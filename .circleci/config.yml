@@ -1,7 +1,6 @@
-# CircleCI Firebase Deployment Config
 version: 2
 jobs:
-  build-react:
+  build:
     docker:
       - image: circleci/node:10
     working_directory: ~/client
