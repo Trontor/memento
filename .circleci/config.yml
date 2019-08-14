@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:10
-    working_directory: ~/client
+    working_directory: ~/memento/client
     steps:
       - checkout
       - restore_cache:
