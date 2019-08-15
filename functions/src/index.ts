@@ -11,9 +11,3 @@ const app: Express = express();
 server.applyMiddleware({ app, path: "/" });
 
 export const api = functions.region("asia-east2").https.onRequest(app);
-
-export const helloWorld = functions
-  .region("asia-east2")
-  .https.onRequest((request, response) => {
-    response.send("Hello from Firebase!");
-  });
