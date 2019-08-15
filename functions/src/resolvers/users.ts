@@ -6,11 +6,14 @@ import {
   UserInputError,
   AuthenticationError
 } from "apollo-server-express";
+import * as firebase from "firebase/app";
+import "firebase/auth";
+
 import { db } from "../utils/firebase/admin";
 import config from "../utils/firebase/config";
-import * as firebase from "firebase/app";
-require("firebase/auth");
 firebase.initializeApp(config);
+
+console.log(firebase);
 
 const USERS_COLLECTION = "users";
 

@@ -4,29 +4,26 @@
 
 ### Installing `firebase` globally or locally
 
-You'll need `firebase@6.8.0` installed globally or within this project:
+You **must** install `firebase@6.8.0` globally. Do not install in the project itself, as an inexplicable bug happens when combined with other firebase modules...
 
 ```bash
 # global using npm
 npm install -g firebase-tools@6.8.0
-
-# or within project using npx
-npm install firebase-tools@6.8.0
 ```
 
 Login to `firebase`:
 
 ```bash
-# global
 firebase login
-
-# within project
-npx firebase login
 ```
 
 ### Installing project modules
 
-Install all the other `npm` modules with `npm install`.
+Install all the other `npm` modules with
+
+```bash
+npm install
+```
 
 ### GraphQL types code generation
 
