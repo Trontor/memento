@@ -3,9 +3,9 @@ import { gql } from "apollo-server-express";
 const typeDefs = gql`
   type User {
     id: ID!
-    username: String!
-    firstName: String
-    lastName: String
+    email: String!
+    firstName: String!
+    lastName: String!
     imageUrl: String
     location: String
     dateOfBirth: String
@@ -27,7 +27,6 @@ const typeDefs = gql`
   type AuthPayload {
     token: String
     user: User
-    error: String
   }
 
   type Query {
@@ -44,7 +43,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    signup(input: UserSignupInput!): AuthPayload
+    signup(input: UserSignupInput!): AuthPayload!
   }
 `;
 
