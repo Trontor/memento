@@ -1,5 +1,6 @@
 import { db } from "../utils/firebase/admin";
 import { ApolloError, ValidationError } from "apollo-server-core";
+import {signup} from "./users"
 
 export const resolvers = {
   Query: {
@@ -17,6 +18,9 @@ export const resolvers = {
         console.error(err);
         throw new ApolloError(err);
       }
-    }
+    },
+  },
+  Mutation: {
+    signup: (parent, {}, context, info) => signup(args);
   }
 };
