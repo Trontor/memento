@@ -6,34 +6,27 @@ import {
   UserInputError,
   AuthenticationError
 } from "apollo-server-express";
-import * as firebase from "firebase/app";
-import "firebase/auth";
 
-import { db } from "../utils/firebase/admin";
-import config from "../utils/firebase/config";
-firebase.initializeApp(config);
+import { Context } from "..";
 
-console.log(firebase);
-
-const USERS_COLLECTION = "users";
-
-export const signup = async (input: UserSignupInput): Promise<AuthPayload> => {
+export const signup = async (
+  input: UserSignupInput,
+  ctx: Context
+): Promise<AuthPayload> => {
   const [errors, isValid] = validateUserSignupInput(input);
   if (!isValid) {
     throw new UserInputError("Signup arguments invalid", errors);
   }
   try {
-    const userSnapshot = await db
-      .collection(USERS_COLLECTION)
-      .doc(input.email)
-      .get();
+    const userSnapshot = await ctx.models.user.getUserByEmail(input.email);
     if (userSnapshot.exists) {
       throw new ValidationError("Email already in use");
     }
 
-    const userCredential = await firebase
-      .auth()
-      .createUserWithEmailAndPassword(input.email, input.password);
+    const userCredential = await ctx.auth.createUserWithEmailAndPassword(
+      input.email,
+      input.password
+    );
 
     const user = userCredential.user;
     let token: string;
@@ -49,10 +42,7 @@ export const signup = async (input: UserSignupInput): Promise<AuthPayload> => {
       lastName: input.lastName,
       createdAt: new Date().toISOString()
     };
-    await db
-      .collection(USERS_COLLECTION)
-      .doc(input.email)
-      .set(newUserDoc);
+    await ctx.models.user.createUser(newUserDoc);
     return {
       token: token,
       user: newUserDoc

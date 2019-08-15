@@ -27,7 +27,7 @@ export type Family = {
 
 export type Mutation = {
   __typename?: "Mutation";
-  signup?: Maybe<AuthPayload>;
+  signup: AuthPayload;
 };
 
 export type MutationSignupArgs = {
@@ -37,11 +37,6 @@ export type MutationSignupArgs = {
 export type Query = {
   __typename?: "Query";
   me: Scalars["String"];
-  user?: Maybe<Scalars["String"]>;
-};
-
-export type QueryUserArgs = {
-  id: Scalars["ID"];
 };
 
 export type User = {
@@ -140,11 +135,11 @@ export type DirectiveResolverFn<
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars["String"]>;
-  ID: ResolverTypeWrapper<Scalars["ID"]>;
   Mutation: ResolverTypeWrapper<{}>;
   UserSignupInput: UserSignupInput;
   AuthPayload: ResolverTypeWrapper<AuthPayload>;
   User: ResolverTypeWrapper<User>;
+  ID: ResolverTypeWrapper<Scalars["ID"]>;
   Family: ResolverTypeWrapper<Family>;
   Int: ResolverTypeWrapper<Scalars["Int"]>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
@@ -154,11 +149,11 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Query: {};
   String: Scalars["String"];
-  ID: Scalars["ID"];
   Mutation: {};
   UserSignupInput: UserSignupInput;
   AuthPayload: AuthPayload;
   User: User;
+  ID: Scalars["ID"];
   Family: Family;
   Int: Scalars["Int"];
   Boolean: Scalars["Boolean"];
@@ -189,7 +184,7 @@ export type MutationResolvers<
   ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
 > = {
   signup?: Resolver<
-    Maybe<ResolversTypes["AuthPayload"]>,
+    ResolversTypes["AuthPayload"],
     ParentType,
     ContextType,
     MutationSignupArgs
@@ -201,12 +196,6 @@ export type QueryResolvers<
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
   me?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  user?: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType,
-    QueryUserArgs
-  >;
 };
 
 export type UserResolvers<

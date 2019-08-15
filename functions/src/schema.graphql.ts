@@ -31,7 +31,6 @@ const typeDefs = gql`
 
   type Query {
     me: String!
-    user(id: ID!): String
   }
 
   input UserSignupInput {
