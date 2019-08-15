@@ -1,8 +1,19 @@
 import * as functions from "firebase-functions";
+import express, { Express } from "express";
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-export const helloWorld = functions.https.onRequest((request, response) => {
-  response.send("Hello from Firebase!");
-});
+import { ApolloServer } from "apollo-server-express";
+import { resolvers } from "./resolvers";
+import typeDefs from "./schema.graphql";
+
+const server = new ApolloServer({ typeDefs, resolvers });
+const app: Express = express();
+
+server.applyMiddleware({ app, path: "/" });
+
+export const api = functions.region("asia-east2").https.onRequest(app);
+
+export const helloWorld = functions
+  .region("asia-east2")
+  .https.onRequest((request, response) => {
+    response.send("Hello from Firebase!");
+  });
