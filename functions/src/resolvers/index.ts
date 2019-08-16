@@ -1,12 +1,12 @@
 import { signup } from "./users";
 import { UserSignupInput } from "../generated/graphql";
-import { Context } from "../";
+import { Context } from "../utils/context";
 
 interface WithUserSignupInput {
   input: UserSignupInput;
 }
 
-export const resolvers = {
+const resolvers = {
   Query: {
     me: () => "me"
   },
@@ -15,3 +15,5 @@ export const resolvers = {
       signup(input, context)
   }
 };
+
+export default resolvers;

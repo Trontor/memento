@@ -21,7 +21,6 @@ export const validateUserSignupInput = (
   input: UserSignupInput
 ): [UserSignupErrors, boolean] => {
   const errors: UserSignupErrors = {};
-  console.log(input);
   if (isEmpty(input.email)) {
     errors.email = "Must not be empty";
   } else if (!isEmail(input.email)) {

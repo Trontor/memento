@@ -1,53 +1,28 @@
-import { UserSignupInput, AuthPayload, User } from "../generated/graphql";
+import { UserSignupInput, AuthPayload } from "../generated/graphql";
 import { validateUserSignupInput } from "../utils/validation";
-import {
-  ValidationError,
-  ApolloError,
-  UserInputError,
-  AuthenticationError
-} from "apollo-server-express";
+import { ValidationError, UserInputError } from "apollo-server-express";
 
-import { Context } from "..";
+import { Context } from "../utils/context";
 
 export const signup = async (
   input: UserSignupInput,
   ctx: Context
 ): Promise<AuthPayload> => {
+  // validate input
   const [errors, isValid] = validateUserSignupInput(input);
   if (!isValid) {
     throw new UserInputError("Signup arguments invalid", errors);
   }
-  try {
-    const userSnapshot = await ctx.models.user.getUserByEmail(input.email);
-    if (userSnapshot.exists) {
-      throw new ValidationError("Email already in use");
-    }
-
-    const userCredential = await ctx.auth.createUserWithEmailAndPassword(
-      input.email,
-      input.password
-    );
-
-    const user = userCredential.user;
-    let token: string;
-    if (user === null) {
-      throw new AuthenticationError("Could not signup");
-    } else {
-      token = await user.getIdToken();
-    }
-    const newUserDoc: User = {
-      id: user.uid,
-      email: input.email,
-      firstName: input.firstName,
-      lastName: input.lastName,
-      createdAt: new Date().toISOString()
-    };
-    await ctx.models.user.createUser(newUserDoc);
-    return {
-      token: token,
-      user: newUserDoc
-    };
-  } catch (err) {
-    throw new ApolloError(err);
+  const userExists = await ctx.models.user.doesUserExist(input.email);
+  if (userExists) {
+    throw new ValidationError("Email already in use");
   }
+
+  // create new user in auth and Firestore
+  const { token, user } = await ctx.models.user.createUser(input);
+
+  return {
+    token,
+    user
+  };
 };
