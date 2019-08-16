@@ -1,0 +1,14 @@
+.slick-prev:before, .slick-next:before {
+  color: black!important;
+  display: block;
+}
+
+.slick-prev:before {
+  transform: translateX( 50px);
+}
+
+.slick-next:before {
+  // position: absolute;
+  // margin-right: 50px;
+  transform: translateX(-50px);
+}

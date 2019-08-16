@@ -3,10 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "node-sass": "^4.12.0",
+    "polished": "^3.4.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
+    "react-slick": "^0.25.2",
+    "react-styled-carousel": "^0.5.1",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^4.3.2"
   },
   "scripts": {
@@ -31,6 +36,7 @@
     ]
   },
   "devDependencies": {
-    "firebase-tools": "^7.2.2"
+    "firebase-tools": "^7.2.2",
+    "react-alice-carousel": "^1.15.2"
   }
 }
