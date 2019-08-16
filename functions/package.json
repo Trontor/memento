@@ -7,17 +7,35 @@
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "logs": "firebase functions:log",
+    "gql": "graphql-codegen --config codegen.yml",
+    "test": "jest --watchAll --coverage src/**/*.spec.ts"
   },
   "engines": {
     "node": "8"
   },
   "main": "lib/index.js",
   "dependencies": {
-    "firebase-admin": "~7.0.0",
-    "firebase-functions": "^2.3.0"
+    "@graphql-codegen/cli": "^1.5.0",
+    "apollo-server-express": "^2.8.1",
+    "express": "^4.17.1",
+    "firebase": "^6.3.5",
+    "firebase-admin": "^8.3.0",
+    "firebase-functions": "^2.3.0",
+    "graphql": "^14.4.2"
   },
   "devDependencies": {
+    "@graphql-codegen/introspection": "^1.5.0",
+    "@graphql-codegen/typescript": "1.5.0",
+    "@graphql-codegen/typescript-resolvers": "^1.5.0",
+    "@types/dotenv": "^6.1.1",
+    "@types/jest": "^24.0.17",
+    "apollo-server-testing": "^2.8.1",
+    "dotenv": "^8.0.0",
+    "firebase-functions-test": "^0.1.6",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.12.0",
     "typescript": "^3.2.2"
   },
   "private": true
