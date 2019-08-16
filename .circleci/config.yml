@@ -3,25 +3,49 @@ jobs:
   build:
     docker:
       - image: circleci/node:10
-    working_directory: ~/memento/client
     steps:
-      - checkout
+      - checkout:
+          path: ~/memento
+      # Download and cache dependencies
       - restore_cache:
+          working_directory: ~/memento/functions
+          keys:
+            - v1-dependencies-{{ checksum "./functions/package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      # Install all needed dependencies from package.json
+      - run:
+          working_directory: ~/memento/functions
+          command: npm install
+
+      # Save the cache including node_modules folder
+      - save_cache:
+          paths:
+            - ~/memento/functions/node_modules
+          key: v1-dependencies-{{ checksum "./functions/package.json" }}
+
+      - restore_cache:
+          working_directory: ~/memento/client
           keys:
             # Find a cache corresponding to this specific package-lock.json
-            - v1-npm-deps-{{ checksum "package-lock.json" }}
+            - v1-npm-deps-{{ checksum "./client/package-lock.json" }}
             # Fallback cache to be used
             - v1-npm-deps-
+      ### REACT
       - run:
+          working_directory: ~/memento/client
           name: Install Dependencies
           command: npm install
       - save_cache:
           key: v1-npm-deps-{{ checksum "package-lock.json" }}
           paths:
-            - ./node_modules
+            - ~/memento/client/node_modules
       - run:
+          working_directory: ~/memento/client
           name: React
           command: npm run build
       - run:
+          working_directory: ~/memento/client
           name: Firebase Deploy
           command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
