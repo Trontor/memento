@@ -6,7 +6,7 @@ import "./carousel.scss"
 import styled from "styled-components"
 
 const CarouselWrapper = styled.div`
-  padding: 20px;
+  padding: 40px;
 
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletLanscape}) {
     width: 50vw;
@@ -19,20 +19,20 @@ const CarouselWrapper = styled.div`
 const Description = styled.h2`
   margin: 0 auto;
   text-align: center;
-  width: 250px;
+  width: 75%;
+  font-size: 1.5em;
 `;
 
 const CarouselSlide = styled.div`
-  max-width: 75%;
-  margin: auto;
   display: block!important;
+  margin: auto;
 
   img {
     object-fit: cover;
     width: 60vw;
     height: 60vw;
     border-radius: 4px;
-    margin: 0 auto;
+    margin: auto;
 
     @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}) {
       width: 50vw;
@@ -53,8 +53,8 @@ export default class Carousel extends Component {
       infinite: true,
       slidesToShow: 1,
       autoplay: true,
-      autoplaySpeed: 3500,
-      speed: 1200,
+      autoplaySpeed: 3300,
+      speed: 2000,
       arrows: true,
       // prevArrow: <SamplePrevArrow/>
     };
