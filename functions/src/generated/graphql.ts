@@ -28,10 +28,15 @@ export type Family = {
 export type Mutation = {
   __typename?: "Mutation";
   signup: AuthPayload;
+  login: AuthPayload;
 };
 
 export type MutationSignupArgs = {
   input: UserSignupInput;
+};
+
+export type MutationLoginArgs = {
+  input: UserLoginInput;
 };
 
 export type Query = {
@@ -52,6 +57,11 @@ export type User = {
   families?: Maybe<Array<Family>>;
   createdAt: Scalars["String"];
   lastLogin?: Maybe<Scalars["String"]>;
+};
+
+export type UserLoginInput = {
+  email: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type UserSignupInput = {
@@ -142,6 +152,7 @@ export type ResolversTypes = {
   ID: ResolverTypeWrapper<Scalars["ID"]>;
   Family: ResolverTypeWrapper<Family>;
   Int: ResolverTypeWrapper<Scalars["Int"]>;
+  UserLoginInput: UserLoginInput;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
 };
 
@@ -156,6 +167,7 @@ export type ResolversParentTypes = {
   ID: Scalars["ID"];
   Family: Family;
   Int: Scalars["Int"];
+  UserLoginInput: UserLoginInput;
   Boolean: Scalars["Boolean"];
 };
 
@@ -188,6 +200,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     MutationSignupArgs
+  >;
+  login?: Resolver<
+    ResolversTypes["AuthPayload"],
+    ParentType,
+    ContextType,
+    MutationLoginArgs
   >;
 };
 
