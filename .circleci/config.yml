@@ -25,6 +25,10 @@ jobs:
           paths:
             - client/node_modules
           key: v1-dependencies-{{ checksum "client/package.json" }}
+      - persist_to_workspace:
+          root: ~/memento
+          paths:
+            - client/node_modules
   build-client:
     docker:
       - image: circleci/node:10
@@ -70,7 +74,11 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "functions/package.json" }}
+          key: v1-dependencies-{{ checksum "functions/package.json" }}\
+      - persist_to_workspace:
+          root: ~/memento
+          paths:
+            - client/node_modules
   deploy-functions:
     docker:
       - image: circleci/node:10
