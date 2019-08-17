@@ -36,7 +36,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ~/memento/
+          at: ~/memento/client
       # Run React build
       - run:
           name: React Build
