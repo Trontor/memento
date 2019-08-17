@@ -115,11 +115,6 @@ workflows:
       - build-client:
           requires:
             - setup-client
-          filters:
-            branches:
-              only:
-                - master
-                - develop
       - deploy-functions:
           requires:
             - setup-functions
