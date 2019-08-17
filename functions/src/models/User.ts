@@ -17,16 +17,14 @@ export default class UserModel {
     this.auth = clientAuth;
   }
 
-  async doesUserExist(email: string) {
-    const userSnapshot = await this.getUserByEmail(email);
-    return userSnapshot.exists;
-  }
-
-  async getUserByEmail(email: string) {
-    return this.db
-      .collection(UserModel.USERS_COLLECTION)
-      .doc(email)
-      .get();
+  async batchUpdateUser(
+    batch: FirebaseFirestore.WriteBatch,
+    userId: string,
+    data: any
+  ) {
+    const userRef = this.db.collection(UserModel.USERS_COLLECTION).doc(userId);
+    batch.update(userRef, data);
+    return batch;
   }
 
   async createUser({ email, password, firstName, lastName }: UserSignupInput) {
@@ -55,12 +53,12 @@ export default class UserModel {
 
       await this.db
         .collection(UserModel.USERS_COLLECTION)
-        .doc(email)
+        .doc(user.uid)
         .set(newUserDoc);
       return { token, user: newUserDoc };
     } catch (err) {
       console.error(err);
-      throw new Error("Could not create new user");
+      throw new Error(err);
     }
   }
 
