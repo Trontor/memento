@@ -50,7 +50,7 @@ jobs:
       - attach_workspace:
           at: ~/memento
       - run:
-          working_directory: ~/memento/client
+          working_directory: client
           name: "Print current directory"
           command: ls -l && cd client && ls -l
       # Deploy React to Firebase Hosting
