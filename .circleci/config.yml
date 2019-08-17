@@ -115,24 +115,24 @@ workflows:
       - build-client:
           requires:
             - setup-client
-          # filters:
-          #   branches:
-          #     only:
-          #       - master
-          #       - develop
+          filters:
+            branches:
+              only:
+                - master
+                - develop
       - deploy-functions:
           requires:
             - setup-functions
-          # filters:
-          #   branches:
-          #     only:
-          #       - master
-          #       - develop
+          filters:
+            branches:
+              only:
+                - master
+                - develop
       - deploy-client:
           requires:
             - build-client
-          # filters:
-          #   branches:
-          #     only:
-          #       - master
-          #       - develop
+          filters:
+            branches:
+              only:
+                - master
+                - develop
