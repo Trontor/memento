@@ -89,19 +89,22 @@ workflows:
             - setup-client
           filters:
             branches:
-              - master
-              - develop
+              only:
+                - master
+                - develop
       - deploy-functions:
           requires:
             - setup-functions
           filters:
             branches:
-              - master
-              - develop
+              only:
+                - master
+                - develop
       - deploy-client:
           requires:
             - build-client
           filters:
             branches:
-              - master
-              - develop
+              only:
+                - master
+                - develop
