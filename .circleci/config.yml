@@ -46,6 +46,7 @@ jobs:
       - image: circleci/node:10
     working_directory: ~/memento/client
     steps:
+      - checkout
       - attach_workspace:
           at: ~/memento
       - run:
