@@ -101,10 +101,14 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/memento/functions
+      # Install Firebase Tools Globally
+      - run:
+          name: Install Firebase Tools
+          command: npm i -g firebase-tools
       # Deploy Firebase Functions
       - run:
           name: Deploy Firebase Functions
-          command: ./functions/node_modules/.bin/firebase deploy --token "$FIREBASE_FUNCTIONS_TOKEN" --debug
+          command: firebase deploy --token "$FIREBASE_FUNCTIONS_TOKEN" --debug
 
 workflows:
   version: 2
