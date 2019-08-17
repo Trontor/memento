@@ -56,7 +56,7 @@ jobs:
       - run:
           working_directory: ~/memento/client
           name: Deploy to Firebase Hosting
-          command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
+          command: firebase deploy --token "$FIREBASE_TOKEN"
   setup-functions:
     docker:
       - image: circleci/node:10
