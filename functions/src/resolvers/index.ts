@@ -32,9 +32,7 @@ const resolvers = {
       _: any,
       { input }: WithCreateFamilyInput,
       context: Context
-    ) => {
-      createFamily(input, context);
-    }
+    ) => createFamily(input, context)
   }
 };
 

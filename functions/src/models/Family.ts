@@ -1,7 +1,7 @@
 import { WithFirebaseFirestore } from "../utils/firebase/admin";
 import { CreateFamilyInput } from "../generated/graphql";
 
-interface FamilyDocument {
+export interface FamilyDocument {
   name: string;
   users: string[];
   description?: string;
@@ -19,7 +19,7 @@ export default class FamilyModel {
     this.db = db;
   }
 
-  async batchCreateFamily(
+  batchCreateFamily(
     batch: FirebaseFirestore.WriteBatch,
     userId: string,
     familyId: string,
@@ -34,7 +34,7 @@ export default class FamilyModel {
       name: name,
       users: [userId],
       numArtifacts: 0,
-      numMembers: 0,
+      numMembers: 1,
       createdAt: new Date().toISOString()
     };
     if (description) {
@@ -46,6 +46,6 @@ export default class FamilyModel {
     }
 
     batch.create(famRef, newFamDoc);
-    return batch;
+    return newFamDoc;
   }
 }
