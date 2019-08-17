@@ -6,6 +6,8 @@ jobs:
     working_directory: ~/memento/
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/memento/
       # Restore dependencies from cache
       - restore_cache:
           keys:
@@ -30,7 +32,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ~/memento/client
+          at: ~/memento/
       # Run React build
       - run:
           name: React Build
@@ -41,7 +43,7 @@ jobs:
     working_directory: ~/memento/
     steps:
       - attach_workspace:
-          at: ~/memento/client
+          at: ~/memento/
       # Deploy React to Firebase Hosting
       - run:
           name: Firebase Deploy
@@ -52,6 +54,8 @@ jobs:
     working_directory: ~/memento/
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/memento/
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -72,8 +76,9 @@ jobs:
       - image: circleci/node:10
     working_directory: ~/memento/
     steps:
+      - checkout
       - attach_workspace:
-          at: ~/memento/functions
+          at: ~/memento/
       # Deploy Firebase Functions
       - run:
           name: Deploy Firebase Functions
