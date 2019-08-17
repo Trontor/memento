@@ -6,9 +6,6 @@ jobs:
     working_directory: ~/memento/
     steps:
       - checkout
-      # Print out directory structure
-      - run:
-          command: ls -l
       # Restore dependencies from cache
       - restore_cache:
           keys:
@@ -29,7 +26,7 @@ jobs:
   build-client:
     docker:
       - image: circleci/node:10
-    working_directory: ~/memento/client
+    working_directory: ~/memento/
     steps:
       - checkout
       - attach_workspace:
@@ -37,19 +34,18 @@ jobs:
       # Run React build
       - run:
           name: React Build
-          command: npm run build
+          command: npm run build --prefix client
   deploy-client:
     docker:
       - image: circleci/node:10
-    working_directory: ~/memento/client
+    working_directory: ~/memento/
     steps:
       - attach_workspace:
           at: ~/memento/client
       # Deploy React to Firebase Hosting
       - run:
-          working_directory: ~/memento/client
           name: Firebase Deploy
-          command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
+          command: .client/node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
   setup-functions:
     docker:
       - image: circleci/node:10
