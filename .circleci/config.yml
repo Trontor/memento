@@ -3,7 +3,7 @@ jobs:
   setup-client:
     docker:
       - image: circleci/node:10
-    working_directory: ~/client/
+    # working_directory: ~/client/
     steps:
       - checkout
       # Print out directory structure
