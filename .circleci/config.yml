@@ -50,7 +50,7 @@ jobs:
           at: ~/memento
       - run:
           name: "Print current directory"
-          command: cd functions && ls -l
+          command: ls -l && cd client && ls -l
       # Deploy React to Firebase Hosting
       - run:
           working_directory: ~/memento/client
