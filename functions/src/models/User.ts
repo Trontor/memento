@@ -2,7 +2,7 @@ import {
   WithFirebaseFirestore,
   WithFirebaseAuth
 } from "../utils/firebase/admin";
-import { User, UserSignupInput } from "../generated/graphql";
+import { User, UserSignupInput, UserLoginInput } from "../generated/graphql";
 
 export default class UserModel {
   static USERS_COLLECTION: string = "users";
@@ -59,5 +59,20 @@ export default class UserModel {
       console.error(err);
       throw new Error("Could not create new user");
     }
+  }
+
+  /**
+   * Returns token after successful login, otherwise returns null.
+   */
+  async loginUser({ email, password }: UserLoginInput) {
+    const userCredential = await this.auth.signInWithEmailAndPassword(
+      email,
+      password
+    );
+    if (userCredential.user === null) {
+      return null;
+    }
+    const token: string = await userCredential.user.getIdToken();
+    return { token };
   }
 }

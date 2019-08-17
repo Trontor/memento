@@ -41,8 +41,14 @@ const typeDefs = gql`
     lastName: String!
   }
 
+  input UserLoginInput {
+    email: String!
+    password: String!
+  }
+
   type Mutation {
     signup(input: UserSignupInput!): AuthPayload!
+    login(input: UserLoginInput!): AuthPayload!
   }
 `;
 

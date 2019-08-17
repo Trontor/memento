@@ -1,8 +1,16 @@
-import { UserSignupInput, AuthPayload } from "../generated/graphql";
+import {
+  UserSignupInput,
+  AuthPayload,
+  UserLoginInput
+} from "../generated/graphql";
 import { validateUserSignupInput } from "../utils/validation";
-import { ValidationError, UserInputError } from "apollo-server-express";
+import { UserInputError, AuthenticationError } from "apollo-server-express";
 
 import { Context } from "../utils/context";
+
+export const AUTH_ERROR_MESSAGE: string = "Could not authenticate user";
+export const EMAIL_IN_USE_ERROR_MESSAGE: string = "Email already in use";
+export const INVALID_ARGS_ERROR_MESSAGE: string = "Invalid input arguments";
 
 export const signup = async (
   input: UserSignupInput,
@@ -11,11 +19,11 @@ export const signup = async (
   // validate input
   const [errors, isValid] = validateUserSignupInput(input);
   if (!isValid) {
-    throw new UserInputError("Signup arguments invalid", errors);
+    throw new UserInputError(INVALID_ARGS_ERROR_MESSAGE, errors);
   }
   const userExists = await ctx.models.user.doesUserExist(input.email);
   if (userExists) {
-    throw new ValidationError("Email already in use");
+    throw new UserInputError(EMAIL_IN_USE_ERROR_MESSAGE);
   }
 
   // create new user in auth and Firestore
@@ -24,5 +32,18 @@ export const signup = async (
   return {
     token,
     user
+  };
+};
+
+export const login = async (
+  input: UserLoginInput,
+  ctx: Context
+): Promise<AuthPayload> => {
+  const result = await ctx.models.user.loginUser(input);
+  if (!result || !result.token) {
+    throw new AuthenticationError(AUTH_ERROR_MESSAGE);
+  }
+  return {
+    token: result.token
   };
 };
