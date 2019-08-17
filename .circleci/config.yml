@@ -48,11 +48,11 @@ jobs:
   deploy-client:
     docker:
       - image: circleci/node:10
-    working_directory: ~/memento/client
+    working_directory: ~/memento/
     steps:
       - checkout
       - attach_workspace:
-          at: ~/memento/client
+          at: client
       - run:
           working_directory: client
           name: Print Client
