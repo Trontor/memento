@@ -6,6 +6,9 @@ jobs:
     working_directory: ~/memento/client
     steps:
       - checkout
+      # Print out directory structure
+      - run:
+          command: ls -l ~/memento
       # Restore dependencies from cache
       - restore_cache:
           keys:
