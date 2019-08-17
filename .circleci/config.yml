@@ -95,7 +95,7 @@ jobs:
             - node_modules
   deploy-functions:
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:8
     working_directory: ~/memento/
     steps:
       - checkout
