@@ -1,6 +1,16 @@
 import { WithFirebaseFirestore } from "../utils/firebase/admin";
 import { CreateFamilyInput } from "../generated/graphql";
 
+interface FamilyDocument {
+  name: string;
+  users: string[];
+  description?: string;
+  numMembers: number;
+  numArtifacts: number;
+  imageUrl?: string;
+  createdAt: string;
+}
+
 export default class FamilyModel {
   static FAMILIES_COLLECTION: string = "families";
   db: FirebaseFirestore.Firestore;
@@ -20,14 +30,12 @@ export default class FamilyModel {
       .doc(familyId);
 
     // create family
-    const newFamDoc: {
-      name: string;
-      users: string[];
-      description?: string;
-      imageUrl?: string;
-    } = {
+    const newFamDoc: FamilyDocument = {
       name: name,
-      users: [userId]
+      users: [userId],
+      numArtifacts: 0,
+      numMembers: 0,
+      createdAt: new Date().toISOString()
     };
     if (description) {
       newFamDoc.description = description;

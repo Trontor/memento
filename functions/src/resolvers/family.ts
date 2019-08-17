@@ -21,9 +21,7 @@ export const createFamily = async (
 
   const batch = db.batch();
   context.models.user.batchUpdateUser(batch, context.user.uid, {
-    families: {
-      [familyId]: "admin"
-    }
+    [`families.${familyId}`]: "admin"
   });
 
   context.models.family.batchCreateFamily(
@@ -35,6 +33,7 @@ export const createFamily = async (
 
   try {
     await batch.commit();
+    return {};
   } catch (err) {
     console.error(err);
     throw new ApolloError("Could not create family");
