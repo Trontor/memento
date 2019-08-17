@@ -55,7 +55,7 @@ jobs:
           command: ls -l && cd client && ls -l
       # Deploy React to Firebase Hosting
       - run:
-          working_directory: ~/memento/client
+          working_directory: client
           name: Deploy to Firebase Hosting
           command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
   setup-functions:
