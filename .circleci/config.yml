@@ -26,9 +26,9 @@ jobs:
             - client/node_modules
           key: v1-dependencies-{{ checksum "client/package.json" }}
       - persist_to_workspace:
-          root: ~/memento
+          root: ~/memento/client
           paths:
-            - client/node_modules
+            - node_modules
   build-client:
     docker:
       - image: circleci/node:10
@@ -48,8 +48,11 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ~/memento
-
+          at: ~/memento/client
+      - run:
+          working_directory: client
+          name: Print Client
+          command: ls -l
       # Deploy React to Firebase Hosting
       - run:
           working_directory: client
