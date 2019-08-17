@@ -45,7 +45,7 @@ jobs:
       # Deploy React to Firebase Hosting
       - run:
           name: Firebase Deploy
-          command: .client/node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
+          command: ./client/node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
   setup-functions:
     docker:
       - image: circleci/node:10
@@ -70,14 +70,14 @@ jobs:
   deploy-functions:
     docker:
       - image: circleci/node:10
-    working_directory: ~/memento/functions
+    working_directory: ~/memento/
     steps:
       - attach_workspace:
           at: ~/memento/functions
       # Deploy Firebase Functions
       - run:
           name: Deploy Firebase Functions
-          command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_FUNCTIONS_TOKEN"
+          command: ./functions/node_modules/.bin/firebase deploy --token "$FIREBASE_FUNCTIONS_TOKEN"
 
 workflows:
   version: 2
