@@ -2,9 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import { theme } from './theme';
-import Landing from './components/Landing';
-import Login from './components/Login';
-import Signup from './components/Signup';
+import Landing from './components/Landing/Landing';
+import Login from './components/Login/Login';
+import Signup from './components/Signup/Signup';
 
 const GlobalStyle = createGlobalStyle`
   html {
