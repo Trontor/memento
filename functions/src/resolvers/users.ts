@@ -9,7 +9,8 @@ import { UserInputError, AuthenticationError } from "apollo-server-express";
 import { Context } from "../utils/context";
 
 export const AUTH_ERROR_MESSAGE: string = "Could not authenticate user";
-export const EMAIL_IN_USE_ERROR_MESSAGE: string = "Email already in use";
+export const EMAIL_IN_USE_ERROR_MESSAGE: string =
+  "The email address is already in use by another account.";
 export const INVALID_ARGS_ERROR_MESSAGE: string = "Invalid input arguments";
 
 export const signup = async (
@@ -20,10 +21,6 @@ export const signup = async (
   const [errors, isValid] = validateUserSignupInput(input);
   if (!isValid) {
     throw new UserInputError(INVALID_ARGS_ERROR_MESSAGE, errors);
-  }
-  const userExists = await ctx.models.user.doesUserExist(input.email);
-  if (userExists) {
-    throw new UserInputError(EMAIL_IN_USE_ERROR_MESSAGE);
   }
 
   // create new user in auth and Firestore

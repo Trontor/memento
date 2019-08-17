@@ -8,14 +8,18 @@ import typeDefs from "./schema.graphql";
 // dependencies
 import { db, clientAuth, adminAuth } from "./utils/firebase/admin";
 
-import { createContext, Models } from "./utils/context";
+import { createContext } from "./utils/context";
 import UserModel from "./models/User";
+import FamilyModel from "./models/Family";
 
-const models: Models = {
-  user: new UserModel({ db, clientAuth })
-};
-
-const context = createContext(models, adminAuth);
+const context = createContext(
+  {
+    user: new UserModel({ db, clientAuth }),
+    family: new FamilyModel({ db })
+  },
+  adminAuth,
+  db
+);
 
 const app: Express = express();
 

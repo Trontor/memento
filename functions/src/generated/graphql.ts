@@ -15,20 +15,29 @@ export type AuthPayload = {
   user?: Maybe<User>;
 };
 
+export type CreateFamilyInput = {
+  name: Scalars["String"];
+  imageUrl?: Maybe<Scalars["String"]>;
+  description?: Maybe<Scalars["String"]>;
+};
+
 export type Family = {
   __typename?: "Family";
   id: Scalars["ID"];
   name: Scalars["String"];
+  description?: Maybe<Scalars["String"]>;
   imageUrl?: Maybe<Scalars["String"]>;
   numMembers: Scalars["Int"];
   numArtifacts: Scalars["Int"];
   createdAt: Scalars["String"];
+  users?: Maybe<Array<User>>;
 };
 
 export type Mutation = {
   __typename?: "Mutation";
   signup: AuthPayload;
   login: AuthPayload;
+  createFamily?: Maybe<Family>;
 };
 
 export type MutationSignupArgs = {
@@ -37,6 +46,10 @@ export type MutationSignupArgs = {
 
 export type MutationLoginArgs = {
   input: UserLoginInput;
+};
+
+export type MutationCreateFamilyArgs = {
+  input: CreateFamilyInput;
 };
 
 export type Query = {
@@ -153,6 +166,7 @@ export type ResolversTypes = {
   Family: ResolverTypeWrapper<Family>;
   Int: ResolverTypeWrapper<Scalars["Int"]>;
   UserLoginInput: UserLoginInput;
+  CreateFamilyInput: CreateFamilyInput;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
 };
 
@@ -168,6 +182,7 @@ export type ResolversParentTypes = {
   Family: Family;
   Int: Scalars["Int"];
   UserLoginInput: UserLoginInput;
+  CreateFamilyInput: CreateFamilyInput;
   Boolean: Scalars["Boolean"];
 };
 
@@ -185,10 +200,20 @@ export type FamilyResolvers<
 > = {
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  description?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
   imageUrl?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   numMembers?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
   numArtifacts?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  users?: Resolver<
+    Maybe<Array<ResolversTypes["User"]>>,
+    ParentType,
+    ContextType
+  >;
 };
 
 export type MutationResolvers<
@@ -206,6 +231,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     MutationLoginArgs
+  >;
+  createFamily?: Resolver<
+    Maybe<ResolversTypes["Family"]>,
+    ParentType,
+    ContextType,
+    MutationCreateFamilyArgs
   >;
 };
 

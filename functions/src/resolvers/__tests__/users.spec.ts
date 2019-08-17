@@ -8,21 +8,30 @@ import typeDefs from "../../schema.graphql";
 import resolvers from "..";
 import { db, clientAuth, adminAuth } from "../../utils/firebase/admin";
 import UserModel from "../../models/User";
+import FamilyModel from "../../models/Family";
 import { AUTH_ERROR_MESSAGE, EMAIL_IN_USE_ERROR_MESSAGE } from "../users";
 import { createContext } from "../../utils/context";
 import { LOGIN, SIGNUP } from "./mutations";
 
 jest.mock("../../models/User");
+jest.mock("../../models/Family");
 
-describe("integration tests - users", () => {
-  let mockUserModelInstance: any, testServer: ApolloServer;
+describe("integration tests - user resolver", () => {
+  let mockUserModelInstance: any,
+    mockFamilyModelInstance: any,
+    testServer: ApolloServer;
   beforeEach(() => {
     mockUserModelInstance = new UserModel({ db, clientAuth });
+    mockFamilyModelInstance = new FamilyModel({ db });
 
     testServer = new ApolloServer({
       typeDefs,
       resolvers,
-      context: createContext({ user: mockUserModelInstance }, adminAuth)
+      context: createContext(
+        { user: mockUserModelInstance, family: mockFamilyModelInstance },
+        adminAuth,
+        db
+      )
     });
   });
   describe("login", () => {

@@ -4,6 +4,19 @@ import {
 } from "../utils/firebase/admin";
 import { User, UserSignupInput, UserLoginInput } from "../generated/graphql";
 
+export interface UserDocument {
+  email: string;
+  firstName: string;
+  lastName: string;
+  imageUrl?: string;
+  location?: string;
+  dateOfBirth?: string;
+  gender?: string;
+  families: { [key: string]: string };
+  createdAt: string;
+  lastLogin?: string;
+}
+
 export default class UserModel {
   static USERS_COLLECTION: string = "users";
   db: FirebaseFirestore.Firestore;
@@ -17,16 +30,37 @@ export default class UserModel {
     this.auth = clientAuth;
   }
 
-  async doesUserExist(email: string) {
-    const userSnapshot = await this.getUserByEmail(email);
-    return userSnapshot.exists;
+  async batchUpdateUser(
+    batch: FirebaseFirestore.WriteBatch,
+    userId: string,
+    data: any
+  ) {
+    const userRef = this.db.collection(UserModel.USERS_COLLECTION).doc(userId);
+    batch.update(userRef, data);
+    return batch;
   }
 
-  async getUserByEmail(email: string) {
-    return this.db
+  async getUser(userId: string): Promise<UserDocument | null> {
+    const snap = await this.db
       .collection(UserModel.USERS_COLLECTION)
-      .doc(email)
+      .doc(userId)
       .get();
+    if (!snap.exists) return null;
+    const data = snap.data();
+    if (!data) return null;
+    console.log(data);
+    return {
+      email: data.email,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      imageUrl: data.imageUrl,
+      location: data.location,
+      dateOfBirth: data.dateOfBirth,
+      gender: data.gender,
+      families: data.families,
+      createdAt: data.createdAt,
+      lastLogin: data.lastLogin
+    };
   }
 
   async createUser({ email, password, firstName, lastName }: UserSignupInput) {
@@ -55,12 +89,12 @@ export default class UserModel {
 
       await this.db
         .collection(UserModel.USERS_COLLECTION)
-        .doc(email)
+        .doc(user.uid)
         .set(newUserDoc);
       return { token, user: newUserDoc };
     } catch (err) {
       console.error(err);
-      throw new Error("Could not create new user");
+      throw new Error(err);
     }
   }
 

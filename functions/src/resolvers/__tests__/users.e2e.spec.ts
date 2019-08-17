@@ -10,6 +10,7 @@ import UserModel from "../../models/User";
 import { createContext } from "../../utils/context";
 import { SIGNUP } from "./mutations";
 import { EMAIL_IN_USE_ERROR_MESSAGE } from "../users";
+import FamilyModel from "../../models/Family";
 
 dotenv.config();
 
@@ -28,8 +29,12 @@ describe("e2e tests - users", () => {
       typeDefs,
       resolvers,
       context: createContext(
-        { user: new UserModel({ db, clientAuth }) },
-        adminAuth
+        {
+          user: new UserModel({ db, clientAuth }),
+          family: new FamilyModel({ db })
+        },
+        adminAuth,
+        db
       )
     });
   });
