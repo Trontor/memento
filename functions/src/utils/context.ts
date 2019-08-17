@@ -1,21 +1,51 @@
 import UserModel from "../models/User";
-import { WithFirebaseAuth, WithFirebaseFirestore } from "./firebase/admin";
+import { ExpressContext } from "apollo-server-express/dist/ApolloServer";
+import { isEmpty } from "./validation";
+import { admin } from "./firebase/admin";
 
-// context is available to all resolvers
-export interface Context {
-  models: {
-    user: UserModel;
-  };
+export interface Models {
+  user: UserModel;
 }
 
-export const createContext = ({
-  db,
-  auth
-}: WithFirebaseFirestore & WithFirebaseAuth): Context => {
-  // inject dependencies for ease of testing
-  return {
-    models: {
-      user: new UserModel({ db, auth })
-    }
-  };
+export interface Context {
+  models: Models;
+  user: any;
+}
+
+const extractBearerToken = (req: any): string | null => {
+  if (
+    !req.headers ||
+    !req.headers.authorization ||
+    !req.headers.authorization.startsWith("Bearer ")
+  ) {
+    return null;
+  }
+  const token: string = req.headers.authorization.split(" ")[1];
+  return !isEmpty(token) ? token : null;
 };
+
+/**
+ * Higher order function that returns an async Apollo ContextFunction
+ * Contains authentication information about the user and
+ * injects data model instances.
+ */
+export function createContext(models: Models, adminAuth: admin.auth.Auth) {
+  return async ({ req }: ExpressContext) => {
+    let decodedToken = null;
+    if (req) {
+      // decodes token
+      const token = extractBearerToken(req);
+
+      if (token !== null) {
+        decodedToken = await adminAuth.verifyIdToken(token);
+      }
+      console.log(decodedToken);
+    }
+
+    // inject dependencies for ease of testing
+    return {
+      models: models,
+      user: decodedToken
+    };
+  };
+}

@@ -6,11 +6,16 @@ import resolvers from "./resolvers";
 import typeDefs from "./schema.graphql";
 
 // dependencies
-import { db, auth } from "./utils/firebase/admin";
+import { db, clientAuth, adminAuth } from "./utils/firebase/admin";
 
-import { createContext } from "./utils/context";
+import { createContext, Models } from "./utils/context";
+import UserModel from "./models/User";
 
-const context = createContext({ db, auth });
+const models: Models = {
+  user: new UserModel({ db, clientAuth })
+};
+
+const context = createContext(models, adminAuth);
 
 const app: Express = express();
 

@@ -1,53 +1,28 @@
 import {
   ApolloServer,
-  gql,
   UserInputError,
   AuthenticationError
 } from "apollo-server-express";
 import { createTestClient } from "apollo-server-testing";
-import typeDefs from "../schema.graphql";
-import resolvers from "./";
-import { db, auth } from "../utils/firebase/admin";
-import UserModel from "../models/User";
-import { AUTH_ERROR_MESSAGE, EMAIL_IN_USE_ERROR_MESSAGE } from "./users";
+import typeDefs from "../../schema.graphql";
+import resolvers from "..";
+import { db, clientAuth, adminAuth } from "../../utils/firebase/admin";
+import UserModel from "../../models/User";
+import { AUTH_ERROR_MESSAGE, EMAIL_IN_USE_ERROR_MESSAGE } from "../users";
+import { createContext } from "../../utils/context";
+import { LOGIN, SIGNUP } from "./mutations";
 
-jest.mock("../models/User");
-
-const SIGNUP = gql`
-  mutation($input: UserSignupInput!) {
-    signup(input: $input) {
-      token
-      user {
-        email
-        firstName
-        lastName
-        id
-      }
-    }
-  }
-`;
-
-const LOGIN = gql`
-  mutation($input: UserLoginInput!) {
-    login(input: $input) {
-      token
-    }
-  }
-`;
+jest.mock("../../models/User");
 
 describe("integration tests - users", () => {
   let mockUserModelInstance: any, testServer: ApolloServer;
   beforeEach(() => {
-    mockUserModelInstance = new UserModel({ db, auth });
+    mockUserModelInstance = new UserModel({ db, clientAuth });
 
     testServer = new ApolloServer({
       typeDefs,
       resolvers,
-      context: {
-        models: {
-          user: mockUserModelInstance
-        }
-      }
+      context: createContext({ user: mockUserModelInstance }, adminAuth)
     });
   });
   describe("login", () => {
