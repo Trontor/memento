@@ -104,7 +104,7 @@ jobs:
       # Install Firebase Tools Globally
       - run:
           name: Install Firebase Tools
-          command: npm i -g firebase-tools
+          command: sudo npm i -g firebase-tools
       # Deploy Firebase Functions
       - run:
           name: Deploy Firebase Functions
