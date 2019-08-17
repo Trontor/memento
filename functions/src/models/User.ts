@@ -1,6 +1,6 @@
 import {
   WithFirebaseFirestore,
-  WithFirebaseAuth
+  WithFirebaseClientAuth
 } from "../utils/firebase/admin";
 import { User, UserSignupInput, UserLoginInput } from "../generated/graphql";
 
@@ -9,9 +9,12 @@ export default class UserModel {
   db: FirebaseFirestore.Firestore;
   auth: firebase.auth.Auth;
 
-  constructor({ db, auth }: WithFirebaseFirestore & WithFirebaseAuth) {
+  constructor({
+    db,
+    clientAuth
+  }: WithFirebaseFirestore & WithFirebaseClientAuth) {
     this.db = db;
-    this.auth = auth;
+    this.auth = clientAuth;
   }
 
   async doesUserExist(email: string) {

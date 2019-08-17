@@ -24,11 +24,25 @@ interface WithFirebaseFirestore {
   db: FirebaseFirestore.Firestore;
 }
 
-interface WithFirebaseAuth {
-  auth: firebase.auth.Auth;
+interface WithFirebaseClientAuth {
+  clientAuth: firebase.auth.Auth;
+}
+
+interface WithFirebaseAdminAuth {
+  adminAuth: admin.auth.Auth;
 }
 
 const db = admin.firestore();
-const auth = firebase.auth();
+const adminAuth = admin.auth();
+const clientAuth = firebase.auth();
 
-export { admin, db, auth, firebase, WithFirebaseFirestore, WithFirebaseAuth };
+export {
+  admin,
+  db,
+  adminAuth,
+  clientAuth,
+  firebase,
+  WithFirebaseFirestore,
+  WithFirebaseClientAuth,
+  WithFirebaseAdminAuth
+};
