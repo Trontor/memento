@@ -22,7 +22,8 @@
     "firebase": "^6.3.5",
     "firebase-admin": "^8.3.0",
     "firebase-functions": "^2.3.0",
-    "graphql": "^14.4.2"
+    "graphql": "^14.4.2",
+    "dotenv": "^8.0.0"
   },
   "devDependencies": {
     "@graphql-codegen/introspection": "^1.5.0",
@@ -31,7 +32,6 @@
     "@types/dotenv": "^6.1.1",
     "@types/jest": "^24.0.17",
     "apollo-server-testing": "^2.8.1",
-    "dotenv": "^8.0.0",
     "firebase-functions-test": "^0.1.6",
     "jest": "^24.8.0",
     "ts-jest": "^24.0.2",
