@@ -44,14 +44,17 @@ jobs:
   deploy-client:
     docker:
       - image: circleci/node:10
-    working_directory: ~/memento/
+    working_directory: ~/memento/client
     steps:
       - attach_workspace:
-          at: ~/memento/
+          at: ~/memento
+      - run:
+          name: "Print current directory"
+          command: cd functions && ls -l
       # Deploy React to Firebase Hosting
       - run:
           working_directory: ~/memento/client
-          name: Firebase Deploy
+          name: Deploy to Firebase Hosting
           command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
   setup-functions:
     docker:
@@ -88,8 +91,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/memento/functions
-      - run:
-          command: cd functions && ls -l
       # Deploy Firebase Functions
       - run:
           name: Deploy Firebase Functions
