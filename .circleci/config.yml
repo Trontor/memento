@@ -1,51 +1,133 @@
 version: 2
 jobs:
-  build:
+  setup-client:
     docker:
       - image: circleci/node:10
+    working_directory: ~/memento/
     steps:
-      - checkout:
-          path: ~/memento
-      # Download and cache dependencies
+      - checkout
+      - attach_workspace:
+          at: ~/memento/
+      # Restore dependencies from cache
       - restore_cache:
-          working_directory: ~/memento/functions
           keys:
-            - v1-dependencies-{{ checksum "./functions/package.json" }}
-            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-{{ checksum "client/package.json" }}
+            # Fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
       # Install all needed dependencies from package.json
       - run:
-          working_directory: ~/memento/functions
-          command: npm install
+          name: Install React Dependencies
+          command: npm i --prefix client
 
       # Save the cache including node_modules folder
       - save_cache:
           paths:
-            - ~/memento/functions/node_modules
-          key: v1-dependencies-{{ checksum "./functions/package.json" }}
-
-      - restore_cache:
-          working_directory: ~/memento/client
-          keys:
-            # Find a cache corresponding to this specific package-lock.json
-            - v1-npm-deps-{{ checksum "./client/package-lock.json" }}
-            # Fallback cache to be used
-            - v1-npm-deps-
-      ### REACT
-      - run:
-          working_directory: ~/memento/client
-          name: Install Dependencies
-          command: npm install
-      - save_cache:
-          key: v1-npm-deps-{{ checksum "package-lock.json" }}
+            - client/node_modules
+          key: v1-dependencies-{{ checksum "client/package.json" }}
+      - persist_to_workspace:
+          root: ~/memento/client
           paths:
-            - ~/memento/client/node_modules
+            - node_modules
+  build-client:
+    docker:
+      - image: circleci/node:10
+    working_directory: ~/memento/
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/memento/client
       - run:
-          working_directory: ~/memento/client
-          name: React
-          command: npm run build
+          working_directory: client
+          name: Print Client
+          command: ls -l
+      # Run React build
       - run:
-          working_directory: ~/memento/client
-          name: Firebase Deploy
+          name: React Build
+          command: npm run build --prefix client
+      - persist_to_workspace:
+          root: ~/memento/client
+          paths:
+            - build
+  deploy-client:
+    docker:
+      - image: circleci/node:10
+    working_directory: ~/memento/
+    steps:
+      - checkout
+      - attach_workspace:
+          at: client
+      - run:
+          working_directory: client
+          name: Print Client
+          command: ls -l
+      # Deploy React to Firebase Hosting
+      - run:
+          working_directory: client
+          name: Deploy to Firebase Hosting
           command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
+  setup-functions:
+    docker:
+      - image: circleci/node:10
+    working_directory: ~/memento/
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/memento/
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "functions/package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      # Install all needed dependencies from package.json
+      - run:
+          name: Install Firebase Functions Dependencies
+          command: npm i --prefix functions
+      # Save the cache including node_modules folder
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "functions/package.json" }}\
+      - persist_to_workspace:
+          root: ~/memento/functions
+          paths:
+            - node_modules
+  deploy-functions:
+    docker:
+      - image: circleci/node:10
+    working_directory: ~/memento/
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/memento/functions
+      # Deploy Firebase Functions
+      - run:
+          name: Deploy Firebase Functions
+          command: ./functions/node_modules/.bin/firebase deploy --token "$FIREBASE_FUNCTIONS_TOKEN"
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - setup-client
+      - setup-functions
+      - build-client:
+          requires:
+            - setup-client
+      - deploy-functions:
+          requires:
+            - setup-functions
+          filters:
+            branches:
+              only:
+                - master
+                - develop
+      - deploy-client:
+          requires:
+            - build-client
+          filters:
+            branches:
+              only:
+                - master
+                - develop

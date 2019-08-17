@@ -3,7 +3,7 @@ import * as admin from "firebase-admin";
 
 // firebase client SDK for convenient authentication
 import * as firebase from "firebase/app";
-import "firebase/auth";
+require("firebase/auth");
 
 import dotenv from "dotenv";
 
