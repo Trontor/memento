@@ -86,7 +86,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ~/memento/
+          at: ~/memento/functions
       # Deploy Firebase Functions
       - run:
           name: Deploy Firebase Functions
