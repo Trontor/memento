@@ -76,9 +76,9 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "functions/package.json" }}\
       - persist_to_workspace:
-          root: ~/memento
+          root: ~/memento/functions
           paths:
-            - client/node_modules
+            - node_modules
   deploy-functions:
     docker:
       - image: circleci/node:10
