@@ -45,6 +45,10 @@ jobs:
       - run:
           name: React Build
           command: npm run build --prefix client
+      - persist_to_workspace:
+          root: ~/memento/client
+          paths:
+            - build
   deploy-client:
     docker:
       - image: circleci/node:10
