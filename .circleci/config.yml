@@ -8,7 +8,7 @@ jobs:
       - checkout
       # Print out directory structure
       - run:
-          command: ls -l ~/memento
+          command: ls -l
       # Restore dependencies from cache
       - restore_cache:
           keys:
