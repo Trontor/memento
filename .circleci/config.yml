@@ -50,8 +50,9 @@ jobs:
           at: ~/memento/
       # Deploy React to Firebase Hosting
       - run:
+          working_directory: ~/memento/client
           name: Firebase Deploy
-          command: ./client/node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
+          command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
   setup-functions:
     docker:
       - image: circleci/node:10
