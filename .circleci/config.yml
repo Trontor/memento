@@ -3,7 +3,7 @@ jobs:
   setup-client:
     docker:
       - image: circleci/node:10
-    # working_directory: ~/client/
+    working_directory: ~/memento/
     steps:
       - checkout
       # Print out directory structure
@@ -12,20 +12,20 @@ jobs:
       # Restore dependencies from cache
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-{{ checksum "client/package.json" }}
             # Fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
       # Install all needed dependencies from package.json
       - run:
           name: Install React Dependencies
-          command: npm install
+          command: npm install --prefix client
 
       # Save the cache including node_modules folder
       - save_cache:
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+            - client/node_modules
+          key: v1-dependencies-{{ checksum "client/package.json" }}
   build-client:
     docker:
       - image: circleci/node:10
