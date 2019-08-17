@@ -37,6 +37,10 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/memento/client
+      - run:
+          working_directory: client
+          name: Print Client
+          command: ls -l
       # Run React build
       - run:
           name: React Build
