@@ -3,12 +3,9 @@ jobs:
   setup-client:
     docker:
       - image: circleci/node:10
-    working_directory: ~/memento
+    working_directory: ~/memento/client
     steps:
       - checkout
-      - run:
-          name: Switch to client Directory
-          command: cd client
       # Restore dependencies from cache
       - restore_cache:
           keys:
