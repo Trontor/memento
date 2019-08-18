@@ -4,7 +4,8 @@ import {
   UserLoginInput,
   User,
   Role,
-  FamilyRole
+  FamilyRole,
+  Gender
 } from "../generated/graphql";
 import { validateUserSignupInput } from "../utils/validation";
 import {
@@ -51,12 +52,17 @@ export const login = async (
   };
 };
 
+/**
+ * Fetches a user from user model and returns GQL schema-compliant `User` type.
+ * @param userId firebase user id
+ * @param ctx apollo server context containing references to models and firebase libs
+ */
 export const getUser = async (userId: string, ctx: Context): Promise<User> => {
   const userDoc = await ctx.models.user.getUser(userId);
   if (userDoc === null) {
     throw new ApolloError(USER_NOT_FOUND_ERROR_MESSAGE);
   }
-  // transform roles into [{familyId, role}]
+  // graphQl-ify roles from Object into array `[{familyId, role}]`
   const roles: Role[] = Object.entries(userDoc.roles).map(
     ([familyId, role]) => {
       return {
@@ -66,6 +72,12 @@ export const getUser = async (userId: string, ctx: Context): Promise<User> => {
     }
   );
 
+  // graphQl-ify gender property
+  let gender = null;
+  if (userDoc.gender) {
+    gender = userDoc.gender == Gender.Male ? Gender.Male : Gender.Female;
+  }
+
   return {
     id: userId,
     email: userDoc.email,
@@ -74,7 +86,7 @@ export const getUser = async (userId: string, ctx: Context): Promise<User> => {
     imageUrl: userDoc.imageUrl,
     location: userDoc.location,
     dateOfBirth: userDoc.dateOfBirth,
-    gender: userDoc.gender,
+    gender: gender,
     createdAt: userDoc.createdAt,
     lastLogin: userDoc.lastLogin,
     roles: roles
