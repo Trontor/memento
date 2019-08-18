@@ -12,7 +12,7 @@ export interface UserDocument {
   location?: string;
   dateOfBirth?: string;
   gender?: string;
-  families: { [key: string]: string };
+  roles: { [key: string]: string };
   createdAt: string;
   lastLogin?: string;
 }
@@ -57,7 +57,7 @@ export default class UserModel {
       location: data.location,
       dateOfBirth: data.dateOfBirth,
       gender: data.gender,
-      families: data.families,
+      roles: data.roles,
       createdAt: data.createdAt,
       lastLogin: data.lastLogin
     };

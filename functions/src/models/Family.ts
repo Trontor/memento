@@ -1,5 +1,6 @@
 import { WithFirebaseFirestore } from "../utils/firebase/admin";
 import { CreateFamilyInput } from "../generated/graphql";
+import { ApolloError } from "apollo-server-core";
 
 export interface FamilyDocument {
   name: string;
@@ -17,6 +18,19 @@ export default class FamilyModel {
 
   constructor({ db }: WithFirebaseFirestore) {
     this.db = db;
+  }
+
+  async getFamilyById(id: string) {
+    try {
+      const snap = await this.db
+        .collection(FamilyModel.FAMILIES_COLLECTION)
+        .doc(id)
+        .get();
+      return snap.data();
+    } catch (err) {
+      console.error(err);
+      throw new ApolloError("Firestore error");
+    }
   }
 
   batchCreateFamily(

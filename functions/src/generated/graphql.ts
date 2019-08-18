@@ -33,6 +33,11 @@ export type Family = {
   users?: Maybe<Array<User>>;
 };
 
+export enum FamilyRole {
+  Admin = "ADMIN",
+  Normal = "NORMAL"
+}
+
 export type Mutation = {
   __typename?: "Mutation";
   signup: AuthPayload;
@@ -55,6 +60,17 @@ export type MutationCreateFamilyArgs = {
 export type Query = {
   __typename?: "Query";
   me: Scalars["String"];
+  user?: Maybe<User>;
+};
+
+export type QueryUserArgs = {
+  id: Scalars["String"];
+};
+
+export type Role = {
+  __typename?: "Role";
+  familyId: Scalars["ID"];
+  role: FamilyRole;
 };
 
 export type User = {
@@ -67,6 +83,7 @@ export type User = {
   location?: Maybe<Scalars["String"]>;
   dateOfBirth?: Maybe<Scalars["String"]>;
   gender?: Maybe<Scalars["String"]>;
+  roles?: Maybe<Array<Role>>;
   families?: Maybe<Array<Family>>;
   createdAt: Scalars["String"];
   lastLogin?: Maybe<Scalars["String"]>;
@@ -158,13 +175,15 @@ export type DirectiveResolverFn<
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars["String"]>;
+  User: ResolverTypeWrapper<User>;
+  ID: ResolverTypeWrapper<Scalars["ID"]>;
+  Role: ResolverTypeWrapper<Role>;
+  FamilyRole: FamilyRole;
+  Family: ResolverTypeWrapper<Family>;
+  Int: ResolverTypeWrapper<Scalars["Int"]>;
   Mutation: ResolverTypeWrapper<{}>;
   UserSignupInput: UserSignupInput;
   AuthPayload: ResolverTypeWrapper<AuthPayload>;
-  User: ResolverTypeWrapper<User>;
-  ID: ResolverTypeWrapper<Scalars["ID"]>;
-  Family: ResolverTypeWrapper<Family>;
-  Int: ResolverTypeWrapper<Scalars["Int"]>;
   UserLoginInput: UserLoginInput;
   CreateFamilyInput: CreateFamilyInput;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
@@ -174,13 +193,15 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Query: {};
   String: Scalars["String"];
+  User: User;
+  ID: Scalars["ID"];
+  Role: Role;
+  FamilyRole: FamilyRole;
+  Family: Family;
+  Int: Scalars["Int"];
   Mutation: {};
   UserSignupInput: UserSignupInput;
   AuthPayload: AuthPayload;
-  User: User;
-  ID: Scalars["ID"];
-  Family: Family;
-  Int: Scalars["Int"];
   UserLoginInput: UserLoginInput;
   CreateFamilyInput: CreateFamilyInput;
   Boolean: Scalars["Boolean"];
@@ -245,6 +266,20 @@ export type QueryResolvers<
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
   me?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  user?: Resolver<
+    Maybe<ResolversTypes["User"]>,
+    ParentType,
+    ContextType,
+    QueryUserArgs
+  >;
+};
+
+export type RoleResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["Role"] = ResolversParentTypes["Role"]
+> = {
+  familyId?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  role?: Resolver<ResolversTypes["FamilyRole"], ParentType, ContextType>;
 };
 
 export type UserResolvers<
@@ -263,6 +298,11 @@ export type UserResolvers<
     ContextType
   >;
   gender?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  roles?: Resolver<
+    Maybe<Array<ResolversTypes["Role"]>>,
+    ParentType,
+    ContextType
+  >;
   families?: Resolver<
     Maybe<Array<ResolversTypes["Family"]>>,
     ParentType,
@@ -281,6 +321,7 @@ export type Resolvers<ContextType = any> = {
   Family?: FamilyResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Role?: RoleResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };
 
