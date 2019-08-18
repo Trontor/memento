@@ -3,6 +3,7 @@ import {
   WithFirebaseClientAuth
 } from "../utils/firebase/admin";
 import { User, UserSignupInput, UserLoginInput } from "../generated/graphql";
+import { ApolloError } from "apollo-server-express";
 
 export interface UserDocument {
   email: string;
@@ -12,7 +13,7 @@ export interface UserDocument {
   location?: string;
   dateOfBirth?: string;
   gender?: string;
-  families: { [key: string]: string };
+  roles: { [key: string]: string };
   createdAt: string;
   lastLogin?: string;
 }
@@ -57,45 +58,40 @@ export default class UserModel {
       location: data.location,
       dateOfBirth: data.dateOfBirth,
       gender: data.gender,
-      families: data.families,
+      roles: data.roles,
       createdAt: data.createdAt,
       lastLogin: data.lastLogin
     };
   }
 
   async createUser({ email, password, firstName, lastName }: UserSignupInput) {
-    try {
-      const userCredential = await this.auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
+    const userCredential = await this.auth.createUserWithEmailAndPassword(
+      email,
+      password
+    );
 
-      const user = userCredential.user;
-      let token: string;
+    const user = userCredential.user;
+    let token: string;
 
-      if (user === null) {
-        throw new Error("UserCredential is null");
-      }
-      token = await user.getIdToken();
-
-      // create new user document for registered user
-      const newUserDoc: User = {
-        id: user.uid,
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        createdAt: new Date().toISOString()
-      };
-
-      await this.db
-        .collection(UserModel.USERS_COLLECTION)
-        .doc(user.uid)
-        .set(newUserDoc);
-      return { token, user: newUserDoc };
-    } catch (err) {
-      console.error(err);
-      throw new Error(err);
+    if (user === null) {
+      throw new ApolloError("UserCredential is null");
     }
+    token = await user.getIdToken();
+
+    // create new user document for registered user
+    const newUserDoc: User = {
+      id: user.uid,
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      createdAt: new Date().toISOString()
+    };
+
+    await this.db
+      .collection(UserModel.USERS_COLLECTION)
+      .doc(user.uid)
+      .set(newUserDoc);
+    return { token, user: newUserDoc };
   }
 
   /**

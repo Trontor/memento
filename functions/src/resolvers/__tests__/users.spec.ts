@@ -42,6 +42,7 @@ describe("integration tests - user resolver", () => {
         password: "correctPassword"
       };
       const TOKEN: string = "valid token";
+
       mockUserModelInstance.loginUser.mockReturnValueOnce({
         token: TOKEN
       });
@@ -90,7 +91,6 @@ describe("integration tests - user resolver", () => {
         firstName: "Joe",
         lastName: "Blogs"
       };
-      mockUserModelInstance.doesUserExist.mockReturnValueOnce(false);
       mockUserModelInstance.createUser.mockReturnValueOnce({
         token: "some token",
         user: expect.anything()
@@ -116,8 +116,9 @@ describe("integration tests - user resolver", () => {
         firstName: "Joe",
         lastName: "Blogs"
       };
-      mockUserModelInstance.doesUserExist.mockReturnValueOnce(true);
-
+      mockUserModelInstance.createUser.mockImplementation(() => {
+        throw new UserInputError(EMAIL_IN_USE_ERROR_MESSAGE);
+      });
       const res = await mutate({
         mutation: SIGNUP,
         variables: {
@@ -126,7 +127,6 @@ describe("integration tests - user resolver", () => {
           }
         }
       });
-      expect(mockUserModelInstance.createUser).not.toBeCalled();
       expect(res.errors).toContainEqual(
         new UserInputError(EMAIL_IN_USE_ERROR_MESSAGE)
       );

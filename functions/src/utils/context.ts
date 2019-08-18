@@ -3,7 +3,7 @@ import FamilyModel from "../models/Family";
 import { ExpressContext } from "apollo-server-express/dist/ApolloServer";
 import { isEmpty } from "./validation";
 import { admin } from "./firebase/admin";
-import { AuthenticationError } from "apollo-server-core";
+import { AuthenticationError } from "apollo-server-express";
 
 export const CONTEXT_CREATION_FAILED_ERROR_MESSAGE =
   "Context creation failed: ";

@@ -1,10 +1,27 @@
-import { CreateFamilyInput, Family } from "../generated/graphql";
+import { CreateFamilyInput, Family, FamilyRole } from "../generated/graphql";
 import { Context } from "../utils/context";
 import { AuthenticationError, ApolloError } from "apollo-server-express";
 import { AUTH_ERROR_MESSAGE } from "./users";
 import { db } from "../utils/firebase/admin";
 import uuidv4 from "uuid/v4";
 import { FamilyDocument } from "../models/Family";
+
+export const getFamily = async (
+  id: string,
+  context: Context
+): Promise<Family | null> => {
+  const familyDoc = await context.models.family.getFamilyById(id);
+  if (!familyDoc) return null;
+  return {
+    id,
+    name: familyDoc.name,
+    numArtifacts: familyDoc.numArtifacts,
+    numMembers: familyDoc.numMembers,
+    createdAt: familyDoc.createdAt,
+    imageUrl: familyDoc.imageUrl,
+    description: familyDoc.description
+  };
+};
 
 // creates a new family
 export const createFamily = async (
@@ -21,7 +38,7 @@ export const createFamily = async (
 
   const batch = db.batch();
   context.models.user.batchUpdateUser(batch, context.user.uid, {
-    [`families.${familyId}`]: "admin"
+    [`roles.${familyId}`]: FamilyRole.Admin
   });
 
   const newFamilyDoc: FamilyDocument = context.models.family.batchCreateFamily(
