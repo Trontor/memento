@@ -42,8 +42,8 @@ describe("integration tests - user resolver", () => {
         password: "correctPassword"
       };
       const TOKEN: string = "valid token";
-
-      mockUserModelInstance.loginUser.mockResolvedValue({
+ 
+      mockUserModelInstance.loginUser.mockResolvedValue({ 
         token: TOKEN
       });
 
@@ -90,8 +90,8 @@ describe("integration tests - user resolver", () => {
         confirmPassword: "123456",
         firstName: "Joe",
         lastName: "Blogs"
-      };
-      mockUserModelInstance.createUser.mockResolvedValue({
+      }; 
+      mockUserModelInstance.createUser.mockResolvedValue({ 
         token: "some token",
         user: expect.anything()
       });
