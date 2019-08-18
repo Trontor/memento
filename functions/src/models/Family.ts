@@ -1,6 +1,6 @@
 import { WithFirebaseFirestore } from "../utils/firebase/admin";
 import { CreateFamilyInput } from "../generated/graphql";
-import { ApolloError } from "apollo-server-core";
+import { ApolloError } from "apollo-server-express";
 
 export interface FamilyDocument {
   name: string;
