@@ -3,48 +3,7 @@ import Slider from "react-slick"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 import "./carousel.scss"
-import styled from "styled-components"
-
-const CarouselWrapper = styled.div`
-  padding: 40px;
-
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLanscape}) {
-    width: 50vw;
-    position: absolute;
-    top: 50%;
-    transform: translate(-20px, -50%);
-  }
-`;
-
-const Description = styled.h2`
-  margin: 0 auto;
-  text-align: center;
-  width: 75%;
-  font-size: 1.5em;
-`;
-
-const CarouselSlide = styled.div`
-  display: block!important;
-  margin: auto;
-
-  img {
-    object-fit: cover;
-    width: 60vw;
-    height: 60vw;
-    border-radius: 4px;
-    margin: auto;
-
-    @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}) {
-      width: 50vw;
-      height: 50vw;
-  }
-
-    @media screen and (min-width: ${props => props.theme.breakpoints.tabletLanscape}) {
-      width: 200px;
-      height: 200px;
-  }
-}
-`;
+import { CarouselWrapper, Description, CarouselSlide } from "./CarouselStyles";
 
 export default class Carousel extends Component {
   render() {
