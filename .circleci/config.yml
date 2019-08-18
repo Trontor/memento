@@ -131,14 +131,17 @@ workflows:
       - build-client:
           requires:
             - setup-client
+      - test-functions:
+          requires:
+            - setup-functions
       - deploy-functions:
           requires:
             - setup-functions
           filters:
             branches:
               only:
-                - master
-                - develop
+                # - master
+                # - develop
       - deploy-client:
           requires:
             - build-client
