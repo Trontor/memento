@@ -9,7 +9,8 @@
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
     "gql": "graphql-codegen --config codegen.yml",
-    "test": "jest"
+    "test": "jest",
+    "test-dev": "jest --watchAll"
   },
   "engines": {
     "node": "8"
