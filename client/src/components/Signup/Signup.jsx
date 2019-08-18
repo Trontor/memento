@@ -55,6 +55,8 @@ export class Signup extends Component {
     switch (
       name //sign up form validation
     ) {
+      default:
+        break;
       case "firstName":
         formErrors.firstName =
           value.length < 1 ? "Please enter your first name" : "";
