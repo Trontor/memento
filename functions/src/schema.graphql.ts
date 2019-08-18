@@ -10,9 +10,20 @@ const typeDefs = gql`
     location: String
     dateOfBirth: String
     gender: String
+    roles: [Role!]
     families: [Family!]
     createdAt: String!
     lastLogin: String
+  }
+
+  enum FamilyRole {
+    ADMIN
+    NORMAL
+  }
+
+  type Role {
+    familyId: ID!
+    role: FamilyRole!
   }
 
   type Family {
@@ -39,6 +50,7 @@ const typeDefs = gql`
 
   type Query {
     me: String!
+    user(id: String!): User
   }
 
   input UserSignupInput {

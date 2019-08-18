@@ -3,6 +3,10 @@ import FamilyModel from "../models/Family";
 import { ExpressContext } from "apollo-server-express/dist/ApolloServer";
 import { isEmpty } from "./validation";
 import { admin } from "./firebase/admin";
+import { AuthenticationError } from "apollo-server-express";
+
+export const CONTEXT_CREATION_FAILED_ERROR_MESSAGE =
+  "Context creation failed: ";
 
 export interface Models {
   user: UserModel;
@@ -44,7 +48,12 @@ export function createContext(
       const token = extractBearerToken(req);
 
       if (token !== null) {
-        decodedToken = await adminAuth.verifyIdToken(token);
+        try {
+          decodedToken = await adminAuth.verifyIdToken(token);
+        } catch (err) {
+          console.error(err);
+          throw new AuthenticationError("Token expired");
+        }
       }
       console.log(decodedToken);
     }

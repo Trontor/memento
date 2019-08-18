@@ -17,12 +17,12 @@ jest.mock("../../models/User");
 jest.mock("../../models/Family");
 
 describe("integration tests - user resolver", () => {
-  let mockUserModelInstance: any,
-    mockFamilyModelInstance: any,
+  let mockUserModelInstance: jest.Mocked<UserModel>,
+    mockFamilyModelInstance: jest.Mocked<FamilyModel>,
     testServer: ApolloServer;
   beforeEach(() => {
-    mockUserModelInstance = new UserModel({ db, clientAuth });
-    mockFamilyModelInstance = new FamilyModel({ db });
+    mockUserModelInstance = new UserModel({ db, clientAuth }) as any;
+    mockFamilyModelInstance = new FamilyModel({ db }) as any;
 
     testServer = new ApolloServer({
       typeDefs,
@@ -42,7 +42,8 @@ describe("integration tests - user resolver", () => {
         password: "correctPassword"
       };
       const TOKEN: string = "valid token";
-      mockUserModelInstance.loginUser.mockReturnValueOnce({
+ 
+      mockUserModelInstance.loginUser.mockResolvedValue({ 
         token: TOKEN
       });
 
@@ -65,7 +66,7 @@ describe("integration tests - user resolver", () => {
         email: "mail@email.com",
         password: "correctPassword"
       };
-      mockUserModelInstance.loginUser.mockReturnValueOnce(null);
+      mockUserModelInstance.loginUser.mockResolvedValue(null);
       const res = await mutate({
         mutation: LOGIN,
         variables: {
@@ -89,9 +90,8 @@ describe("integration tests - user resolver", () => {
         confirmPassword: "123456",
         firstName: "Joe",
         lastName: "Blogs"
-      };
-      mockUserModelInstance.doesUserExist.mockReturnValueOnce(false);
-      mockUserModelInstance.createUser.mockReturnValueOnce({
+      }; 
+      mockUserModelInstance.createUser.mockResolvedValue({ 
         token: "some token",
         user: expect.anything()
       });
@@ -116,8 +116,9 @@ describe("integration tests - user resolver", () => {
         firstName: "Joe",
         lastName: "Blogs"
       };
-      mockUserModelInstance.doesUserExist.mockReturnValueOnce(true);
-
+      mockUserModelInstance.createUser.mockImplementation(() => {
+        throw new UserInputError(EMAIL_IN_USE_ERROR_MESSAGE);
+      });
       const res = await mutate({
         mutation: SIGNUP,
         variables: {
@@ -126,7 +127,6 @@ describe("integration tests - user resolver", () => {
           }
         }
       });
-      expect(mockUserModelInstance.createUser).not.toBeCalled();
       expect(res.errors).toContainEqual(
         new UserInputError(EMAIL_IN_USE_ERROR_MESSAGE)
       );

@@ -93,6 +93,18 @@ jobs:
           root: ~/memento/functions
           paths:
             - node_modules
+  test-functions:
+    docker:
+      - image: circleci/node:8
+    working_directory: ~/memento/
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/memento/functions
+      # Run Jest Tests
+      - run:
+          name: Run Jest Tests
+          command: npm run test --prefix functions
   deploy-functions:
     docker:
       - image: circleci/node:8
@@ -119,14 +131,17 @@ workflows:
       - build-client:
           requires:
             - setup-client
-      - deploy-functions:
+      - test-functions:
           requires:
             - setup-functions
-          filters:
-            branches:
-              only:
-                - master
-                - develop
+      # - deploy-functions:
+      #     requires:
+      #       - setup-functions
+      #     filters:
+      #       branches:
+      #         only:
+      #           # - master
+      #           # - develop
       - deploy-client:
           requires:
             - build-client
