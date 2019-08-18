@@ -30,10 +30,8 @@ export const signup = async (
   if (!isValid) {
     throw new UserInputError(INVALID_ARGS_ERROR_MESSAGE, errors);
   }
-
   // create new user in auth and Firestore
   const { token, user } = await ctx.models.user.createUser(input);
-
   return {
     token,
     user
