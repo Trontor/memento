@@ -30,10 +30,20 @@ const typeDefs = gql`
   }
 
   input UpdateUserInput {
+    userId: ID!
     location: String
     dateOfBirth: String
     gender: Gender
-    roles: [UpdateRoleInput!]
+    role: UpdateRoleInput
+    imageUrl: String
+  }
+
+  type UpdateUserOutput {
+    userId: ID!
+    location: String
+    dateOfBirth: String
+    gender: Gender
+    role: Role
     imageUrl: String
   }
 
@@ -74,7 +84,7 @@ const typeDefs = gql`
     description: String
   }
 
-  type AuthPayload {
+  type AuthOutput {
     token: String
     user: User
   }
@@ -85,10 +95,10 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    signup(input: UserSignupInput!): AuthPayload!
-    login(input: UserLoginInput!): AuthPayload!
+    signup(input: UserSignupInput!): AuthOutput!
+    login(input: UserLoginInput!): AuthOutput!
     createFamily(input: CreateFamilyInput!): Family
-    updateUser(input: UpdateUserInput!): User
+    updateUser(input: UpdateUserInput!): UpdateUserOutput!
   }
 `;
 

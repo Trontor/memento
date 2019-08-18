@@ -2,8 +2,14 @@ import {
   WithFirebaseFirestore,
   WithFirebaseClientAuth
 } from "../utils/firebase/admin";
-import { User, UserSignupInput, UserLoginInput } from "../generated/graphql";
+import {
+  User,
+  UserSignupInput,
+  UserLoginInput,
+  FamilyRole
+} from "../generated/graphql";
 import { ApolloError } from "apollo-server-express";
+import { UpdateableBySelf, UpdateableByOther } from "../resolvers/users";
 
 export interface UserDocument {
   email: string;
@@ -29,6 +35,28 @@ export default class UserModel {
   }: WithFirebaseFirestore & WithFirebaseClientAuth) {
     this.db = db;
     this.auth = clientAuth;
+  }
+
+  async updateUser(
+    userId: string,
+    data: Partial<UpdateableBySelf & UpdateableByOther>
+  ) {
+    try {
+      const updateData: any = {
+        ...data
+      };
+      if (data.role) {
+        const { familyId, role } = data.role;
+        updateData[`role.${familyId}`] = role;
+      }
+      return await this.db
+        .collection(UserModel.USERS_COLLECTION)
+        .doc(userId)
+        .update(updateData);
+    } catch (err) {
+      console.error(err);
+      throw new ApolloError("DB error");
+    }
   }
 
   async batchUpdateUser(
@@ -107,5 +135,22 @@ export default class UserModel {
     }
     const token: string = await userCredential.user.getIdToken();
     return { token };
+  }
+
+  /***
+   * Checks if a user has a particular role in the family.
+   */
+  hasRoleInFamily(
+    userDoc: UserDocument,
+    role: FamilyRole,
+    familyId: string
+  ): boolean {
+    if (!userDoc.roles) return false;
+    return userDoc.roles[familyId] === role;
+  }
+
+  isInFamily(userDoc: UserDocument, familyId: string): boolean {
+    if (!userDoc.roles) return false;
+    return userDoc.roles[familyId] !== undefined;
   }
 }
