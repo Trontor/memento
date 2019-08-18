@@ -17,12 +17,12 @@ jest.mock("../../models/User");
 jest.mock("../../models/Family");
 
 describe("integration tests - user resolver", () => {
-  let mockUserModelInstance: any,
-    mockFamilyModelInstance: any,
+  let mockUserModelInstance: jest.Mocked<UserModel>,
+    mockFamilyModelInstance: jest.Mocked<FamilyModel>,
     testServer: ApolloServer;
   beforeEach(() => {
-    mockUserModelInstance = new UserModel({ db, clientAuth });
-    mockFamilyModelInstance = new FamilyModel({ db });
+    mockUserModelInstance = new UserModel({ db, clientAuth }) as any;
+    mockFamilyModelInstance = new FamilyModel({ db }) as any;
 
     testServer = new ApolloServer({
       typeDefs,
@@ -43,7 +43,7 @@ describe("integration tests - user resolver", () => {
       };
       const TOKEN: string = "valid token";
 
-      mockUserModelInstance.loginUser.mockReturnValueOnce({
+      mockUserModelInstance.loginUser.mockResolvedValue({
         token: TOKEN
       });
 
@@ -66,7 +66,7 @@ describe("integration tests - user resolver", () => {
         email: "mail@email.com",
         password: "correctPassword"
       };
-      mockUserModelInstance.loginUser.mockReturnValueOnce(null);
+      mockUserModelInstance.loginUser.mockResolvedValue(null);
       const res = await mutate({
         mutation: LOGIN,
         variables: {
@@ -91,7 +91,7 @@ describe("integration tests - user resolver", () => {
         firstName: "Joe",
         lastName: "Blogs"
       };
-      mockUserModelInstance.createUser.mockReturnValueOnce({
+      mockUserModelInstance.createUser.mockResolvedValue({
         token: "some token",
         user: expect.anything()
       });
