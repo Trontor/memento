@@ -21,3 +21,19 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const UPDATE_USER = gql`
+  mutation($input: UpdateUserInput!) {
+    updateUser(input: $input) {
+      userId
+      location
+      dateOfBirth
+      gender
+      imageUrl
+      role {
+        familyId
+        role
+      }
+    }
+  }
+`;

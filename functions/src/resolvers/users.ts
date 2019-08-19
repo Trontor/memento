@@ -24,6 +24,7 @@ export const EMAIL_IN_USE_ERROR_MESSAGE: string =
 export const INVALID_ARGS_ERROR_MESSAGE: string = "Invalid input arguments";
 export const USER_NOT_FOUND_ERROR_MESSAGE: string = "User not found";
 export const AUTHORIZATION_ERROR_MESSAGE: string = "Unauthorized";
+export const NOT_LOGGED_IN_ERROR_MESSAGE: string = "Not logged in";
 
 export class AuthorizationError extends ApolloError {
   constructor(message: string, properties?: Record<string, any>) {
@@ -120,7 +121,7 @@ export const updateUser = async (
   ctx: Context
 ): Promise<UpdateUserOutput> => {
   if (!ctx.user) {
-    throw new AuthenticationError("Not logged in");
+    throw new AuthenticationError(NOT_LOGGED_IN_ERROR_MESSAGE);
   }
   const updater = ctx.user.uid; // user requesting the mutation
   const updatee = input.userId; // user being updated
@@ -135,7 +136,6 @@ export const updateUser = async (
     await ctx.models.user.updateUser(updatee, reducedInput);
     return { userId: updatee, ...reducedInput };
   } else {
-    console.log("#############################");
     // A family admin can update another user's `role` ONLY
     // 1. updater is in same family as the `userId`
     // 2. updater is a family admin in the same family
