@@ -6,10 +6,14 @@ import {
   User,
   UserSignupInput,
   UserLoginInput,
-  FamilyRole
+  FamilyRole,
+  Role,
+  Gender,
+  UpdateUserInput,
+  RoleInput
 } from "../generated/graphql";
 import { ApolloError } from "apollo-server-express";
-import { UpdateableBySelf, UpdateableByOther } from "../resolvers/users";
+import { USER_NOT_FOUND_ERROR_MESSAGE } from "../resolvers/users";
 
 export interface UserDocument {
   email: string;
@@ -39,23 +43,32 @@ export default class UserModel {
 
   async updateUser(
     userId: string,
-    data: Partial<UpdateableBySelf & UpdateableByOther>
-  ) {
+    data: Partial<UpdateUserInput>
+  ): Promise<UserDocument> {
     try {
-      const updateData: any = {
-        ...data
+      await this.db
+        .collection(UserModel.USERS_COLLECTION)
+        .doc(userId)
+        .update(data);
+      return await this.getUser(userId);
+    } catch (err) {
+      console.error(err);
+      throw new ApolloError("DB error: Could not update user");
+    }
+  }
+
+  async updateRole(userId: string, { familyId, role }: RoleInput) {
+    try {
+      const updateData = {
+        [`role.${familyId}`]: role
       };
-      if (data.role) {
-        const { familyId, role } = data.role;
-        updateData[`role.${familyId}`] = role;
-      }
       return await this.db
         .collection(UserModel.USERS_COLLECTION)
         .doc(userId)
         .update(updateData);
     } catch (err) {
       console.error(err);
-      throw new ApolloError("DB error");
+      throw new ApolloError("DB error: Could not update role");
     }
   }
 
@@ -69,14 +82,17 @@ export default class UserModel {
     return batch;
   }
 
-  async getUser(userId: string): Promise<UserDocument | null> {
+  async getUser(userId: string): Promise<UserDocument> {
     const snap = await this.db
       .collection(UserModel.USERS_COLLECTION)
       .doc(userId)
       .get();
-    if (!snap.exists) return null;
     const data = snap.data();
-    if (!data) return null;
+    if (!snap.exists || !data) {
+      console.error(USER_NOT_FOUND_ERROR_MESSAGE);
+      throw new ApolloError(USER_NOT_FOUND_ERROR_MESSAGE);
+    }
+
     console.log(data);
     return {
       email: data.email,
@@ -152,5 +168,42 @@ export default class UserModel {
   isInFamily(userDoc: UserDocument, familyId: string): boolean {
     if (!userDoc.roles) return false;
     return userDoc.roles[familyId] !== undefined;
+  }
+
+  /**
+   * Converts type `UserDocument` into GraphQL type `User`
+   * @param userDoc Document from Firebase Firestore
+   * @param userId id of user
+   */
+  convertUserDocumentToUser(userDoc: UserDocument, userId: string): User {
+    // graphQl-ify roles from Object into array `[{familyId, role}]`
+    const roles: Role[] = Object.entries(userDoc.roles).map(
+      ([familyId, role]) => {
+        return {
+          familyId,
+          role: role === FamilyRole.Admin ? FamilyRole.Admin : FamilyRole.Normal
+        };
+      }
+    );
+
+    // graphQl-ify gender property
+    let gender = null;
+    if (userDoc.gender) {
+      gender = userDoc.gender == Gender.Male ? Gender.Male : Gender.Female;
+    }
+
+    return {
+      id: userId,
+      email: userDoc.email,
+      firstName: userDoc.firstName,
+      lastName: userDoc.lastName,
+      imageUrl: userDoc.imageUrl,
+      location: userDoc.location,
+      dateOfBirth: userDoc.dateOfBirth,
+      gender: gender,
+      createdAt: userDoc.createdAt,
+      lastLogin: userDoc.lastLogin,
+      roles: roles
+    };
   }
 }

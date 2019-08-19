@@ -516,14 +516,33 @@
                 "defaultValue": null
               }
             ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "UpdateUserOutput",
-                "ofType": null
+            "type": { "kind": "OBJECT", "name": "User", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updateRole",
+            "description": null,
+            "args": [
+              {
+                "name": "input",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "UpdateRoleInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
               }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "UpdateRoleOutput",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -693,7 +712,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "userId",
+            "name": "id",
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -721,16 +740,6 @@
             "defaultValue": null
           },
           {
-            "name": "role",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "UpdateRoleInput",
-              "ofType": null
-            },
-            "defaultValue": null
-          },
-          {
             "name": "imageUrl",
             "description": null,
             "type": { "kind": "SCALAR", "name": "String", "ofType": null },
@@ -744,6 +753,41 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "UpdateRoleInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "userId",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "role",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "RoleInput",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "RoleInput",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -774,7 +818,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "UpdateUserOutput",
+        "name": "UpdateRoleOutput",
         "description": null,
         "fields": [
           {
@@ -790,42 +834,10 @@
             "deprecationReason": null
           },
           {
-            "name": "location",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "dateOfBirth",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "gender",
-            "description": null,
-            "args": [],
-            "type": { "kind": "ENUM", "name": "Gender", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "role",
             "description": null,
             "args": [],
             "type": { "kind": "OBJECT", "name": "Role", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "imageUrl",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
             "isDeprecated": false,
             "deprecationReason": null
           }

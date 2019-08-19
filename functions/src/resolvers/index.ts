@@ -1,11 +1,12 @@
-import { signup, login, getUser, updateUser } from "./users";
+import { signup, login, getUser, updateUser, updateRole } from "./users";
 import { createFamily, getFamily } from "./family";
 import {
   UserSignupInput,
   UserLoginInput,
   CreateFamilyInput,
   User,
-  UpdateUserInput
+  UpdateUserInput,
+  UpdateRoleInput
 } from "../generated/graphql";
 import { Context } from "../utils/context";
 
@@ -23,6 +24,10 @@ interface WithCreateFamilyInput {
 
 interface WithUpdateUserInput {
   input: UpdateUserInput;
+}
+
+interface WithUpdateRoleInput {
+  input: UpdateRoleInput;
 }
 
 const resolvers = {
@@ -52,7 +57,9 @@ const resolvers = {
       context: Context
     ) => createFamily(input, context),
     updateUser: (_: any, { input }: WithUpdateUserInput, context: Context) =>
-      updateUser(input, context)
+      updateUser(input, context),
+    updateRole: (_: any, { input }: WithUpdateRoleInput, context: Context) =>
+      updateRole(input, context)
   }
 };
 

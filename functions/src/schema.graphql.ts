@@ -30,24 +30,24 @@ const typeDefs = gql`
   }
 
   input UpdateUserInput {
-    userId: ID!
+    id: ID!
     location: String
     dateOfBirth: String
     gender: Gender
-    role: UpdateRoleInput
-    imageUrl: String
-  }
-
-  type UpdateUserOutput {
-    userId: ID!
-    location: String
-    dateOfBirth: String
-    gender: Gender
-    role: Role
     imageUrl: String
   }
 
   input UpdateRoleInput {
+    userId: ID!
+    role: RoleInput!
+  }
+
+  type UpdateRoleOutput {
+    userId: ID!
+    role: Role
+  }
+
+  input RoleInput {
     familyId: ID!
     role: FamilyRole!
   }
@@ -98,7 +98,8 @@ const typeDefs = gql`
     signup(input: UserSignupInput!): AuthOutput!
     login(input: UserLoginInput!): AuthOutput!
     createFamily(input: CreateFamilyInput!): Family
-    updateUser(input: UpdateUserInput!): UpdateUserOutput!
+    updateUser(input: UpdateUserInput!): User
+    updateRole(input: UpdateRoleInput!): UpdateRoleOutput
   }
 `;
 

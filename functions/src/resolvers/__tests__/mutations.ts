@@ -25,11 +25,17 @@ export const LOGIN = gql`
 export const UPDATE_USER = gql`
   mutation($input: UpdateUserInput!) {
     updateUser(input: $input) {
-      userId
+      id
       location
-      dateOfBirth
       gender
-      imageUrl
+    }
+  }
+`;
+
+export const UPDATE_ROLE = gql`
+  mutation($input: UpdateRoleInput!) {
+    updateRole(input: $input) {
+      userId
       role {
         familyId
         role
