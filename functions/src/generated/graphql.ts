@@ -9,8 +9,8 @@ export type Scalars = {
   Float: number;
 };
 
-export type AuthPayload = {
-  __typename?: "AuthPayload";
+export type AuthOutput = {
+  __typename?: "AuthOutput";
   token?: Maybe<Scalars["String"]>;
   user?: Maybe<User>;
 };
@@ -38,11 +38,18 @@ export enum FamilyRole {
   Normal = "NORMAL"
 }
 
+export enum Gender {
+  Male = "MALE",
+  Female = "FEMALE"
+}
+
 export type Mutation = {
   __typename?: "Mutation";
-  signup: AuthPayload;
-  login: AuthPayload;
+  signup: AuthOutput;
+  login: AuthOutput;
   createFamily?: Maybe<Family>;
+  updateUser?: Maybe<User>;
+  updateRole?: Maybe<UpdateRoleOutput>;
 };
 
 export type MutationSignupArgs = {
@@ -55,6 +62,14 @@ export type MutationLoginArgs = {
 
 export type MutationCreateFamilyArgs = {
   input: CreateFamilyInput;
+};
+
+export type MutationUpdateUserArgs = {
+  input: UpdateUserInput;
+};
+
+export type MutationUpdateRoleArgs = {
+  input: UpdateRoleInput;
 };
 
 export type Query = {
@@ -73,6 +88,30 @@ export type Role = {
   role: FamilyRole;
 };
 
+export type RoleInput = {
+  familyId: Scalars["ID"];
+  role: FamilyRole;
+};
+
+export type UpdateRoleInput = {
+  userId: Scalars["ID"];
+  role: RoleInput;
+};
+
+export type UpdateRoleOutput = {
+  __typename?: "UpdateRoleOutput";
+  userId: Scalars["ID"];
+  role?: Maybe<Role>;
+};
+
+export type UpdateUserInput = {
+  id: Scalars["ID"];
+  location?: Maybe<Scalars["String"]>;
+  dateOfBirth?: Maybe<Scalars["String"]>;
+  gender?: Maybe<Gender>;
+  imageUrl?: Maybe<Scalars["String"]>;
+};
+
 export type User = {
   __typename?: "User";
   id: Scalars["ID"];
@@ -82,7 +121,7 @@ export type User = {
   imageUrl?: Maybe<Scalars["String"]>;
   location?: Maybe<Scalars["String"]>;
   dateOfBirth?: Maybe<Scalars["String"]>;
-  gender?: Maybe<Scalars["String"]>;
+  gender?: Maybe<Gender>;
   roles?: Maybe<Array<Role>>;
   families?: Maybe<Array<Family>>;
   createdAt: Scalars["String"];
@@ -177,15 +216,20 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars["String"]>;
   User: ResolverTypeWrapper<User>;
   ID: ResolverTypeWrapper<Scalars["ID"]>;
+  Gender: Gender;
   Role: ResolverTypeWrapper<Role>;
   FamilyRole: FamilyRole;
   Family: ResolverTypeWrapper<Family>;
   Int: ResolverTypeWrapper<Scalars["Int"]>;
   Mutation: ResolverTypeWrapper<{}>;
   UserSignupInput: UserSignupInput;
-  AuthPayload: ResolverTypeWrapper<AuthPayload>;
+  AuthOutput: ResolverTypeWrapper<AuthOutput>;
   UserLoginInput: UserLoginInput;
   CreateFamilyInput: CreateFamilyInput;
+  UpdateUserInput: UpdateUserInput;
+  UpdateRoleInput: UpdateRoleInput;
+  RoleInput: RoleInput;
+  UpdateRoleOutput: ResolverTypeWrapper<UpdateRoleOutput>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
 };
 
@@ -195,21 +239,26 @@ export type ResolversParentTypes = {
   String: Scalars["String"];
   User: User;
   ID: Scalars["ID"];
+  Gender: Gender;
   Role: Role;
   FamilyRole: FamilyRole;
   Family: Family;
   Int: Scalars["Int"];
   Mutation: {};
   UserSignupInput: UserSignupInput;
-  AuthPayload: AuthPayload;
+  AuthOutput: AuthOutput;
   UserLoginInput: UserLoginInput;
   CreateFamilyInput: CreateFamilyInput;
+  UpdateUserInput: UpdateUserInput;
+  UpdateRoleInput: UpdateRoleInput;
+  RoleInput: RoleInput;
+  UpdateRoleOutput: UpdateRoleOutput;
   Boolean: Scalars["Boolean"];
 };
 
-export type AuthPayloadResolvers<
+export type AuthOutputResolvers<
   ContextType = any,
-  ParentType extends ResolversParentTypes["AuthPayload"] = ResolversParentTypes["AuthPayload"]
+  ParentType extends ResolversParentTypes["AuthOutput"] = ResolversParentTypes["AuthOutput"]
 > = {
   token?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   user?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>;
@@ -242,13 +291,13 @@ export type MutationResolvers<
   ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
 > = {
   signup?: Resolver<
-    ResolversTypes["AuthPayload"],
+    ResolversTypes["AuthOutput"],
     ParentType,
     ContextType,
     MutationSignupArgs
   >;
   login?: Resolver<
-    ResolversTypes["AuthPayload"],
+    ResolversTypes["AuthOutput"],
     ParentType,
     ContextType,
     MutationLoginArgs
@@ -258,6 +307,18 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     MutationCreateFamilyArgs
+  >;
+  updateUser?: Resolver<
+    Maybe<ResolversTypes["User"]>,
+    ParentType,
+    ContextType,
+    MutationUpdateUserArgs
+  >;
+  updateRole?: Resolver<
+    Maybe<ResolversTypes["UpdateRoleOutput"]>,
+    ParentType,
+    ContextType,
+    MutationUpdateRoleArgs
   >;
 };
 
@@ -282,6 +343,14 @@ export type RoleResolvers<
   role?: Resolver<ResolversTypes["FamilyRole"], ParentType, ContextType>;
 };
 
+export type UpdateRoleOutputResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["UpdateRoleOutput"] = ResolversParentTypes["UpdateRoleOutput"]
+> = {
+  userId?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  role?: Resolver<Maybe<ResolversTypes["Role"]>, ParentType, ContextType>;
+};
+
 export type UserResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
@@ -297,7 +366,7 @@ export type UserResolvers<
     ParentType,
     ContextType
   >;
-  gender?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  gender?: Resolver<Maybe<ResolversTypes["Gender"]>, ParentType, ContextType>;
   roles?: Resolver<
     Maybe<Array<ResolversTypes["Role"]>>,
     ParentType,
@@ -317,11 +386,12 @@ export type UserResolvers<
 };
 
 export type Resolvers<ContextType = any> = {
-  AuthPayload?: AuthPayloadResolvers<ContextType>;
+  AuthOutput?: AuthOutputResolvers<ContextType>;
   Family?: FamilyResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Role?: RoleResolvers<ContextType>;
+  UpdateRoleOutput?: UpdateRoleOutputResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };
 

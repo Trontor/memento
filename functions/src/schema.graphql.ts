@@ -9,11 +9,52 @@ const typeDefs = gql`
     imageUrl: String
     location: String
     dateOfBirth: String
-    gender: String
+    gender: Gender
     roles: [Role!]
     families: [Family!]
     createdAt: String!
     lastLogin: String
+  }
+
+  input UserSignupInput {
+    email: String!
+    password: String!
+    confirmPassword: String!
+    firstName: String!
+    lastName: String!
+  }
+
+  input UserLoginInput {
+    email: String!
+    password: String!
+  }
+
+  input UpdateUserInput {
+    id: ID!
+    location: String
+    dateOfBirth: String
+    gender: Gender
+    imageUrl: String
+  }
+
+  input UpdateRoleInput {
+    userId: ID!
+    role: RoleInput!
+  }
+
+  type UpdateRoleOutput {
+    userId: ID!
+    role: Role
+  }
+
+  input RoleInput {
+    familyId: ID!
+    role: FamilyRole!
+  }
+
+  enum Gender {
+    MALE
+    FEMALE
   }
 
   enum FamilyRole {
@@ -43,7 +84,7 @@ const typeDefs = gql`
     description: String
   }
 
-  type AuthPayload {
+  type AuthOutput {
     token: String
     user: User
   }
@@ -53,23 +94,12 @@ const typeDefs = gql`
     user(id: String!): User
   }
 
-  input UserSignupInput {
-    email: String!
-    password: String!
-    confirmPassword: String!
-    firstName: String!
-    lastName: String!
-  }
-
-  input UserLoginInput {
-    email: String!
-    password: String!
-  }
-
   type Mutation {
-    signup(input: UserSignupInput!): AuthPayload!
-    login(input: UserLoginInput!): AuthPayload!
+    signup(input: UserSignupInput!): AuthOutput!
+    login(input: UserLoginInput!): AuthOutput!
     createFamily(input: CreateFamilyInput!): Family
+    updateUser(input: UpdateUserInput!): User
+    updateRole(input: UpdateRoleInput!): UpdateRoleOutput
   }
 `;
 
