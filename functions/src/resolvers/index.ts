@@ -40,7 +40,6 @@ const resolvers = {
     families: ({ roles }: User, _: any, context: Context) => {
       if (!roles) return null;
       const promises = roles.map(({ familyId }) => {
-        console.log("fetching " + familyId);
         return getFamily(familyId, context);
       });
       return Promise.all(promises);

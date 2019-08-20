@@ -27,6 +27,8 @@ export const AUTHORIZATION_ERROR_MESSAGE: string = "Unauthorized";
 export const NOT_LOGGED_IN_ERROR_MESSAGE: string = "Not logged in";
 export const MUST_BE_FAMILY_ADMIN_ERROR_MESSAGE: string =
   "Must be a family admin";
+export const CANNOT_CHANGE_OWN_ROLE_ERROR_MESSAGE: string =
+  "Cannot change own role";
 
 export class AuthorizationError extends ApolloError {
   constructor(message: string, properties?: Record<string, any>) {
@@ -125,6 +127,32 @@ export const updateUser = async (
   }
 };
 
+const validatePermissionToUpdateRole = async (
+  updaterId: string,
+  updateeId: string,
+  familyId: string,
+  ctx: Context
+) => {
+  if (updaterId === updateeId) {
+    throw new AuthorizationError(CANNOT_CHANGE_OWN_ROLE_ERROR_MESSAGE);
+  }
+
+  // check updater is an admin in input.role.familyId
+  const updaterDoc = await ctx.models.user.getUser(updaterId);
+  if (
+    !updaterDoc ||
+    !ctx.models.user.hasRoleInFamily(updaterDoc, FamilyRole.Admin, familyId)
+  ) {
+    throw new AuthorizationError(MUST_BE_FAMILY_ADMIN_ERROR_MESSAGE);
+  }
+
+  // check user is in the same family
+  const updateeDoc = await ctx.models.user.getUser(updateeId);
+  if (!updateeDoc || !ctx.models.user.isInFamily(updateeDoc, familyId)) {
+    throw new AuthorizationError("Updatee not in same family as updater");
+  }
+};
+
 /**
  * Updates the role of a user in a particular family.
  * @param input Update role input
@@ -137,35 +165,21 @@ export const updateRole = async (
   if (!ctx.user) {
     throw new AuthenticationError(NOT_LOGGED_IN_ERROR_MESSAGE);
   }
-  const updater = ctx.user.uid; // user requesting the mutation
-  const updatee = userId; // user being updated
-
-  // A family admin can update another user's `role` ONLY
-  // 1. updater is in same family as the `userId`
-  // 2. updater is a family admin in the same family
+  // user can only update role
   if (!role) {
     throw new UserInputError(
       "No provided fields are updateable on another user."
     );
   }
 
-  // check updater is an admin in input.role.familyId
-  const updaterDoc = await ctx.models.user.getUser(updater);
-  if (
-    !updaterDoc ||
-    !ctx.models.user.hasRoleInFamily(
-      updaterDoc,
-      FamilyRole.Admin,
-      role.familyId
-    )
-  ) {
-    throw new AuthorizationError(MUST_BE_FAMILY_ADMIN_ERROR_MESSAGE);
-  }
+  const updater = ctx.user.uid; // user requesting the mutation
+  const updatee = userId; // user being updated
 
-  // check user is in the same family
-  const updateeDoc = await ctx.models.user.getUser(updatee);
-  if (!updateeDoc || !ctx.models.user.isInFamily(updateeDoc, role.familyId)) {
-    throw new AuthorizationError("Updatee not in same family as updater");
+  try {
+    await validatePermissionToUpdateRole(updater, updatee, role.familyId, ctx);
+  } catch (err) {
+    console.log(err);
+    throw err;
   }
   await ctx.models.user.updateRole(updatee, role);
   return { userId, role };

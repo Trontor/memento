@@ -320,7 +320,7 @@ describe("updateRole resolver", () => {
     const UPDATER = {
       USER_ID: "UzxasdaKJHKJGDssNHK123JLKss3",
       FAMILY_ID: UPDATEE.FAMILY_ID,
-      ROLE: FamilyRole.Normal
+      ROLE: FamilyRole.Normal // here
     };
 
     expect(UPDATEE.USER_ID).not.toStrictEqual(UPDATER.USER_ID);
