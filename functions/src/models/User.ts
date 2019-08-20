@@ -60,7 +60,7 @@ export default class UserModel {
   async updateRole(userId: string, { familyId, role }: RoleInput) {
     try {
       const updateData = {
-        [`role.${familyId}`]: role
+        [`roles.${familyId}`]: role
       };
       return await this.db
         .collection(UserModel.USERS_COLLECTION)
