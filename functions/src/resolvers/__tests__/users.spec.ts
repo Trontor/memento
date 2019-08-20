@@ -18,7 +18,12 @@ import {
 } from "../users";
 import { createContext } from "../../utils/context";
 import { LOGIN, SIGNUP, UPDATE_USER, UPDATE_ROLE } from "./mutations";
-import { Gender, UpdateRoleInput, FamilyRole } from "../../generated/graphql";
+import {
+  Gender,
+  UpdateRoleInput,
+  FamilyRole,
+  UpdateRoleOutput
+} from "../../generated/graphql";
 
 jest.mock("../../models/User");
 jest.mock("../../models/Family");
@@ -371,7 +376,6 @@ describe("updateRole resolver", () => {
     expect(res.errors).toContainEqual(
       new AuthorizationError(MUST_BE_FAMILY_ADMIN_ERROR_MESSAGE)
     );
-    console.log(res);
   });
 
   it("should successfully update another user if updater is family admin", async () => {
@@ -420,6 +424,7 @@ describe("updateRole resolver", () => {
     mockUserModelInstance.getUser
       .mockResolvedValueOnce(updaterDoc)
       .mockResolvedValueOnce(updateeDoc);
+    mockUserModelInstance.hasRoleInFamily.mockReturnValue(true);
     mockUserModelInstance.isInFamily.mockReturnValue(true);
 
     const testServer = new ApolloServer({
@@ -453,9 +458,19 @@ describe("updateRole resolver", () => {
       }
     });
 
-    expect(res.errors).toContainEqual(
-      new AuthorizationError(MUST_BE_FAMILY_ADMIN_ERROR_MESSAGE)
-    );
-    console.log(res);
+    const expectedOutput: UpdateRoleOutput = {
+      userId: UPDATEE.USER_ID,
+      role: {
+        familyId: UPDATEE.FAMILY_ID,
+        role: UPDATEE.NEW_ROLE
+      }
+    };
+
+    expect(res.errors).toBeUndefined();
+    expect(res.data).toMatchObject({
+      updateRole: {
+        ...expectedOutput
+      }
+    });
   });
 });
