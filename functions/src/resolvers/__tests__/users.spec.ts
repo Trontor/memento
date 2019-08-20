@@ -7,16 +7,18 @@ import { createTestClient } from "apollo-server-testing";
 import typeDefs from "../../schema.graphql";
 import resolvers from "..";
 import { db, clientAuth, adminAuth } from "../../utils/firebase/admin";
-import UserModel from "../../models/User";
+import UserModel, { UserDocument } from "../../models/User";
 import FamilyModel from "../../models/Family";
 import {
   AUTH_ERROR_MESSAGE,
   EMAIL_IN_USE_ERROR_MESSAGE,
-  NOT_LOGGED_IN_ERROR_MESSAGE
+  NOT_LOGGED_IN_ERROR_MESSAGE,
+  AuthorizationError,
+  MUST_BE_FAMILY_ADMIN_ERROR_MESSAGE
 } from "../users";
 import { createContext } from "../../utils/context";
-import { LOGIN, SIGNUP, UPDATE_USER } from "./mutations";
-import { Gender } from "../../generated/graphql";
+import { LOGIN, SIGNUP, UPDATE_USER, UPDATE_ROLE } from "./mutations";
+import { Gender, UpdateRoleInput, FamilyRole } from "../../generated/graphql";
 
 jest.mock("../../models/User");
 jest.mock("../../models/Family");
@@ -193,17 +195,16 @@ describe("updateUser resolver", () => {
         }
       }
     });
-    console.log(res);
     expect(res.errors).toContainEqual(
       new AuthenticationError(NOT_LOGGED_IN_ERROR_MESSAGE)
     );
-    // expect(res.data).toBeNull();
   });
 
   it("should successfully return updated data if authenticated", async () => {
     const UPDATER_ID = "WZNq3rP4AYUXBdYnQqozyuaUXPf2";
     const LOCATION = "Melbourne, AU";
     const GENDER = Gender.Male;
+    const DUMMY_STRING = "dummy";
 
     const testServer = new ApolloServer({
       typeDefs,
@@ -237,10 +238,10 @@ describe("updateUser resolver", () => {
     mockUserModelInstance.updateUser.mockResolvedValue(expect.anything());
     mockUserModelInstance.convertUserDocumentToUser.mockReturnValue({
       id: UPDATER_ID,
-      email: "dummy",
-      firstName: "dummy",
-      lastName: "dummy",
-      createdAt: "dummy",
+      email: DUMMY_STRING,
+      firstName: DUMMY_STRING,
+      lastName: DUMMY_STRING,
+      createdAt: DUMMY_STRING,
       location: LOCATION,
       gender: GENDER
     });
@@ -256,5 +257,205 @@ describe("updateUser resolver", () => {
         gender: GENDER
       }
     });
+  });
+});
+
+describe("updateRole resolver", () => {
+  let mockUserModelInstance: jest.Mocked<UserModel>;
+  let mockFamilyModelInstance: jest.Mocked<FamilyModel>;
+  beforeEach(() => {
+    mockUserModelInstance = new UserModel({
+      db,
+      clientAuth
+    }) as jest.Mocked<UserModel>;
+
+    mockFamilyModelInstance = new FamilyModel({ db }) as jest.Mocked<
+      FamilyModel
+    >;
+  });
+
+  it("should throw AuthenticationError if updater is not authenticated", async () => {
+    const testServer = new ApolloServer({
+      typeDefs,
+      resolvers,
+      context: createContext(
+        { user: mockUserModelInstance, family: mockFamilyModelInstance },
+        adminAuth,
+        db
+      )
+    });
+    const { mutate } = createTestClient(testServer);
+    const input: UpdateRoleInput = {
+      userId: "WZNq3rP4AYUXBdYnQqozyuaUXPf2",
+      role: {
+        familyId: "aasbd123-asdnad-123132-asdas",
+        role: FamilyRole.Admin
+      }
+    };
+
+    const res = await mutate({
+      mutation: UPDATE_ROLE,
+      variables: {
+        input
+      }
+    });
+    expect(res.errors).toContainEqual(
+      new AuthenticationError(NOT_LOGGED_IN_ERROR_MESSAGE)
+    );
+  });
+
+  it("should throw AuthorizationError if not admin of the updatee's family", async () => {
+    const UPDATEE = {
+      USER_ID: "WZNq3rP4AYUXBdYnQqozyuaUXPf2",
+      FAMILY_ID: "aasbd123-asdnad-123132-asdas",
+      ROLE: FamilyRole.Normal
+    };
+
+    // Updater is NOT an admin in the same family group as updatee
+    const UPDATER = {
+      USER_ID: "UzxasdaKJHKJGDssNHK123JLKss3",
+      FAMILY_ID: UPDATEE.FAMILY_ID,
+      ROLE: FamilyRole.Normal
+    };
+
+    expect(UPDATEE.USER_ID).not.toStrictEqual(UPDATER.USER_ID);
+    expect(UPDATEE.FAMILY_ID).toStrictEqual(UPDATER.FAMILY_ID);
+
+    const DUMMY_STRING = "dummy";
+
+    // updater's user document containing family and role information
+    const updaterDoc: UserDocument = {
+      email: DUMMY_STRING,
+      firstName: DUMMY_STRING,
+      lastName: DUMMY_STRING,
+      createdAt: DUMMY_STRING,
+      roles: {
+        familyId: UPDATER.FAMILY_ID,
+        role: UPDATER.ROLE
+      }
+    };
+
+    const testServer = new ApolloServer({
+      typeDefs,
+      resolvers,
+      context: {
+        models: {
+          user: mockUserModelInstance,
+          family: mockFamilyModelInstance
+        },
+        adminAuth,
+        db,
+        user: {
+          uid: UPDATER.USER_ID
+        }
+      }
+    });
+    const { mutate } = createTestClient(testServer);
+    const input: UpdateRoleInput = {
+      userId: UPDATEE.USER_ID,
+      role: {
+        familyId: UPDATEE.FAMILY_ID,
+        role: UPDATEE.ROLE
+      }
+    };
+
+    mockUserModelInstance.getUser.mockResolvedValue(updaterDoc);
+
+    const res = await mutate({
+      mutation: UPDATE_ROLE,
+      variables: {
+        input
+      }
+    });
+
+    expect(res.errors).toContainEqual(
+      new AuthorizationError(MUST_BE_FAMILY_ADMIN_ERROR_MESSAGE)
+    );
+    console.log(res);
+  });
+
+  it("should successfully update another user if updater is family admin", async () => {
+    const UPDATEE = {
+      USER_ID: "WZNq3rP4AYUXBdYnQqozyuaUXPf2",
+      FAMILY_ID: "aasbd123-asdnad-123132-asdas",
+      ROLE: FamilyRole.Normal,
+      NEW_ROLE: FamilyRole.Admin
+    };
+
+    // Updater is NOT an admin in the same family group as updatee
+    const UPDATER = {
+      USER_ID: "UzxasdaKJHKJGDssNHK123JLKss3",
+      FAMILY_ID: UPDATEE.FAMILY_ID,
+      ROLE: FamilyRole.Admin
+    };
+
+    expect(UPDATEE.USER_ID).not.toStrictEqual(UPDATER.USER_ID);
+    expect(UPDATEE.FAMILY_ID).toStrictEqual(UPDATER.FAMILY_ID);
+
+    const DUMMY_STRING = "dummy";
+
+    // updater's user document containing family and role information
+    const updaterDoc: UserDocument = {
+      email: DUMMY_STRING,
+      firstName: DUMMY_STRING,
+      lastName: DUMMY_STRING,
+      createdAt: DUMMY_STRING,
+      roles: {
+        familyId: UPDATER.FAMILY_ID,
+        role: UPDATER.ROLE
+      }
+    };
+
+    // updatee's user document indicates same family as updater
+    const updateeDoc: UserDocument = {
+      email: DUMMY_STRING,
+      firstName: DUMMY_STRING,
+      lastName: DUMMY_STRING,
+      createdAt: DUMMY_STRING,
+      roles: {
+        familyId: UPDATEE.FAMILY_ID,
+        role: UPDATEE.ROLE
+      }
+    };
+    mockUserModelInstance.getUser
+      .mockResolvedValueOnce(updaterDoc)
+      .mockResolvedValueOnce(updateeDoc);
+    mockUserModelInstance.isInFamily.mockReturnValue(true);
+
+    const testServer = new ApolloServer({
+      typeDefs,
+      resolvers,
+      context: {
+        models: {
+          user: mockUserModelInstance,
+          family: mockFamilyModelInstance
+        },
+        adminAuth,
+        db,
+        user: {
+          uid: UPDATER.USER_ID
+        }
+      }
+    });
+    const { mutate } = createTestClient(testServer);
+    const input: UpdateRoleInput = {
+      userId: UPDATEE.USER_ID,
+      role: {
+        familyId: UPDATEE.FAMILY_ID,
+        role: UPDATEE.NEW_ROLE
+      }
+    };
+
+    const res = await mutate({
+      mutation: UPDATE_ROLE,
+      variables: {
+        input
+      }
+    });
+
+    expect(res.errors).toContainEqual(
+      new AuthorizationError(MUST_BE_FAMILY_ADMIN_ERROR_MESSAGE)
+    );
+    console.log(res);
   });
 });

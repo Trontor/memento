@@ -25,6 +25,8 @@ export const INVALID_ARGS_ERROR_MESSAGE: string = "Invalid input arguments";
 export const USER_NOT_FOUND_ERROR_MESSAGE: string = "User not found";
 export const AUTHORIZATION_ERROR_MESSAGE: string = "Unauthorized";
 export const NOT_LOGGED_IN_ERROR_MESSAGE: string = "Not logged in";
+export const MUST_BE_FAMILY_ADMIN_ERROR_MESSAGE: string =
+  "Must be a family admin";
 
 export class AuthorizationError extends ApolloError {
   constructor(message: string, properties?: Record<string, any>) {
@@ -157,7 +159,7 @@ export const updateRole = async (
       role.familyId
     )
   ) {
-    throw new AuthorizationError("Updater not an admin");
+    throw new AuthorizationError(MUST_BE_FAMILY_ADMIN_ERROR_MESSAGE);
   }
 
   // check user is in the same family
