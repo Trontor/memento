@@ -4,7 +4,11 @@
   "description": "Team memento's IT project 2019",
   "main": "server.ts",
   "scripts": {
-    "server": "npm run build --prefix client && nodemon --exec ts-node server.ts",
+    "update": "npm i && npm i --prefix client",
+    "build": "npm run build --prefix client",
+    "dev": "concurrently \"npm run client\" \"npm run server\"",
+    "client": "npm start --prefix client",
+    "server": "nodemon --exec ts-node server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,6 +30,7 @@
   },
   "devDependencies": {
     "@types/node": "^12.7.2",
+    "concurrently": "^4.1.2",
     "nodemon": "^1.19.1",
     "ts-node": "^8.3.0",
     "tslint": "^5.19.0",
