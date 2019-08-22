@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import "./Signup.css";
+import { Buttons } from "../../ui/Buttons";
+import { FormInput } from "ui/Forms";
+import {
+  SignupLayout,
+  Intro,
+  TitleWrapper,
+  SignupWrapper,
+  NameWrapper,
+  ErrorMsg
+} from "./SignupStyles";
 
 const emailRegex = RegExp(
   //valid email regex
@@ -106,102 +115,87 @@ export class Signup extends Component {
   render() {
     const { formErrors } = this.state;
     return (
-      <div>
-        <div>
-          <button className="login">Log In</button>
-        </div>
+      <SignupLayout>
+        <Intro>
+          <Buttons>Insert Button here</Buttons> {/*login button*/}
+        </Intro>
+        <TitleWrapper>
+          <h1>Sign up today!</h1> {/*title*/}
+        </TitleWrapper>
         <form onSubmit={this.handleSubmit}>
-          <div className="form">
-            <div className="title">
-              <h1>Sign up today!</h1>
-            </div>
-            <div className="name">
-              <div className="first">
-                <label>First Name </label>
-                <input
-                  className={
-                    formErrors.firstName.length > 0 ? "errorInput" : null
-                  }
-                  type="text"
-                  name="firstName"
-                  maxLength="40"
-                  value={this.state.firstName}
-                  onChange={this.handleChange}
-                />
-                {formErrors.firstName.length > 0 && (
-                  <span className="error">{formErrors.firstName}</span>
-                )}
-              </div>
-              <div className="last">
-                <label>Last Name </label>
-                <input
-                  className={
-                    formErrors.firstName.length > 0 ? "errorInput" : null
-                  }
-                  type="text"
-                  name="lastName"
-                  maxLength="40"
-                  value={this.state.lastName}
-                  onChange={this.handleChange}
-                />
-                {formErrors.lastName.length > 0 && (
-                  <span className="error">{formErrors.lastName}</span>
-                )}
-              </div>
-            </div>
-            <div>
-              <label>Email Address </label>
-              <input
-                className={formErrors.email.length > 0 ? "errorInput" : null}
-                type="email"
-                name="email"
-                value={this.state.email}
+          <SignupWrapper>
+            <NameWrapper>
+              {" "}
+              {/*first name and last name*/}
+              <FormInput
+                attributes="firstName"
+                valid={formErrors.firstName.length > 0}
+                placeholder="First Name"
+                type="text"
+                name="firstName"
+                value={this.state.firstName}
                 onChange={this.handleChange}
               />
-              {formErrors.email.length > 0 && (
-                <span className="error">{formErrors.email}</span>
-              )}
-            </div>
-            <div>
-              <input
-                className={formErrors.password.length > 0 ? "errorInput" : null}
-                type="password"
-                placeholder="Password"
-                name="password"
-                value={this.state.password}
+              <FormInput
+                attributes="lastName"
+                valid={formErrors.lastName.length > 0}
+                placeholder="Last Name"
+                type="text"
+                name="lastName"
+                value={this.state.lastName}
                 onChange={this.handleChange}
               />
-              {formErrors.password.length > 0 && (
-                <span className="error">{formErrors.password}</span>
+            </NameWrapper>
+            <NameWrapper>
+              {" "}
+              {/*error message for name*/}
+              {formErrors.firstName.length > 0 && (
+                <ErrorMsg>{formErrors.firstName}</ErrorMsg>
               )}
-            </div>
-            <div>
-              <input
-                className={
-                  formErrors.confirmPassword.length > 0 ? "errorInput" : null
-                }
-                type="password"
-                placeholder="Confirm Password"
-                name="confirmPassword"
-                value={this.state.confirmPassword}
-                onChange={this.handleChange}
-              />
-              {formErrors.confirmPassword.length > 0 && (
-                <span className="error">{formErrors.confirmPassword}</span>
+              {formErrors.lastName.length > 0 && (
+                <ErrorMsg attributes="lastName">{formErrors.lastName}</ErrorMsg>
               )}
-            </div>
-            <div>
-              <button type="submit" className="signup">
-                Sign Up
-              </button>
-            </div>
-          </div>
+            </NameWrapper>
+            <FormInput /*email, password and confirm password */
+              valid={formErrors.email.length > 0}
+              placeholder="Email"
+              type="text"
+              name="email"
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+            {formErrors.email.length > 0 && (
+              <ErrorMsg>{formErrors.email}</ErrorMsg>
+            )}
+            <FormInput
+              valid={formErrors.password.length > 0}
+              placeholder="Password"
+              type="password"
+              name="password"
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
+            {formErrors.password.length > 0 && (
+              <ErrorMsg>{formErrors.password}</ErrorMsg>
+            )}
+            <FormInput
+              valid={formErrors.confirmPassword.length > 0}
+              placeholder="Confirm Password"
+              type="password"
+              name="confirmPassword"
+              value={this.state.confirmPpassword}
+              onChange={this.handleChange}
+            />
+            {formErrors.confirmPassword.length > 0 && (
+              <ErrorMsg>{formErrors.confirmPassword}</ErrorMsg>
+            )}
+            <Buttons type="submit">Insert Button here</Buttons>{" "}
+            {/*  submit button */}
+          </SignupWrapper>
         </form>
-      </div>
+      </SignupLayout>
     );
   }
 }
 
 export default Signup;
-
-
