@@ -146,4 +146,4 @@ workflows:
       - test-backend 
       - heroku/deploy-via-git
           requires:
-                - setup-client
+            - build-client
