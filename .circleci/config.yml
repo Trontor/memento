@@ -95,7 +95,7 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "functions/package.json" }}
+            - v1-dependencies-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
       # Install all needed dependencies from package.json
@@ -106,7 +106,7 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "functions/package.json" }}\
+          key: v1-dependencies-{{ checksum "package.json" }}\
       - persist_to_workspace:
           root: ~/memento/
           paths:
@@ -122,23 +122,7 @@ jobs:
       # Run Jest Tests
       - run:
           name: Run Jest Tests
-          command: npm run test --prefix functions
-  deploy-functions:
-    docker:
-      - image: circleci/node:8
-    working_directory: ~/memento/
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ~/memento/functions
-      # Install Firebase Tools Globally
-      - run:
-          name: Install Firebase Tools
-          command: sudo npm i -g firebase-tools
-      # Deploy Firebase Functions
-      - run:
-          name: Deploy Firebase Functions
-          command: firebase deploy --token "$FIREBASE_FUNCTIONS_TOKEN" --debug
+          command: npm run test
 
 workflows:
   version: 2
