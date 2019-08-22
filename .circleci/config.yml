@@ -78,6 +78,12 @@ jobs:
   #         working_directory: client
   #         name: Deploy to Firebase Hosting
   #         command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
+  deploy:
+    executor: heroku/default # Uses the basic buildpack-deps image, which has the prerequisites for installing heroku's CLI.
+    steps:
+      - checkout
+      - heroku/install # Runs the heroku install command, if necessary.
+      - heroku/deploy-via-git: # Deploys branch to Heroku via git push. 
   setup-backend:
     docker:
       - image: circleci/node:10
@@ -144,6 +150,6 @@ workflows:
           requires:
             - setup-client
       - test-backend 
-      - heroku/deploy-via-git
+      - deploy
           requires:
             - build-client
