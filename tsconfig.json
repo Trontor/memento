@@ -1,18 +1,15 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "esModuleInterop": true,
-    "target": "es6",
-    "noImplicitAny": true,
-    "moduleResolution": "node",
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "outDir": "lib",
     "sourceMap": true,
-    "outDir": "dist",
-    "baseUrl": ".",
-    "resolveJsonModule": true,
-    "paths": {
-      "*": ["node_modules/*"]
-    }
+    "strict": true,
+    "target": "es2017",
+    "esModuleInterop": true,
+    "lib": ["dom", "esnext.asynciterable"]
   },
-  "include": ["*.ts"],
-  "exclude": ["node_modules", ".vscode"]
+  "compileOnSave": true,
+  "exclude": ["node_modules", "functions"]
 }

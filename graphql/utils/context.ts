@@ -55,7 +55,7 @@ export function createContext(
           throw new AuthenticationError("Token expired");
         }
       }
-      console.log(decodedToken);
+      if (decodedToken) console.log("Request made with token: " + decodedToken);
     }
 
     // inject dependencies for ease of testing

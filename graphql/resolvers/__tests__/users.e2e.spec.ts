@@ -1,5 +1,5 @@
-import functions from "firebase-functions-test";
-import path from "path";
+// import functions from "firebase-functions-test";
+// import path from "path";
 import dotenv from "dotenv";
 import { ApolloServer, UserInputError } from "apollo-server-express";
 import { createTestClient } from "apollo-server-testing";
@@ -14,13 +14,13 @@ import FamilyModel from "../../models/Family";
 
 dotenv.config();
 
-functions(
-  {
-    projectId: process.env.projectId,
-    databaseURL: process.env.databaseURL
-  },
-  path.resolve("./service-account.json")
-);
+// functions(
+//   {
+//     projectId: process.env.projectId,
+//     databaseURL: process.env.databaseURL
+//   },
+//   path.resolve("./service-account.json")
+// );
 
 describe("e2e tests - users", () => {
   let testServer: ApolloServer;

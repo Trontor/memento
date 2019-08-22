@@ -1,13 +1,7 @@
-import * as functions from "firebase-functions";
-import express, { Express } from "express";
-
 import { ApolloServer } from "apollo-server-express";
-import resolvers from "./resolvers";
 import typeDefs from "./schema.graphql";
-
-// dependencies
+import resolvers from "./resolvers";
 import { db, clientAuth, adminAuth } from "./utils/firebase/admin";
-
 import {
   createContext,
   CONTEXT_CREATION_FAILED_ERROR_MESSAGE
@@ -24,10 +18,8 @@ const context = createContext(
   db
 );
 
-const app: Express = express();
-
 // setup graphql apollo server
-const server = new ApolloServer({
+export const server = new ApolloServer({
   typeDefs,
   resolvers,
   context,
@@ -39,9 +31,3 @@ const server = new ApolloServer({
     return err;
   }
 });
-server.applyMiddleware({
-  app,
-  path: "/" /* usually defaults to `/graphql` endpoint */
-});
-
-export const api = functions.region("asia-east2").https.onRequest(app);
