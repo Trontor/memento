@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 orbs:
   heroku: circleci/heroku@0.0.8
 jobs:
@@ -134,6 +134,8 @@ workflows:
           requires:
             - setup-client
       - test-backend
+          requires:
+            - setup-backend
       - heroku/deploy-via-git:
           requires:
             - build-client
