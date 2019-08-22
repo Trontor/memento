@@ -51,15 +51,15 @@ jobs:
           root: ~/memento/client
           paths:
             - build
-  deploy:
-    docker:
-      - image: buildpack-deps:trusty
-    steps:
-      - checkout
-      - run:
-          name: Deploy Master to Heroku
-          command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+  # deploy:
+  #   docker:
+  #     - image: buildpack-deps:trusty
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Deploy Master to Heroku
+  #         command: |
+  #           git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
 
   # deploy-client:
   #   docker:
@@ -83,7 +83,7 @@ jobs:
     steps:
       - checkout
       - heroku/install # Runs the heroku install command, if necessary.
-      - heroku/deploy-via-git: # Deploys branch to Heroku via git push. 
+      - heroku/deploy-via-git: # Deploys branch to Heroku via git push.
   setup-backend:
     docker:
       - image: circleci/node:10
@@ -149,7 +149,7 @@ workflows:
       - build-client:
           requires:
             - setup-client
-      - test-backend 
+      - test-backend
       - deploy:
           requires:
             - build-client
