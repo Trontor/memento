@@ -150,6 +150,6 @@ workflows:
           requires:
             - setup-client
       - test-backend 
-      - deploy
+      - deploy:
           requires:
             - build-client
