@@ -4,6 +4,7 @@
   "description": "Team memento's IT project 2019",
   "main": "lib/server.js",
   "scripts": {
+    "start": "node lib/server.js",
     "lint": "tslint --project tsconfig.json",
     "gql": "cd graphql && graphql-codegen --config codegen.yml",
     "update": "npm i && npm i --prefix client",

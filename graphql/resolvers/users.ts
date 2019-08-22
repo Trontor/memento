@@ -100,7 +100,7 @@ export const updateUser = async (
   ctx: Context
 ): Promise<User> => {
   if (!ctx.user) {
-    console.log(NOT_LOGGED_IN_ERROR_MESSAGE);
+    // console.log(NOT_LOGGED_IN_ERROR_MESSAGE);
     throw new AuthenticationError(NOT_LOGGED_IN_ERROR_MESSAGE);
   }
 
@@ -178,7 +178,7 @@ export const updateRole = async (
   try {
     await validatePermissionToUpdateRole(updater, updatee, role.familyId, ctx);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     throw err;
   }
   await ctx.models.user.updateRole(updatee, role);

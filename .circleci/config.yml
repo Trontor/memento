@@ -1,4 +1,6 @@
 version: 2
+orbs:
+  heroku: circleci/heroku@1.0.0
 jobs:
   setup-client:
     docker:
@@ -49,24 +51,34 @@ jobs:
           root: ~/memento/client
           paths:
             - build
-  deploy-client:
+  deploy:
     docker:
-      - image: circleci/node:10
-    working_directory: ~/memento/
+      - image: buildpack-deps:trusty
     steps:
       - checkout
-      - attach_workspace:
-          at: client
       - run:
-          working_directory: client
-          name: Print Client
-          command: ls -l
-      # Deploy React to Firebase Hosting
-      - run:
-          working_directory: client
-          name: Deploy to Firebase Hosting
-          command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
-  setup-functions:
+          name: Deploy Master to Heroku
+          command: |
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+
+  # deploy-client:
+  #   docker:
+  #     - image: circleci/node:10
+  #   working_directory: ~/memento/
+  #   steps:
+  #     - checkout
+  #     - attach_workspace:
+  #         at: client
+  #     - run:
+  #         working_directory: client
+  #         name: Print Client
+  #         command: ls -l
+  #     # Deploy React to Firebase Hosting
+  #     - run:
+  #         working_directory: client
+  #         name: Deploy to Firebase Hosting
+  #         command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
+  setup-backend:
     docker:
       - image: circleci/node:10
     working_directory: ~/memento/
@@ -82,25 +94,25 @@ jobs:
             - v1-dependencies-
       # Install all needed dependencies from package.json
       - run:
-          name: Install Firebase Functions Dependencies
-          command: npm i --prefix functions
+          name: Install Node JS + Express Dependencies
+          command: npm i
       # Save the cache including node_modules folder
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "functions/package.json" }}\
       - persist_to_workspace:
-          root: ~/memento/functions
+          root: ~/memento/
           paths:
             - node_modules
-  test-functions:
+  test-backend:
     docker:
       - image: circleci/node:8
     working_directory: ~/memento/
     steps:
       - checkout
       - attach_workspace:
-          at: ~/memento/functions
+          at: ~/memento/
       # Run Jest Tests
       - run:
           name: Run Jest Tests
@@ -127,26 +139,11 @@ workflows:
   build_and_deploy:
     jobs:
       - setup-client
-      - setup-functions
+      - setup-backend
       - build-client:
           requires:
             - setup-client
-      - test-functions:
+      - test-backend 
+      - heroku/deploy-via-git
           requires:
-            - setup-functions
-      # - deploy-functions:
-      #     requires:
-      #       - setup-functions
-      #     filters:
-      #       branches:
-      #         only:
-      #           # - master
-      #           # - develop
-      - deploy-client:
-          requires:
-            - build-client
-          filters:
-            branches:
-              only:
-                - master
-                - develop
+                - setup-client
