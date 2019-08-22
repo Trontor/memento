@@ -12,26 +12,34 @@ import { server } from "./graphql";
 /**
  * Setup Environment Variables + GraphQL Server + Express + React Static Files
  */
+
 // Load .env file into memory
 dotenv.config();
+
 // Create a new express server
 const app: Application = express();
+
 // Port to serve the express server on: production port or default (5000)
 const port = process.env.PORT || 5000;
+
 // Set up to serve static files
 app.use(express.static("client/build"));
+
 // Parse application/json requests
 app.use(bodyParser.json());
 
 /**
  * Serve React Build + GraphQL Server using Express
  */
+
 // Serves the React build
 app.get("/", (req: Request, res: Response) =>
   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
 );
+
 // Injects GraphQL into the express server as middleware
 server.applyMiddleware({ app });
+
 // Listen for routes on the specified port
 app.listen(port, () => {
   const host = `http://localhost:${port}`;

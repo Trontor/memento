@@ -9,6 +9,11 @@ import {
 import UserModel from "./models/User";
 import FamilyModel from "./models/Family";
 
+/**
+ * Context is shared by all the resolvers of a given request.
+ * It is useful for storing data such as authentication info, the current user,
+ * database connection, data sources and other things.
+ * */
 const context = createContext(
   {
     user: new UserModel({ db, clientAuth }),
@@ -18,7 +23,10 @@ const context = createContext(
   db
 );
 
-// setup graphql apollo server
+/**
+ * Set up GraphQL server, passing in typeDefs, resolver and the context.
+ * typeDefs contain all the
+ */
 export const server = new ApolloServer({
   typeDefs,
   resolvers,

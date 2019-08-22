@@ -1,6 +1,25 @@
 import { gql } from "apollo-server-express";
 
+/**
+ * GraphQL Type Definitions
+ * ------------------------
+ * These specify what exactly can be queried with a request.
+ * For more information, see: https://graphql.org/learn/schema/
+ */
 const typeDefs = gql`
+  type Query {
+    me: String!
+    user(id: String!): User
+  }
+
+  type Mutation {
+    signup(input: UserSignupInput!): AuthOutput!
+    login(input: UserLoginInput!): AuthOutput!
+    createFamily(input: CreateFamilyInput!): Family
+    updateUser(input: UpdateUserInput!): User
+    updateRole(input: UpdateRoleInput!): UpdateRoleOutput
+  }
+
   type User {
     id: ID!
     email: String!
@@ -87,19 +106,6 @@ const typeDefs = gql`
   type AuthOutput {
     token: String
     user: User
-  }
-
-  type Query {
-    me: String!
-    user(id: String!): User
-  }
-
-  type Mutation {
-    signup(input: UserSignupInput!): AuthOutput!
-    login(input: UserLoginInput!): AuthOutput!
-    createFamily(input: CreateFamilyInput!): Family
-    updateUser(input: UpdateUserInput!): User
-    updateRole(input: UpdateRoleInput!): UpdateRoleOutput
   }
 `;
 
