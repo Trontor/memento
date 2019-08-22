@@ -106,8 +106,8 @@ workflows:
       - heroku/deploy-via-git:
           requires:
             - build-client
-            filters:
-              branches:
-                only:
-                  - master
-                  - develop
+          filters:
+            branches:
+              only:
+                - master
+                - develop
