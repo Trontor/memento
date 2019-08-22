@@ -8,13 +8,12 @@
     "lint": "tslint --project tsconfig.json",
     "gql": "cd graphql && graphql-codegen --config codegen.yml",
     "update": "npm i && npm i --prefix client",
-    "build": "tsc",
+    "build": "npm install --prefix client && npm run build --prefix client && tsc",
     "build-client": "npm run build --prefix client",
     "dev": "concurrently \"npm run client\" \"npm run server\"",
     "client": "npm start --prefix client",
     "server": "nodemon --exec ts-node server.ts",
-    "test": "jest",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "test": "jest"
   },
   "engines": {
     "node": "8"
