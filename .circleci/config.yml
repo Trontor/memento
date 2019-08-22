@@ -133,7 +133,7 @@ workflows:
       - build-client:
           requires:
             - setup-client
-      - test-backend
+      - test-backend:
           requires:
             - setup-backend
       - heroku/deploy-via-git:
