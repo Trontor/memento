@@ -25,3 +25,9 @@ export const NameInputContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-gap: 30px;
 `;
+
+export const NameInputContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 30px;
+`;
