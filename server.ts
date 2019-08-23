@@ -8,6 +8,8 @@ import express, { Application, Request, Response } from "express";
 import path from "path";
 // Apollo Server will handle GraphQL Requests
 import { server } from "./graphql";
+// CORS package allows Cross-Origin Resource Sharing
+import cors from "cors";
 
 /**
  * Setup Environment Variables + GraphQL Server + Express + React Static Files
@@ -27,6 +29,9 @@ app.use(express.static("client/build"));
 
 // Parse application/json requests
 app.use(bodyParser.json());
+
+// Allow CORS
+app.use(cors());
 
 /**
  * Serve React Build + GraphQL Server using Express
