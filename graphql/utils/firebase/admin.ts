@@ -9,8 +9,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-admin.initializeApp();
-firebase.initializeApp({
+const config = {
   apiKey: process.env.apiKey,
   authDomain: process.env.authDomain,
   databaseURL: process.env.databaseURL,
@@ -18,8 +17,12 @@ firebase.initializeApp({
   storageBucket: process.env.storageBucket,
   messagingSenderId: process.env.messagingSenderId,
   appId: process.env.appId
-});
+};
 
+admin.initializeApp(config);
+console.log("Firestore connection established.");
+firebase.initializeApp(config);
+console.log("Firebase connection established.");
 interface WithFirebaseFirestore {
   db: FirebaseFirestore.Firestore;
 }

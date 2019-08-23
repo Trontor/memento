@@ -3,31 +3,37 @@ import React from "react";
 // import {query} from 'apollo-client';
 // import gql from "graphql-tag";
 import { Formik } from "formik";
-import { InputContainer, InputField, InputLabel, Error } from "ui/Forms";
+import {
+  InputContainer,
+  InputField,
+  InputLabel,
+  Error,
+  AnimateLabel
+} from "ui/Forms";
 import { ButtonPrimary } from "ui/Buttons";
 import { FormHeader } from "ui/Typography";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
-
+import gql from "graphql-tag";
 import { NameInputContainer, SignupContainer } from "./SignupStyles";
 import { HelpText } from "ui/Forms";
-import { AnimateLabel } from "ui/Forms";
-
-// const defaultValues = {
-//   firstName: "John",
-//   lastName: "Doe",
-//   email: "Test123@gmail.com",
-//   password: "IOUHJWRFN",
-//   confirmPassword: "IOUHJWRFN"
-// };
+import { useMutation } from "@apollo/react-hooks";
 
 const defaultValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  confirmPassword: ""
+  firstName: "John",
+  lastName: "Doe",
+  email: "Test123@gmail.com",
+  password: "IOUHJWRFN",
+  confirmPassword: "IOUHJWRFN"
 };
+
+// const defaultValues = {
+//   firstName: "",
+//   lastName: "",
+//   email: "",
+//   password: "",
+//   confirmPassword: ""
+// };
 
 const SignupValidationSchema = yup.object().shape({
   firstName: yup
@@ -49,12 +55,45 @@ const SignupValidationSchema = yup.object().shape({
     .required("Password confirm is required")
 });
 
+const SIGNUP = gql`
+  mutation($input: UserSignupInput!) {
+    signup(input: $input) {
+      token
+      user {
+        email
+        firstName
+        lastName
+        id
+      }
+    }
+  }
+`;
 export default function Signup() {
+  const [signup, { loading, data, error }] = useMutation(SIGNUP);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (data) {
+    return <div>{JSON.stringify(data)}</div>;
+  }
+  if (error) {
+    return (
+      <div>
+        {error.graphQLErrors
+          .map(err => err.message)
+          .map(message => (
+            <div>{message}</div>
+          ))}
+      </div>
+    );
+  }
   return (
     <>
       <Formik
         initialValues={defaultValues}
-        onSubmit={(values, actions) => {}}
+        onSubmit={(values, actions) => {
+          signup({ variables: { input: { ...values } } });
+        }}
         validationSchema={SignupValidationSchema}
         validateOnBlur={false}
         validateOnChange={false}
@@ -116,19 +155,19 @@ export default function Signup() {
               {props.errors.password && props.touched.password && (
                 <Error>{props.errors.password}</Error>
               )}
-              </InputContainer>
-              <InputContainer>
-                <InputField
-                  type="password"
-                  name="confirmPassword"
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  value={props.values.confirmPassword}
-                />
-                <InputLabel>Confirm Password</InputLabel>
-                {props.errors.confirmPassword &&
-                    <Error>{props.errors.confirmPassword}</Error>
-                  }
+            </InputContainer>
+            <InputContainer>
+              <InputField
+                type="password"
+                name="confirmPassword"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.confirmPassword}
+              />
+              <InputLabel>Confirm Password</InputLabel>
+              {props.errors.confirmPassword && (
+                <Error>{props.errors.confirmPassword}</Error>
+              )}
             </InputContainer>
             <ButtonPrimary type="submit">Sign Up</ButtonPrimary>
             <HelpText>
