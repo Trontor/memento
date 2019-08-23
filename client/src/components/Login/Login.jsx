@@ -1,16 +1,14 @@
 import React, { Component } from "react";
-import { FormInput } from "ui/Forms";
+import { FormHeader } from "ui/Typography";
+import { InputContainer, Input, InputLabel } from "ui/Forms";
 import { Logo } from "components/Logo";
-import { SubmitButton } from "ui/Buttons";
 import {
-  LoginLayout,
-  Intro,
-  LoginWrapper,
-  TitleWrapper,
   ErrorMsg,
   Message,
   MsgLink
 } from "./LoginStyles";
+import { ButtonPrimary } from "ui/Buttons";
+import { LoginContainer } from "./LoginStyles";
 
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
@@ -78,45 +76,47 @@ export class Login extends Component {
   render() {
     const { formErrors } = this.state;
     return (
-      <LoginLayout>
-        <Intro>
-          <Logo />
-        </Intro>
-        <TitleWrapper>
-          <h1>Welcome back!</h1>
-        </TitleWrapper>
-        <form onSubmit={this.handleSubmit}>
-          <LoginWrapper>
-            <FormInput
-              valid={formErrors.email.length > 0}
-              placeholder="Email"
-              type="text"
-              name="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-            {formErrors.email.length > 0 && (
-              <ErrorMsg>{formErrors.email}</ErrorMsg>
-            )}
-            <FormInput
-              valid={formErrors.password.length > 0}
-              placeholder="Password"
-              type="password"
-              name="password"
-              value={this.state.password}
-              onChange={this.handleChange}
-            />
-            {formErrors.password.length > 0 && (
-              <ErrorMsg>{formErrors.password}</ErrorMsg>
-            )}
-            <SubmitButton>Login</SubmitButton>
+      <>
+        <Logo />
+        <LoginContainer>
+          <FormHeader>Welcome back!</FormHeader>
+          <form onSubmit={this.handleSubmit}>
+            <InputContainer>
+              <InputLabel>Email</InputLabel>
+              <Input
+                valid={formErrors.email.length > 0}
+                type="text"
+                name="email"
+                value={this.state.email}
+                onChange={this.handleChange}
+              />
+              {formErrors.email.length > 0 && (
+                <ErrorMsg>{formErrors.email}</ErrorMsg>
+              )}
+            </InputContainer>
+
+            <InputContainer>
+              <InputLabel>Password</InputLabel>
+              <Input
+                valid={formErrors.password.length > 0}
+                type="password"
+                name="password"
+                value={this.state.password}
+                onChange={this.handleChange}
+              />
+              {formErrors.password.length > 0 && (
+                <ErrorMsg>{formErrors.password}</ErrorMsg>
+              )}
+            </InputContainer>
+
+            <ButtonPrimary>Login</ButtonPrimary>
             <Message>
               Don't have an account?
               <MsgLink to="./Signup"> Sign up</MsgLink>
             </Message>
-          </LoginWrapper>
-        </form>
-      </LoginLayout>
+          </form>
+        </LoginContainer>
+      </>
     );
   }
 }

@@ -12,10 +12,12 @@ export const CarouselWrapper = styled.div`
 `;
 
 export const Description = styled.h2`
+  font-weight: normal;
   margin: 0 auto;
   text-align: center;
-  width: 75%;
-  font-size: 1.5em;
+  width: 65%;
+  margin-top: 10px;
+  line-height: 1.2em;
 `;
 
 export const CarouselSlide = styled.div`

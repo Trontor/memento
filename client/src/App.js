@@ -27,8 +27,20 @@ const GlobalStyle = createGlobalStyle`
   }
 
   h1, h2, h3 {
-    font-family: "Nunito", Arial, Helvetica, sans-serif;
-    font-weight: bold;
+    font-family: "Livvic", Arial, Helvetica, sans-serif;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  button {
+    font-family: "Livvic", Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    border: none;
+    letter-spacing: 0.02em;
+    cursor: pointer;
   }
 
   *, *::before, *::after {

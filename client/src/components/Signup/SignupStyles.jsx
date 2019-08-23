@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export const SignupContainer = styled.div`
-  margin: 30px;
+  margin: 50px;
 
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}){
-    margin: 50px;
+    /* margin: 80px; */
   }
 `;
 
@@ -18,13 +18,6 @@ export const SignupHeader = styled.h2`
 
 export const NameInputContainer = styled.div`
   display: grid;
-  grid-template-columns: 50% 50%;
-`;
-
-export const FirstName = styled.div`
-  margin-right: 10px;
-`;
-
-export const LastName = styled.div`
-  margin-left: 10px;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 30px;
 `;

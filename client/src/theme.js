@@ -8,13 +8,13 @@ const theme = {
   palette: {
     text: "#44404B",
     main: "#FF844D",
-    mainDark: "#FF5C14",
+    secondary: "#FFA217",
 
     error: "#F73953",
-    border: "#ddd"
+    border: "#D3D0DD"
   },
   mixins: {
-    hoverFade: "transition: ease-in 0.2s"
+    hoverFade: "transition: ease-in 0.1s"
   }
 }
 
