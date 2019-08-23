@@ -3,17 +3,22 @@ import React from "react";
 // import {query} from 'apollo-client';
 // import gql from "graphql-tag";
 import { Formik } from "formik";
-import {  InputContainer, InputField, InputLabel, Error } from "ui/Forms";
+import { InputContainer, InputField, InputLabel, Error } from "ui/Forms";
 import { ButtonPrimary } from "ui/Buttons";
 import { FormHeader } from "ui/Typography";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
 
-import {
-  NameInputContainer,
-  SignupContainer
-} from "./SignupStyles";
+import { NameInputContainer, SignupContainer } from "./SignupStyles";
 import { HelpText } from "ui/Forms";
+
+// const defaultValues = {
+//   firstName: "John",
+//   lastName: "Doe",
+//   email: "Test123@gmail.com",
+//   password: "IOUHJWRFN",
+//   confirmPassword: "IOUHJWRFN"
+// };
 
 const defaultValues = {
   firstName: "",
@@ -54,9 +59,7 @@ export default function Signup() {
         validateOnChange={false}
         render={props => (
           <SignupContainer onSubmit={props.handleSubmit}>
-            <FormHeader>
-              Sign up today!
-            </FormHeader>
+            <FormHeader>Sign up today!</FormHeader>
             <NameInputContainer>
               <InputContainer>
                 <InputField
@@ -124,8 +127,10 @@ export default function Signup() {
                     <Error>{props.errors.confirmPassword}</Error>
                   }
             </InputContainer>
-            <ButtonPrimary type="submit" onClick="submitForm">Sign Up</ButtonPrimary>
-            <HelpText>Already have an account? <Link to="/login">Log in</Link></HelpText>
+            <ButtonPrimary type="submit">Sign Up</ButtonPrimary>
+            <HelpText>
+              Already have an account? <Link to="/login">Log in</Link>
+            </HelpText>
           </SignupContainer>
         )}
       />
