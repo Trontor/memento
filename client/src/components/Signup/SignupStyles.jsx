@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
-export const SignupContainer = styled.div`
+export const SignupContainer = styled.form`
   margin: 50px;
   position: relative;
   top: 50%;
   transform: translate(0, -50%);
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}){
+  @media screen and (min-width: ${props =>
+      props.theme.breakpoints.tabletPortrait}) {
     /* margin: 80px; */
   }
 `;
