@@ -3,15 +3,17 @@ import React from "react";
 // import {query} from 'apollo-client';
 // import gql from "graphql-tag";
 import { Formik } from "formik";
-import {  InputContainer, Input, InputLabel, Error } from "ui/Forms";
+import {  InputContainer, InputField, InputLabel, Error } from "ui/Forms";
 import { ButtonPrimary, ButtonSecondary } from "ui/Buttons";
 import { FormHeader } from "ui/Typography";
+import { Link } from "react-router-dom";
 import * as yup from "yup";
 
 import {
   NameInputContainer,
   SignupContainer
 } from "./SignupStyles";
+import { HelpText } from "ui/Forms";
 
 const defaultValues = {
   firstName: "",
@@ -58,7 +60,7 @@ export default function Signup() {
             <NameInputContainer>
               <InputContainer>
                 <InputLabel>First Name</InputLabel>
-                <Input
+                <InputField
                   type="text"
                   name="firstName"
                   onChange={props.handleChange}
@@ -71,7 +73,7 @@ export default function Signup() {
               </InputContainer>
               <InputContainer>
                 <InputLabel>Last Name</InputLabel>
-                <Input
+                <InputField
                   type="text"
                   name="lastName"
                   onChange={props.handleChange}
@@ -85,7 +87,7 @@ export default function Signup() {
             </NameInputContainer>
             <InputContainer>
               <InputLabel>Email Address</InputLabel>
-              <Input
+              <InputField
                 type="email"
                 name="email"
                 onChange={props.handleChange}
@@ -98,7 +100,7 @@ export default function Signup() {
             </InputContainer>
             <InputContainer>
               <InputLabel>Password</InputLabel>
-              <Input
+              <InputField
                 type="password"
                 name="password"
                 onChange={props.handleChange}
@@ -111,7 +113,7 @@ export default function Signup() {
               </InputContainer>
               <InputContainer>
                 <InputLabel>Confirm Password</InputLabel>
-                <Input
+                <InputField
                   type="password"
                   name="confirmPassword"
                   onChange={props.handleChange}
@@ -119,11 +121,11 @@ export default function Signup() {
                   value={props.values.confirmPassword}
                 />
                 {props.errors.confirmPassword &&
-                  props.touched.confirmPassword && (
                     <Error>{props.errors.confirmPassword}</Error>
-                  )}
+                  }
             </InputContainer>
             <ButtonPrimary type="submit" onClick="submitForm">Sign Up</ButtonPrimary>
+            <HelpText>Already have an account? <Link to="/login">Log in</Link></HelpText>
           </SignupContainer>
         )}
       />

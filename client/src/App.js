@@ -26,6 +26,10 @@ const GlobalStyle = createGlobalStyle`
     color: ${props => props.theme.palette.text}
   }
 
+  a {
+    text-decoration: none;
+  }
+
   h1, h2, h3 {
     font-family: "Livvic", Arial, Helvetica, sans-serif;
     font-weight: 700;
@@ -39,7 +43,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: "Livvic", Arial, Helvetica, sans-serif;
     font-weight: 600;
     border: none;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.03em;
     cursor: pointer;
   }
 

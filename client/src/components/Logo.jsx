@@ -4,7 +4,6 @@ import styled from "styled-components"
 
 const Logotype = styled(Link)`
   display: block;
-  text-decoration: none;
   color: ${props => props.theme.palette.text};
   font-size: 40px;
   font-weight: light;

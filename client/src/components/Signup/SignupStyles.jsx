@@ -2,6 +2,9 @@ import styled from "styled-components";
 
 export const SignupContainer = styled.div`
   margin: 50px;
+  position: relative;
+  top: 50%;
+  transform: translate(0, -50%);
 
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}){
     /* margin: 80px; */

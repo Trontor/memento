@@ -7,7 +7,7 @@ const theme = {
   },
   palette: {
     text: "#44404B",
-    main: "#FF844D",
+    main: "#FF7F5F",
     secondary: "#FFA217",
 
     error: "#F73953",

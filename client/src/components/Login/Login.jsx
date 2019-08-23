@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { FormHeader } from "ui/Typography";
-import { InputContainer, Input, InputLabel } from "ui/Forms";
+import { InputContainer, InputField, InputLabel, HelpText } from "ui/Forms";
 import { Logo } from "components/Logo";
 import {
   ErrorMsg,
@@ -83,7 +83,7 @@ export class Login extends Component {
           <form onSubmit={this.handleSubmit}>
             <InputContainer>
               <InputLabel>Email</InputLabel>
-              <Input
+              <InputField
                 valid={formErrors.email.length > 0}
                 type="text"
                 name="email"
@@ -97,7 +97,7 @@ export class Login extends Component {
 
             <InputContainer>
               <InputLabel>Password</InputLabel>
-              <Input
+              <InputField
                 valid={formErrors.password.length > 0}
                 type="password"
                 name="password"
@@ -110,10 +110,10 @@ export class Login extends Component {
             </InputContainer>
 
             <ButtonPrimary>Login</ButtonPrimary>
-            <Message>
+            <HelpText>
               Don't have an account?
               <MsgLink to="./Signup"> Sign up</MsgLink>
-            </Message>
+            </HelpText>
           </form>
         </LoginContainer>
       </>

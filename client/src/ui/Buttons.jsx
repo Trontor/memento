@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { darken } from 'polished';
 
 export const ButtonPrimary = styled.button`
   background: ${props => props.theme.palette.main};
@@ -9,6 +8,7 @@ export const ButtonPrimary = styled.button`
   font-size: 15px;
   border-radius: 4px;
   ${props => props.theme.mixins.hoverFade};
+  margin-right: 20px;
 
   &:hover {
     border: 1px solid ${props => props.theme.palette.secondary};
