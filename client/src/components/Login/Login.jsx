@@ -81,7 +81,6 @@ export class Login extends Component {
           <FormHeader>Welcome back!</FormHeader>
           <form onSubmit={this.handleSubmit}>
             <InputContainer>
-              <InputLabel>Email</InputLabel>
               <InputField
                 valid={formErrors.email.length > 0}
                 type="text"
@@ -89,13 +88,13 @@ export class Login extends Component {
                 value={this.state.email}
                 onChange={this.handleChange}
               />
+              <InputLabel>Email</InputLabel>
               {formErrors.email.length > 0 && (
                 <ErrorMsg>{formErrors.email}</ErrorMsg>
               )}
             </InputContainer>
 
             <InputContainer>
-              <InputLabel>Password</InputLabel>
               <InputField
                 valid={formErrors.password.length > 0}
                 type="password"
@@ -103,6 +102,7 @@ export class Login extends Component {
                 value={this.state.password}
                 onChange={this.handleChange}
               />
+              <InputLabel>Password</InputLabel>
               {formErrors.password.length > 0 && (
                 <ErrorMsg>{formErrors.password}</ErrorMsg>
               )}

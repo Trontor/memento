@@ -59,7 +59,6 @@ export default function Signup() {
             </FormHeader>
             <NameInputContainer>
               <InputContainer>
-                <InputLabel>First Name</InputLabel>
                 <InputField
                   type="text"
                   name="firstName"
@@ -67,12 +66,12 @@ export default function Signup() {
                   onBlur={props.handleBlur}
                   value={props.values.firstName}
                 />
+                <InputLabel>First Name</InputLabel>
                 {props.errors.firstName && props.touched.firstName && (
                   <Error>{props.errors.firstName}</Error>
                 )}
               </InputContainer>
               <InputContainer>
-                <InputLabel>Last Name</InputLabel>
                 <InputField
                   type="text"
                   name="lastName"
@@ -80,13 +79,13 @@ export default function Signup() {
                   onBlur={props.handleBlur}
                   value={props.values.lastName}
                 />
+                <InputLabel>Last Name</InputLabel>
                 {props.errors.lastName && props.touched.lastName && (
                   <Error>{props.errors.lastName}</Error>
                 )}
               </InputContainer>
             </NameInputContainer>
             <InputContainer>
-              <InputLabel>Email Address</InputLabel>
               <InputField
                 type="email"
                 name="email"
@@ -94,12 +93,12 @@ export default function Signup() {
                 onBlur={props.handleBlur}
                 value={props.values.email}
               />
+              <InputLabel>Email Address</InputLabel>
               {props.errors.email && props.touched.email && (
                 <Error>{props.errors.email}</Error>
               )}
             </InputContainer>
             <InputContainer>
-              <InputLabel>Password</InputLabel>
               <InputField
                 type="password"
                 name="password"
@@ -107,12 +106,12 @@ export default function Signup() {
                 onBlur={props.handleBlur}
                 value={props.values.password}
               />
+              <InputLabel>Password</InputLabel>
               {props.errors.password && props.touched.password && (
                 <Error>{props.errors.password}</Error>
               )}
               </InputContainer>
               <InputContainer>
-                <InputLabel>Confirm Password</InputLabel>
                 <InputField
                   type="password"
                   name="confirmPassword"
@@ -120,6 +119,7 @@ export default function Signup() {
                   onBlur={props.handleBlur}
                   value={props.values.confirmPassword}
                 />
+                <InputLabel>Confirm Password</InputLabel>
                 {props.errors.confirmPassword &&
                     <Error>{props.errors.confirmPassword}</Error>
                   }
