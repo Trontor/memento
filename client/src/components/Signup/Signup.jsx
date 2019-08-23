@@ -76,7 +76,6 @@ export default function Signup() {
       <div>
         <LoginButton>Log In</LoginButton>
       </div>
-      <Formik
         initialValues={defaultValues}
         onSubmit={(values, actions) => {}}
         validationSchema={SignupValidationSchema}

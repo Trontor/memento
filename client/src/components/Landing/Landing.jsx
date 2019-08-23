@@ -1,24 +1,21 @@
-import React, { Component } from "react"
-import { Link } from "react-router-dom"
-import Carousel from "../Carousel/Carousel"
+import React, { Component } from "react";
+import Carousel from "../Carousel/Carousel";
 import Logo from "../Logo";
-import { LandingLayout, Intro } from "./LandingStyles"
+import { LandingLayout, Intro } from "./LandingStyles";
+import Signup from "../Signup/Signup";
 
 export class Landing extends Component {
   render() {
     return (
       <LandingLayout>
         <Intro>
-          <Logo/>
-          <Carousel/>
+          <Logo />
+          <Carousel />
         </Intro>
-        <div>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Signup</Link>
-        </div>
+        <Signup />
       </LandingLayout>
-    )
+    );
   }
 }
 
-export default Landing
+export default Landing;

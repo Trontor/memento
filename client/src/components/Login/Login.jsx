@@ -1,17 +1,16 @@
 import React, { Component } from "react";
-import styled from "styled-components";
 import { FormInput } from "ui/Forms";
-import "./Login.css";
-import { Link } from "react-router-dom";
 import { Logo } from "components/Logo";
-
-const LoginWrapper = styled.div`
-  width: 350px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
+import { Buttons } from "../../ui/Buttons";
+import {
+  LoginLayout,
+  Intro,
+  LoginWrapper,
+  TitleWrapper,
+  ErrorMsg,
+  Message,
+  MsgLink
+} from "./LoginStyles";
 
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
@@ -79,48 +78,45 @@ export class Login extends Component {
   render() {
     const { formErrors } = this.state;
     return (
-      <div>
-        <Logo />
-        <LoginWrapper>
-          <h1 className="welcome">Welcome back!</h1>
-          <form onSubmit={this.handleSubmit}>
+      <LoginLayout>
+        <Intro>
+          <Logo />
+        </Intro>
+        <TitleWrapper>
+          <h1>Welcome back!</h1>
+        </TitleWrapper>
+        <form onSubmit={this.handleSubmit}>
+          <LoginWrapper>
             <FormInput
+              valid={formErrors.email.length > 0}
               placeholder="Email"
               type="text"
               name="email"
-              className={formErrors.email.length > 0 ? "errorInput1" : "input"}
               value={this.state.email}
               onChange={this.handleChange}
             />
             {formErrors.email.length > 0 && (
-              <span className="error1">{formErrors.email}</span>
+              <ErrorMsg>{formErrors.email}</ErrorMsg>
             )}
             <FormInput
+              valid={formErrors.password.length > 0}
               placeholder="Password"
               type="password"
               name="password"
-              className={
-                formErrors.password.length > 0 ? "errorInput1" : "input"
-              }
               value={this.state.password}
               onChange={this.handleChange}
             />
             {formErrors.password.length > 0 && (
-              <span className="error1">{formErrors.password}</span>
+              <ErrorMsg>{formErrors.password}</ErrorMsg>
             )}
-
-            <button type="submit" className="login1">
-              Log In
-            </button>
-          </form>
-          <div className="text">
-            Don't have an account?{" "}
-            <Link to="./Signup" className="link">
-              Sign up
-            </Link>
-          </div>
-        </LoginWrapper>
-      </div>
+            <Buttons>Insert Button here</Buttons>
+            <Message>
+              Don't have an account?
+              <MsgLink to="./Signup"> Sign up</MsgLink>
+            </Message>
+          </LoginWrapper>
+        </form>
+      </LoginLayout>
     );
   }
 }
