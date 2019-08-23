@@ -95,13 +95,13 @@ workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - setup-client
+      - setup-client:
           filters:
             branches:
               only:
                 - master
                 - develop
-      - setup-backend
+      - setup-backend:
           filters:
             branches:
               only:
