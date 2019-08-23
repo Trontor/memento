@@ -95,14 +95,34 @@ workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - setup-client
-      - setup-backend
+      - setup-client:
+          filters:
+            branches:
+              only:
+                - master
+                - develop
+      - setup-backend:
+          filters:
+            branches:
+              only:
+                - master
+                - develop
       - build-client:
           requires:
             - setup-client
+          filters:
+            branches:
+              only:
+                - master
+                - develop
       - test-backend:
           requires:
             - setup-backend
+          filters:
+            branches:
+              only:
+                - master
+                - develop
       - heroku/deploy-via-git:
           requires:
             - build-client
