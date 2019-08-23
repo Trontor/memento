@@ -1,13 +1,7 @@
-import * as functions from "firebase-functions";
-import express, { Express } from "express";
-
 import { ApolloServer } from "apollo-server-express";
-import resolvers from "./resolvers";
 import typeDefs from "./schema.graphql";
-
-// dependencies
+import resolvers from "./resolvers";
 import { db, clientAuth, adminAuth } from "./utils/firebase/admin";
-
 import {
   createContext,
   CONTEXT_CREATION_FAILED_ERROR_MESSAGE
@@ -15,6 +9,11 @@ import {
 import UserModel from "./models/User";
 import FamilyModel from "./models/Family";
 
+/**
+ * Context is shared by all the resolvers of a given request.
+ * It is useful for storing data such as authentication info, the current user,
+ * database connection, data sources and other things.
+ * */
 const context = createContext(
   {
     user: new UserModel({ db, clientAuth }),
@@ -24,10 +23,11 @@ const context = createContext(
   db
 );
 
-const app: Express = express();
-
-// setup graphql apollo server
-const server = new ApolloServer({
+/**
+ * Set up GraphQL server, passing in typeDefs, resolver and the context.
+ * typeDefs contain all the
+ */
+export const server = new ApolloServer({
   typeDefs,
   resolvers,
   context,
@@ -39,9 +39,3 @@ const server = new ApolloServer({
     return err;
   }
 });
-server.applyMiddleware({
-  app,
-  path: "/" /* usually defaults to `/graphql` endpoint */
-});
-
-export const api = functions.region("asia-east2").https.onRequest(app);

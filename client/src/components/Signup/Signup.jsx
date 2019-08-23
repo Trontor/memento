@@ -1,201 +1,138 @@
-import React, { Component } from "react";
-import { Buttons } from "../../ui/Buttons";
-import { FormInput } from "ui/Forms";
+import React from "react";
+// import { useQuery } from "@apollo/react-hooks";
+// import {query} from 'apollo-client';
+// import gql from "graphql-tag";
+import { Formik } from "formik";
+import { Form, Title, Input, InputLabel, Error } from "ui/Forms";
+import * as yup from "yup";
 import {
-  SignupLayout,
-  Intro,
-  TitleWrapper,
-  SignupWrapper,
-  NameWrapper,
-  ErrorMsg
+  LoginButton,
+  FirstName,
+  LastName,
+  Name,
+  Email,
+  Password,
+  SignupButton,
+  SignupContainer
 } from "./SignupStyles";
 
-const emailRegex = RegExp(
-  //valid email regex
-  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-);
-
-const passRegex = RegExp(/^(?=.*[A-Z])[0-9a-zA-Z]{5,}$/); //valid password regex
-
-const formValid = ({ formErrors, ...rest }) => {
-  let valid = true;
-
-  //validate from errors being empty
-  Object.values(formErrors).forEach(val => {
-    val.length > 0 && (valid = false);
-  });
-
-  //empty form won't be submitted
-  Object.values(rest).forEach(val => {
-    val === "" && (valid = false);
-  });
-
-  return valid;
+const defaultValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: ""
 };
 
-export class Signup extends Component {
-  constructor(props) {
-    super(props);
+const SignupValidationSchema = yup.object().shape({
+  firstName: yup
+    .string()
+    .required("Please enter your first name")
+    .min(2, "First name too short"),
+  lastName: yup
+    .string()
+    .required("Please enter your last name")
+    .min(2, "Last name is too short"),
+  email: yup
+    .string()
+    .email("Please enter your email")
+    .required(),
+  password: yup.string().required("Password is required"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Passwords must match")
+    .required("Password confirm is required")
+});
 
-    this.state = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      formErrors: {
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
-      }
-    };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(e) {
-    e.preventDefault();
-    const { name, value } = e.target;
-    let formErrors = this.state.formErrors;
-
-    switch (
-      name //sign up form validation
-    ) {
-      default:
-        break;
-      case "firstName":
-        formErrors.firstName =
-          value.length < 1 ? "Please enter your first name" : "";
-        break;
-      case "lastName":
-        formErrors.lastName =
-          value.length < 1 ? "Please enter your last name" : "";
-        break;
-      case "email":
-        formErrors.email = emailRegex.test(value)
-          ? ""
-          : "Please enter a valid email address";
-        break;
-      case "password":
-        if (passRegex.test(value)) {
-          if (
-            formErrors.password !== this.state.confirmPassword &&
-            this.state.confirmPassword !== ""
-          ) {
-            formErrors.confirmPassword = "Please confirm your password";
-          }
-          formErrors.password = "";
-        } else {
-          formErrors.password =
-            "Your password must contain at least 6 characters and 1 uppercase letter";
-        }
-        break;
-      case "confirmPassword":
-        formErrors.confirmPassword =
-          value === this.state.password ? "" : "Please confirm your password";
-
-        break;
-    }
-    this.setState({ formErrors, [name]: value });
-    //, () => console.log(this.state)
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    if (formValid(this.state)) {
-      console.log("Form Submitted");
-    } else {
-      console.error("Form Invalid");
-    }
-  }
-
-  render() {
-    const { formErrors } = this.state;
-    return (
-      <SignupLayout>
-        <Intro>
-          <Buttons>Insert Button here</Buttons> {/*login button*/}
-        </Intro>
-        <TitleWrapper>
-          <h1>Sign up today!</h1> {/*title*/}
-        </TitleWrapper>
-        <form onSubmit={this.handleSubmit}>
-          <SignupWrapper>
-            <NameWrapper>
-              {" "}
-              {/*first name and last name*/}
-              <FormInput
-                attributes="firstName"
-                valid={formErrors.firstName.length > 0}
-                placeholder="First Name"
-                type="text"
-                name="firstName"
-                value={this.state.firstName}
-                onChange={this.handleChange}
+export default function Signup() {
+  return (
+    <>
+      <div>
+        <LoginButton>Log In</LoginButton>
+      </div>
+      <Formik
+        initialValues={defaultValues}
+        onSubmit={(values, actions) => {}}
+        validationSchema={SignupValidationSchema}
+        render={props => (
+          <Form onSubmit={props.handleSubmit}>
+            <Title>
+              <h1>Sign up today!</h1>
+            </Title>
+            <Name>
+              <FirstName>
+                <InputLabel>First Name</InputLabel>
+                <Input
+                  type="text"
+                  name="firstName"
+                  onChange={props.handleChange}
+                  onBlur={props.handleBlur}
+                  value={props.values.firstName}
+                />
+                {props.errors.firstName && props.touched.firstName && (
+                  <Error>{props.errors.firstName}</Error>
+                )}
+              </FirstName>
+              <LastName>
+                <InputLabel>Last Name</InputLabel>
+                <Input
+                  type="text"
+                  name="lastName"
+                  onChange={props.handleChange}
+                  onBlur={props.handleBlur}
+                  value={props.values.lastName}
+                />
+                {props.errors.lastName && props.touched.lastName && (
+                  <Error>{props.errors.lastName}</Error>
+                )}
+              </LastName>
+            </Name>
+            <Email>
+              <InputLabel>Email Address</InputLabel>
+              <Input
+                type="email"
+                name="email"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.email}
               />
-              <FormInput
-                attributes="lastName"
-                valid={formErrors.lastName.length > 0}
-                placeholder="Last Name"
-                type="text"
-                name="lastName"
-                value={this.state.lastName}
-                onChange={this.handleChange}
+              {props.errors.email && props.touched.email && (
+                <Error>{props.errors.email}</Error>
+              )}
+            </Email>
+            <Password>
+              <InputLabel>Password</InputLabel>
+              <Input
+                type="password"
+                name="password"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.password}
               />
-            </NameWrapper>
-            <NameWrapper>
-              {" "}
-              {/*error message for name*/}
-              {formErrors.firstName.length > 0 && (
-                <ErrorMsg>{formErrors.firstName}</ErrorMsg>
+              {props.errors.password && props.touched.password && (
+                <Error>{props.errors.password}</Error>
               )}
-              {formErrors.lastName.length > 0 && (
-                <ErrorMsg attributes="lastName">{formErrors.lastName}</ErrorMsg>
-              )}
-            </NameWrapper>
-            <FormInput /*email, password and confirm password */
-              valid={formErrors.email.length > 0}
-              placeholder="Email"
-              type="text"
-              name="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-            {formErrors.email.length > 0 && (
-              <ErrorMsg>{formErrors.email}</ErrorMsg>
-            )}
-            <FormInput
-              valid={formErrors.password.length > 0}
-              placeholder="Password"
-              type="password"
-              name="password"
-              value={this.state.password}
-              onChange={this.handleChange}
-            />
-            {formErrors.password.length > 0 && (
-              <ErrorMsg>{formErrors.password}</ErrorMsg>
-            )}
-            <FormInput
-              valid={formErrors.confirmPassword.length > 0}
-              placeholder="Confirm Password"
-              type="password"
-              name="confirmPassword"
-              value={this.state.confirmPpassword}
-              onChange={this.handleChange}
-            />
-            {formErrors.confirmPassword.length > 0 && (
-              <ErrorMsg>{formErrors.confirmPassword}</ErrorMsg>
-            )}
-            <Buttons type="submit">Insert Button here</Buttons>{" "}
-            {/*  submit button */}
-          </SignupWrapper>
-        </form>
-      </SignupLayout>
-    );
-  }
+            </Password>
+            <Password>
+              <InputLabel>Confirm Password</InputLabel>
+              <Input
+                type="password"
+                name="confirmPassword"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.confirmPassword}
+              />
+              {props.errors.confirmPassword &&
+                props.touched.confirmPassword && (
+                  <Error>{props.errors.confirmPassword}</Error>
+                )}
+            </Password>
+            <SignupContainer>
+              <SignupButton type="submit">Sign Up</SignupButton>
+            </SignupContainer>
+          </Form>
+        )}
+      />
+    </>
+  );
 }
-
-export default Signup;

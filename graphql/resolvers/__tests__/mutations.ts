@@ -21,3 +21,25 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const UPDATE_USER = gql`
+  mutation($input: UpdateUserInput!) {
+    updateUser(input: $input) {
+      id
+      location
+      gender
+    }
+  }
+`;
+
+export const UPDATE_ROLE = gql`
+  mutation($input: UpdateRoleInput!) {
+    updateRole(input: $input) {
+      userId
+      role {
+        familyId
+        role
+      }
+    }
+  }
+`;

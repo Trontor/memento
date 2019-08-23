@@ -1,10 +1,12 @@
-import { signup, login, getUser } from "./users";
+import { signup, login, getUser, updateUser, updateRole } from "./users";
 import { createFamily, getFamily } from "./family";
 import {
   UserSignupInput,
   UserLoginInput,
   CreateFamilyInput,
-  User
+  User,
+  UpdateUserInput,
+  UpdateRoleInput
 } from "../generated/graphql";
 import { Context } from "../utils/context";
 
@@ -20,6 +22,14 @@ interface WithCreateFamilyInput {
   input: CreateFamilyInput;
 }
 
+interface WithUpdateUserInput {
+  input: UpdateUserInput;
+}
+
+interface WithUpdateRoleInput {
+  input: UpdateRoleInput;
+}
+
 const resolvers = {
   Query: {
     me: () => "me",
@@ -30,7 +40,6 @@ const resolvers = {
     families: ({ roles }: User, _: any, context: Context) => {
       if (!roles) return null;
       const promises = roles.map(({ familyId }) => {
-        console.log("fetching " + familyId);
         return getFamily(familyId, context);
       });
       return Promise.all(promises);
@@ -45,7 +54,11 @@ const resolvers = {
       _: any,
       { input }: WithCreateFamilyInput,
       context: Context
-    ) => createFamily(input, context)
+    ) => createFamily(input, context),
+    updateUser: (_: any, { input }: WithUpdateUserInput, context: Context) =>
+      updateUser(input, context),
+    updateRole: (_: any, { input }: WithUpdateRoleInput, context: Context) =>
+      updateRole(input, context)
   }
 };
 

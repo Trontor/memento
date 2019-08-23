@@ -1,0 +1,334 @@
+import { GraphQLResolveInfo } from 'graphql';
+export type Maybe<T> = T | null;
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
+};
+
+export type AuthOutput = {
+  __typename?: 'AuthOutput',
+  token?: Maybe<Scalars['String']>,
+  user?: Maybe<User>,
+};
+
+export type CreateFamilyInput = {
+  name: Scalars['String'],
+  imageUrl?: Maybe<Scalars['String']>,
+  description?: Maybe<Scalars['String']>,
+};
+
+export type Family = {
+  __typename?: 'Family',
+  id: Scalars['ID'],
+  name: Scalars['String'],
+  description?: Maybe<Scalars['String']>,
+  imageUrl?: Maybe<Scalars['String']>,
+  numMembers: Scalars['Int'],
+  numArtifacts: Scalars['Int'],
+  createdAt: Scalars['String'],
+  users?: Maybe<Array<User>>,
+};
+
+export enum FamilyRole {
+  Admin = 'ADMIN',
+  Normal = 'NORMAL'
+}
+
+export enum Gender {
+  Male = 'MALE',
+  Female = 'FEMALE'
+}
+
+export type Mutation = {
+  __typename?: 'Mutation',
+  signup: AuthOutput,
+  login: AuthOutput,
+  createFamily?: Maybe<Family>,
+  updateUser?: Maybe<User>,
+  updateRole?: Maybe<UpdateRoleOutput>,
+};
+
+
+export type MutationSignupArgs = {
+  input: UserSignupInput
+};
+
+
+export type MutationLoginArgs = {
+  input: UserLoginInput
+};
+
+
+export type MutationCreateFamilyArgs = {
+  input: CreateFamilyInput
+};
+
+
+export type MutationUpdateUserArgs = {
+  input: UpdateUserInput
+};
+
+
+export type MutationUpdateRoleArgs = {
+  input: UpdateRoleInput
+};
+
+export type Query = {
+  __typename?: 'Query',
+  me: Scalars['String'],
+  user?: Maybe<User>,
+};
+
+
+export type QueryUserArgs = {
+  id: Scalars['String']
+};
+
+export type Role = {
+  __typename?: 'Role',
+  familyId: Scalars['ID'],
+  role: FamilyRole,
+};
+
+export type RoleInput = {
+  familyId: Scalars['ID'],
+  role: FamilyRole,
+};
+
+export type UpdateRoleInput = {
+  userId: Scalars['ID'],
+  role: RoleInput,
+};
+
+export type UpdateRoleOutput = {
+  __typename?: 'UpdateRoleOutput',
+  userId: Scalars['ID'],
+  role?: Maybe<Role>,
+};
+
+export type UpdateUserInput = {
+  id: Scalars['ID'],
+  location?: Maybe<Scalars['String']>,
+  dateOfBirth?: Maybe<Scalars['String']>,
+  gender?: Maybe<Gender>,
+  imageUrl?: Maybe<Scalars['String']>,
+};
+
+export type User = {
+  __typename?: 'User',
+  id: Scalars['ID'],
+  email: Scalars['String'],
+  firstName: Scalars['String'],
+  lastName: Scalars['String'],
+  imageUrl?: Maybe<Scalars['String']>,
+  location?: Maybe<Scalars['String']>,
+  dateOfBirth?: Maybe<Scalars['String']>,
+  gender?: Maybe<Gender>,
+  roles?: Maybe<Array<Role>>,
+  families?: Maybe<Array<Family>>,
+  createdAt: Scalars['String'],
+  lastLogin?: Maybe<Scalars['String']>,
+};
+
+export type UserLoginInput = {
+  email: Scalars['String'],
+  password: Scalars['String'],
+};
+
+export type UserSignupInput = {
+  email: Scalars['String'],
+  password: Scalars['String'],
+  confirmPassword: Scalars['String'],
+  firstName: Scalars['String'],
+  lastName: Scalars['String'],
+};
+
+
+export type ResolverTypeWrapper<T> = Promise<T> | T;
+
+export type ResolverFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => Promise<TResult> | TResult;
+
+
+export type StitchingResolver<TResult, TParent, TContext, TArgs> = {
+  fragment: string;
+  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
+};
+
+export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
+  | ResolverFn<TResult, TParent, TContext, TArgs>
+  | StitchingResolver<TResult, TParent, TContext, TArgs>;
+
+export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => AsyncIterator<TResult> | Promise<AsyncIterator<TResult>>;
+
+export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => TResult | Promise<TResult>;
+
+export interface SubscriptionSubscriberObject<TResult, TKey extends string, TParent, TContext, TArgs> {
+  subscribe: SubscriptionSubscribeFn<{ [key in TKey]: TResult }, TParent, TContext, TArgs>;
+  resolve?: SubscriptionResolveFn<TResult, { [key in TKey]: TResult }, TContext, TArgs>;
+}
+
+export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
+  subscribe: SubscriptionSubscribeFn<any, TParent, TContext, TArgs>;
+  resolve: SubscriptionResolveFn<TResult, any, TContext, TArgs>;
+}
+
+export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, TArgs> =
+  | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
+  | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
+
+export type SubscriptionResolver<TResult, TKey extends string, TParent = {}, TContext = {}, TArgs = {}> =
+  | ((...args: any[]) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
+  | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>;
+
+export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
+  parent: TParent,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => Maybe<TTypes>;
+
+export type NextResolverFn<T> = () => Promise<T>;
+
+export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs = {}> = (
+  next: NextResolverFn<TResult>,
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => TResult | Promise<TResult>;
+
+/** Mapping between all available schema types and the resolvers types */
+export type ResolversTypes = {
+  Query: ResolverTypeWrapper<{}>,
+  String: ResolverTypeWrapper<Scalars['String']>,
+  User: ResolverTypeWrapper<User>,
+  ID: ResolverTypeWrapper<Scalars['ID']>,
+  Gender: Gender,
+  Role: ResolverTypeWrapper<Role>,
+  FamilyRole: FamilyRole,
+  Family: ResolverTypeWrapper<Family>,
+  Int: ResolverTypeWrapper<Scalars['Int']>,
+  Mutation: ResolverTypeWrapper<{}>,
+  UserSignupInput: UserSignupInput,
+  AuthOutput: ResolverTypeWrapper<AuthOutput>,
+  UserLoginInput: UserLoginInput,
+  CreateFamilyInput: CreateFamilyInput,
+  UpdateUserInput: UpdateUserInput,
+  UpdateRoleInput: UpdateRoleInput,
+  RoleInput: RoleInput,
+  UpdateRoleOutput: ResolverTypeWrapper<UpdateRoleOutput>,
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
+};
+
+/** Mapping between all available schema types and the resolvers parents */
+export type ResolversParentTypes = {
+  Query: {},
+  String: Scalars['String'],
+  User: User,
+  ID: Scalars['ID'],
+  Gender: Gender,
+  Role: Role,
+  FamilyRole: FamilyRole,
+  Family: Family,
+  Int: Scalars['Int'],
+  Mutation: {},
+  UserSignupInput: UserSignupInput,
+  AuthOutput: AuthOutput,
+  UserLoginInput: UserLoginInput,
+  CreateFamilyInput: CreateFamilyInput,
+  UpdateUserInput: UpdateUserInput,
+  UpdateRoleInput: UpdateRoleInput,
+  RoleInput: RoleInput,
+  UpdateRoleOutput: UpdateRoleOutput,
+  Boolean: Scalars['Boolean'],
+};
+
+export type AuthOutputResolvers<ContextType = any, ParentType extends ResolversParentTypes['AuthOutput'] = ResolversParentTypes['AuthOutput']> = {
+  token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>,
+};
+
+export type FamilyResolvers<ContextType = any, ParentType extends ResolversParentTypes['Family'] = ResolversParentTypes['Family']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  imageUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  numMembers?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  numArtifacts?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  users?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>,
+};
+
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  signup?: Resolver<ResolversTypes['AuthOutput'], ParentType, ContextType, RequireFields<MutationSignupArgs, 'input'>>,
+  login?: Resolver<ResolversTypes['AuthOutput'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'input'>>,
+  createFamily?: Resolver<Maybe<ResolversTypes['Family']>, ParentType, ContextType, RequireFields<MutationCreateFamilyArgs, 'input'>>,
+  updateUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'input'>>,
+  updateRole?: Resolver<Maybe<ResolversTypes['UpdateRoleOutput']>, ParentType, ContextType, RequireFields<MutationUpdateRoleArgs, 'input'>>,
+};
+
+export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  me?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>,
+};
+
+export type RoleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Role'] = ResolversParentTypes['Role']> = {
+  familyId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  role?: Resolver<ResolversTypes['FamilyRole'], ParentType, ContextType>,
+};
+
+export type UpdateRoleOutputResolvers<ContextType = any, ParentType extends ResolversParentTypes['UpdateRoleOutput'] = ResolversParentTypes['UpdateRoleOutput']> = {
+  userId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  role?: Resolver<Maybe<ResolversTypes['Role']>, ParentType, ContextType>,
+};
+
+export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  imageUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  location?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  dateOfBirth?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  gender?: Resolver<Maybe<ResolversTypes['Gender']>, ParentType, ContextType>,
+  roles?: Resolver<Maybe<Array<ResolversTypes['Role']>>, ParentType, ContextType>,
+  families?: Resolver<Maybe<Array<ResolversTypes['Family']>>, ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  lastLogin?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+};
+
+export type Resolvers<ContextType = any> = {
+  AuthOutput?: AuthOutputResolvers<ContextType>,
+  Family?: FamilyResolvers<ContextType>,
+  Mutation?: MutationResolvers<ContextType>,
+  Query?: QueryResolvers<ContextType>,
+  Role?: RoleResolvers<ContextType>,
+  UpdateRoleOutput?: UpdateRoleOutputResolvers<ContextType>,
+  User?: UserResolvers<ContextType>,
+};
+
+
+/**
+ * @deprecated
+ * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
+*/
+export type IResolvers<ContextType = any> = Resolvers<ContextType>;

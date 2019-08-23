@@ -60,6 +60,10 @@ typings/
 # next.js build output
 .next
 
+#lib
+lib/
+
+
 \.vscode/
 
-functions/service-account.json
+service-account.json
