@@ -22,7 +22,29 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     font-size: 14px;
     font-family: "Rubik", Arial, Helvetica, sans-serif;
+    letter-spacing: 0.01em;
     color: ${props => props.theme.palette.text}
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  h1, h2, h3 {
+    font-family: "Livvic", Arial, Helvetica, sans-serif;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  button {
+    font-family: "Livvic", Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    border: none;
+    letter-spacing: 0.03em;
+    cursor: pointer;
   }
 
   *, *::before, *::after {

@@ -6,9 +6,15 @@ const theme = {
     desktop: "1280px"
   },
   palette: {
-    text: "#493D57",
-    main: "#FF844D",
-    mainDark: "#FF5C14"
+    text: "#44404B",
+    main: "#FF7F5F",
+    secondary: "#FFA217",
+
+    error: "#F73953",
+    border: "#D3D0DD"
+  },
+  mixins: {
+    hoverFade: "transition: ease-in 0.1s"
   }
 }
 

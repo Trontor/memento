@@ -1,42 +1,24 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export const LoginLayout = styled.div`
-  height: 100%;
-`;
-
-export const Intro = styled.div`
-  width: 100%;
-  height: 100%;
-  border-right: 1px solid grey;
-  padding: 20px;
-`;
-
-export const LoginWrapper = styled.div`
-  width: 400px;
+export const LoginContainer = styled.div`
   position: absolute;
-  top: 52%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-`;
+  width: 70%;
 
-export const TitleWrapper = styled.div`
-  width: 250px;
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-bottom: 4px solid #ff996c;
-  border-radius: 1px;
-  text-align: center;
-  letter-spacing: 1px;
+  @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}){
+    width: 450px;
+  }
+
 `;
 
 export const ErrorMsg = styled.div`
   width: 100%;
   margin-left: ${props => (props.attributes === "lastName" ? "27px" : "0")};
   margin-bottom: -16px;
-  color: red;
+  color: 1px solid ${props => props.theme.palette.border};
 `;
 
 export const Message = styled.div`

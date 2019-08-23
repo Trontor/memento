@@ -3,18 +3,17 @@ import React from "react";
 // import {query} from 'apollo-client';
 // import gql from "graphql-tag";
 import { Formik } from "formik";
-import { Form, Title, Input, InputLabel, Error } from "ui/Forms";
+import {  InputContainer, InputField, InputLabel, Error } from "ui/Forms";
+import { ButtonPrimary } from "ui/Buttons";
+import { FormHeader } from "ui/Typography";
+import { Link } from "react-router-dom";
 import * as yup from "yup";
+
 import {
-  LoginButton,
-  FirstName,
-  LastName,
-  Name,
-  Email,
-  Password,
-  SignupButton,
+  NameInputContainer,
   SignupContainer
 } from "./SignupStyles";
+import { HelpText } from "ui/Forms";
 
 const defaultValues = {
   firstName: "",
@@ -36,7 +35,7 @@ const SignupValidationSchema = yup.object().shape({
   email: yup
     .string()
     .email("Please enter your email")
-    .required(),
+    .required("Email is required"),
   password: yup.string().required("Password is required"),
   confirmPassword: yup
     .string()
@@ -47,22 +46,21 @@ const SignupValidationSchema = yup.object().shape({
 export default function Signup() {
   return (
     <>
-      <div>
-        <LoginButton>Log In</LoginButton>
-      </div>
       <Formik
         initialValues={defaultValues}
         onSubmit={(values, actions) => {}}
         validationSchema={SignupValidationSchema}
+        validateOnBlur={false}
+        validateOnChange={false}
         render={props => (
-          <Form onSubmit={props.handleSubmit}>
-            <Title>
-              <h1>Sign up today!</h1>
-            </Title>
-            <Name>
-              <FirstName>
+          <SignupContainer onSubmit={props.handleSubmit}>
+            <FormHeader>
+              Sign up today!
+            </FormHeader>
+            <NameInputContainer>
+              <InputContainer>
                 <InputLabel>First Name</InputLabel>
-                <Input
+                <InputField
                   type="text"
                   name="firstName"
                   onChange={props.handleChange}
@@ -72,10 +70,10 @@ export default function Signup() {
                 {props.errors.firstName && props.touched.firstName && (
                   <Error>{props.errors.firstName}</Error>
                 )}
-              </FirstName>
-              <LastName>
+              </InputContainer>
+              <InputContainer>
                 <InputLabel>Last Name</InputLabel>
-                <Input
+                <InputField
                   type="text"
                   name="lastName"
                   onChange={props.handleChange}
@@ -85,11 +83,11 @@ export default function Signup() {
                 {props.errors.lastName && props.touched.lastName && (
                   <Error>{props.errors.lastName}</Error>
                 )}
-              </LastName>
-            </Name>
-            <Email>
+              </InputContainer>
+            </NameInputContainer>
+            <InputContainer>
               <InputLabel>Email Address</InputLabel>
-              <Input
+              <InputField
                 type="email"
                 name="email"
                 onChange={props.handleChange}
@@ -99,10 +97,10 @@ export default function Signup() {
               {props.errors.email && props.touched.email && (
                 <Error>{props.errors.email}</Error>
               )}
-            </Email>
-            <Password>
+            </InputContainer>
+            <InputContainer>
               <InputLabel>Password</InputLabel>
-              <Input
+              <InputField
                 type="password"
                 name="password"
                 onChange={props.handleChange}
@@ -112,25 +110,23 @@ export default function Signup() {
               {props.errors.password && props.touched.password && (
                 <Error>{props.errors.password}</Error>
               )}
-            </Password>
-            <Password>
-              <InputLabel>Confirm Password</InputLabel>
-              <Input
-                type="password"
-                name="confirmPassword"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                value={props.values.confirmPassword}
-              />
-              {props.errors.confirmPassword &&
-                props.touched.confirmPassword && (
-                  <Error>{props.errors.confirmPassword}</Error>
-                )}
-            </Password>
-            <SignupContainer>
-              <SignupButton type="submit">Sign Up</SignupButton>
-            </SignupContainer>
-          </Form>
+              </InputContainer>
+              <InputContainer>
+                <InputLabel>Confirm Password</InputLabel>
+                <InputField
+                  type="password"
+                  name="confirmPassword"
+                  onChange={props.handleChange}
+                  onBlur={props.handleBlur}
+                  value={props.values.confirmPassword}
+                />
+                {props.errors.confirmPassword &&
+                    <Error>{props.errors.confirmPassword}</Error>
+                  }
+            </InputContainer>
+            <ButtonPrimary type="submit" onClick="submitForm">Sign Up</ButtonPrimary>
+            <HelpText>Already have an account? <Link to="/login">Log in</Link></HelpText>
+          </SignupContainer>
         )}
       />
     </>

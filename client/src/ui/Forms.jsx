@@ -1,64 +1,49 @@
 import styled from "styled-components";
+import { lighten,darken } from 'polished';
 
-export const FormInput = styled.input`
-  width: ${props =>
-    props.attributes === "lastName" || props.attributes === "firstName"
-      ? "89%"
-      : "100%"};
-  padding: 10px;
-  border: none;
-  border-bottom: ${props =>
-    props.valid ? "1px solid red" : "2px solid lightgray"};
+export const InputContainer = styled.div`
+  margin-bottom: 25px;
+`;
+
+export const InputLabel = styled.label`
+  font-size: 13px;
+  color: ${props => lighten(0.3, props.theme.palette.text)};
   display: block;
-  margin-bottom: 0;
-  margin-top: 50px;
-  margin-left: ${props => (props.attributes === "lastName" ? "27px" : "0")};
-  font-size: 14px;
+`;
+
+export const InputField = styled.input`
   color: ${props => props.theme.palette.text};
-`;
-
-export const Form = styled.form`
-  color: #493d57;
-  display: grid;
-  grid-template-rows: repeat(6, 20%);
-  position: relative;
-  float: right;
-  width: 45%;
-  height: 500px;
-
-  padding: 50px 30px 0;
-  font-size: 8pt;
-  margin: 75px 0px;
-`;
-
-export const Title = styled.div`
-  letter-spacing: 1px;
-  border-bottom: 4px solid #ff996c;
-  border-radius: 1px;
-  margin-bottom: 30px;
-  width: 100%;
-  font-size: 10pt;
-`;
-
-export const InputLabel = styled.label``;
-export const Input = styled.input`
   border: none;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid ${props => props.theme.palette.border};
   width: 100%;
-  margin-top: 5px;
-  padding-bottom: 5px;
-  font-size: 12pt;
-`;
+  font-size: 19px;
+  padding: 8px 0;
+  margin-bottom: 3px;
+  ${props => props.theme.mixins.hoverFade};
 
-export const Button = styled.button`
-  text-transform: uppercase;
-  border-radius: 4px;
-  font-weight: bold;
-  &:hover {
-    cursor: pointer;
+  &:focus {
+    outline: none;
+    border-color: ${props => lighten(0.1, props.theme.palette.main)};
+    ${props => props.theme.mixins.hoverFade};
   }
 `;
 
-export const Error = styled.span`
-  color: red;
+export const Error = styled.div`
+  color: ${props => props.theme.palette.error};
+  font-size: 10px;
+  margin-bottom: 10px;
+`;
+
+export const HelpText = styled.span`
+  font-size: 11px;
+
+  a {
+    text-decoration: none;
+    color: ${props => props.theme.palette.main};
+    font-weight: bold;
+
+    &:hover {
+      color: ${props => darken(0.1, props.theme.palette.main)};
+    }
+  }
 `;
