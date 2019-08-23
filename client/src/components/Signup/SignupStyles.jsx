@@ -23,5 +23,5 @@ export const SignupHeader = styled.h2`
 export const NameInputContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 30px;
+  grid-column-gap: 30px;
 `;

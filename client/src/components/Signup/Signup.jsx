@@ -11,6 +11,7 @@ import * as yup from "yup";
 
 import { NameInputContainer, SignupContainer } from "./SignupStyles";
 import { HelpText } from "ui/Forms";
+import { AnimateLabel } from "ui/Forms";
 
 // const defaultValues = {
 //   firstName: "John",
@@ -68,6 +69,8 @@ export default function Signup() {
                   onChange={props.handleChange}
                   onBlur={props.handleBlur}
                   value={props.values.firstName}
+                  filled={props.values.firstName.length > 0}
+                  onfocus={AnimateLabel}
                 />
                 <InputLabel>First Name</InputLabel>
                 {props.errors.firstName && props.touched.firstName && (

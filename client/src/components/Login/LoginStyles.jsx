@@ -27,7 +27,6 @@ export const Message = styled.div`
 `;
 
 export const MsgLink = styled(Link)`
-  color: #ff996c;
   text-decoration: none;
   font-weight: bold;
 `;
