@@ -4,7 +4,6 @@ import { InputContainer, InputField, InputLabel, HelpText } from "ui/Forms";
 import { Logo } from "components/Logo";
 import {
   ErrorMsg,
-  Message,
   MsgLink
 } from "./LoginStyles";
 import { ButtonPrimary } from "ui/Buttons";

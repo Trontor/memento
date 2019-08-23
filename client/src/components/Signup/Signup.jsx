@@ -4,7 +4,7 @@ import React from "react";
 // import gql from "graphql-tag";
 import { Formik } from "formik";
 import {  InputContainer, InputField, InputLabel, Error } from "ui/Forms";
-import { ButtonPrimary, ButtonSecondary } from "ui/Buttons";
+import { ButtonPrimary } from "ui/Buttons";
 import { FormHeader } from "ui/Typography";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
