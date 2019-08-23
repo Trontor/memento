@@ -22,7 +22,13 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     font-size: 14px;
     font-family: "Rubik", Arial, Helvetica, sans-serif;
+    letter-spacing: 0.01em;
     color: ${props => props.theme.palette.text}
+  }
+
+  h1, h2, h3 {
+    font-family: "Nunito", Arial, Helvetica, sans-serif;
+    font-weight: bold;
   }
 
   *, *::before, *::after {

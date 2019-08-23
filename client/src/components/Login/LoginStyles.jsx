@@ -36,7 +36,7 @@ export const ErrorMsg = styled.div`
   width: 100%;
   margin-left: ${props => (props.attributes === "lastName" ? "27px" : "0")};
   margin-bottom: -16px;
-  color: red;
+  color: 1px solid ${props => props.theme.palette.border};
 `;
 
 export const Message = styled.div`

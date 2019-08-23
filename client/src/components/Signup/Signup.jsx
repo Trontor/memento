@@ -3,16 +3,15 @@ import React from "react";
 // import {query} from 'apollo-client';
 // import gql from "graphql-tag";
 import { Formik } from "formik";
-import { Form, Title, Input, InputLabel, Error } from "ui/Forms";
+import { Input, InputLabel, Error } from "ui/Forms";
+import { SubmitButton } from "ui/Buttons";
+import { SignupHeader } from "./SignupStyles";
 import * as yup from "yup";
+
 import {
-  LoginButton,
   FirstName,
   LastName,
-  Name,
-  Email,
-  Password,
-  SignupButton,
+  NameInputContainer,
   SignupContainer
 } from "./SignupStyles";
 
@@ -36,7 +35,7 @@ const SignupValidationSchema = yup.object().shape({
   email: yup
     .string()
     .email("Please enter your email")
-    .required(),
+    .required("Email is required"),
   password: yup.string().required("Password is required"),
   confirmPassword: yup
     .string()
@@ -47,19 +46,18 @@ const SignupValidationSchema = yup.object().shape({
 export default function Signup() {
   return (
     <>
-      <div>
-        <LoginButton>Log In</LoginButton>
-      </div>
       <Formik
         initialValues={defaultValues}
         onSubmit={(values, actions) => {}}
         validationSchema={SignupValidationSchema}
+        validateOnChange={false}
+        validateOnBlur={false}
         render={props => (
-          <Form onSubmit={props.handleSubmit}>
-            <Title>
-              <h1>Sign up today!</h1>
-            </Title>
-            <Name>
+          <SignupContainer onSubmit={props.handleSubmit}>
+            <SignupHeader>
+              Sign up today!
+            </SignupHeader>
+            <NameInputContainer>
               <FirstName>
                 <InputLabel>First Name</InputLabel>
                 <Input
@@ -86,8 +84,7 @@ export default function Signup() {
                   <Error>{props.errors.lastName}</Error>
                 )}
               </LastName>
-            </Name>
-            <Email>
+            </NameInputContainer>
               <InputLabel>Email Address</InputLabel>
               <Input
                 type="email"
@@ -99,8 +96,6 @@ export default function Signup() {
               {props.errors.email && props.touched.email && (
                 <Error>{props.errors.email}</Error>
               )}
-            </Email>
-            <Password>
               <InputLabel>Password</InputLabel>
               <Input
                 type="password"
@@ -112,8 +107,6 @@ export default function Signup() {
               {props.errors.password && props.touched.password && (
                 <Error>{props.errors.password}</Error>
               )}
-            </Password>
-            <Password>
               <InputLabel>Confirm Password</InputLabel>
               <Input
                 type="password"
@@ -126,11 +119,8 @@ export default function Signup() {
                 props.touched.confirmPassword && (
                   <Error>{props.errors.confirmPassword}</Error>
                 )}
-            </Password>
-            <SignupContainer>
-              <SignupButton type="submit">Sign Up</SignupButton>
-            </SignupContainer>
-          </Form>
+            <SubmitButton type="submit">Sign Up</SubmitButton>
+          </SignupContainer>
         )}
       />
     </>

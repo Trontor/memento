@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { FormInput } from "ui/Forms";
 import { Logo } from "components/Logo";
-import { Buttons } from "../../ui/Buttons";
+import { SubmitButton } from "ui/Buttons";
 import {
   LoginLayout,
   Intro,
@@ -109,7 +109,7 @@ export class Login extends Component {
             {formErrors.password.length > 0 && (
               <ErrorMsg>{formErrors.password}</ErrorMsg>
             )}
-            <Buttons>Insert Button here</Buttons>
+            <SubmitButton>Login</SubmitButton>
             <Message>
               Don't have an account?
               <MsgLink to="./Signup"> Sign up</MsgLink>

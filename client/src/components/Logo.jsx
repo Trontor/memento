@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from "styled-components"
 
-const Logotype = styled.header`
+const Logotype = styled.div`
   font-size: 36px;
   font-weight: bold;
   text-transform: lowercase;
