@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import "./Signup.css";
+import { useQuery } from "@apollo/react-hooks";
+// import {query} from 'apollo-client';
+import gql from "graphql-tag";
 
 const emailRegex = RegExp(
   //valid email regex
@@ -201,7 +204,14 @@ export class Signup extends Component {
     );
   }
 }
+ 
+export default function Signup() {
+  return (
+    <div>
+      
+    </div>
+  )
+}
+
 
 export default Signup;
-
-

@@ -7,7 +7,7 @@
     "start": "node lib/server.js",
     "lint": "tslint --project tsconfig.json",
     "gql": "cd graphql && graphql-codegen --config codegen.yml",
-    "update": "npm i && npm i --prefix client",
+    "update": "npm i && cd client && npm i",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
     "build-client": "npm run build --prefix client",
     "dev": "concurrently \"npm run client\" \"npm run server\"",
@@ -32,6 +32,7 @@
   "dependencies": {
     "apollo-server-express": "^2.8.2",
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "firebase": "^6.3.5",
