@@ -1,51 +1,32 @@
 import styled from "styled-components";
+import { Button } from "ui/Forms";
 
-export const SignupLayout = styled.div`
-  height: 100%;
-  display: block;
-
-  @media screen and (max-width: ${props =>
-      props.theme.breakpoints.tabletLanscape}) {
-    display: none;
-  }
+export const Name = styled.div`
+  display: grid;
+  grid-template-columns: 50% 50%;
+`;
+export const Email = styled.div``;
+export const Password = styled.div``;
+export const SignupContainer = styled.div``;
+export const FirstName = styled.div`
+  margin-right: 10px;
+`;
+export const LastName = styled.div`
+  margin-left: 10px;
 `;
 
-export const Intro = styled.div`
+export const SignupButton = styled(Button)`
+  background: #ff996c;
+  color: white;
+  padding: 10px 30px;
+`;
+
+export const LoginButton = styled(Button)`
   float: right;
+  background: white;
+  color: #ff996c;
   margin-top: 25px;
   margin-right: 15px;
-  margin-left: auto;
-`;
-
-export const TitleWrapper = styled.div`
-  width: 230px;
-  position: absolute;
-  top: 20%;
-  left: 64%;
-  transform: translate(-50%, -50%);
-  border-bottom: 4px solid #ff996c;
-  border-radius: 1px;
-  text-align: left;
-  letter-spacing: 1px;
-`;
-
-export const SignupWrapper = styled.div`
-  width: 500px;
-  height: 400px;
-  position: absolute;
-  top: 53%;
-  left: 74%;
-  transform: translate(-50%, -50%);
-`;
-
-export const NameWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-`;
-
-export const ErrorMsg = styled.div`
-  width: 100%;
-  margin-left: ${props => (props.attributes === "lastName" ? "27px" : "0")};
-  margin-bottom: -16px;
-  color: red;
+  padding: 10px 20px;
+  border: 1px solid #ff996c;
 `;

@@ -1,47 +1,21 @@
-import React, { Component } from "react";
-import "./Signup.css";
-import { useQuery } from "@apollo/react-hooks";
+import React from "react";
+// import { useQuery } from "@apollo/react-hooks";
 // import {query} from 'apollo-client';
-import gql from "graphql-tag";
+// import gql from "graphql-tag";
 import { Formik } from "formik";
-import { Form } from "ui/Forms";
-import { Title } from "ui/Forms";
-import styled from "styled-components";
-import { Input } from "ui/Forms";
-import { InputLabel } from "ui/Forms";
-import { Button } from "ui/Forms";
+import { Form, Title, Input, InputLabel, Error } from "ui/Forms";
 import * as yup from "yup";
-import { Error } from "ui/Forms";
+import {
+  LoginButton,
+  FirstName,
+  LastName,
+  Name,
+  Email,
+  Password,
+  SignupButton,
+  SignupContainer
+} from "./SignupStyles";
 
-const Name = styled.div`
-  display: grid;
-  grid-template-columns: 50% 50%;
-`;
-const Email = styled.div``;
-const Password = styled.div``;
-const SignupContainer = styled.div``;
-const FirstName = styled.div`
-  margin-right: 10px;
-`;
-const LastName = styled.div`
-  margin-left: 10px;
-`;
-
-const SignupButton = styled(Button)`
-  background: #ff996c;
-  color: white;
-  padding: 10px 30px;
-`;
-
-const LoginButton = styled(Button)`
-  float: right;
-  background: white;
-  color: #ff996c;
-  margin-top: 25px;
-  margin-right: 15px;
-  padding: 10px 20px;
-  border: 1px solid #ff996c;
-`;
 const defaultValues = {
   firstName: "",
   lastName: "",
@@ -76,6 +50,7 @@ export default function Signup() {
       <div>
         <LoginButton>Log In</LoginButton>
       </div>
+      <Formik
         initialValues={defaultValues}
         onSubmit={(values, actions) => {}}
         validationSchema={SignupValidationSchema}
