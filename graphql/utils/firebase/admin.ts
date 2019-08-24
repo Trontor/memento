@@ -24,7 +24,16 @@ console.log(
     JSON.stringify(config)
 );
 
-admin.initializeApp(config);
+const serviceAccount = process.env["SERVICE_ACCOUNT"];
+if (!serviceAccount) {
+  throw new Error("The $SERVICE_ACCOUNT environment variable was not found!");
+}
+const keys = JSON.parse(serviceAccount);
+
+admin.initializeApp({
+  credential: admin.credential.cert(keys),
+  databaseURL: "https://memento-84bad.firebaseio.com"
+});
 console.log("Firestore connection established.");
 firebase.initializeApp(config);
 console.log("Firebase connection established.");
