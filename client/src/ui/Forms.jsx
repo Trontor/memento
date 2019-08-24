@@ -1,14 +1,31 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { lighten,darken } from 'polished';
 
 export const InputContainer = styled.div`
   margin-bottom: 25px;
+  position: relative;
 `;
+
+export const AnimateLabel = css`
+  transform: translateY(-150%);
+  font-size: 11px;
+  color: ${props => lighten(0.1, props.theme.palette.text)};
+  transition: 0.3s ease-in-out;
+`
 
 export const InputLabel = styled.label`
   font-size: 13px;
-  color: ${props => lighten(0.3, props.theme.palette.text)};
+  color: ${props => lighten(0.35, props.theme.palette.text)};
   display: block;
+  transition: 0.5s ease-in-out;
+
+  ${({ filled }) => filled && css`
+    transform: translateY(-150%);
+    font-size: 11px;
+    color: ${props => lighten(0.1, props.theme.palette.text)};
+    transition: 0.3s ease-in-out;
+    `
+  }
 `;
 
 export const InputField = styled.input`
@@ -26,6 +43,7 @@ export const InputField = styled.input`
     border-color: ${props => lighten(0.1, props.theme.palette.main)};
     ${props => props.theme.mixins.hoverFade};
   }
+
 `;
 
 export const Error = styled.div`

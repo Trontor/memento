@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
-export const SignupContainer = styled.div`
+export const SignupContainer = styled.form`
   margin: 50px;
   position: relative;
   top: 50%;
   transform: translate(0, -50%);
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}){
+  @media screen and (min-width: ${props =>
+      props.theme.breakpoints.tabletPortrait}) {
     /* margin: 80px; */
   }
 `;
@@ -22,5 +23,5 @@ export const SignupHeader = styled.h2`
 export const NameInputContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 30px;
+  grid-column-gap: 30px;
 `;

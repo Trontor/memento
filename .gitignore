@@ -67,3 +67,5 @@ lib/
 \.vscode/
 
 service-account.json
+
+.DS_Store
