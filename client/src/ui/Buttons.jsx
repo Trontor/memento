@@ -33,7 +33,28 @@ export const ButtonSecondary = styled.button`
   ${props => props.theme.mixins.hoverFade};
 `;
 
-export const MenuIcon = styled(Menu)`
+export const MenuIcon = styled.button`
+  margin: 15px;
+  background: transparent;
+  position: relative;
+  z-index: 99;
+  &:focus {
+    outline: none;
+  }
+  &:active {
+    outline: none;
+  }
+`;
+
+export const CloseMenuIcon = styled.button`
+  margin: 15px;
+  background: transparent;
   color: black;
-  size: "1";
+  position: relative;
+  &:focus {
+    outline: none;
+  }
+  &:active {
+    outline: none;
+  }
 `;

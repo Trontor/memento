@@ -1,13 +1,16 @@
 import styled from "styled-components";
 
 export const DashboardContainer = styled.div`
+  position: relative;
   width: 100%;
   height: 100%;
+  left: 0;
 `;
 
-export const Navbar = styled.div`
-  height: 70px;
-  background: skyblue;
+export const Navbar = styled.header`
+  height: 60px;
+  display: grid;
+  grid-template-columns: 10% 90%;
 `;
 
 export const TextWrapper = styled.text`
@@ -39,17 +42,45 @@ export const TextWrapper = styled.text`
 `;
 
 export const SearchBar = styled.input`
-  margin-top: 15px;
-  margin-left: 15px;
+  display: ${props => (props.menuClick ? "none" : "block")};
+  margin-top: 17px;
+  margin-left: ${props => (props.onSidebar ? "25px" : "10px")};
   width: 90%;
+  height: 40px;
   padding: 10px;
-  background: lightgray;
-  border-radius: 15px;
+  background: ${props => (props.onSidebar ? "white" : "lightgray")};
+  border-radius: 20px;
   border: none;
+  font-size: 18px;
   &:focus {
     outline: none;
   }
   &:active {
     outline: none;
   }
+  @media screen and (max-width: ${props =>
+      props.theme.breakpoints.tabletPortrait}) {
+    margin-left: 40px;
+    width: 80%;
+  }
+`;
+
+export const Sidebar = styled.div`
+  top: 0;
+  width: 100%;
+  height: 80%;
+  position: absolute;
+  background: ${props => props.theme.palette.sidebar};
+  z-index: 999;
+  left: ${props => (props.menuClick ? "0" : "-100%")};
+  transition: left 0.3s ease-in-out;
+  @media screen and (min-width: ${props =>
+      props.theme.breakpoints.tabletPortrait}) {
+    width: 40%;
+  }
+`;
+
+export const SidebarItem = styled.li`
+  margin-top: 10px;
+  font-size: 16px;
 `;
