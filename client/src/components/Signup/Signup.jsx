@@ -69,6 +69,24 @@ const SIGNUP = gql`
   }
 `;
 export default function Signup() {
+  /**
+   * Creates a GraphQL Mutation Hook
+   * https://apollographql.com/docs/react/essentials/mutations/
+   *
+   * The hook is passed the SIGNUP constant, which contains our GraphQL mutation
+   * and within the mutation, a variable is denoted: $input. We will fill this
+   * in later, when we call the mutation.
+   *
+   * The hook returns a tuple, with a 'mutate' function in the first entry,
+   * in this case 'signup'. You can see this used in the Formik onSubmit
+   * callback.
+   *
+   * The second entry is an object, with three properties of interest to us,
+   *    data:     The data returned from your mutation.
+   *    loading:  A boolean indicating whether the mutation is in flight
+   *    error:    Any errors returned from the mutation
+   *
+   */
   const [signup, { loading, data, error }] = useMutation(SIGNUP);
   if (loading) {
     return <div>Loading...</div>;
