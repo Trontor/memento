@@ -17,9 +17,6 @@ export const InputLabel = styled.label`
   font-size: 13px;
   color: ${props => lighten(0.35, props.theme.palette.text)};
   display: block;
-  position: absolute;
-  left: 0;
-  top: 10px;
   transition: 0.5s ease-in-out;
 
   ${({ filled }) => filled && css`
@@ -47,12 +44,6 @@ export const InputField = styled.input`
     ${props => props.theme.mixins.hoverFade};
   }
 
-  /* &:focus ~ ${InputLabel}{
-    transform: translateY(-150%);
-    font-size: 11px;
-    color: ${props => lighten(0.1, props.theme.palette.text)};
-    transition: 0.3s ease-in-out;
-  } */
 `;
 
 export const Error = styled.div`
