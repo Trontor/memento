@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Menu } from "styled-icons/boxicons-regular/Menu";
 
 export const ButtonPrimary = styled.button`
   background: ${props => props.theme.palette.main};
@@ -30,4 +31,9 @@ export const ButtonSecondary = styled.button`
   display: inline-block;
   font-size: 15px;
   ${props => props.theme.mixins.hoverFade};
+`;
+
+export const MenuIcon = styled(Menu)`
+  color: black;
+  size: "1";
 `;
