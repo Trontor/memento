@@ -19,6 +19,10 @@ const config = {
   appId: process.env.appId
 };
 
+console.log(
+  "Initialising Firestore and Firebase with the following config:" + config
+);
+
 admin.initializeApp(config);
 console.log("Firestore connection established.");
 firebase.initializeApp(config);
