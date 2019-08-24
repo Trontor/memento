@@ -175,7 +175,10 @@ export default class UserModel {
    * @param userDoc Document from Firebase Firestore
    * @param userId id of user
    */
-  convertUserDocumentToUser(userDoc: UserDocument, userId: string): User {
+  static convertUserDocumentToUser(
+    userDoc: UserDocument,
+    userId: string
+  ): User {
     // graphQl-ify roles from Object into array `[{familyId, role}]`
     const roles: Role[] = [];
     if (userDoc.roles)
