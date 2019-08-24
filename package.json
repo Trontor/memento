@@ -41,7 +41,6 @@
     "firebase-functions-test": "^0.1.6",
     "graphql": "^14.4.2",
     "jest": "^24.8.0",
-    "styled-icons": "^8.3.0",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
