@@ -9,6 +9,7 @@ import { gql } from "apollo-server-express";
 const typeDefs = gql`
   type Query {
     me: String!
+    currentUser: User
     user(id: String!): User
   }
 

@@ -79,6 +79,21 @@ export const getUser = async (userId: string, ctx: Context): Promise<User> => {
 };
 
 /**
+ * Fetches a user from user model and returns GQL schema-compliant `User` type.
+ * @param userId firebase user id
+ * @param ctx apollo server context containing references to models and firebase libs
+ */
+export const getAuthenticatedUser = async (ctx: Context): Promise<User> => {
+  const currentUser = await ctx.user;
+  if (!currentUser) {
+    throw new AuthenticationError("Unauthorised");
+  }
+  const id = currentUser.uid;
+  const userDoc = await ctx.models.user.getUser(id);
+  return ctx.models.user.convertUserDocumentToUser(userDoc, id);
+};
+
+/**
  * Selects the allowed fields to update a user.
  */
 const reduceUpdateUserInput = ({

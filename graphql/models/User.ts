@@ -177,14 +177,14 @@ export default class UserModel {
    */
   convertUserDocumentToUser(userDoc: UserDocument, userId: string): User {
     // graphQl-ify roles from Object into array `[{familyId, role}]`
-    const roles: Role[] = Object.entries(userDoc.roles).map(
-      ([familyId, role]) => {
+    const roles: Role[] = [];
+    if (userDoc.roles)
+      Object.entries(userDoc.roles).map(([familyId, role]) => {
         return {
           familyId,
           role: role === FamilyRole.Admin ? FamilyRole.Admin : FamilyRole.Normal
         };
-      }
-    );
+      });
 
     // graphQl-ify gender property
     let gender = null;
