@@ -8,8 +8,14 @@ import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { HttpLink } from "apollo-link-http";
 const cache = new InMemoryCache();
+const DEV_ENDPOINT = "http://localhost:5000/graphql";
+const PROD_ENDPOINT = "/graphql";
+const gqlEndpoint =
+  process.env.NODE_ENV === "development" ? DEV_ENDPOINT : PROD_ENDPOINT;
+console.log("Linking GraphQL to Apollo Client at: " + gqlEndpoint);
+
 const link = new HttpLink({
-  uri: "http://localhost:5000/graphql"
+  uri: gqlEndpoint
 });
 
 const client = new ApolloClient({
