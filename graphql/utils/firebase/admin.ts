@@ -20,7 +20,8 @@ const config = {
 };
 
 console.log(
-  "Initialising Firestore and Firebase with the following config:" + config
+  "Initialising Firestore and Firebase with the following config:" +
+    JSON.stringify(config)
 );
 
 admin.initializeApp(config);
