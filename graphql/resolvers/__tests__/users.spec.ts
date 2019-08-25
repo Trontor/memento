@@ -173,7 +173,6 @@ describe("updateUser resolver", () => {
       db,
       clientAuth
     }) as jest.Mocked<UserModel>;
-
     mockFamilyModelInstance = new FamilyModel({ db }) as jest.Mocked<
       FamilyModel
     >;
@@ -241,7 +240,12 @@ describe("updateUser resolver", () => {
     };
 
     mockUserModelInstance.updateUser.mockResolvedValue(expect.anything());
-    mockUserModelInstance.convertUserDocumentToUser.mockReturnValue({
+
+    const mockedFromUserDocument = jest.fn();
+
+    UserModel.fromUserDocument = mockedFromUserDocument;
+
+    mockedFromUserDocument.mockReturnValue({
       id: UPDATER_ID,
       email: DUMMY_STRING,
       firstName: DUMMY_STRING,
@@ -253,7 +257,7 @@ describe("updateUser resolver", () => {
 
     const res = await mutate(data);
     expect(mockUserModelInstance.updateUser).toBeCalled();
-    expect(mockUserModelInstance.convertUserDocumentToUser).toBeCalled();
+    expect(mockedFromUserDocument).toBeCalled();
     expect(res.errors).toBeUndefined();
     expect(res.data).toMatchObject({
       updateUser: {
