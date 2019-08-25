@@ -19,6 +19,7 @@ const typeDefs = gql`
     createFamily(input: CreateFamilyInput!): Family
     updateUser(input: UpdateUserInput!): User
     updateRole(input: UpdateRoleInput!): UpdateRoleOutput
+    createInvitation(input: CreateInvitationInput!): Invitation
   }
 
   type User {
@@ -107,6 +108,17 @@ const typeDefs = gql`
   type AuthOutput {
     token: String
     user: User
+  }
+
+  type Invitation {
+    id: ID!
+    familyId: ID!
+    createdAt: String!
+    expiresAt: String!
+  }
+
+  input CreateInvitationInput {
+    familyId: ID!
   }
 `;
 

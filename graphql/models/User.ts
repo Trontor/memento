@@ -13,7 +13,7 @@ import {
   RoleInput
 } from "../generated/graphql";
 import { ApolloError } from "apollo-server-express";
-import { USER_NOT_FOUND_ERROR_MESSAGE } from "../resolvers/users";
+import { USER_NOT_FOUND_ERROR_MESSAGE } from "../utils/errors";
 
 export interface UserDocument {
   email: string;

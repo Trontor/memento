@@ -9,13 +9,7 @@ import resolvers from "..";
 import { db, clientAuth, adminAuth } from "../../utils/firebase/admin";
 import UserModel, { UserDocument } from "../../models/User";
 import FamilyModel from "../../models/Family";
-import {
-  AUTH_ERROR_MESSAGE,
-  EMAIL_IN_USE_ERROR_MESSAGE,
-  NOT_LOGGED_IN_ERROR_MESSAGE,
-  AuthorizationError,
-  MUST_BE_FAMILY_ADMIN_ERROR_MESSAGE
-} from "../users";
+
 import { createContext } from "../../utils/context";
 import { LOGIN, SIGNUP, UPDATE_USER, UPDATE_ROLE } from "./mutations";
 import {
@@ -24,23 +18,38 @@ import {
   FamilyRole,
   UpdateRoleOutput
 } from "../../generated/graphql";
+import InvitationModel from "../../models/Invitation";
+import {
+  AUTH_ERROR_MESSAGE,
+  EMAIL_IN_USE_ERROR_MESSAGE,
+  NOT_LOGGED_IN_ERROR_MESSAGE,
+  AuthorizationError,
+  MUST_BE_FAMILY_ADMIN_ERROR_MESSAGE
+} from "../../utils/errors";
 
 jest.mock("../../models/User");
 jest.mock("../../models/Family");
+jest.mock("../../models/Invitation");
 
 describe("integration tests - user resolver", () => {
   let mockUserModelInstance: jest.Mocked<UserModel>,
     mockFamilyModelInstance: jest.Mocked<FamilyModel>,
+    mockInvitationModelInstance: jest.Mocked<InvitationModel>,
     testServer: ApolloServer;
   beforeEach(() => {
     mockUserModelInstance = new UserModel({ db, clientAuth }) as any;
     mockFamilyModelInstance = new FamilyModel({ db }) as any;
+    mockInvitationModelInstance = new InvitationModel({ db }) as any;
 
     testServer = new ApolloServer({
       typeDefs,
       resolvers,
       context: createContext(
-        { user: mockUserModelInstance, family: mockFamilyModelInstance },
+        {
+          user: mockUserModelInstance,
+          family: mockFamilyModelInstance,
+          invitation: mockInvitationModelInstance
+        },
         adminAuth,
         db
       )
@@ -168,6 +177,8 @@ describe("integration tests - user resolver", () => {
 describe("updateUser resolver", () => {
   let mockUserModelInstance: jest.Mocked<UserModel>;
   let mockFamilyModelInstance: jest.Mocked<FamilyModel>;
+  let mockInvitationModelInstance: jest.Mocked<InvitationModel>;
+
   beforeEach(() => {
     mockUserModelInstance = new UserModel({
       db,
@@ -176,6 +187,7 @@ describe("updateUser resolver", () => {
     mockFamilyModelInstance = new FamilyModel({ db }) as jest.Mocked<
       FamilyModel
     >;
+    mockInvitationModelInstance = new InvitationModel({ db }) as any;
   });
 
   it("should throw AuthenticationError if updater is not authenticated", async () => {
@@ -183,7 +195,11 @@ describe("updateUser resolver", () => {
       typeDefs,
       resolvers,
       context: createContext(
-        { user: mockUserModelInstance, family: mockFamilyModelInstance },
+        {
+          user: mockUserModelInstance,
+          family: mockFamilyModelInstance,
+          invitation: mockInvitationModelInstance
+        },
         adminAuth,
         db
       )
@@ -272,6 +288,8 @@ describe("updateUser resolver", () => {
 describe("updateRole resolver", () => {
   let mockUserModelInstance: jest.Mocked<UserModel>;
   let mockFamilyModelInstance: jest.Mocked<FamilyModel>;
+  let mockInvitationModelInstance: jest.Mocked<InvitationModel>;
+
   beforeEach(() => {
     mockUserModelInstance = new UserModel({
       db,
@@ -281,6 +299,9 @@ describe("updateRole resolver", () => {
     mockFamilyModelInstance = new FamilyModel({ db }) as jest.Mocked<
       FamilyModel
     >;
+    mockInvitationModelInstance = new InvitationModel({ db }) as jest.Mocked<
+      InvitationModel
+    >;
   });
 
   it("should throw AuthenticationError if updater is not authenticated", async () => {
@@ -288,7 +309,11 @@ describe("updateRole resolver", () => {
       typeDefs,
       resolvers,
       context: createContext(
-        { user: mockUserModelInstance, family: mockFamilyModelInstance },
+        {
+          user: mockUserModelInstance,
+          family: mockFamilyModelInstance,
+          invitation: mockInvitationModelInstance
+        },
         adminAuth,
         db
       )

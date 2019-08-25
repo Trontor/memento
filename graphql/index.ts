@@ -8,6 +8,7 @@ import {
 } from "./utils/context";
 import UserModel from "./models/User";
 import FamilyModel from "./models/Family";
+import InvitationModel from "./models/Invitation";
 
 /**
  * Context is shared by all the resolvers of a given request.
@@ -17,7 +18,8 @@ import FamilyModel from "./models/Family";
 const context = createContext(
   {
     user: new UserModel({ db, clientAuth }),
-    family: new FamilyModel({ db })
+    family: new FamilyModel({ db }),
+    invitation: new InvitationModel({ db })
   },
   adminAuth,
   db
