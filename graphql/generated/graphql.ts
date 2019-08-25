@@ -81,6 +81,7 @@ export type MutationUpdateRoleArgs = {
 export type Query = {
   __typename?: 'Query',
   me: Scalars['String'],
+  currentUser?: Maybe<User>,
   user?: Maybe<User>,
 };
 
@@ -288,6 +289,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   me?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  currentUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>,
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>,
 };
 
