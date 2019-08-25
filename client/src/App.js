@@ -6,6 +6,7 @@ import Landing from "./components/Landing/Landing";
 import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
 import Dashboard from "./components/Dashboard/Dashboard";
+import Sidebar from "./components/Sidebar/Sidebar";
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -68,6 +69,7 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/dashboard" component={Dashboard} />
+        <Route path="/sidebar" component={Sidebar} />
       </Router>
     </ThemeProvider>
   );

@@ -10,8 +10,8 @@ import {
 import {
   ButtonPrimary,
   ButtonSecondary,
-  MenuIcon,
-  CloseMenuIcon
+  MenuButton,
+  CloseMenuButton
 } from "ui/Buttons";
 import { useQuery } from "@apollo/react-hooks";
 import GET_CURRENT_USER from "queries/GetCurrentUser";
@@ -30,9 +30,9 @@ export default function Dashboard() {
     <DashboardContainer>
       {/* Navigation Menu Bar */}
       <Navbar>
-        <MenuIcon onClick={toggleSidebarOpened}>
+        <MenuButton size="40px" onClick={toggleSidebarOpened}>
           <i className="fas fa-bars fa-4x"></i>
-        </MenuIcon>
+        </MenuButton>
         <SearchBar
           placeholder="Search artefacts..."
           menuClick={isSidebarOpen}
@@ -42,9 +42,9 @@ export default function Dashboard() {
       {/* Side Menu Bar */}
       <Sidebar menuClick={isSidebarOpen}>
         <Navbar onSidebar={isSidebarOpen}>
-          <CloseMenuIcon onClick={toggleSidebarOpened}>
+          <CloseMenuButton size="40px" onClick={toggleSidebarOpened}>
             <i className="fas fa-times fa-4x"></i>
-          </CloseMenuIcon>
+          </CloseMenuButton>
           <SearchBar
             placeholder="Search artefacts..."
             onSidebar={isSidebarOpen}

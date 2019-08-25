@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Menu } from "styled-icons/boxicons-regular/Menu";
+import { Menu } from "styled-icons/feather/Menu";
+import { Close } from "styled-icons/evil/Close";
 
 export const ButtonPrimary = styled.button`
   background: ${props => props.theme.palette.main};
@@ -33,7 +34,7 @@ export const ButtonSecondary = styled.button`
   ${props => props.theme.mixins.hoverFade};
 `;
 
-export const MenuIcon = styled.button`
+export const MenuButton = styled(Menu)`
   margin: 15px;
   background: transparent;
   position: relative;
@@ -46,7 +47,7 @@ export const MenuIcon = styled.button`
   }
 `;
 
-export const CloseMenuIcon = styled.button`
+export const CloseMenuButton = styled(Close)`
   margin: 15px;
   background: transparent;
   color: black;
