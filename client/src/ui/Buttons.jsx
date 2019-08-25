@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import { Menu } from "styled-icons/feather/Menu";
 import { Close } from "styled-icons/evil/Close";
+import { PlusCircle } from "styled-icons/boxicons-regular/PlusCircle";
+import { Edit } from "styled-icons/material/Edit";
+import { Settings } from "styled-icons/material/Settings";
+import { AddToQueue } from "styled-icons/boxicons-regular/AddToQueue";
+import { GroupAdd } from "styled-icons/material/GroupAdd";
 
 export const ButtonPrimary = styled.button`
   background: ${props => props.theme.palette.main};
@@ -35,7 +40,6 @@ export const ButtonSecondary = styled.button`
 `;
 
 export const MenuButton = styled(Menu)`
-  margin: 15px;
   background: transparent;
   position: relative;
   z-index: 99;
@@ -58,4 +62,29 @@ export const CloseMenuButton = styled(Close)`
   &:active {
     outline: none;
   }
+`;
+
+export const NewGroup = styled(PlusCircle)`
+  color: gray;
+  margin-right: 10px;
+`;
+
+export const NewArtefact = styled(AddToQueue)`
+  color: gray;
+  margin-right: 10px;
+`;
+
+export const EditProfile = styled(Edit)`
+  color: gray;
+  margin-right: 10px;
+`;
+
+export const Setting = styled(Settings)`
+  color: gray;
+  margin-right: 10px;
+`;
+
+export const Invite = styled(GroupAdd)`
+  color: gray;
+  margin-right: 10px;
 `;

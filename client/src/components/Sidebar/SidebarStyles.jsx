@@ -1,1 +1,69 @@
 import styled from "styled-components";
+import { Search } from "styled-icons/boxicons-regular/Search";
+
+export const SidebarContainer = styled.div`
+  position: absolute;
+  height: 100%;
+  top: 0;
+  width: 100%;
+  background: lightgray;
+  @media screen and (min-width: ${props =>
+      props.theme.breakpoints.tabletPortrait}) {
+    width: 50%;
+  }
+`;
+
+export const SearchHeader = styled.div`
+  display: grid;
+  grid-template-columns: 15% 85%;
+  margin-top: 10px;
+`;
+
+export const SearchBar = styled.div`
+  width: 90%;
+  float: right;
+  height: 45px;
+  margin: 10px 0 0 5px;
+  border: 1px solid gray;
+  background: white;
+  border-radius: 5px;
+`;
+
+export const SearchIcon = styled(Search)`
+  color: black;
+  margin: 8px 0 0 10px;
+`;
+
+export const SearchInput = styled.input`
+  position: absolute;
+  background: transparent;
+  border: none;
+  margin-top: 7px;
+  padding: 5px;
+  font-size: 16px;
+  font-family: "Rubik";
+  &:focus {
+    outline: none;
+  }
+  &:active {
+    outline: none;
+  }
+`;
+
+export const FamilyListContainer = styled.div`
+  width: 85%;
+  height: 35%;
+  margin: 0px 15px 0px 25px;
+  border-bottom: 2px solid black;
+`;
+
+export const TextList = styled.li`
+  margin-top: 10px;
+  list-style-type: none;
+`;
+
+export const MenuContainer = styled.div`
+  width: 85%;
+  margin: 0px 15px 0px 25px;
+  border: 1px solid black;
+`;

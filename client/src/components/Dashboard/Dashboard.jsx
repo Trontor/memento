@@ -30,9 +30,7 @@ export default function Dashboard() {
     <DashboardContainer>
       {/* Navigation Menu Bar */}
       <Navbar>
-        <MenuButton size="40px" onClick={toggleSidebarOpened}>
-          <i className="fas fa-bars fa-4x"></i>
-        </MenuButton>
+        <MenuButton size="40px" onClick={toggleSidebarOpened} />
         <SearchBar
           placeholder="Search artefacts..."
           menuClick={isSidebarOpen}
@@ -42,9 +40,7 @@ export default function Dashboard() {
       {/* Side Menu Bar */}
       <Sidebar menuClick={isSidebarOpen}>
         <Navbar onSidebar={isSidebarOpen}>
-          <CloseMenuButton size="40px" onClick={toggleSidebarOpened}>
-            <i className="fas fa-times fa-4x"></i>
-          </CloseMenuButton>
+          <CloseMenuButton size="40px" onClick={toggleSidebarOpened} />
           <SearchBar
             placeholder="Search artefacts..."
             onSidebar={isSidebarOpen}
