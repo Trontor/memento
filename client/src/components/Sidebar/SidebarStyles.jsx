@@ -2,11 +2,14 @@ import styled from "styled-components";
 import { Search } from "styled-icons/boxicons-regular/Search";
 
 export const SidebarContainer = styled.div`
+  display: ${props => (props.menuClick ? "none" : "block")};
   position: absolute;
   height: 100%;
   top: 0;
   width: 100%;
   background: lightgray;
+  z-index: 999;
+
   @media screen and (min-width: ${props =>
       props.theme.breakpoints.tabletPortrait}) {
     width: 50%;
