@@ -13,8 +13,8 @@ import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { NameInputContainer, SignupContainer } from "./SignupStyles";
 import { HelpText } from "ui/Forms";
-import SIGNUP from "mutations/Signup";
 import { useMutation } from "@apollo/react-hooks";
+import { SIGNUP } from "mutations/Authentication";
 
 const defaultValues = {
   firstName: "Jane",
@@ -71,7 +71,6 @@ const SignupValidationSchema = yup.object().shape({
  *     }
  *   }
  */
-
 const processAuthentication = data => {
   // Extract JWT token from response using ES6 destructuring
   const { token } = data.signup;
