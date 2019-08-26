@@ -18,10 +18,9 @@ import {
   FamilyListContainer,
   TextList,
   MenuContainer,
-  SettingContainer,
-  Footer,
-  SmallLogo
+  SettingContainer
 } from "./SidebarStyles";
+import { Logo } from "components/Logo";
 
 export default function Sidebar() {
   const [isSidebarOpen, setSidebarOpened] = useState(false);
@@ -40,9 +39,7 @@ export default function Sidebar() {
         </SearchHeader>
         <FamilyListContainer>
           <h3>My Families</h3>
-          <TextList>
-            <a href="#">Leung</a>
-          </TextList>
+          <TextList>Leung</TextList>
           <TextList>Siu</TextList>
           <TextList>Febriana</TextList>
           <TextList>Joshi</TextList>
@@ -73,7 +70,7 @@ export default function Sidebar() {
             Edit profile & account
           </TextList>
         </SettingContainer>
-        <SmallLogo />
+        <Logo /> {/*not sure how to override the styling in Logo.jsx */}
         <ButtonPrimary>Sign Out</ButtonPrimary>
       </SidebarContainer>
     </>

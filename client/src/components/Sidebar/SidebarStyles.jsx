@@ -1,16 +1,17 @@
 import styled from "styled-components";
 import { Search } from "styled-icons/boxicons-regular/Search";
-import Logo from "../Logo";
+import { lighten } from "polished";
 
 export const SidebarContainer = styled.div`
-  display: ${props => (props.menuClick ? "none" : "block")};
+  display: ${props => (props.menuClick ? "block" : "none")};
   position: absolute;
   height: 100%;
   top: 0;
   width: 100%;
-  background: ${props => props.theme.palette.sidebar};
+  background: ${props => lighten(0.05, props.theme.palette.sidebar)};
   z-index: 999;
-  box-shadow: 5px 10px gray;
+  box-shadow: 5px 10px lightgrey;
+
   @media screen and (min-width: ${props =>
       props.theme.breakpoints.tabletPortrait}) {
     width: 414px;
@@ -83,14 +84,4 @@ export const SettingContainer = styled.div`
   width: 85%;
   margin: 0px 15px 0px 25px;
   border-top: 1px solid ${props => props.theme.palette.border};
-`;
-
-export const Footer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  height: 35px;
-`;
-
-export const SmallLogo = styled(Logo)`
-  font-size: 5px;
 `;

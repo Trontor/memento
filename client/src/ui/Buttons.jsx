@@ -40,6 +40,8 @@ export const ButtonSecondary = styled.button`
 `;
 
 export const MenuButton = styled(Menu)`
+  margin-top: 20px;
+  margin-left: 15px;
   background: transparent;
   position: relative;
   z-index: 99;
