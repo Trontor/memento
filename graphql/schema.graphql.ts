@@ -20,6 +20,7 @@ const typeDefs = gql`
     updateUser(input: UpdateUserInput!): User
     updateRole(input: UpdateRoleInput!): UpdateRoleOutput
     createInvitation(input: CreateInvitationInput!): Invitation
+    joinFamily(input: JoinFamilyInput!): Family
   }
 
   type User {
@@ -119,6 +120,10 @@ const typeDefs = gql`
 
   input CreateInvitationInput {
     familyId: ID!
+  }
+
+  input JoinFamilyInput {
+    invitationId: ID!
   }
 `;
 

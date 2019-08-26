@@ -1,5 +1,5 @@
 import { WithFirebaseFirestore } from "../utils/firebase/admin";
-import { ApolloError } from "apollo-server-express";
+import { ApolloError, UserInputError } from "apollo-server-express";
 import { get24HoursFromNow } from "../utils/date";
 
 export interface InvitationDocument {
@@ -18,25 +18,25 @@ export default class InvitationModel {
   }
 
   async getInvitationById(id: string): Promise<InvitationDocument> {
-    try {
-      const snap = await this.db
-        .collection(InvitationModel.INVITATION_COLLECTION)
-        .doc(id)
-        .get();
-      const data = snap.data();
-      if (!data) {
-        throw new ApolloError("Invitation not found");
-      }
-      return {
-        id: snap.id,
-        familyId: data.familyId,
-        createdAt: data.createdAt,
-        expiresAt: data.expiresAt
-      };
-    } catch (err) {
-      console.error(err);
-      throw new ApolloError("Firestore error");
+    if (!id) {
+      throw new UserInputError("Invitation id is invalid");
     }
+
+    const snap = await this.db
+      .collection(InvitationModel.INVITATION_COLLECTION)
+      .doc(id)
+      .get();
+    const data = snap.data();
+    if (!snap.exists || !data) {
+      throw new UserInputError("Invitation not found");
+    }
+
+    return {
+      id: snap.id,
+      familyId: data.familyId,
+      createdAt: data.createdAt,
+      expiresAt: data.expiresAt
+    };
   }
 
   async createInvitation(familyId: string): Promise<InvitationDocument> {

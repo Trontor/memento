@@ -56,6 +56,10 @@ export type Invitation = {
   expiresAt: Scalars['String'],
 };
 
+export type JoinFamilyInput = {
+  invitationId: Scalars['ID'],
+};
+
 export type Mutation = {
   __typename?: 'Mutation',
   signup: AuthOutput,
@@ -64,6 +68,7 @@ export type Mutation = {
   updateUser?: Maybe<User>,
   updateRole?: Maybe<UpdateRoleOutput>,
   createInvitation?: Maybe<Invitation>,
+  joinFamily?: Maybe<Family>,
 };
 
 
@@ -94,6 +99,11 @@ export type MutationUpdateRoleArgs = {
 
 export type MutationCreateInvitationArgs = {
   input: CreateInvitationInput
+};
+
+
+export type MutationJoinFamilyArgs = {
+  input: JoinFamilyInput
 };
 
 export type Query = {
@@ -257,6 +267,7 @@ export type ResolversTypes = {
   UpdateRoleOutput: ResolverTypeWrapper<UpdateRoleOutput>,
   CreateInvitationInput: CreateInvitationInput,
   Invitation: ResolverTypeWrapper<Invitation>,
+  JoinFamilyInput: JoinFamilyInput,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
 };
 
@@ -282,6 +293,7 @@ export type ResolversParentTypes = {
   UpdateRoleOutput: UpdateRoleOutput,
   CreateInvitationInput: CreateInvitationInput,
   Invitation: Invitation,
+  JoinFamilyInput: JoinFamilyInput,
   Boolean: Scalars['Boolean'],
 };
 
@@ -315,6 +327,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   updateUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'input'>>,
   updateRole?: Resolver<Maybe<ResolversTypes['UpdateRoleOutput']>, ParentType, ContextType, RequireFields<MutationUpdateRoleArgs, 'input'>>,
   createInvitation?: Resolver<Maybe<ResolversTypes['Invitation']>, ParentType, ContextType, RequireFields<MutationCreateInvitationArgs, 'input'>>,
+  joinFamily?: Resolver<Maybe<ResolversTypes['Family']>, ParentType, ContextType, RequireFields<MutationJoinFamilyArgs, 'input'>>,
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {

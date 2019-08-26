@@ -6,41 +6,24 @@ import {
   updateRole,
   getAuthenticatedUser
 } from "./users";
-import { createFamily, getFamily, createInvitation } from "./family";
 import {
-  UserSignupInput,
-  UserLoginInput,
-  CreateFamilyInput,
-  User,
-  UpdateUserInput,
-  UpdateRoleInput,
-  CreateInvitationInput
-} from "../generated/graphql";
+  createFamily,
+  getFamily,
+  createInvitation,
+  joinFamily
+} from "./family";
+
 import { Context } from "../utils/context";
-
-interface WithUserSignupInput {
-  input: UserSignupInput;
-}
-
-interface WithUserLoginInput {
-  input: UserLoginInput;
-}
-
-interface WithCreateFamilyInput {
-  input: CreateFamilyInput;
-}
-
-interface WithUpdateUserInput {
-  input: UpdateUserInput;
-}
-
-interface WithUpdateRoleInput {
-  input: UpdateRoleInput;
-}
-
-interface WithCreateInvitationInput {
-  input: CreateInvitationInput;
-}
+import { User, Family } from "../generated/graphql";
+import {
+  WithUserSignupInput,
+  WithUserLoginInput,
+  WithCreateFamilyInput,
+  WithUpdateUserInput,
+  WithUpdateRoleInput,
+  WithCreateInvitationInput,
+  WithJoinFamilyInput
+} from "./interfaces";
 
 const resolvers = {
   Query: {
@@ -49,6 +32,16 @@ const resolvers = {
       getAuthenticatedUser(context),
     user: (_: any, { id }: { id: string }, context: Context) =>
       getUser(id, context)
+  },
+  Family: {
+    users: async ({ id }: Family, _: any, context: Context) => {
+      console.log("nested family");
+      const { users } = await context.models.family.getFamilyById(id);
+      const promises = users.map(userId => {
+        return getUser(userId, context);
+      });
+      return Promise.all(promises);
+    }
   },
   User: {
     families: ({ roles }: User, _: any, context: Context) => {
@@ -77,7 +70,9 @@ const resolvers = {
       _: any,
       { input }: WithCreateInvitationInput,
       context: Context
-    ) => createInvitation(input, context)
+    ) => createInvitation(input, context),
+    joinFamily: (_: any, { input }: WithJoinFamilyInput, context: Context) =>
+      joinFamily(input, context)
   }
 };
 

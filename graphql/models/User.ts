@@ -83,6 +83,7 @@ export default class UserModel {
   }
 
   async getUser(userId: string): Promise<UserDocument> {
+    console.log(userId);
     const snap = await this.db
       .collection(UserModel.USERS_COLLECTION)
       .doc(userId)
@@ -123,19 +124,19 @@ export default class UserModel {
     token = await user.getIdToken();
 
     // create new user document for registered user
-    const newUserDoc: User = {
-      id: user.uid,
+    const newUserDoc: UserDocument = {
       email: email,
       firstName: firstName,
       lastName: lastName,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      roles: {}
     };
 
     await this.db
       .collection(UserModel.USERS_COLLECTION)
       .doc(user.uid)
       .set(newUserDoc);
-    return { token, user: newUserDoc };
+    return { token, userDoc: newUserDoc, userId: user.uid };
   }
 
   /**
