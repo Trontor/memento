@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Logo from "../Logo";
 import {
+  ButtonPrimary,
   MenuButton,
   CloseMenuButton,
   NewGroup,
@@ -17,7 +17,10 @@ import {
   SearchInput,
   FamilyListContainer,
   TextList,
-  MenuContainer
+  MenuContainer,
+  SettingContainer,
+  Footer,
+  SmallLogo
 } from "./SidebarStyles";
 
 export default function Sidebar() {
@@ -25,7 +28,7 @@ export default function Sidebar() {
   const toggleSidebarOpened = () => setSidebarOpened(!isSidebarOpen);
 
   return (
-    <div>
+    <>
       <MenuButton size="35px" onClick={toggleSidebarOpened} />
       <SidebarContainer menuClick={isSidebarOpen}>
         <SearchHeader>
@@ -55,6 +58,8 @@ export default function Sidebar() {
             <NewArtefact size="25px" />
             New Artefact
           </TextList>
+        </MenuContainer>
+        <SettingContainer>
           <TextList>
             <Invite size="25px" />
             Invite Family members
@@ -67,9 +72,10 @@ export default function Sidebar() {
             <EditProfile size="25px" />
             Edit profile & account
           </TextList>
-        </MenuContainer>
-        <Logo />
+        </SettingContainer>
+        <SmallLogo />
+        <ButtonPrimary>Sign Out</ButtonPrimary>
       </SidebarContainer>
-    </div>
+    </>
   );
 }

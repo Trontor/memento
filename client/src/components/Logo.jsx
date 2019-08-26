@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import { Link } from "react-router-dom"
-import styled from "styled-components"
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const Logotype = styled(Link)`
   display: block;
@@ -14,7 +14,8 @@ const Logotype = styled(Link)`
   top: 40px;
   margin-bottom: 1em;
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLanscape}) {
+  @media screen and (min-width: ${props =>
+      props.theme.breakpoints.tabletLanscape}) {
     text-align: left;
     left: 50px;
   }
@@ -22,10 +23,8 @@ const Logotype = styled(Link)`
 
 export class Logo extends Component {
   render() {
-    return (
-      <Logotype to="/">Memento</Logotype>
-    )
+    return <Logotype to="/">Memento</Logotype>;
   }
 }
 
-export default Logo
+export default Logo;
