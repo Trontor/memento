@@ -26,7 +26,7 @@ const LoginValidationSchema = yup.object().shape({
 
 const processAuthentication = data => {
   // Extract JWT token from response using ES6 destructuring
-  const { token } = data.signup;
+  const { token } = data.login;
   // Store the token to localStorage, which is NOT a secure way to store
   // sensitive information, but it is easy. See here:
   // https://www.rdegges.com/2018/please-stop-using-local-storage/
@@ -43,7 +43,9 @@ const defaultValues = {
   password: process.env.REACT_APP_DEFAULT_LOGIN_PASSWORD || ""
 };
 export default function Login(props) {
-  const [login, { loading, error, data }] = useMutation(LOGIN);
+  const [login, { loading, error, data }] = useMutation(LOGIN, {
+    onCompleted: processAuthentication
+  });
   if (localStorage.getItem("AUTH-TOKEN")) {
     props.history.push("/dashboard");
   }

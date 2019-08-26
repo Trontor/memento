@@ -21,9 +21,8 @@ export default function Dashboard() {
   const toggleSidebarOpened = () => setSidebarOpened(!isSidebarOpen);
   const { data, error, loading } = useQuery(GET_CURRENT_USER);
   if (error) {
-    console.log(error.graphQLErrors);
-  }
-  if (data) {
+    console.log("Error loading user data:", error);
+  } else if (data) {
     console.log("Success:", data);
   }
   return (
@@ -39,11 +38,11 @@ export default function Dashboard() {
 
       {/* Side Menu Bar */}
       <Sidebar menuClick={isSidebarOpen}>
-        <Navbar onSidebar={isSidebarOpen}>
+        <Navbar>
           <CloseMenuButton size="40px" onClick={toggleSidebarOpened} />
           <SearchBar
             placeholder="Search artefacts..."
-            onSidebar={isSidebarOpen}
+            isOnSidebar={isSidebarOpen}
           />
         </Navbar>
         {/* Items inside sidebar */}

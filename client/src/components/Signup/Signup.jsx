@@ -80,7 +80,10 @@ const processAuthentication = data => {
   localStorage.setItem("AUTH-TOKEN", token);
 };
 
-export default function Signup() {
+export default function Signup(props) {
+  if (localStorage.getItem("AUTH-TOKEN")) {
+    props.history.push("/dashboard");
+  }
   /**
    * Creates a GraphQL Mutation Hook
    * https://apollographql.com/docs/react/essentials/mutations/

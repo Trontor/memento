@@ -13,7 +13,7 @@ export const Navbar = styled.header`
   grid-template-columns: 10% 90%;
 `;
 
-export const TextWrapper = styled.text`
+export const TextWrapper = styled.span`
   position: absolute;
   top: 40%;
   left: 50%;
@@ -44,11 +44,11 @@ export const TextWrapper = styled.text`
 export const SearchBar = styled.input`
   display: ${props => (props.menuClick ? "none" : "block")};
   margin-top: 17px;
-  margin-left: ${props => (props.onSidebar ? "25px" : "10px")};
+  margin-left: ${props => (props.isOnSidebar ? "25px" : "10px")};
   width: 90%;
   height: 40px;
   padding: 10px;
-  background: ${props => (props.onSidebar ? "white" : "lightgray")};
+  background: ${props => (props.isOnSidebar ? "white" : "lightgray")};
   border-radius: 20px;
   border: none;
   font-size: 18px;
