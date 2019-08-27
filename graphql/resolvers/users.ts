@@ -16,7 +16,7 @@ import {
 } from "apollo-server-express";
 
 import { Context } from "../utils/context";
-import { UserDocument } from "../models/User";
+import UserModel, { UserDocument } from "../models/User";
 
 export const AUTH_ERROR_MESSAGE: string = "Could not authenticate user";
 export const EMAIL_IN_USE_ERROR_MESSAGE: string =
@@ -75,7 +75,22 @@ export const login = async (
  */
 export const getUser = async (userId: string, ctx: Context): Promise<User> => {
   const userDoc = await ctx.models.user.getUser(userId);
-  return ctx.models.user.convertUserDocumentToUser(userDoc, userId);
+  return UserModel.fromUserDocument(userDoc, userId);
+};
+
+/**
+ * Fetches a user from user model and returns GQL schema-compliant `User` type.
+ * @param userId firebase user id
+ * @param ctx apollo server context containing references to models and firebase libs
+ */
+export const getAuthenticatedUser = async (ctx: Context): Promise<User> => {
+  const currentUser = await ctx.user;
+  if (!currentUser) {
+    throw new AuthenticationError("Unauthorised");
+  }
+  const id = currentUser.uid;
+  const userDoc = await ctx.models.user.getUser(id);
+  return UserModel.fromUserDocument(userDoc, id);
 };
 
 /**
@@ -116,10 +131,7 @@ export const updateUser = async (
       updatee,
       reducedInput
     );
-    const updatedUser: User = ctx.models.user.convertUserDocumentToUser(
-      updatedDoc,
-      updatee
-    );
+    const updatedUser: User = UserModel.fromUserDocument(updatedDoc, updatee);
     return updatedUser;
   } catch (err) {
     console.error(err);

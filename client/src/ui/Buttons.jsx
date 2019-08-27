@@ -1,5 +1,11 @@
 import styled from "styled-components";
-import { Menu } from "styled-icons/boxicons-regular/Menu";
+import { Menu } from "styled-icons/feather/Menu";
+import { Close } from "styled-icons/evil/Close";
+import { PlusCircle } from "styled-icons/boxicons-regular/PlusCircle";
+import { Edit } from "styled-icons/material/Edit";
+import { Settings } from "styled-icons/material/Settings";
+import { AddToQueue } from "styled-icons/boxicons-regular/AddToQueue";
+import { GroupAdd } from "styled-icons/material/GroupAdd";
 
 export const ButtonPrimary = styled.button`
   background: ${props => props.theme.palette.main};
@@ -33,7 +39,54 @@ export const ButtonSecondary = styled.button`
   ${props => props.theme.mixins.hoverFade};
 `;
 
-export const MenuIcon = styled(Menu)`
+export const MenuButton = styled(Menu)`
+  margin-top: 20px;
+  margin-left: 15px;
+  background: transparent;
+  position: relative;
+  z-index: 99;
+  &:focus {
+    outline: none;
+  }
+  &:active {
+    outline: none;
+  }
+`;
+
+export const CloseMenuButton = styled(Close)`
+  margin: 15px;
+  background: transparent;
   color: black;
-  size: "1";
+  position: relative;
+  &:focus {
+    outline: none;
+  }
+  &:active {
+    outline: none;
+  }
+`;
+
+export const NewGroup = styled(PlusCircle)`
+  color: gray;
+  margin-right: 10px;
+`;
+
+export const NewArtefact = styled(AddToQueue)`
+  color: gray;
+  margin-right: 10px;
+`;
+
+export const EditProfile = styled(Edit)`
+  color: gray;
+  margin-right: 10px;
+`;
+
+export const Setting = styled(Settings)`
+  color: gray;
+  margin-right: 10px;
+`;
+
+export const Invite = styled(GroupAdd)`
+  color: gray;
+  margin-right: 10px;
 `;

@@ -1,22 +1,19 @@
 import styled from "styled-components";
 
-export const DashboardContainer = styled.div`
-  width: 100%;
-  height: 100%;
+export const Navbar = styled.header`
+  height: 60px;
+  display: grid;
+  grid-template-columns: 10% 90%;
 `;
 
-export const Navbar = styled.div`
-  height: 70px;
-  background: skyblue;
-`;
-
-export const TextWrapper = styled.text`
+export const TextWrapper = styled.span`
   position: absolute;
-  top: 40%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 70%;
+  width: 50%;
   text-align: center;
+  padding: 25px;
   color: ${props => props.theme.palette.text};
 
   h2 {
@@ -35,21 +32,5 @@ export const TextWrapper = styled.text`
         props.theme.breakpoints.tabletPortrait}) {
       width: 50%;
     }
-  }
-`;
-
-export const SearchBar = styled.input`
-  margin-top: 15px;
-  margin-left: 15px;
-  width: 90%;
-  padding: 10px;
-  background: lightgray;
-  border-radius: 15px;
-  border: none;
-  &:focus {
-    outline: none;
-  }
-  &:active {
-    outline: none;
   }
 `;

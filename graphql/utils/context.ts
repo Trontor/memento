@@ -51,11 +51,12 @@ export function createContext(
         try {
           decodedToken = await adminAuth.verifyIdToken(token);
         } catch (err) {
-          console.error(err);
+          console.log("Error decoding token, token expired.");
           throw new AuthenticationError("Token expired");
         }
       }
-      if (decodedToken) console.log("Request made with token: " + decodedToken);
+      if (decodedToken)
+        console.log("Request made with token: " + JSON.stringify(decodedToken));
     }
 
     // inject dependencies for ease of testing

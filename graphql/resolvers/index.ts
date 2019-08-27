@@ -1,4 +1,11 @@
-import { signup, login, getUser, updateUser, updateRole } from "./users";
+import {
+  signup,
+  login,
+  getUser,
+  updateUser,
+  updateRole,
+  getAuthenticatedUser
+} from "./users";
 import { createFamily, getFamily } from "./family";
 import {
   UserSignupInput,
@@ -33,6 +40,8 @@ interface WithUpdateRoleInput {
 const resolvers = {
   Query: {
     me: () => "me",
+    currentUser: (_: any, {}, context: Context) =>
+      getAuthenticatedUser(context),
     user: (_: any, { id }: { id: string }, context: Context) =>
       getUser(id, context)
   },

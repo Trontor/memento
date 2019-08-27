@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/Trontor/memento#readme",
   "dependencies": {
+    "apollo-link-error": "^1.1.11",
     "apollo-server-express": "^2.8.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",

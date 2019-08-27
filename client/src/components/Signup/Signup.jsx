@@ -1,7 +1,4 @@
 import React from "react";
-// import { useQuery } from "@apollo/react-hooks";
-// import {query} from 'apollo-client';
-// import gql from "graphql-tag";
 import { Formik } from "formik";
 import {
   InputContainer,
@@ -14,17 +11,17 @@ import { ButtonPrimary } from "ui/Buttons";
 import { FormHeader } from "ui/Typography";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
-import gql from "graphql-tag";
 import { NameInputContainer, SignupContainer } from "./SignupStyles";
 import { HelpText } from "ui/Forms";
 import { useMutation } from "@apollo/react-hooks";
+import { SIGNUP } from "mutations/Authentication";
 
 const defaultValues = {
-  firstName: "John",
+  firstName: "Jane",
   lastName: "Doe",
-  email: "Test123@gmail.com",
-  password: "IOUHJWRFN",
-  confirmPassword: "IOUHJWRFN"
+  email: `test-account-${Math.trunc(Math.random() * 1000000)}@email.com`,
+  password: "compl14n7Pa$$w0rd",
+  confirmPassword: "compl14n7Pa$$w0rd"
 };
 
 // const defaultValues = {
@@ -35,6 +32,11 @@ const defaultValues = {
 //   confirmPassword: ""
 // };
 
+/**
+ * Uses a validation libary, called 'Yup' to easily specify a validation schema.
+ * This is used in tandem with Formik, which has first class support for Yup
+ * through its prop, validationSchema - which you can see below.
+ */
 const SignupValidationSchema = yup.object().shape({
   firstName: yup
     .string()
@@ -46,8 +48,8 @@ const SignupValidationSchema = yup.object().shape({
     .min(2, "Last name is too short"),
   email: yup
     .string()
-    .email("Please enter your email")
-    .required("Email is required"),
+    .email("Please enter a valid email")
+    .required("Please enter your email"),
   password: yup.string().required("Password is required"),
   confirmPassword: yup
     .string()
@@ -55,20 +57,33 @@ const SignupValidationSchema = yup.object().shape({
     .required("Password confirm is required")
 });
 
-const SIGNUP = gql`
-  mutation($input: UserSignupInput!) {
-    signup(input: $input) {
-      token
-      user {
-        email
-        firstName
-        lastName
-        id
-      }
-    }
+/**
+ * Processes a successful signup mutation by saving the resulting token
+ * and re-routing to the dashboard.
+ *
+ * @param {Object} data Mutation result of the form:
+ * "signup": {
+ *     "token": "<token string>",
+ *     "user": {
+ *         "firstName": "<first name>",
+ *         "lastName": "<last name>",
+ *         "id": "<id gibberish>"
+ *     }
+ *   }
+ */
+const processAuthentication = data => {
+  // Extract JWT token from response using ES6 destructuring
+  const { token } = data.signup;
+  // Store the token to localStorage, which is NOT a secure way to store
+  // sensitive information, but it is easy. See here:
+  // https://www.rdegges.com/2018/please-stop-using-local-storage/
+  localStorage.setItem("AUTH-TOKEN", token);
+};
+
+export default function Signup(props) {
+  if (localStorage.getItem("AUTH-TOKEN")) {
+    props.history.push("/dashboard");
   }
-`;
-export default function Signup() {
   /**
    * Creates a GraphQL Mutation Hook
    * https://apollographql.com/docs/react/essentials/mutations/
@@ -87,7 +102,10 @@ export default function Signup() {
    *    error:    Any errors returned from the mutation
    *
    */
-  const [signup, { loading, data, error }] = useMutation(SIGNUP);
+  const [signup, { loading, data, error }] = useMutation(SIGNUP, {
+    // A MutationOption that
+    onCompleted: processAuthentication
+  });
   if (loading) {
     return <div>Loading...</div>;
   }
