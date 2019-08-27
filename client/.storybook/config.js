@@ -1,8 +1,70 @@
-import { configure } from '@storybook/react';
+import React from 'react';
+import { configure, addDecorator } from '@storybook/react';
+import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import { theme } from "../stories/theme";
 
+const GlobalStyle = createGlobalStyle`
+  html {
+    height: 100%;
+    margin: 0;
+  }
+
+  #root {
+    height: 100%;
+  }
+
+  body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    font-family: "Rubik", Arial, Helvetica, sans-serif;
+    letter-spacing: 0.01em;
+    color: ${props => props.theme.palette.text}
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  h1, h2, h3 {
+    font-family: "Livvic", Arial, Helvetica, sans-serif;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  button {
+    font-family: "Livvic", Arial, Helvetica, sans-serif;
+    border: none;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+`;
+
+const passTheme = story =>
+  <ThemeProvider theme={theme}>
+    <>
+      <GlobalStyle/>
+      {story()}
+    </>
+  </ThemeProvider>;
+
+addDecorator(passTheme);
+
+const req = require.context('../stories', true, /\.stories\.js$/);
 function loadStories() {
-  require('../stories/index.js');
-  // You can require as many stories as you need.
+  req.keys().forEach(filename => req(filename));
 }
 
 configure(loadStories, module);
