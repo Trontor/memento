@@ -78,10 +78,10 @@ export const MenuContainer = styled.div`
   width: 85%;
   margin: 0px 15px 0px 25px;
   padding: 15px 0 15px 0;
+  border-bottom: 1px solid ${props => props.theme.palette.border};
 `;
 
 export const SettingContainer = styled.div`
   width: 85%;
-  margin: 0px 15px 0px 25px;
-  border-top: 1px solid ${props => props.theme.palette.border};
+  margin: 15px 15px 25px 25px;
 `;

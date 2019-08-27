@@ -21,10 +21,28 @@ const Logotype = styled(Link)`
   }
 `;
 
+const LogoStyle = styled.text`
+  display: block;
+  float: left;
+  color: ${props => props.theme.palette.text};
+  font-size: 25px;
+  font-weight: light;
+  text-transform: lowercase;
+  width: 40%;
+  position: relative;
+  margin-left: 1em;
+`;
+
 export class Logo extends Component {
   render() {
     return <Logotype to="/">Memento</Logotype>;
   }
 }
 
-export default Logo;
+export class MiniLogo extends Component {
+  render() {
+    return <LogoStyle>Memento</LogoStyle>;
+  }
+}
+
+export default { Logo, MiniLogo };

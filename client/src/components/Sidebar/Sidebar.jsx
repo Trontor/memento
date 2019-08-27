@@ -20,7 +20,7 @@ import {
   MenuContainer,
   SettingContainer
 } from "./SidebarStyles";
-import { Logo } from "components/Logo";
+import { MiniLogo } from "components/Logo";
 
 export default function Sidebar() {
   const [isSidebarOpen, setSidebarOpened] = useState(false);
@@ -70,7 +70,7 @@ export default function Sidebar() {
             Edit profile & account
           </TextList>
         </SettingContainer>
-        <Logo /> {/*not sure how to override the styling in Logo.jsx */}
+        <MiniLogo />
         <ButtonPrimary>Sign Out</ButtonPrimary>
       </SidebarContainer>
     </>
