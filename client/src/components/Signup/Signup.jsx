@@ -81,7 +81,7 @@ const processAuthentication = data => {
 };
 
 export default function Signup(props) {
-  if (localStorage.getItem("AUTH-TOKEN")) {
+  if (props.history && localStorage.getItem("AUTH-TOKEN")) {
     props.history.push("/dashboard");
   }
   /**

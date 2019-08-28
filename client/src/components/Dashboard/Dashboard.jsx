@@ -6,7 +6,7 @@ import { useQuery } from "@apollo/react-hooks";
 import GET_CURRENT_USER from "queries/GetCurrentUser";
 
 export default function Dashboard() {
-  const { data, error, loading } = useQuery(GET_CURRENT_USER);
+  const { data, error /*, loading*/ } = useQuery(GET_CURRENT_USER);
   if (error) {
     console.log("Error loading user data:", error);
   } else if (data) {
