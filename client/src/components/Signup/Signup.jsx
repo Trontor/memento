@@ -8,7 +8,7 @@ import {
   AnimateLabel
 } from "ui/Forms";
 import { ButtonPrimary } from "ui/Buttons";
-import { FormHeader } from "ui/Typography";
+import { Header } from "ui/Typography";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { NameInputContainer, SignupContainer } from "./SignupStyles";
@@ -135,7 +135,7 @@ export default function Signup(props) {
         validateOnChange={false}
         render={props => (
           <SignupContainer onSubmit={props.handleSubmit}>
-            <FormHeader>Sign up today!</FormHeader>
+            <Header underline>Sign up today!</Header>
             <NameInputContainer>
               <InputContainer>
                 <InputLabel>First Name</InputLabel>

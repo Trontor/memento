@@ -70,6 +70,7 @@ function App() {
         <Route path="/signup" component={Signup} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/sidebar" component={Sidebar} />
+        <Route path="/new-family" component={Dashboard} />
       </Router>
     </ThemeProvider>
   );

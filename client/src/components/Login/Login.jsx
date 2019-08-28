@@ -1,5 +1,5 @@
 import React from "react";
-import { FormHeader } from "ui/Typography";
+import { Header } from "ui/Typography";
 import {
   Error,
   InputContainer,
@@ -61,7 +61,7 @@ export default function Login(props) {
     <>
       <Logo />
       <LoginContainer>
-        <FormHeader>Welcome back!</FormHeader>
+        <Header underline>Welcome back!</Header>
         <Formik
           initialValues={defaultValues}
           onSubmit={(values, actions) => {
