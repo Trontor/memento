@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Logo from "../Logo";
 import {
+  ButtonPrimary,
   MenuButton,
   CloseMenuButton,
   NewGroup,
@@ -17,15 +17,17 @@ import {
   SearchInput,
   FamilyListContainer,
   TextList,
-  MenuContainer
+  MenuContainer,
+  SettingContainer
 } from "./SidebarStyles";
+import { MiniLogo } from "components/Logo";
 
 export default function Sidebar() {
   const [isSidebarOpen, setSidebarOpened] = useState(false);
   const toggleSidebarOpened = () => setSidebarOpened(!isSidebarOpen);
 
   return (
-    <div>
+    <>
       <MenuButton size="35px" onClick={toggleSidebarOpened} />
       <SidebarContainer menuClick={isSidebarOpen}>
         <SearchHeader>
@@ -37,9 +39,7 @@ export default function Sidebar() {
         </SearchHeader>
         <FamilyListContainer>
           <h3>My Families</h3>
-          <TextList>
-            <a href="#">Leung</a>
-          </TextList>
+          <TextList>Leung</TextList>
           <TextList>Siu</TextList>
           <TextList>Febriana</TextList>
           <TextList>Joshi</TextList>
@@ -55,6 +55,8 @@ export default function Sidebar() {
             <NewArtefact size="25px" />
             New Artefact
           </TextList>
+        </MenuContainer>
+        <SettingContainer>
           <TextList>
             <Invite size="25px" />
             Invite Family members
@@ -67,9 +69,10 @@ export default function Sidebar() {
             <EditProfile size="25px" />
             Edit profile & account
           </TextList>
-        </MenuContainer>
-        <Logo />
+        </SettingContainer>
+        <MiniLogo />
+        <ButtonPrimary>Sign Out</ButtonPrimary>
       </SidebarContainer>
-    </div>
+    </>
   );
 }

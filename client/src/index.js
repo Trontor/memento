@@ -34,29 +34,29 @@ const authLink = setContext((_, { headers }) => {
 const errorLink = onError(
   ({ graphQLErrors, networkError, operation, forward }) => {
     if (graphQLErrors) {
-      for (let err of graphQLErrors) {
-        switch (err.extensions.code) {
-          case "UNAUTHENTICATED":
-            break;
-          // error code is set to UNAUTHENTICATED
-          // when AuthenticationError thrown in resolver
-          // localStorage.removeItem("AUTH-TOKEN");
-          // modify the operation context with a new token
-          // const oldHeaders = operation.getContext().headers;
-          // operation.setContext({
-          //   headers: {
-          //     ...oldHeaders,
-          //     authorization: getNewToken()
-          //   }
-          // });
-          // retry the request, returning the new observable
-          // return forward(operation);
-        }
-      }
+      // for (let err of graphQLErrors) {
+      //   switch (err.extensions.code) {
+      //     case "UNAUTHENTICATED":
+      //       break;
+      // error code is set to UNAUTHENTICATED
+      // when AuthenticationError thrown in resolver
+      // localStorage.removeItem("AUTH-TOKEN");
+      // modify the operation context with a new token
+      // const oldHeaders = operation.getContext().headers;
+      // operation.setContext({
+      //   headers: {
+      //     ...oldHeaders,
+      //     authorization: getNewToken()
+      //   }
+      // });
+      // retry the request, returning the new observable
+      // return forward(operation);
+      // }
     }
-    if (networkError) {
-      console.log(`[Network error]: ${networkError}`);
-    }
+    // }
+    // if (networkError) {
+    //   console.log(`[Network error]: ${networkError}`);
+    // }
   }
 );
 

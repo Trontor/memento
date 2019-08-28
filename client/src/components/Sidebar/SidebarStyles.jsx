@@ -1,18 +1,20 @@
 import styled from "styled-components";
 import { Search } from "styled-icons/boxicons-regular/Search";
+import { lighten } from "polished";
 
 export const SidebarContainer = styled.div`
-  display: ${props => (props.menuClick ? "none" : "block")};
+  display: ${props => (props.menuClick ? "block" : "none")};
   position: absolute;
   height: 100%;
   top: 0;
   width: 100%;
-  background: lightgray;
+  background: ${props => lighten(0.05, props.theme.palette.sidebar)};
   z-index: 999;
+  box-shadow: 5px 10px lightgrey;
 
   @media screen and (min-width: ${props =>
       props.theme.breakpoints.tabletPortrait}) {
-    width: 50%;
+    width: 414px;
   }
 `;
 
@@ -27,13 +29,13 @@ export const SearchBar = styled.div`
   float: right;
   height: 45px;
   margin: 10px 0 0 5px;
-  border: 1px solid gray;
-  background: white;
+  border: 1px solid #e0e0e0;
+  background: #fcfcfc;
   border-radius: 5px;
 `;
 
 export const SearchIcon = styled(Search)`
-  color: black;
+  color: rgba(75, 71, 75, 0.8);
   margin: 8px 0 0 10px;
 `;
 
@@ -43,8 +45,11 @@ export const SearchInput = styled.input`
   border: none;
   margin-top: 7px;
   padding: 5px;
-  font-size: 16px;
   font-family: "Rubik";
+  font-weight: 300;
+  font-size: 16px;
+  font-style: normal;
+  line-height: 19px;
   &:focus {
     outline: none;
   }
@@ -57,16 +62,26 @@ export const FamilyListContainer = styled.div`
   width: 85%;
   height: 35%;
   margin: 0px 15px 0px 25px;
-  border-bottom: 2px solid black;
+  border-bottom: 1px solid ${props => props.theme.palette.border};
 `;
 
 export const TextList = styled.li`
   margin-top: 10px;
   list-style-type: none;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 18px;
 `;
 
 export const MenuContainer = styled.div`
   width: 85%;
   margin: 0px 15px 0px 25px;
-  border: 1px solid black;
+  padding: 15px 0 15px 0;
+  border-bottom: 1px solid ${props => props.theme.palette.border};
+`;
+
+export const SettingContainer = styled.div`
+  width: 85%;
+  margin: 15px 15px 25px 25px;
 `;

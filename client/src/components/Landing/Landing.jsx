@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Carousel from "../Carousel/Carousel";
-import Logo from "../Logo";
+import { Logo } from "../Logo";
 import { LandingLayout, Intro } from "./LandingStyles";
 import Signup from "../Signup/Signup";
 

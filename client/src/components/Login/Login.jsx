@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { FormHeader } from "ui/Typography";
 import {
   Error,
@@ -8,7 +8,7 @@ import {
   HelpText
 } from "ui/Forms";
 import { Logo } from "components/Logo";
-import { ErrorMsg, MsgLink } from "./LoginStyles";
+import { MsgLink } from "./LoginStyles";
 import { ButtonPrimary } from "ui/Buttons";
 import { LoginContainer } from "./LoginStyles";
 import * as yup from "yup";
@@ -43,7 +43,7 @@ const defaultValues = {
   password: process.env.REACT_APP_DEFAULT_LOGIN_PASSWORD || ""
 };
 export default function Login(props) {
-  const [login, { loading, error, data }] = useMutation(LOGIN, {
+  const [login, { loading /*, error*/, data }] = useMutation(LOGIN, {
     onCompleted: processAuthentication
   });
   if (localStorage.getItem("AUTH-TOKEN")) {

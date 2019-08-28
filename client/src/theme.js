@@ -12,7 +12,7 @@ const theme = {
 
     error: "#F73953",
     border: "#D3D0DD",
-    sidebar: "#E8E8E8"
+    sidebar: "#E5E5E5"
   },
   mixins: {
     hoverFade: "transition: ease-in 0.1s"
