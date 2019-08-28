@@ -1,9 +1,18 @@
 import styled, { css } from "styled-components";
 import { lighten,darken } from 'polished';
 
-export const InputContainer = styled.div`
+export const InputSection = styled.div`
   margin-bottom: 25px;
   position: relative;
+`;
+
+export const FormSection = styled.div`
+  margin-bottom: 50px;
+  position: relative;
+
+  &:last-child{
+    margin-bottom: 25px;
+  }
 `;
 
 export const AnimateLabel = css`
@@ -35,7 +44,6 @@ export const InstructionLabel = styled.label`
   display: block;
   margin-bottom: 1em;
   opacity: 0.8;
-  margin-top: 60px;
 `;
 
 
@@ -85,5 +93,5 @@ export const HelpText = styled.span`
 export const FormHelpText = styled.span`
   font-size: 11px;
   font-weight: 300;
-  opacity: 0.5;
+  opacity: 0.6;
 `;
