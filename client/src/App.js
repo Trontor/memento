@@ -7,6 +7,7 @@ import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Sidebar from "./components/Sidebar/Sidebar";
+import CreateFamily from "./components/CreateFamily/CreateFamily";
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -70,7 +71,7 @@ function App() {
         <Route path="/signup" component={Signup} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/sidebar" component={Sidebar} />
-        <Route path="/new-family" component={Dashboard} />
+        <Route path="/create-family" component={CreateFamily} />
       </Router>
     </ThemeProvider>
   );

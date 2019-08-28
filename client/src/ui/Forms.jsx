@@ -28,15 +28,32 @@ export const InputLabel = styled.label`
   }
 `;
 
+export const InstructionLabel = styled.label`
+  font-size: 16px;
+  font-family: 'Livvic', sans-serif;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 1em;
+  opacity: 0.8;
+  margin-top: 60px;
+`;
+
+
 export const InputField = styled.input`
+  font-family: "Rubik", sans-serif;
   color: ${props => props.theme.palette.text};
   border: none;
   border-bottom: 1px solid ${props => props.theme.palette.border};
   width: 100%;
   font-size: 19px;
-  padding: 8px 0;
+  padding: 6px 0;
   margin-bottom: 3px;
   ${props => props.theme.mixins.hoverFade};
+
+  ::placeholder {
+    opacity: 0.4;
+    font-weight: 300;
+  }
 
   &:focus {
     outline: none;
@@ -63,4 +80,10 @@ export const HelpText = styled.span`
       color: ${props => darken(0.1, props.theme.palette.main)};
     }
   }
+`;
+
+export const FormHelpText = styled.span`
+  font-size: 11px;
+  font-weight: 300;
+  opacity: 0.5;
 `;
