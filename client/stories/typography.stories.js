@@ -10,14 +10,8 @@ export const PageHeader = styled.h1`
     display: inline-block;
     border-bottom: 5px solid ${props => props.theme.palette.main};
     padding-bottom: 2px;
+    margin-bottom: 1.5em;
   `};
-`;
-
-export const Instructions = styled.label`
-  font-size: 16px;
-  font-family: 'Livvic', sans-serif;
-  font-weight: bold;
-  display: block;
 `;
 
 storiesOf('Typography', module)

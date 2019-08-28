@@ -9,8 +9,16 @@ export const center = css`
 
 export const Container = styled.div`
   width: 100%;
-  padding: 20px;
+  padding: 30px;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+
+  @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}) {
+    width: 70%;
+  }
+
+  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
+    width: 50%;
+  }
 `;

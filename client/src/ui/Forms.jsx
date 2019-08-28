@@ -43,7 +43,6 @@ export const InputField = styled.input`
     border-color: ${props => lighten(0.1, props.theme.palette.main)};
     ${props => props.theme.mixins.hoverFade};
   }
-
 `;
 
 export const Error = styled.div`
