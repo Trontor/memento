@@ -10,9 +10,7 @@ export const center = css`
 export const Container = styled.div`
   width: 100%;
   padding: 40px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  margin: 0 auto;
 
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}) {
     width: 600px;

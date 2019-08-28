@@ -43,12 +43,13 @@ export const InstructionLabel = styled.label`
   font-weight: bold;
   display: block;
   margin-bottom: 1em;
-  opacity: 0.8;
+  opacity: 0.75;
 `;
 
 
 export const InputField = styled.input`
   font-family: "Rubik", sans-serif;
+  font-weight: normal;
   color: ${props => props.theme.palette.text};
   border: none;
   border-bottom: 1px solid ${props => props.theme.palette.border};
