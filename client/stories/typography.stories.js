@@ -10,7 +10,7 @@ export const PageHeader = styled.h1`
     display: inline-block;
     border-bottom: 5px solid ${props => props.theme.palette.main};
     padding-bottom: 2px;
-    margin-bottom: 1.5em;
+    margin-bottom: 10px;
   `};
 `;
 

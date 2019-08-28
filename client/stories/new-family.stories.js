@@ -5,6 +5,7 @@ import { PageHeader } from './typography.stories';
 import { Container } from './helpers';
 import { InputField, FormHelpText } from './forms.stories';
 import { CirclePicker } from 'react-color';
+import { StyledDropzone } from './uploader.stories';
 
 const InstructionLabel = styled.label`
   font-size: 16px;
@@ -12,13 +13,13 @@ const InstructionLabel = styled.label`
   font-weight: bold;
   display: block;
   margin-bottom: 1em;
-  opacity: 0.85;
-  margin-top: 2em;
+  opacity: 0.8;
+  margin-top: 60px;
 `;
 
 const PickerWrapper = styled.div`
   width: 100%;
-  margin-top: 20px;
+  margin: 20px 0;
 `;
 
 storiesOf('Create New Family', module)
@@ -35,11 +36,18 @@ storiesOf('Create New Family', module)
     </FormHelpText>
 
     <InstructionLabel>Select a display photo for your Family.</InstructionLabel>
+    <StyledDropzone/>
+    <FormHelpText>
+      You can upload a photo later.
+    </FormHelpText>
     <InstructionLabel>Pick a colour theme for your Family group page.</InstructionLabel>
     <PickerWrapper>
       <CirclePicker
       width="100%"/>
     </PickerWrapper>
+    <FormHelpText>
+      You can change your colour anytime you want.
+    </FormHelpText>
   </Container>
   )
 ;

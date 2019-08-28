@@ -2,34 +2,51 @@ import React from 'react';
 import {useDropzone} from 'react-dropzone';
 import styled, { css } from "styled-components";
 import { storiesOf } from '@storybook/react';
+import { lighten } from 'polished';
 
 const getColor = (props) => {
   if (props.isDragAccept) {
-      return '#00e676';
+      return props => lighten(0.1, props.theme.palette.loading);
   }
   if (props.isDragReject) {
-      return '#ff1744';
+      return props => props.theme.palette.error;
   }
   if (props.isDragActive) {
-      return '#2196f3';
+      return props => props.theme.palette.main;
   }
-  return '#eeeeee';
+  return '#eee';
 }
 
-const Container = styled.div`
-  flex: 1;
+const DropzoneContainer = styled.div`
+  height: 200px;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 18px;
+  font-family: 'Livvic', sans-serif;
+  font-weight: 600;
   padding: 20px;
-  border: 1px solid #ddd;
-  background-color: #fafafa;
-  color: #bdbdbd;
+  border: 3px solid ${props => getColor(props)};
+  border-radius: 4px;
+  color: ${props => lighten(0.4, props.theme.palette.text)};
   outline: none;
-  transition: border .24s ease-in-out;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+  margin-bottom: 6px;
+
+  &:hover {
+    /* border-color: ${props => lighten(0.1, props.theme.palette.main)}; */
+    color:${props => lighten(0.3, props.theme.palette.text)};
+    transition: 0.3s ease-in-out;
+  }
+
+  p {
+    line-height: 1.5em;
+  }
 `;
 
-function StyledDropzone(props) {
+export function StyledDropzone(props) {
   const {
     getRootProps,
     getInputProps,
@@ -39,10 +56,10 @@ function StyledDropzone(props) {
   } = useDropzone({accept: 'image/*'});
 
   return (
-    <Container {...getRootProps({isDragActive, isDragAccept, isDragReject})}>
+    <DropzoneContainer {...getRootProps({isDragActive, isDragAccept, isDragReject})}>
       <input {...getInputProps()} />
-      <p>Drag and drop or click to upload an image.</p>
-    </Container>
+      <p>Drag a file here or click to upload.</p>
+    </DropzoneContainer>
   );
 }
 
