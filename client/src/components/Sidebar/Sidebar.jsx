@@ -18,7 +18,7 @@ import {
   FamilyListContainer,
   TextList,
   MenuContainer,
-  SettingContainer
+  Footer
 } from "./SidebarStyles";
 import { MiniLogo } from "components/Logo";
 
@@ -39,8 +39,12 @@ export default function Sidebar() {
         </SearchHeader>
         <FamilyListContainer>
           <h3>My Families</h3>
-          <TextList>Leung</TextList>
-          <TextList>Siu</TextList>
+          <TextList>
+            <a href="#">Leung</a>
+          </TextList>
+          <TextList>
+            <a href="#">Siu</a>
+          </TextList>
           <TextList>Febriana</TextList>
           <TextList>Joshi</TextList>
           <TextList>Huang</TextList>
@@ -56,7 +60,7 @@ export default function Sidebar() {
             New Artefact
           </TextList>
         </MenuContainer>
-        <SettingContainer>
+        <MenuContainer>
           <TextList>
             <Invite size="25px" />
             Invite Family members
@@ -69,9 +73,11 @@ export default function Sidebar() {
             <EditProfile size="25px" />
             Edit profile & account
           </TextList>
-        </SettingContainer>
-        <MiniLogo />
-        <ButtonPrimary>Sign Out</ButtonPrimary>
+        </MenuContainer>
+        <Footer>
+          <MiniLogo />
+          <ButtonPrimary>Sign Out</ButtonPrimary>
+        </Footer>
       </SidebarContainer>
     </>
   );

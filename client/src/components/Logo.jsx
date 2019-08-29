@@ -30,7 +30,7 @@ const LogoStyle = styled.text`
   text-transform: lowercase;
   width: 40%;
   position: relative;
-  margin-left: 1em;
+  margin: 0 1em 0 1em;
 `;
 
 export class Logo extends Component {

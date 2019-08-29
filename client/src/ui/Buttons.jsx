@@ -64,6 +64,10 @@ export const CloseMenuButton = styled(Close)`
   &:active {
     outline: none;
   }
+  @media screen and (min-width: ${props =>
+      props.theme.breakpoints.tabletPortrait}) {
+    display: none;
+  }
 `;
 
 export const NewGroup = styled(PlusCircle)`

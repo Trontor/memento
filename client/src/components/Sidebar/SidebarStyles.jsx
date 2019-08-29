@@ -14,7 +14,9 @@ export const SidebarContainer = styled.div`
 
   @media screen and (min-width: ${props =>
       props.theme.breakpoints.tabletPortrait}) {
-    width: 414px;
+    width: 30%;
+    box-shadow: none;
+    display: block;
   }
 `;
 
@@ -22,6 +24,11 @@ export const SearchHeader = styled.div`
   display: grid;
   grid-template-columns: 15% 85%;
   margin-top: 10px;
+
+  @media screen and (min-width: ${props =>
+      props.theme.breakpoints.tabletPortrait}) {
+    display: flex;
+  }
 `;
 
 export const SearchBar = styled.div`
@@ -32,6 +39,12 @@ export const SearchBar = styled.div`
   border: 1px solid #e0e0e0;
   background: #fcfcfc;
   border-radius: 5px;
+
+  @media screen and (min-width: ${props =>
+      props.theme.breakpoints.tabletPortrait}) {
+    float: left;
+    margin: 10px 15px;
+  }
 `;
 
 export const SearchIcon = styled(Search)`
@@ -62,7 +75,9 @@ export const FamilyListContainer = styled.div`
   width: 85%;
   height: 35%;
   margin: 0px 15px 0px 25px;
-  border-bottom: 1px solid ${props => props.theme.palette.border};
+  @media screen and (min-width: ${props =>
+      props.theme.breakpoints.tabletPortrait}) {
+  }
 `;
 
 export const TextList = styled.li`
@@ -72,16 +87,23 @@ export const TextList = styled.li`
   font-weight: 300;
   font-size: 15px;
   line-height: 18px;
+  a {
+    color: ${props => props.theme.palette.text};
+    &:hover {
+      border-bottom: 3px solid ${props => props.theme.palette.main};
+    }
+  }
 `;
 
 export const MenuContainer = styled.div`
   width: 85%;
-  margin: 0px 15px 0px 25px;
-  padding: 15px 0 15px 0;
-  border-bottom: 1px solid ${props => props.theme.palette.border};
+  margin: 10px 15px 15px 25px;
+  padding-top: 10px;
+  border-top: 1px solid ${props => props.theme.palette.border};
 `;
 
-export const SettingContainer = styled.div`
-  width: 85%;
-  margin: 15px 15px 25px 25px;
+export const Footer = styled.div`
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
 `;
