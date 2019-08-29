@@ -7,25 +7,23 @@ import { AlignRight } from 'ui/Helpers';
 import { FamilyGroup, FamilyGroupList } from "./InviteFamilyStyles";
 
 export default function CreateFamily() {
-  const [selected, setSelected] = useState([]);
   const [selectedFamily, setSelectedFamily] = useState(null);
 
   const familyGroups = [
     {
-      name: 'Leung'
+      name: "Keith and Regina"
     },
     {
-      name: 'Siu'
+      name: "Hans & Joyce"
+    },
+    {
+      name: "Gigi's family"
     }
   ]
 
-  const toggleFamilyName = (name) => {
-    setSelected([
-      ...selected,
-      name
-    ]);
-
-  };
+  const selectFamily = (familyName) => {
+    selectedFamily === familyName ? setSelectedFamily(null) : setSelectedFamily(familyName);
+  }
 
   return(
     <Container>
@@ -36,7 +34,7 @@ export default function CreateFamily() {
         <InstructionLabel>Which Family group would you like to invite members to?</InstructionLabel>
         <FamilyGroupList>
           { familyGroups.map((family)=>(
-            <FamilyGroup selected={selectedFamily === family.name} onClick={()=>setSelectedFamily(family.name)}>
+            <FamilyGroup selected={selectedFamily === family.name} onClick={() => selectFamily(family.name)}>
               { family.name }
             </FamilyGroup>
           ))}
@@ -47,7 +45,7 @@ export default function CreateFamily() {
       </FormSection>
 
       <AlignRight>
-        <ButtonPrimary>Next</ButtonPrimary>
+        <ButtonPrimary disabled={selectedFamily == null}>Next</ButtonPrimary>
       </AlignRight>
 
     </Container>

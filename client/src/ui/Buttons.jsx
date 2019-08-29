@@ -27,6 +27,12 @@ export const ButtonPrimary = styled.button`
   &:focus {
     outline: none;
   }
+
+  &:disabled, &[disabled] {
+    background-color: ${props => props.theme.palette.disabled};
+    border-color: ${props => props.theme.palette.disabled};
+    cursor: default;
+  }
 `;
 
 export const ButtonSecondary = styled.button`

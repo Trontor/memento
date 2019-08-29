@@ -11,8 +11,10 @@ const theme = {
     secondary: "#FFA217",
 
     error: "#F73953",
+    disabled: "#ccc",
+
     border: "#D3D0DD",
-    sidebar: "#E5E5E5"
+    sidebar: "#E5E5E5",
   },
   mixins: {
     hoverFade: "transition: ease-in 0.1s"
