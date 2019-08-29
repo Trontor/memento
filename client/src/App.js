@@ -8,6 +8,7 @@ import Signup from "./components/Signup/Signup";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Sidebar from "./components/Sidebar/Sidebar";
 import CreateFamily from "./components/CreateFamily/CreateFamily";
+import InviteFamily from "./components/InviteFamily/InviteFamily";
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -25,7 +26,6 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     font-size: 14px;
     font-family: "Rubik", Arial, Helvetica, sans-serif;
-    letter-spacing: 0.01em;
     color: ${props => props.theme.palette.text}
   }
 
@@ -48,6 +48,10 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     letter-spacing: 0.03em;
     cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   *, *::before, *::after {
@@ -72,6 +76,8 @@ function App() {
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/sidebar" component={Sidebar} />
         <Route path="/create-family" component={CreateFamily} />
+        <Route path="/invite" component={InviteFamily} />
+
       </Router>
     </ThemeProvider>
   );
