@@ -17,3 +17,8 @@ export const Container = styled.div`
   }
 
 `;
+
+export const AlignRight = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { lighten } from "polished";
 import { Menu } from "styled-icons/feather/Menu";
 import { Close } from "styled-icons/evil/Close";
 import { PlusCircle } from "styled-icons/boxicons-regular/PlusCircle";
@@ -15,11 +16,11 @@ export const ButtonPrimary = styled.button`
   font-size: 15px;
   border-radius: 4px;
   ${props => props.theme.mixins.hoverFade};
-  margin-right: 20px;
+  margin-right: ${props => props.spacing ? "15px" : "0" };
 
   &:hover {
-    border: 1px solid ${props => props.theme.palette.secondary};
-    background: ${props => props.theme.palette.secondary};
+    border: 1px solid ${props => lighten(0.03, props.theme.palette.main)};
+    background: ${props => lighten(0.03, props.theme.palette.main)};
     ${props => props.theme.mixins.hoverFade};
   }
 

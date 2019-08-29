@@ -100,7 +100,7 @@ export default function Login(props) {
                   <Error>{props.errors.password}</Error>
                 )}
               </InputSection>
-              <ButtonPrimary type="submit">Login</ButtonPrimary>
+              <ButtonPrimary type="submit" spacing>Login</ButtonPrimary>
               <HelpText>
                 Don't have an account?
                 <MsgLink to="./Signup"> Sign up</MsgLink>

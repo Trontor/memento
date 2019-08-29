@@ -5,6 +5,8 @@ import { InstructionLabel, InputField, FormHelpText, FormSection } from 'ui/Form
 import { CirclePicker } from 'react-color';
 import { PickerWrapper } from './CreateFamilyStyles';
 import { StyledDropzone } from 'components/FileDropzone';
+import { ButtonPrimary } from 'ui/Buttons';
+import { AlignRight } from 'ui/Helpers';
 
 export default function CreateFamily() {
   return(
@@ -41,6 +43,10 @@ export default function CreateFamily() {
           You can adjust the colour anytime you want.
         </FormHelpText>
       </FormSection>
+
+      <AlignRight>
+        <ButtonPrimary>Create My Family</ButtonPrimary>
+      </AlignRight>
 
     </Container>
   );
