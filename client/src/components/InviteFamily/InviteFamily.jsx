@@ -7,7 +7,25 @@ import { AlignRight } from 'ui/Helpers';
 import { FamilyGroup, FamilyGroupList } from "./InviteFamilyStyles";
 
 export default function CreateFamily() {
-  const [selected, setSelected] = useState(false);
+  const [selected, setSelected] = useState([]);
+  const [selectedFamily, setSelectedFamily] = useState(null);
+
+  const familyGroups = [
+    {
+      name: 'Leung'
+    },
+    {
+      name: 'Siu'
+    }
+  ]
+
+  const toggleFamilyName = (name) => {
+    setSelected([
+      ...selected,
+      name
+    ]);
+
+  };
 
   return(
     <Container>
@@ -17,8 +35,11 @@ export default function CreateFamily() {
       <FormSection>
         <InstructionLabel>Which Family group would you like to invite members to?</InstructionLabel>
         <FamilyGroupList>
-          <FamilyGroup selected={selected} onclick={()=> setSelected(!selected)}>Leung</FamilyGroup>
-          <FamilyGroup>Siu</FamilyGroup>
+          { familyGroups.map((family)=>(
+            <FamilyGroup selected={selectedFamily === family.name} onClick={()=>setSelectedFamily(family.name)}>
+              { family.name }
+            </FamilyGroup>
+          ))}
         </FamilyGroupList>
         <FormHelpText>
           You are able to invite members to Family groups you are an administrator of.
