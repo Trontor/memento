@@ -1,7 +1,6 @@
 import React from 'react';
 import {useDropzone} from 'react-dropzone';
-import styled, { css } from "styled-components";
-import { storiesOf } from '@storybook/react';
+import styled from "styled-components";
 import { lighten } from 'polished';
 
 
