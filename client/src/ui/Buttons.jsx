@@ -6,6 +6,7 @@ import { Edit } from "styled-icons/material/Edit";
 import { Settings } from "styled-icons/material/Settings";
 import { AddToQueue } from "styled-icons/boxicons-regular/AddToQueue";
 import { GroupAdd } from "styled-icons/material/GroupAdd";
+import { NavigateNext } from "styled-icons/material/NavigateNext";
 
 export const ButtonPrimary = styled.button`
   background: ${props => props.theme.palette.main};
@@ -65,7 +66,7 @@ export const CloseMenuButton = styled(Close)`
     outline: none;
   }
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletPortrait}) {
+      props.theme.breakpoints.tabletLanscape}) {
     display: none;
   }
 `;
@@ -93,4 +94,8 @@ export const Setting = styled(Settings)`
 export const Invite = styled(GroupAdd)`
   color: gray;
   margin-right: 10px;
+`;
+
+export const Next = styled(NavigateNext)`
+  color: gray;
 `;

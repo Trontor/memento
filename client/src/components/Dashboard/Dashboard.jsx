@@ -1,7 +1,14 @@
 import React from "react";
 import Sidebar from "../Sidebar/Sidebar";
-import { DashboardContainer, TextWrapper } from "./DashboardStyles";
-import { ButtonPrimary, ButtonSecondary } from "ui/Buttons";
+import {
+  DashboardContainer,
+  TextWrapper,
+  ButtonWrapper,
+  OrangeButton,
+  TextHeading,
+  TextDetail,
+  NextButton
+} from "./DashboardStyles";
 import { useQuery } from "@apollo/react-hooks";
 import GET_CURRENT_USER from "queries/GetCurrentUser";
 
@@ -19,9 +26,19 @@ export default function Dashboard() {
         <Sidebar />
         <TextWrapper>
           <h2>You don't belong to any Families at the moment. </h2>
-          <p>What would you like to do for now?</p>
-          <ButtonPrimary>Create a Family</ButtonPrimary>
-          <ButtonSecondary>Join a Family</ButtonSecondary>
+          <p>Get started with one of the following actions: </p>
+          <ButtonWrapper>
+            <OrangeButton />
+            <TextHeading>Create a Family</TextHeading>
+            <TextDetail>Get your family to join Memento.</TextDetail>
+            <NextButton />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <OrangeButton />
+            <TextHeading>Join an existing Family</TextHeading>
+            <TextDetail>Got an invite code? Join your family.</TextDetail>
+            <NextButton />
+          </ButtonWrapper>
         </TextWrapper>
       </DashboardContainer>
     </>

@@ -42,7 +42,7 @@ export const SearchBar = styled.div`
   border-radius: 5px;
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletPortrait}) {
+      props.theme.breakpoints.tabletLanscape}) {
     float: left;
     margin: 10px 15px;
   }
@@ -77,6 +77,7 @@ export const FamilyListContainer = styled.div`
   width: 85%;
   height: 35%;
   margin: 0px 15px 0px 25px;
+
   @media screen and (min-width: ${props =>
       props.theme.breakpoints.tabletPortrait}) and (max-width: ${props =>
       props.theme.breakpoints.tabletLanscape}) {
@@ -110,7 +111,6 @@ export const Footer = styled.div`
   position: absolute;
   bottom: 20px;
   width: 85%;
-
   margin: 10px 15px 15px 10px;
 `;
 
@@ -118,6 +118,7 @@ export const SidebarButtonPrimary = styled(ButtonPrimary)`
   float: right;
   font-size: 15px;
   margin-right: 0;
+
   @media screen and (width: ${props => props.theme.breakpoints.tabletLanscape}),
     (min-width: ${props =>
       props.theme.breakpoints.tabletLanscape}) and (max-width: ${props =>
