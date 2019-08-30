@@ -11,7 +11,7 @@ const theme = {
     secondary: "#FFA217",
 
     error: "#F73953",
-    disabled: "#ccc",
+    disabled: "#ddd",
 
     border: "#D3D0DD",
     sidebar: "#E5E5E5",

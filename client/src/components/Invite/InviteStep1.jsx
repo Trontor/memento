@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { Header } from "ui/Typography";
 import { Container } from 'ui/Helpers';
 import { InstructionLabel, FormHelpText, FormSection } from 'ui/Forms';
 import { ButtonPrimary } from 'ui/Buttons';
 import { AlignRight } from 'ui/Helpers';
-import { FamilyGroup, FamilyGroupList } from "./InviteFamilyStyles";
+import { FamilyGroup, FamilyGroupList } from "./InviteStyles";
 
-export default function CreateFamily() {
-  const [selectedFamily, setSelectedFamily] = useState(null);
+export default function InviteStep1(props) {
 
   const familyGroups = [
     {
@@ -21,20 +19,13 @@ export default function CreateFamily() {
     }
   ]
 
-  const selectFamily = (familyName) => {
-    selectedFamily === familyName ? setSelectedFamily(null) : setSelectedFamily(familyName);
-  }
-
   return(
-    <Container>
-
-      <Header underline>Invite a Family Member</Header>
-
+    <>
       <FormSection>
         <InstructionLabel>Which Family group would you like to invite members to?</InstructionLabel>
         <FamilyGroupList>
           { familyGroups.map((family)=>(
-            <FamilyGroup selected={selectedFamily === family.name} onClick={() => selectFamily(family.name)}>
+            <FamilyGroup selected={props.selected === family.name} onClick={() => props.selectFamily(family.name)}>
               { family.name }
             </FamilyGroup>
           ))}
@@ -45,9 +36,8 @@ export default function CreateFamily() {
       </FormSection>
 
       <AlignRight>
-        <ButtonPrimary disabled={selectedFamily == null}>Next</ButtonPrimary>
+        <ButtonPrimary disabled={props.selected == null}>Next</ButtonPrimary>
       </AlignRight>
-
-    </Container>
+    </>
   );
 }
