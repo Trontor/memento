@@ -4,13 +4,8 @@ import {
   AuthenticationError
 } from "apollo-server-express";
 import { createTestClient } from "apollo-server-testing";
-import typeDefs from "../../schema.graphql";
-import resolvers from "..";
-import { db, clientAuth, adminAuth } from "../../utils/firebase/admin";
 import UserModel, { UserDocument } from "../../models/User";
-import FamilyModel from "../../models/Family";
 
-import { createContext } from "../../utils/context";
 import { LOGIN, SIGNUP, UPDATE_USER, UPDATE_ROLE } from "./mutations";
 import {
   Gender,
@@ -18,7 +13,6 @@ import {
   FamilyRole,
   UpdateRoleOutput
 } from "../../generated/graphql";
-import InvitationModel from "../../models/Invitation";
 import {
   AUTH_ERROR_MESSAGE,
   EMAIL_IN_USE_ERROR_MESSAGE,
@@ -26,34 +20,14 @@ import {
   AuthorizationError,
   MUST_BE_FAMILY_ADMIN_ERROR_MESSAGE
 } from "../../utils/errors";
-
-jest.mock("../../models/User");
-jest.mock("../../models/Family");
-jest.mock("../../models/Invitation");
+import { mockApolloServer } from "../../utils/tests/server";
 
 describe("integration tests - user resolver", () => {
-  let mockUserModelInstance: jest.Mocked<UserModel>,
-    mockFamilyModelInstance: jest.Mocked<FamilyModel>,
-    mockInvitationModelInstance: jest.Mocked<InvitationModel>,
-    testServer: ApolloServer;
+  let mockUserModelInstance: jest.Mocked<UserModel>, testServer: ApolloServer;
   beforeEach(() => {
-    mockUserModelInstance = new UserModel({ db, clientAuth }) as any;
-    mockFamilyModelInstance = new FamilyModel({ db }) as any;
-    mockInvitationModelInstance = new InvitationModel({ db }) as any;
-
-    testServer = new ApolloServer({
-      typeDefs,
-      resolvers,
-      context: createContext(
-        {
-          user: mockUserModelInstance,
-          family: mockFamilyModelInstance,
-          invitation: mockInvitationModelInstance
-        },
-        adminAuth,
-        db
-      )
-    });
+    const mockServer = mockApolloServer(null);
+    testServer = mockServer.testServer;
+    mockUserModelInstance = mockServer.models.user as any;
   });
   describe("login resolver", () => {
     it("should return token for existing user", async () => {
@@ -114,7 +88,8 @@ describe("integration tests - user resolver", () => {
       };
       mockUserModelInstance.createUser.mockResolvedValue({
         token: "some token",
-        user: expect.anything()
+        userId: "some id",
+        userDoc: expect.anything()
       });
       const res = await mutate({
         mutation: SIGNUP,
@@ -176,34 +151,15 @@ describe("integration tests - user resolver", () => {
 
 describe("updateUser resolver", () => {
   let mockUserModelInstance: jest.Mocked<UserModel>;
-  let mockFamilyModelInstance: jest.Mocked<FamilyModel>;
-  let mockInvitationModelInstance: jest.Mocked<InvitationModel>;
+  let testServer: ApolloServer;
 
   beforeEach(() => {
-    mockUserModelInstance = new UserModel({
-      db,
-      clientAuth
-    }) as jest.Mocked<UserModel>;
-    mockFamilyModelInstance = new FamilyModel({ db }) as jest.Mocked<
-      FamilyModel
-    >;
-    mockInvitationModelInstance = new InvitationModel({ db }) as any;
+    const mockServer = mockApolloServer(null);
+    testServer = mockServer.testServer;
+    mockUserModelInstance = mockServer.models.user as any;
   });
 
   it("should throw AuthenticationError if updater is not authenticated", async () => {
-    const testServer = new ApolloServer({
-      typeDefs,
-      resolvers,
-      context: createContext(
-        {
-          user: mockUserModelInstance,
-          family: mockFamilyModelInstance,
-          invitation: mockInvitationModelInstance
-        },
-        adminAuth,
-        db
-      )
-    });
     const { mutate } = createTestClient(testServer);
     const res = await mutate({
       mutation: UPDATE_USER,
@@ -226,21 +182,9 @@ describe("updateUser resolver", () => {
     const GENDER = Gender.Male;
     const DUMMY_STRING = "dummy";
 
-    const testServer = new ApolloServer({
-      typeDefs,
-      resolvers,
-      context: {
-        models: {
-          user: mockUserModelInstance,
-          family: mockFamilyModelInstance
-        },
-        adminAuth,
-        db,
-        user: {
-          uid: UPDATER_ID // shortcut for 'authenticating' the user
-        }
-      }
-    });
+    const mockServer = mockApolloServer({ uid: UPDATER_ID });
+    testServer = mockServer.testServer;
+    mockUserModelInstance = mockServer.models.user as any;
 
     const { mutate } = createTestClient(testServer);
 
@@ -287,37 +231,14 @@ describe("updateUser resolver", () => {
 
 describe("updateRole resolver", () => {
   let mockUserModelInstance: jest.Mocked<UserModel>;
-  let mockFamilyModelInstance: jest.Mocked<FamilyModel>;
-  let mockInvitationModelInstance: jest.Mocked<InvitationModel>;
-
+  let testServer: ApolloServer;
   beforeEach(() => {
-    mockUserModelInstance = new UserModel({
-      db,
-      clientAuth
-    }) as jest.Mocked<UserModel>;
-
-    mockFamilyModelInstance = new FamilyModel({ db }) as jest.Mocked<
-      FamilyModel
-    >;
-    mockInvitationModelInstance = new InvitationModel({ db }) as jest.Mocked<
-      InvitationModel
-    >;
+    const mockServer = mockApolloServer(null);
+    testServer = mockServer.testServer;
+    mockUserModelInstance = mockServer.models.user as any;
   });
 
   it("should throw AuthenticationError if updater is not authenticated", async () => {
-    const testServer = new ApolloServer({
-      typeDefs,
-      resolvers,
-      context: createContext(
-        {
-          user: mockUserModelInstance,
-          family: mockFamilyModelInstance,
-          invitation: mockInvitationModelInstance
-        },
-        adminAuth,
-        db
-      )
-    });
     const { mutate } = createTestClient(testServer);
     const input: UpdateRoleInput = {
       userId: "WZNq3rP4AYUXBdYnQqozyuaUXPf2",
@@ -369,21 +290,12 @@ describe("updateRole resolver", () => {
       }
     };
 
-    const testServer = new ApolloServer({
-      typeDefs,
-      resolvers,
-      context: {
-        models: {
-          user: mockUserModelInstance,
-          family: mockFamilyModelInstance
-        },
-        adminAuth,
-        db,
-        user: {
-          uid: UPDATER.USER_ID
-        }
-      }
+    const mockServer = mockApolloServer({
+      uid: UPDATER.USER_ID
     });
+    testServer = mockServer.testServer;
+    mockUserModelInstance = mockServer.models.user as any;
+
     const { mutate } = createTestClient(testServer);
     const input: UpdateRoleInput = {
       userId: UPDATEE.USER_ID,
@@ -415,7 +327,7 @@ describe("updateRole resolver", () => {
       NEW_ROLE: FamilyRole.Admin
     };
 
-    // Updater is NOT an admin in the same family group as updatee
+    // Updater is an admin in the same family group as updatee
     const UPDATER = {
       USER_ID: "UzxasdaKJHKJGDssNHK123JLKss3",
       FAMILY_ID: UPDATEE.FAMILY_ID,
@@ -450,27 +362,19 @@ describe("updateRole resolver", () => {
         role: UPDATEE.ROLE
       }
     };
+
+    const mockServer = mockApolloServer({
+      uid: UPDATER.USER_ID
+    });
+    testServer = mockServer.testServer;
+    mockUserModelInstance = mockServer.models.user as any;
+
     mockUserModelInstance.getUser
       .mockResolvedValueOnce(updaterDoc)
       .mockResolvedValueOnce(updateeDoc);
     mockUserModelInstance.hasRoleInFamily.mockReturnValue(true);
     mockUserModelInstance.isInFamily.mockReturnValue(true);
 
-    const testServer = new ApolloServer({
-      typeDefs,
-      resolvers,
-      context: {
-        models: {
-          user: mockUserModelInstance,
-          family: mockFamilyModelInstance
-        },
-        adminAuth,
-        db,
-        user: {
-          uid: UPDATER.USER_ID
-        }
-      }
-    });
     const { mutate } = createTestClient(testServer);
     const input: UpdateRoleInput = {
       userId: UPDATEE.USER_ID,
