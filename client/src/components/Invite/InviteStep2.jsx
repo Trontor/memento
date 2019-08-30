@@ -1,13 +1,18 @@
 import React, { useState } from "react";
-import { InstructionLabel, FormHelpText, FormSection } from 'ui/Forms';
-import { ButtonPrimary } from 'ui/Buttons';
+import { InstructionLabel, FormSection, InputField, HelpText } from 'ui/Forms';
 
-export default function InviteStep2() {
-  const [inviteEmails, setInviteEmails] = useState([]);
+export default function InviteStep2({ currentStep, addEmails, inviteEmails}) {
+
+  if (currentStep !== 2) {
+    return null
+  }
 
   return(
     <FormSection>
-      <InstructionLabel>Who would you like to invite?</InstructionLabel>
+      <InstructionLabel>Enter the email addresses of family members you would like to invite.</InstructionLabel>
+      <InputField
+        type="text"
+        placeholder="name@example.com"/>
     </FormSection>
   );
 }
