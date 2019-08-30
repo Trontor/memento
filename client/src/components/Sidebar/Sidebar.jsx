@@ -18,7 +18,8 @@ import {
   FamilyListContainer,
   TextList,
   MenuContainer,
-  Footer
+  Footer,
+  SidebarButtonPrimary
 } from "./SidebarStyles";
 import { MiniLogo } from "components/Logo";
 
@@ -76,7 +77,7 @@ export default function Sidebar() {
         </MenuContainer>
         <Footer>
           <MiniLogo />
-          <ButtonPrimary>Sign Out</ButtonPrimary>
+          <SidebarButtonPrimary>Sign Out</SidebarButtonPrimary>
         </Footer>
       </SidebarContainer>
     </>

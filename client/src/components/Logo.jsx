@@ -21,16 +21,24 @@ const Logotype = styled(Link)`
   }
 `;
 
-const LogoStyle = styled.text`
+const LogoStyle = styled.span`
   display: block;
   float: left;
   color: ${props => props.theme.palette.text};
   font-size: 25px;
   font-weight: light;
   text-transform: lowercase;
-  width: 40%;
+  width: 35%;
   position: relative;
-  margin: 0 1em 0 1em;
+  margin: 5px 15px;
+
+  @media screen and (width: ${props => props.theme.breakpoints.tabletLanscape}),
+    (min-width: ${props =>
+      props.theme.breakpoints.tabletLanscape}) and (max-width: ${props =>
+      props.theme.breakpoints.desktop}) {
+    font-size: 20px;
+    margin: 5px 15px 0 5px;
+  }
 `;
 
 export class Logo extends Component {

@@ -2,10 +2,11 @@ import styled from "styled-components";
 
 export const DashboardContainer = styled.div`
   top: 10%;
+
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletPortrait}) {
+      props.theme.breakpoints.tabletLanscape}) {
     display: grid;
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 22% 78%;
     height: 100%;
   }
 `;
@@ -35,7 +36,7 @@ export const TextWrapper = styled.div`
   }
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletPortrait}) {
+      props.theme.breakpoints.tabletLanscape}) {
     position: relative;
     width: 60%;
   }

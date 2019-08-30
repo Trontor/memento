@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Search } from "styled-icons/boxicons-regular/Search";
 import { lighten } from "polished";
+import { ButtonPrimary } from "../../ui/Buttons";
 
 export const SidebarContainer = styled.div`
   display: ${props => (props.menuClick ? "block" : "none")};
@@ -13,8 +14,8 @@ export const SidebarContainer = styled.div`
   box-shadow: 5px 10px lightgrey;
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletPortrait}) {
-    width: 30%;
+      props.theme.breakpoints.tabletLanscape}) {
+    width: 22%;
     box-shadow: none;
     display: block;
   }
@@ -63,6 +64,7 @@ export const SearchInput = styled.input`
   font-size: 16px;
   font-style: normal;
   line-height: 19px;
+
   &:focus {
     outline: none;
   }
@@ -76,7 +78,9 @@ export const FamilyListContainer = styled.div`
   height: 35%;
   margin: 0px 15px 0px 25px;
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletPortrait}) {
+      props.theme.breakpoints.tabletPortrait}) and (max-width: ${props =>
+      props.theme.breakpoints.tabletLanscape}) {
+    height: 30%;
   }
 `;
 
@@ -105,5 +109,19 @@ export const MenuContainer = styled.div`
 export const Footer = styled.div`
   position: absolute;
   bottom: 20px;
-  width: 100%;
+  width: 85%;
+
+  margin: 10px 15px 15px 10px;
+`;
+
+export const SidebarButtonPrimary = styled(ButtonPrimary)`
+  float: right;
+  font-size: 15px;
+  margin-right: 0;
+  @media screen and (width: ${props => props.theme.breakpoints.tabletLanscape}),
+    (min-width: ${props =>
+      props.theme.breakpoints.tabletLanscape}) and (max-width: ${props =>
+      props.theme.breakpoints.desktop}) {
+    font-size: 12px;
+  }
 `;
