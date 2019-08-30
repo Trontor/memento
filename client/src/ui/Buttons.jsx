@@ -7,6 +7,7 @@ import { Settings } from "styled-icons/material/Settings";
 import { AddToQueue } from "styled-icons/boxicons-regular/AddToQueue";
 import { GroupAdd } from "styled-icons/material/GroupAdd";
 import { NavigateNext } from "styled-icons/material/NavigateNext";
+import { Group } from "styled-icons/material/Group";
 
 export const ButtonPrimary = styled.button`
   background: ${props => props.theme.palette.main};
@@ -98,4 +99,10 @@ export const Invite = styled(GroupAdd)`
 
 export const Next = styled(NavigateNext)`
   color: gray;
+`;
+
+export const CreateFamily = styled(Group)`
+  color: white;
+  margin-left: -17px;
+  margin-top: -5px;
 `;

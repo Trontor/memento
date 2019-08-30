@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ButtonPrimary, Next } from "ui/Buttons";
+import { ButtonPrimary, Next, Invite } from "ui/Buttons";
 import { lighten } from "polished";
 
 export const DashboardContainer = styled.div`
@@ -73,4 +73,10 @@ export const TextDetail = styled.span`
 export const NextButton = styled(Next)`
   grid-area: icon;
   padding-top: 12px;
+`;
+
+export const InviteFamily = styled(Invite)`
+  color: white;
+  margin-left: -18px;
+  margin-top: -5px;
 `;

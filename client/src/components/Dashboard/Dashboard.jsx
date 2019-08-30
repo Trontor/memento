@@ -7,8 +7,10 @@ import {
   OrangeButton,
   TextHeading,
   TextDetail,
-  NextButton
+  NextButton,
+  InviteFamily
 } from "./DashboardStyles";
+import { CreateFamily } from "../../ui/Buttons";
 import { useQuery } from "@apollo/react-hooks";
 import GET_CURRENT_USER from "queries/GetCurrentUser";
 
@@ -28,13 +30,17 @@ export default function Dashboard() {
           <h2>You don't belong to any Families at the moment. </h2>
           <p>Get started with one of the following actions: </p>
           <ButtonWrapper>
-            <OrangeButton />
+            <OrangeButton>
+              <CreateFamily size="35px" />
+            </OrangeButton>
             <TextHeading>Create a Family</TextHeading>
             <TextDetail>Get your family to join Memento.</TextDetail>
             <NextButton />
           </ButtonWrapper>
           <ButtonWrapper>
-            <OrangeButton />
+            <OrangeButton>
+              <InviteFamily size="35px" />
+            </OrangeButton>
             <TextHeading>Join an existing Family</TextHeading>
             <TextDetail>Got an invite code? Join your family.</TextDetail>
             <NextButton />
