@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { ButtonSecondary } from "ui/Buttons";
+import { darken } from "polished";
 
 export const FamilyGroup = styled(ButtonSecondary)`
   display: block;
@@ -14,4 +15,9 @@ export const FamilyGroup = styled(ButtonSecondary)`
   /* @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}) {
    width: 50%;
   } */
+`;
+
+export const FamilyGroupName = styled.span`
+  font-style: italic;
+  color: ${props => darken(0.1, props.theme.palette.main)};
 `;

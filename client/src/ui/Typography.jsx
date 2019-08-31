@@ -10,12 +10,8 @@ export const Header = styled.h1`
 
   ${({underline}) => underline && css`
     display: inline-block;
-    border-bottom: 5px solid ${props => props.theme.palette.main};
-    padding-bottom: 3px;
+    border-bottom: 0.15em solid ${props => props.theme.palette.main};
+    padding-bottom: 0.1em;
     margin-bottom: 1em;
   `};
-`;
-
-export const Italic = styled.span`
-  font-style: italic;
 `;
