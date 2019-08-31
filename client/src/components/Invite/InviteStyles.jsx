@@ -15,7 +15,3 @@ export const FamilyGroup = styled(ButtonSecondary)`
    width: 50%;
   } */
 `;
-
-export const FamilyGroupList = styled.div`
-  /* width: 100%; */
-`;

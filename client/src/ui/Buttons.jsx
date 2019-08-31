@@ -9,6 +9,7 @@ import { AddToQueue } from "styled-icons/boxicons-regular/AddToQueue";
 import { GroupAdd } from "styled-icons/material/GroupAdd";
 
 export const ButtonPrimary = styled.button`
+  display: inline-block;
   background: ${props => props.theme.palette.main};
   color: white;
   border: 1px solid ${props => props.theme.palette.main};

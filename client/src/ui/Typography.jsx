@@ -15,3 +15,7 @@ export const Header = styled.h1`
     margin-bottom: 1em;
   `};
 `;
+
+export const Italic = styled.span`
+  font-style: italic;
+`;

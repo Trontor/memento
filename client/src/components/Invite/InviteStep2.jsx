@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { InstructionLabel, FormSection, InputField, HelpText } from 'ui/Forms';
+import React from "react";
+import { InstructionLabel, FormSection, InputField } from 'ui/Forms';
+import { Italic } from 'ui/Typography';
 
-export default function InviteStep2({ currentStep, addEmails, inviteEmails}) {
+export default function InviteStep2({ currentStep, addEmails, inviteEmails, selected}) {
 
   if (currentStep !== 2) {
     return null
@@ -9,7 +10,7 @@ export default function InviteStep2({ currentStep, addEmails, inviteEmails}) {
 
   return(
     <FormSection>
-      <InstructionLabel>Enter the email addresses of family members you would like to invite.</InstructionLabel>
+      <InstructionLabel>Enter the email addresses of family members you would like to invite to <Italic>{selected}</Italic>.</InstructionLabel>
       <InputField
         type="text"
         placeholder="name@example.com"/>

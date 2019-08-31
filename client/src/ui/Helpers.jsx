@@ -11,6 +11,7 @@ export const Container = styled.div`
   width: 100%;
   padding: 40px;
   margin: 0 auto;
+  position: relative;
 
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}) {
     width: 600px;
@@ -19,6 +20,7 @@ export const Container = styled.div`
 `;
 
 export const AlignRight = styled.div`
-  display: flex;
-  justify-content: flex-end;
+  position: absolute;
+  right: 40px;
+  display: inline-block;
 `;

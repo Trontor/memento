@@ -44,6 +44,7 @@ export const InstructionLabel = styled.label`
   display: block;
   margin-bottom: 1em;
   opacity: 0.75;
+  line-height: 1.5em;
 `;
 
 
@@ -95,4 +96,8 @@ export const FormHelpText = styled.span`
   font-size: 11px;
   font-weight: 300;
   opacity: 0.6;
+`;
+
+export const FormNav = styled.div`
+  width: 100%;
 `;

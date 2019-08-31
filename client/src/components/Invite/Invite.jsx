@@ -3,14 +3,15 @@ import InviteStep1 from "./InviteStep1";
 import InviteStep2 from "./InviteStep2";
 import { Container } from 'ui/Helpers';
 import { Header } from "ui/Typography";
-import { ButtonPrimary } from 'ui/Buttons';
+import { ButtonPrimary, ButtonSecondary } from 'ui/Buttons';
 import { AlignRight } from 'ui/Helpers';
+import { FormNav } from 'ui/Forms';
+
 
 export default function InviteFamily() {
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedFamily, setSelectedFamily] = useState(null);
   const [inviteEmails, setInviteEmails] = useState([]);
-
 
   const selectFamily = (familyName) => {
     if (selectedFamily === familyName) {
@@ -37,7 +38,6 @@ export default function InviteFamily() {
     setCurrentStep(currentStep - 1)
   };
 
-
   return(
     <Container>
 
@@ -51,11 +51,21 @@ export default function InviteFamily() {
       currentStep={currentStep}
       addEmails={addEmails}
       inviteEmails={inviteEmails}
+      selected={selectedFamily}
       />
 
-    <AlignRight>
-      <ButtonPrimary disabled={selectedFamily == null} onClick={nextStep}>Next</ButtonPrimary>
-    </AlignRight>
+    <FormNav>
+      { currentStep !== 1 ?
+        <ButtonSecondary onClick={prevStep}>Back</ButtonSecondary>
+        : null
+      }
+      { currentStep <= 2 ?
+        <AlignRight>
+          <ButtonPrimary disabled={selectedFamily == null} onClick={nextStep}>Next</ButtonPrimary>
+        </AlignRight>
+        : null
+      }
+    </FormNav>
 
   </Container>
   );
