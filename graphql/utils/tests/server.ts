@@ -6,7 +6,7 @@ import { db, clientAuth } from "../firebase/admin";
 import typeDefs from "../../schema.graphql";
 import resolvers from "../../resolvers";
 import { ApolloServer } from "apollo-server-express";
-import { Models, Context } from "../context";
+import { Context } from "../context";
 
 jest.mock("../../models/User");
 jest.mock("../../models/Family");
@@ -25,14 +25,27 @@ export const mockApolloServer = (user: any) => {
     db
   }) as jest.Mocked<InvitationModel>;
 
-  const models: Models = {
-    user: mockUserModelInstance,
-    family: mockFamilyModelInstance,
-    invitation: mockInvitationModelInstance
+  const models = {
+    user: {
+      instance: mockUserModelInstance,
+      class: UserModel
+    },
+    family: {
+      instance: mockFamilyModelInstance,
+      class: FamilyModel
+    },
+    invitation: {
+      instance: mockInvitationModelInstance,
+      class: InvitationModel
+    }
   };
 
   const mockContext: Context = {
-    models,
+    models: {
+      user: mockUserModelInstance,
+      family: mockFamilyModelInstance,
+      invitation: mockInvitationModelInstance
+    },
     db,
     user
   };

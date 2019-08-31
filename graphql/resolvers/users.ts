@@ -34,7 +34,7 @@ export const signup = async (
   }
   // create new user `in auth and Firestore
   const { token, userDoc, userId } = await ctx.models.user.createUser(input);
-  const user = ctx.models.user.convertUserDocumentToUser(userDoc, userId);
+  const user = UserModel.fromUserDocument(userDoc, userId);
   return {
     token,
     user

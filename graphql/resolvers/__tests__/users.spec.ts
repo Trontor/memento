@@ -27,7 +27,7 @@ describe("integration tests - user resolver", () => {
   beforeEach(() => {
     const mockServer = mockApolloServer(null);
     testServer = mockServer.testServer;
-    mockUserModelInstance = mockServer.models.user as any;
+    mockUserModelInstance = mockServer.models.user.instance as any;
   });
   describe("login resolver", () => {
     it("should return token for existing user", async () => {
@@ -152,11 +152,13 @@ describe("integration tests - user resolver", () => {
 describe("updateUser resolver", () => {
   let mockUserModelInstance: jest.Mocked<UserModel>;
   let testServer: ApolloServer;
+  let mockUserModelClass: typeof UserModel;
 
   beforeEach(() => {
     const mockServer = mockApolloServer(null);
     testServer = mockServer.testServer;
-    mockUserModelInstance = mockServer.models.user as any;
+    mockUserModelInstance = mockServer.models.user.instance as any;
+    mockUserModelClass = mockServer.models.user.class;
   });
 
   it("should throw AuthenticationError if updater is not authenticated", async () => {
@@ -184,7 +186,7 @@ describe("updateUser resolver", () => {
 
     const mockServer = mockApolloServer({ uid: UPDATER_ID });
     testServer = mockServer.testServer;
-    mockUserModelInstance = mockServer.models.user as any;
+    mockUserModelInstance = mockServer.models.user.instance as any;
 
     const { mutate } = createTestClient(testServer);
 
@@ -203,7 +205,7 @@ describe("updateUser resolver", () => {
 
     const mockedFromUserDocument = jest.fn();
 
-    UserModel.fromUserDocument = mockedFromUserDocument;
+    mockUserModelClass.fromUserDocument = mockedFromUserDocument;
 
     mockedFromUserDocument.mockReturnValue({
       id: UPDATER_ID,
@@ -235,7 +237,7 @@ describe("updateRole resolver", () => {
   beforeEach(() => {
     const mockServer = mockApolloServer(null);
     testServer = mockServer.testServer;
-    mockUserModelInstance = mockServer.models.user as any;
+    mockUserModelInstance = mockServer.models.user.instance as any;
   });
 
   it("should throw AuthenticationError if updater is not authenticated", async () => {
@@ -294,7 +296,7 @@ describe("updateRole resolver", () => {
       uid: UPDATER.USER_ID
     });
     testServer = mockServer.testServer;
-    mockUserModelInstance = mockServer.models.user as any;
+    mockUserModelInstance = mockServer.models.user.instance as any;
 
     const { mutate } = createTestClient(testServer);
     const input: UpdateRoleInput = {
@@ -367,7 +369,7 @@ describe("updateRole resolver", () => {
       uid: UPDATER.USER_ID
     });
     testServer = mockServer.testServer;
-    mockUserModelInstance = mockServer.models.user as any;
+    mockUserModelInstance = mockServer.models.user.instance as any;
 
     mockUserModelInstance.getUser
       .mockResolvedValueOnce(updaterDoc)
