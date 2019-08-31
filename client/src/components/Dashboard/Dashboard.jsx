@@ -4,7 +4,6 @@ import {
   DashboardContainer,
   TextWrapper,
   ButtonWrapper,
-  OrangeButton,
   TextHeading,
   TextDetail,
   NextButton,
@@ -30,17 +29,13 @@ export default function Dashboard() {
           <h2>You don't belong to any Families at the moment. </h2>
           <p>Get started with one of the following actions: </p>
           <ButtonWrapper>
-            <OrangeButton>
-              <CreateFamily size="35px" />
-            </OrangeButton>
+            <CreateFamily size="55px" />
             <TextHeading>Create a Family</TextHeading>
             <TextDetail>Get your family to join Memento.</TextDetail>
             <NextButton />
           </ButtonWrapper>
           <ButtonWrapper>
-            <OrangeButton>
-              <InviteFamily size="35px" />
-            </OrangeButton>
+            <InviteFamily size="55px" />
             <TextHeading>Join an existing Family</TextHeading>
             <TextDetail>Got an invite code? Join your family.</TextDetail>
             <NextButton />

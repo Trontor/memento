@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ButtonPrimary, Next, Invite } from "ui/Buttons";
+import { Next, Invite } from "ui/Buttons";
 import { lighten } from "polished";
 
 export const DashboardContainer = styled.div`
@@ -48,35 +48,38 @@ export const ButtonWrapper = styled.div`
   display: grid;
   grid-template-areas: "orangeButton heading icon" "orangeButton text icon";
   grid-template-rows: 1fr 1fr;
-  grid-template-columns: 60px auto 40px;
+  grid-template-columns: 70px auto 40px;
   text-align: left;
   margin-bottom: 10px;
-`;
 
-export const OrangeButton = styled(ButtonPrimary)`
-  grid-area: orangeButton;
-  height: 70%;
-  margin: 10px;
+  @media screen and (max-width: ${props => props.theme.breakpoints.mobile}) {
+    height: 100px;
+  }
 `;
 
 export const TextHeading = styled.h4`
   grid-area: heading;
   padding: 0;
-  margin-top: 12px;
+  margin-top: 15px;
+  margin-left: 5px;
+  letter-spacing: 0.5px;
 `;
+
 export const TextDetail = styled.span`
   grid-area: text;
   font-size: 12px;
-  margin-top: -10px;
+  margin-top: -25px;
+  margin-left: 5px;
   padding: 0;
 `;
+
 export const NextButton = styled(Next)`
   grid-area: icon;
   padding-top: 12px;
 `;
 
 export const InviteFamily = styled(Invite)`
-  color: white;
-  margin-left: -18px;
-  margin-top: -5px;
+  color: ${props => props.theme.palette.main};
+  margin-top: 10px;
+  margin-left: 10px;
 `;

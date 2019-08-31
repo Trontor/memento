@@ -6,7 +6,8 @@ import {
   EditProfile,
   Setting,
   NewArtefact,
-  Invite
+  Invite,
+  View
 } from "ui/Buttons";
 import {
   SidebarContainer,
@@ -52,23 +53,29 @@ export default function Sidebar() {
         </FamilyListContainer>
         <MenuContainer>
           <TextList>
-            <NewGroup size="25px" />
-            New Family Group
-          </TextList>
-          <TextList>
-            <NewArtefact size="25px" />
-            New Artefact
-          </TextList>
-        </MenuContainer>
-        <MenuContainer>
-          <TextList>
             <Invite size="25px" />
-            Invite Family members
+            <a href="#">Invite Family members</a>
           </TextList>
           <TextList>
             <Setting size="25px" />
             Manage my Family groups
           </TextList>
+          <TextList>
+            <NewGroup size="25px" />
+            New Family Group
+          </TextList>
+        </MenuContainer>
+        <MenuContainer>
+          <TextList>
+            <NewArtefact size="25px" />
+            New Artefact
+          </TextList>
+          <TextList>
+            <View size="25px" />
+            View my Artefacts
+          </TextList>
+        </MenuContainer>
+        <MenuContainer>
           <TextList>
             <EditProfile size="25px" />
             Edit profile & account

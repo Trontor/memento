@@ -4,14 +4,14 @@ import { lighten } from "polished";
 import { ButtonPrimary } from "../../ui/Buttons";
 
 export const SidebarContainer = styled.div`
-  display: ${props => (props.menuClick ? "block" : "none")};
+  overflow-x: hidden;
   position: absolute;
   height: 100%;
   top: 0;
-  width: 100%;
+  width: ${props => (props.menuClick ? "100%" : "0")};
   background: ${props => lighten(0.05, props.theme.palette.sidebar)};
   z-index: 999;
-  box-shadow: 5px 10px lightgrey;
+  transition: 0.5s ease-in-out;
 
   @media screen and (min-width: ${props =>
       props.theme.breakpoints.tabletLanscape}) {
@@ -75,18 +75,17 @@ export const SearchInput = styled.input`
 
 export const FamilyListContainer = styled.div`
   width: 85%;
-  height: 35%;
+  height: 30%;
   margin: 0px 15px 0px 25px;
 
-  @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletPortrait}) and (max-width: ${props =>
-      props.theme.breakpoints.tabletLanscape}) {
-    height: 30%;
+  h3 {
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
 `;
 
 export const TextList = styled.li`
-  margin-top: 10px;
+  margin-top: 8px;
   list-style-type: none;
   font-style: normal;
   font-weight: 300;
@@ -96,6 +95,8 @@ export const TextList = styled.li`
     color: ${props => props.theme.palette.text};
     &:hover {
       border-bottom: 3px solid ${props => props.theme.palette.main};
+      font-weight: bold;
+      letter-spacing: 0.5px;
     }
   }
 `;

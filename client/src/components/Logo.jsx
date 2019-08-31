@@ -26,7 +26,6 @@ const LogoStyle = styled.span`
   float: left;
   color: ${props => props.theme.palette.text};
   font-size: 25px;
-  font-weight: light;
   text-transform: lowercase;
   width: 35%;
   position: relative;
