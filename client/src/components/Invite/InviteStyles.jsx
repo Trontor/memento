@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { ButtonSecondary } from "ui/Buttons";
-import { darken } from "polished";
+import { lighten, darken } from "polished";
 import { InputField } from 'ui/Forms';
 
 
@@ -24,9 +24,26 @@ export const FamilyGroupName = styled.span`
   color: ${props => darken(0.1, props.theme.palette.main)};
 `;
 
+export const EmailInvite = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const DeleteButton = styled.button`
+  color: ${props => lighten(0.5, props.theme.palette.text)};
+
+  &:hover {
+    color: ${props => lighten(0.3, props.theme.palette.text)};
+  }
+`;
+
 export const EmailsList = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-row-gap: 20px;
+  grid-row-gap: 10px;
   margin-bottom: 10px;
+
+  input {
+    font-size: 16px;
+  }
 `;

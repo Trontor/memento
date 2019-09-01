@@ -22,20 +22,21 @@ export default function InviteFamily() {
     };
   }
 
-  const addEmail = (email) => {
-    setInviteEmails([...inviteEmails, email])
-  }
-
   function handleChange(index, event) {
     const emails = [...inviteEmails];
     emails[index]= event.target.value;
     setInviteEmails(emails)
   }
 
-  // const deleteEmail = (index) => {
-  //   inviteEmails.splice(index, 1)
-  //   setInviteEmails([...inviteEmails, email])
-  // }
+  const addEmail = (email) => {
+    setInviteEmails([...inviteEmails, email])
+  }
+
+  const deleteEmail = (index) => {
+    const emails = [...inviteEmails]
+    emails.splice(index, 1)
+    setInviteEmails(emails)
+  }
 
   //Go to next step
   const nextStep = () => {
@@ -59,6 +60,7 @@ export default function InviteFamily() {
     <InviteStep2
       currentStep={currentStep}
       addEmail={addEmail}
+      deleteEmail={deleteEmail}
       inviteEmails={inviteEmails}
       selected={selectedFamily}
       handleChange={handleChange}

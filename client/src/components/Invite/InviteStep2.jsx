@@ -1,9 +1,9 @@
 import React from "react";
-import { InstructionLabel, FormSection, InputField } from 'ui/Forms';
-import { FamilyGroupName, EmailsList } from './InviteStyles';
+import { InstructionLabel, FormSection, InputField, FormHelpText } from 'ui/Forms';
+import { FamilyGroupName, EmailsList, EmailInvite, DeleteButton } from './InviteStyles';
 import { AddButton } from 'ui/Buttons';
 
-export default function InviteStep2({ currentStep, addEmail, inviteEmails, selected, handleChange}) {
+export default function InviteStep2({ currentStep, addEmail, deleteEmail, inviteEmails, selected, handleChange}) {
 
   if (currentStep !== 2) {
     return null
@@ -16,22 +16,35 @@ export default function InviteStep2({ currentStep, addEmail, inviteEmails, selec
       <EmailsList>
         {
           inviteEmails.map((email, idx) => (
-            <InputField
-              type="text"
-              placeholder="name@example.com"
-              value={email}
-              onChange={e => handleChange(idx, e)}
-            />
+            <EmailInvite>
+              <InputField
+                type="text"
+                placeholder="name@example.com"
+                value={email}
+                onChange={e => handleChange(idx, e)}
+              />
+              { inviteEmails.length > 1 ?
+              <DeleteButton
+                onClick={() => deleteEmail(idx)}>
+                <i class="fa fa-trash"></i>
+              </DeleteButton>
+              :
+              null
+              }
+            </EmailInvite>
           ))
         }
       </EmailsList>
 
-      <AddButton
-        text="Add another"
-        onClick={() => addEmail("")}>
-        <i className="fa fa-plus"></i>
-      </AddButton>
-
+      { inviteEmails.length < 10 ?
+        <AddButton
+          text="Add another"
+          onClick={() => addEmail("")}>
+          <i className="fa fa-plus"></i>
+        </AddButton>
+        :
+        null
+      }
     </FormSection>
   );
 }
