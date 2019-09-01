@@ -6,7 +6,8 @@ import { Header } from "ui/Typography";
 import { ButtonPrimary, ButtonSecondary } from 'ui/Buttons';
 import { AlignRight } from 'ui/Helpers';
 import { FormNav } from 'ui/Forms';
-
+import { Formik } from "formik";
+import * as yup from "yup";
 
 export default function InviteFamily() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -48,44 +49,58 @@ export default function InviteFamily() {
     setCurrentStep(currentStep - 1)
   };
 
- function checkEmpty() {
+  function checkEmpty() {
     return [...inviteEmails].filter(x => x !== "").length < 1;
   }
 
+  const validateEmail = yup.object().shape({
+    email: yup
+      .string()
+      .email("Please enter a valid email")
+  });
+
   return(
-    <Container>
+    <Formik
+      validationSchema={validateEmail}
+      validateOnBlur={false}
+      validateOnChange={false}
+      onSubmit={(values, actions) => {
+      }}
+      render={props => (
+        <Container>
+        <Header underline>Invite a Family Member</Header>
+        <InviteStep1
+          currentStep={currentStep}
+          selectFamily={selectFamily}
+          selected={selectedFamily}
+        />
+        <InviteStep2
+          currentStep={currentStep}
+          addEmail={addEmail}
+          deleteEmail={deleteEmail}
+          inviteEmails={inviteEmails}
+          selected={selectedFamily}
+          handleChange={handleChange}
+          validateEmail = {validateEmail}
+          error={props.errors.email}
+        />
 
-    <Header underline>Invite a Family Member</Header>
-    <InviteStep1
-      currentStep={currentStep}
-      selectFamily={selectFamily}
-      selected={selectedFamily}
-      />
-    <InviteStep2
-      currentStep={currentStep}
-      addEmail={addEmail}
-      deleteEmail={deleteEmail}
-      inviteEmails={inviteEmails}
-      selected={selectedFamily}
-      handleChange={handleChange}
-      />
+          <FormNav>
+            { currentStep !== 1 ?
+              <ButtonSecondary onClick={prevStep}>Back</ButtonSecondary>
+              : null
+            }
 
-    <FormNav>
-      { currentStep !== 1 ?
-        <ButtonSecondary onClick={prevStep}>Back</ButtonSecondary>
-        : null
-      }
+              <AlignRight>
+                { currentStep !== 2 ?
+                  <ButtonPrimary disabled={selectedFamily == null} onClick={nextStep}>Next</ButtonPrimary>
+                  :
+                  <ButtonPrimary disabled={checkEmpty()} type="submit">Invite</ButtonPrimary>
+                }
+              </AlignRight>
 
-        <AlignRight>
-          { currentStep !== 2 ?
-            <ButtonPrimary disabled={selectedFamily == null} onClick={nextStep}>Next</ButtonPrimary>
-            :
-            <ButtonPrimary disabled={checkEmpty()} type="submit">Invite</ButtonPrimary>
-          }
-         </AlignRight>
-
-    </FormNav>
-
-  </Container>
+          </FormNav>
+        </Container>
+      )}/>
   );
 }

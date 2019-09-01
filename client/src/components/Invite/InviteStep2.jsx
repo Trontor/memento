@@ -1,9 +1,9 @@
 import React from "react";
-import { InstructionLabel, FormSection, InputField, FormHelpText } from 'ui/Forms';
+import { InstructionLabel, FormSection, InputField, FormHelpText, Error } from 'ui/Forms';
 import { FamilyGroupName, EmailsList, EmailInvite, DeleteButton } from './InviteStyles';
 import { AddButton } from 'ui/Buttons';
 
-export default function InviteStep2({ currentStep, addEmail, deleteEmail, inviteEmails, selected, handleChange}) {
+export default function InviteStep2({ currentStep, addEmail, deleteEmail, inviteEmails, selected, handleChange, error}) {
 
   if (currentStep !== 2) {
     return null
@@ -18,7 +18,7 @@ export default function InviteStep2({ currentStep, addEmail, deleteEmail, invite
           inviteEmails.map((email, idx) => (
             <EmailInvite>
               <InputField
-                type="text"
+                type="email"
                 placeholder="name@example.com"
                 value={email}
                 onChange={e => handleChange(idx, e)}
@@ -34,6 +34,9 @@ export default function InviteStep2({ currentStep, addEmail, deleteEmail, invite
             </EmailInvite>
           ))
         }
+        {error && (
+          <Error>error</Error>
+        )}
       </EmailsList>
 
       { inviteEmails.length < 10 ?
