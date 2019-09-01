@@ -101,6 +101,7 @@ workflows:
               only:
                 - master
                 - develop
+                - feature/backend/setup-nestjs
       - setup-backend:
           filters:
             branches:
@@ -115,6 +116,7 @@ workflows:
               only:
                 - master
                 - develop
+                - feature/backend/setup-nestjs
       - test-backend:
           requires:
             - setup-backend
