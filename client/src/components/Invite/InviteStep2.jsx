@@ -45,6 +45,9 @@ export default function InviteStep2({ currentStep, addEmail, deleteEmail, invite
         :
         null
       }
+      <FormHelpText>
+        You may add up to 10 family members at once.
+      </FormHelpText>
     </FormSection>
   );
 }

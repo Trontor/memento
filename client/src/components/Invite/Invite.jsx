@@ -48,6 +48,10 @@ export default function InviteFamily() {
     setCurrentStep(currentStep - 1)
   };
 
+ function checkEmpty() {
+    return [...inviteEmails].filter(x => x !== "").length < 1;
+  }
+
   return(
     <Container>
 
@@ -76,7 +80,7 @@ export default function InviteFamily() {
           { currentStep !== 2 ?
             <ButtonPrimary disabled={selectedFamily == null} onClick={nextStep}>Next</ButtonPrimary>
             :
-            <ButtonPrimary disabled={inviteEmails[0]=="" || inviteEmails.length < 1} type="submit">Invite</ButtonPrimary>
+            <ButtonPrimary disabled={checkEmpty()} type="submit">Invite</ButtonPrimary>
           }
          </AlignRight>
 

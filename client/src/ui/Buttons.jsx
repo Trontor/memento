@@ -105,8 +105,9 @@ export const AddButton = styled.button`
   border-radius: 50%;
   border: 1px solid ${props => lighten(0.03, props.theme.palette.main)};
   color: ${props => props.theme.palette.main};
-  margin-top: 10px;
+  margin: 10px 0;
   position: relative;
+  display: block;
 
   i {
     display: block;

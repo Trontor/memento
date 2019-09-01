@@ -1,8 +1,6 @@
 import styled, { css } from "styled-components";
 import { ButtonSecondary } from "ui/Buttons";
 import { lighten, darken } from "polished";
-import { InputField } from 'ui/Forms';
-
 
 export const FamilyGroup = styled(ButtonSecondary)`
   display: block;
@@ -30,7 +28,7 @@ export const EmailInvite = styled.div`
 `;
 
 export const DeleteButton = styled.button`
-  color: ${props => lighten(0.5, props.theme.palette.text)};
+  color: ${props => lighten(0.55, props.theme.palette.text)};
 
   &:hover {
     color: ${props => lighten(0.3, props.theme.palette.text)};
