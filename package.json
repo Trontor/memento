@@ -32,6 +32,7 @@
   "dependencies": {
     "@nestjs/common": "^6.6.3",
     "@nestjs/core": "^6.6.3",
+    "@nestjs/graphql": "^6.4.3",
     "@nestjs/platform-express": "^6.6.3",
     "@nestjs/serve-static": "^1.0.1",
     "apollo-link-error": "^1.1.11",
@@ -45,6 +46,7 @@
     "firebase-functions": "^3.2.0",
     "firebase-functions-test": "^0.1.6",
     "graphql": "^14.4.2",
+    "graphql-tools": "^4.0.5",
     "jest": "^24.8.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.2",
