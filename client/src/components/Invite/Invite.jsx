@@ -11,7 +11,7 @@ import { FormNav } from 'ui/Forms';
 export default function InviteFamily() {
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedFamily, setSelectedFamily] = useState(null);
-  const [inviteEmails, setInviteEmails] = useState([]);
+  const [inviteEmails, setInviteEmails] = useState([""]);
 
   const selectFamily = (familyName) => {
     if (selectedFamily === familyName) {
@@ -22,11 +22,20 @@ export default function InviteFamily() {
     };
   }
 
-  const addEmails = (email) => {
-    setInviteEmails(
-      [...inviteEmails, email]
-    )
+  const addEmail = (email) => {
+    setInviteEmails([...inviteEmails, email])
   }
+
+  function handleChange(index, event) {
+    const emails = [...inviteEmails];
+    emails[index]= event.target.value;
+    setInviteEmails(emails)
+  }
+
+  // const deleteEmail = (index) => {
+  //   inviteEmails.splice(index, 1)
+  //   setInviteEmails([...inviteEmails, email])
+  // }
 
   //Go to next step
   const nextStep = () => {
@@ -49,9 +58,10 @@ export default function InviteFamily() {
       />
     <InviteStep2
       currentStep={currentStep}
-      addEmails={addEmails}
+      addEmail={addEmail}
       inviteEmails={inviteEmails}
       selected={selectedFamily}
+      handleChange={handleChange}
       />
 
     <FormNav>
@@ -59,12 +69,15 @@ export default function InviteFamily() {
         <ButtonSecondary onClick={prevStep}>Back</ButtonSecondary>
         : null
       }
-      { currentStep <= 2 ?
+
         <AlignRight>
-          <ButtonPrimary disabled={selectedFamily == null} onClick={nextStep}>Next</ButtonPrimary>
-        </AlignRight>
-        : null
-      }
+          { currentStep !== 2 ?
+            <ButtonPrimary disabled={selectedFamily == null} onClick={nextStep}>Next</ButtonPrimary>
+            :
+            <ButtonPrimary disabled={inviteEmails[0]=="" || inviteEmails.length < 1} type="submit">Invite</ButtonPrimary>
+          }
+         </AlignRight>
+
     </FormNav>
 
   </Container>

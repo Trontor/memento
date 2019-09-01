@@ -1,6 +1,8 @@
 import styled, { css } from "styled-components";
 import { ButtonSecondary } from "ui/Buttons";
 import { darken } from "polished";
+import { InputField } from 'ui/Forms';
+
 
 export const FamilyGroup = styled(ButtonSecondary)`
   display: block;
@@ -20,4 +22,11 @@ export const FamilyGroup = styled(ButtonSecondary)`
 export const FamilyGroupName = styled.span`
   font-style: italic;
   color: ${props => darken(0.1, props.theme.palette.main)};
+`;
+
+export const EmailsList = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-row-gap: 20px;
+  margin-bottom: 10px;
 `;

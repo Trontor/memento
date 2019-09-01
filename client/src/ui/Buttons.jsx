@@ -98,3 +98,27 @@ export const Invite = styled(GroupAdd)`
   color: gray;
   margin-right: 10px;
 `;
+
+export const AddButton = styled.button`
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 1px solid ${props => lighten(0.03, props.theme.palette.main)};
+  color: ${props => props.theme.palette.main};
+  margin-top: 10px;
+  position: relative;
+
+  i {
+    display: block;
+  }
+
+  &:after {
+    display: block;
+    content: '${props => props.text}';
+    position: absolute;
+    top: 50%;
+    transform: translate(25px, -50%);
+    width: 115px;
+    text-align: left;
+  }
+`;
