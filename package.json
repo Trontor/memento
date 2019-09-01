@@ -51,6 +51,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.2",
+    "type-graphql": "^0.17.5",
     "uuid": "^3.3.3"
   },
   "devDependencies": {

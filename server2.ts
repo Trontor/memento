@@ -1,11 +1,15 @@
 import { NestFactory } from "@nestjs/core";
+// AppModule is the root module of the application
 import { AppModule } from "./backend/app.module";
 // Helps us load .env files into memory (process.env.<property> = <value>)
 import dotenv from "dotenv";
+
 // Load .env file into memory
 dotenv.config();
 
+// An async function is needed due to `await` usage
 async function bootstrap() {
+  // Create a nest application
   const app = await NestFactory.create(AppModule);
 
   // Allow CORS
