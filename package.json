@@ -12,7 +12,7 @@
     "build-client": "npm run build --prefix client",
     "dev": "concurrently \"npm run client\" \"npm run server\"",
     "client": "npm start --prefix client",
-    "postinstall": "tsc",
+    "postinstall": "tsc --project tsconfig.json",
     "server": "nodemon --exec ts-node server2.ts",
     "test": "jest"
   },
