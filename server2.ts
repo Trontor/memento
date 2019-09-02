@@ -17,6 +17,6 @@ async function bootstrap() {
   await app.listen(port);
   const host = `http://localhost:${port}`;
   console.log(`Express server initialised at ${host}`);
-  console.log(`GraphQL server initialised at ${host}`);
+  console.log(`GraphQL server initialised at ${host}/graphql`);
 }
 bootstrap();

@@ -1,13 +1,19 @@
 import { Resolver, Query, Mutation, Args } from "@nestjs/graphql";
 import { UserSignupInput } from "./input/user.input";
-import { User } from "./dto/user.dto";
 import { UserService } from "./user.service";
-import { UserInputError } from "apollo-server-express";
 import { AuthOutput } from "../auth/dto/auth.dto";
+import { Inject, forwardRef } from "@nestjs/common";
+import { AuthService } from "../auth/auth.service";
+import { mapDocumentToUserDTO } from "./schema/user.mapper";
+import { User } from "./dto/user.dto";
 
 @Resolver()
 export class UserResolver {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    @Inject(forwardRef(() => AuthService))
+    private readonly authService: AuthService,
+    private readonly userService: UserService
+  ) {}
 
   @Query(returns => String)
   async me(): Promise<string> {
@@ -15,13 +21,12 @@ export class UserResolver {
   }
 
   @Mutation(returns => AuthOutput)
-  async signup(@Args("input") input: UserSignupInput) {
-    let createdUser: User | undefined;
-    try {
-      createdUser = await this.userService.createUser(input);
-    } catch (error) {
-      throw new UserInputError(error.message);
-    }
-    return createdUser;
+  async signup(@Args("input") input: UserSignupInput): Promise<AuthOutput> {
+    const createdUser: User = await this.userService.createUser(input);
+    const { token } = this.authService.createJwt(createdUser);
+    return {
+      user: createdUser,
+      token
+    };
   }
 }

@@ -74,6 +74,7 @@ type User {
   families: [Family!]!
   createdAt: String!
   updatedAt: String!
+  lastSeenAt: String!
 }
 
 input UserSignupInput {

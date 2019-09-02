@@ -2,7 +2,7 @@
  * Defines the GraphQL object.
  * DTO stands for "Data Transfer Object": the data that's sent over the network.
  */
-import { ObjectType, ID, Field } from "type-graphql";
+import { ObjectType, ID, Field, Int } from "type-graphql";
 
 import { Gender } from "./gender.dto";
 import { Role } from "./role.dto";
@@ -46,4 +46,7 @@ export class User {
 
   @Field()
   updatedAt!: string;
+
+  @Field()
+  lastSeenAt!: string;
 }

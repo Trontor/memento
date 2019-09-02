@@ -2,18 +2,15 @@ import { Schema, model, Model, Document, Query, Types } from "mongoose";
 import * as bcrypt from "bcrypt";
 import { User } from "../dto/user.dto";
 
+/**
+ * Use GraphQL `User` type as a single source of truth by extending the Mongoose
+ * `UserDocument` from the `User` class.
+ * Issue: This can lead to messy bloated `UserDocument`.
+ */
 export interface UserDocument extends User, Document {
   // Declaring everything that is not in the GraphQL Schema for a User
   password: string;
   lowercaseEmail: string;
-
-  /**
-   * Checks if the user's password provided matches the user's password hash
-   *
-   * @param {string} password The password to attempt
-   * @returns {Promise<boolean>} result of the match. Will throw an error if one exists from bcrypt
-   */
-  checkPassword(password: string): Promise<boolean>;
 }
 
 export interface IUserModel extends Model<UserDocument> {
@@ -32,6 +29,14 @@ export interface IUserModel extends Model<UserDocument> {
  */
 export const UserSchema: Schema = new Schema(
   {
+    firstName: {
+      type: String,
+      required: true
+    },
+    lastName: {
+      type: String,
+      required: true
+    },
     email: {
       type: String,
       unique: true,
@@ -56,6 +61,10 @@ export const UserSchema: Schema = new Schema(
     },
     imageUrl: {
       type: String
+    },
+    lastSeenAt: {
+      type: Date,
+      default: Date.now
     }
   },
   {
@@ -107,22 +116,6 @@ UserSchema.pre<Query<UserDocument>>("findOneAndUpdate", function(next) {
   }
   next();
 });
-
-UserSchema.methods.checkPassword = function(
-  password: string
-): Promise<boolean> {
-  const user = this;
-
-  return new Promise((resolve, reject) => {
-    bcrypt.compare(password, user.password, (error, isMatch) => {
-      if (error) {
-        reject(error);
-      }
-
-      resolve(isMatch);
-    });
-  });
-};
 
 // Mongoose Static Method - added so a service can validate an email with the same criteria the schema is using
 UserSchema.statics.validateEmail = function(email: string): boolean {
