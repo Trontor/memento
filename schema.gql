@@ -41,6 +41,7 @@ type Mutation {
 
 type Query {
   me: String!
+  refreshToken: String!
 }
 
 type Role {

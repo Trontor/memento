@@ -6,6 +6,7 @@ import { AuthResolver } from "./auth.resolvers";
 import { ConfigModule } from "../config/config.module";
 import { JwtModule, JwtModuleOptions } from "@nestjs/jwt";
 import { ConfigService } from "../config/config.service";
+import { JwtStrategy } from "./strategies/jwt.strategy";
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { ConfigService } from "../config/config.service";
      * Special import due to circular dependency between AuthModule and UserModule.
      */
     forwardRef(() => UserModule),
-    PassportModule,
+    PassportModule.register({ defaultStrategy: "jwt", session: false }),
     ConfigModule,
     /**
      * Sets up the JwtModule:
@@ -38,7 +39,7 @@ import { ConfigService } from "../config/config.service";
       inject: [ConfigService]
     })
   ],
-  providers: [AuthService, AuthResolver],
+  providers: [AuthService, AuthResolver, JwtStrategy],
   exports: [AuthService]
 })
 export class AuthModule {}

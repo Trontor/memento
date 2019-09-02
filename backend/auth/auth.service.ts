@@ -7,12 +7,13 @@ import {
 } from "@nestjs/common";
 import { UserService } from "../user/user.service";
 import { AuthOutput } from "./dto/auth.dto";
-import { JwtPayload } from "./interfaces/jwtPayload.interface";
+import { JwtPayload } from "./interfaces/jwt-payload.interface";
 import { User } from "../user/dto/user.dto";
 import { ConfigService } from "../config/config.service";
 import { JwtService } from "@nestjs/jwt";
 import { mapDocumentToUserDTO } from "../user/schema/user.mapper";
 import { checkPassword } from "./auth.util";
+import { UserDocument } from "../user/schema/user.schema";
 
 @Injectable()
 export class AuthService {
@@ -85,5 +86,29 @@ export class AuthService {
       data,
       token: jwt
     };
+  }
+
+  /**
+   * Verifies that the JWT payload associated with a JWT is valid by making sure the user exists
+   *
+   * @param {JwtPayload} payload
+   * @returns {(Promise<UserDocument>)} returns user
+   * @throws UnauthorizedException if user is not found
+   * @memberof AuthService
+   */
+  async validateJwtPayload(payload: JwtPayload): Promise<UserDocument> {
+    // This will be used when the user has already logged in and has a JWT
+    try {
+      const user = await this.userService.findOneByEmail(payload.email);
+      // TODO: fix type mismatch
+      // user.lastSeenAt = new Date();
+      // user.save();
+      return user;
+    } catch (err) {
+      // catch UserNotFoundException and throw UnauthorizedException
+      throw new UnauthorizedException(
+        "Could not log-in with the provided credentials"
+      );
+    }
   }
 }
