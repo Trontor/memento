@@ -23,14 +23,14 @@ export default function InviteStep1({ currentStep, selectFamily, selected}) {
   return(
     <>
       <FormSection>
-        <InstructionLabel>Which Family group would you like to invite members to?</InstructionLabel>
+        <InstructionLabel>Which Family group would you like to invite people to?</InstructionLabel>
           { familyGroups.map((family)=>(
             <FamilyGroup selected={selected === family.name} onClick={() => selectFamily(family.name)}>
               { family.name }
             </FamilyGroup>
           ))}
         <FormHelpText>
-          You are able to invite members to Family groups you are an administrator of.
+          You are able to invite people to Family groups you are an administrator of.
         </FormHelpText>
 
       </FormSection>

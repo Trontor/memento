@@ -9,12 +9,12 @@ export const center = css`
 
 export const Container = styled.div`
   width: 100%;
-  padding: 40px;
+  padding: 20px;
   margin: 0 auto;
   position: relative;
 
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}) {
-    width: 600px;
+    width: 580px;
   }
 
 `;

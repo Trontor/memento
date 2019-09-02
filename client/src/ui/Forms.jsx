@@ -38,13 +38,17 @@ export const InputLabel = styled.label`
 `;
 
 export const InstructionLabel = styled.label`
-  font-size: 16px;
+  font-size: 14px;
   font-family: 'Livvic', sans-serif;
   font-weight: bold;
   display: block;
   margin-bottom: 1em;
   opacity: 0.75;
   line-height: 1.5em;
+
+  @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}) {
+    font-size: 15px;
+  }
 `;
 
 
