@@ -1,11 +1,11 @@
 import React from "react";
-import { FormHeader } from "ui/Typography";
+import { Header } from "ui/Typography";
 import {
   Error,
-  InputContainer,
   InputField,
   InputLabel,
-  HelpText
+  HelpText,
+  InputSection
 } from "ui/Forms";
 import { Logo } from "components/Logo";
 import { MsgLink } from "./LoginStyles";
@@ -61,7 +61,7 @@ export default function Login(props) {
     <>
       <Logo />
       <LoginContainer>
-        <FormHeader>Welcome back!</FormHeader>
+        <Header underline>Welcome back!</Header>
         <Formik
           initialValues={defaultValues}
           onSubmit={(values, actions) => {
@@ -73,7 +73,7 @@ export default function Login(props) {
           render={props => (
             <form onSubmit={props.handleSubmit}>
               {/* Email Field */}
-              <InputContainer>
+              <InputSection>
                 <InputLabel>Email</InputLabel>
                 <InputField
                   type="text"
@@ -85,9 +85,9 @@ export default function Login(props) {
                 {props.errors.email && props.touched.email && (
                   <Error>{props.errors.email}</Error>
                 )}
-              </InputContainer>
+              </InputSection>
               {/* Password Field */}
-              <InputContainer>
+              <InputSection>
                 <InputLabel>Password</InputLabel>
                 <InputField
                   type="password"
@@ -99,8 +99,8 @@ export default function Login(props) {
                 {props.errors.password && props.touched.password && (
                   <Error>{props.errors.password}</Error>
                 )}
-              </InputContainer>
-              <ButtonPrimary type="submit">Login</ButtonPrimary>
+              </InputSection>
+              <ButtonPrimary type="submit" spacing>Login</ButtonPrimary>
               <HelpText>
                 Don't have an account?
                 <MsgLink to="./Signup"> Sign up</MsgLink>
@@ -168,7 +168,7 @@ export default function Login(props) {
 //         <LoginContainer>
 //           <FormHeader>Welcome back!</FormHeader>
 //           <form onSubmit={this.handleSubmit}>
-//             <InputContainer>
+//             <InputSection>
 //               <InputLabel>Email</InputLabel>
 //               <InputField
 //                 valid={formErrors.email.length > 0}
@@ -180,9 +180,9 @@ export default function Login(props) {
 //               {formErrors.email.length > 0 && (
 //                 <ErrorMsg>{formErrors.email}</ErrorMsg>
 //               )}
-//             </InputContainer>
+//             </InputSection>
 
-//             <InputContainer>
+//             <InputSection>
 //               <InputLabel>Password</InputLabel>
 //               <InputField
 //                 valid={formErrors.password.length > 0}
@@ -194,7 +194,7 @@ export default function Login(props) {
 //               {formErrors.password.length > 0 && (
 //                 <ErrorMsg>{formErrors.password}</ErrorMsg>
 //               )}
-//             </InputContainer>
+//             </InputSection>
 
 //             <ButtonPrimary>Login</ButtonPrimary>
 //             <HelpText>
