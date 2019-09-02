@@ -28,20 +28,8 @@ export class UserSignupInput {
   password!: string;
 
   @Field()
-  confirmPassword!: string;
-
-  @Field()
   firstName!: string;
 
   @Field()
   lastName!: string;
-}
-
-@InputType()
-export class UserLoginInput {
-  @Field()
-  email!: string;
-
-  @Field()
-  password!: string;
 }

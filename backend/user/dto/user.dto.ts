@@ -12,7 +12,7 @@ import { Family } from "../../family/dto/family.dto";
 @ObjectType()
 export class User {
   @Field(type => ID)
-  id!: string;
+  userId!: string;
 
   @Field()
   email!: string;
@@ -45,5 +45,5 @@ export class User {
   createdAt!: string;
 
   @Field()
-  lastLogin?: string;
+  updatedAt!: string;
 }

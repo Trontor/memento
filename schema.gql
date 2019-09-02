@@ -3,6 +3,82 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type AuthOutput {
+  token: String!
+  user: User!
+}
+
+type Family {
+  id: ID!
+  name: String!
+  description: String
+  imageUrl: String
+  numMembers: Int!
+  numArtifacts: Int!
+  users: [User!]!
+  createdAt: String!
+}
+
+enum FamilyRole {
+  Admin
+  Normal
+}
+
+enum Gender {
+  Male
+  Female
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  signup(input: UserSignupInput!): AuthOutput!
+  login(input: LoginInput!): AuthOutput!
+}
+
 type Query {
   me: String!
+}
+
+type Role {
+  familyId: ID!
+  role: FamilyRole!
+}
+
+type UpdateRoleOutput {
+  userId: ID!
+  role: Role!
+}
+
+input UpdateUserInput {
+  id: ID!
+  location: String
+  dateOfBirth: String
+  gender: Gender
+  imageUrl: String
+}
+
+type User {
+  userId: ID!
+  email: String!
+  firstName: String!
+  lastName: String!
+  imageUrl: String
+  location: String
+  dateOfBirth: String
+  gender: String
+  roles: [Role!]!
+  families: [Family!]!
+  createdAt: String!
+  updatedAt: String!
+}
+
+input UserSignupInput {
+  email: String!
+  password: String!
+  firstName: String!
+  lastName: String!
 }
