@@ -1,15 +1,37 @@
-import React from "react";
-import { BackgroundWrapper, Organic } from "./BackgroundStyles";
+import React, { Component } from "react";
+import {
+  SignupBackgroundWrapper,
+  SignupOrganic,
+  LoginBackgroundWrapper,
+  LoginOrganic
+} from "./BackgroundStyles";
 
-export default function Background() {
-  return (
-    <BackgroundWrapper>
-      <Organic />
-      <Organic />
-      <Organic />
-      <Organic />
-      <Organic />
-      <Organic />
-    </BackgroundWrapper>
-  );
+export class SignupBackground extends Component {
+  render() {
+    return (
+      <SignupBackgroundWrapper>
+        <SignupOrganic />
+        <SignupOrganic />
+        <SignupOrganic />
+        <SignupOrganic />
+        <SignupOrganic />
+        <SignupOrganic />
+      </SignupBackgroundWrapper>
+    );
+  }
 }
+
+export class LoginBackground extends Component {
+  render() {
+    return (
+      <LoginBackgroundWrapper>
+        <LoginOrganic />
+        <LoginOrganic />
+        <LoginOrganic />
+        <LoginOrganic />
+      </LoginBackgroundWrapper>
+    );
+  }
+}
+
+export default { SignupBackground, LoginBackground };

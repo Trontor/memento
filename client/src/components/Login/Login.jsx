@@ -15,6 +15,7 @@ import * as yup from "yup";
 import { Formik } from "formik";
 import { LOGIN } from "mutations/Authentication";
 import { useMutation } from "@apollo/react-hooks";
+import { LoginBackground } from "../Background/Background";
 
 const LoginValidationSchema = yup.object().shape({
   email: yup
@@ -59,7 +60,9 @@ export default function Login(props) {
 
   return (
     <>
+      <LoginBackground />
       <Logo />
+
       <LoginContainer>
         <FormHeader>Welcome back!</FormHeader>
         <Formik

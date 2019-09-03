@@ -1,15 +1,16 @@
 import styled from "styled-components";
 
-export const BackgroundWrapper = styled.div`
+export const SignupBackgroundWrapper = styled.div`
   position: absolute;
   display: flex;
   justify-content: flex-start;
   height: 100%;
   width: 50%;
   z-index: 9;
+  overflow-x: hidden;
 `;
 
-export const Organic = styled.div`
+export const SignupOrganic = styled.div`
   position: absolute;
   display: block;
   opacity: 0.7;
@@ -60,7 +61,7 @@ export const Organic = styled.div`
   &:nth-child(4) {
     width: 175px;
     height: 150px;
-    top: 75%;
+    top: 85%;
     left: 60%;
     background: linear-gradient(90deg, #4efbd2, #58f981);
 
@@ -85,7 +86,7 @@ export const Organic = styled.div`
   &:nth-child(6) {
     width: 85px;
     height: 85px;
-    top: 75%;
+    top: 78%;
     left: 55%;
     background: linear-gradient(225deg, #8c09f4, #5890f9);
 
@@ -109,4 +110,57 @@ export const Organic = styled.div`
       border-radius: 41% 59% 41% 59% / 43% 45% 55%;
     }
   }*/
+`;
+
+export const LoginBackgroundWrapper = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: flex-start;
+  height: 100%;
+  width: 100%;
+  z-index: 9;
+  overflow-x: hidden;
+  overflow-y: hidden;
+`;
+
+export const LoginOrganic = styled.div`
+  position: absolute;
+  display: block;
+  opacity: 0.7;
+  border-radius: 50%;
+  /*animation-name: organic;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;*/
+
+  &:first-child {
+    width: 45%;
+    height: 55%;
+    top: -25%;
+    left: 65%;
+    background: #f79c1d;
+  }
+
+  &:nth-child(2) {
+    width: 30%;
+    height: 55%;
+    top: 18%;
+    left: 90%;
+    background: #59e5f0;
+  }
+
+  &:nth-child(3) {
+    width: 10%;
+    height: 18%;
+    top: 40%;
+    left: 83%;
+    background: linear-gradient(180deg, #ff512f, orange);
+  }
+
+  &:nth-child(4) {
+    width: 30%;
+    height: 20%;
+    top: 92%;
+    left: 5%;
+    background: #f79c1d;
+  }
 `;
