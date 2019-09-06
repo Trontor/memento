@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID, Int } from "type-graphql";
+import { ObjectType, Field, ID } from "type-graphql";
 import { User } from "../../user/dto/user.dto";
 
 @ObjectType()

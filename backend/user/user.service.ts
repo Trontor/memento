@@ -9,9 +9,9 @@ import { UserSignupInput, UpdateUserInput } from "./input/user.input";
 import { InjectModel } from "@nestjs/mongoose";
 import { UserDocument } from "./schema/user.schema";
 import { Model, Types } from "mongoose";
-import { MongoError, ObjectId } from "mongodb";
+import { MongoError } from "mongodb";
 import { IUserService } from "./interfaces/IUserService";
-import { UserNotFoundException, UpdateRoleException } from "./user.exceptions";
+import { UserNotFoundException, CreateRoleException } from "./user.exceptions";
 import { User } from "./dto/user.dto";
 import { mapDocumentToUserDTO } from "./schema/user.mapper";
 import { RoleInput } from "./input/role.input";
@@ -37,6 +37,21 @@ export class UserService implements IUserService {
       throw new UserNotFoundException();
     }
     return mapDocumentToUserDTO(user);
+  }
+
+  /**
+   * Finds users by ids.
+   * @param userId user id as a string
+   */
+  async getUsers(userIds: string[]): Promise<User[]> {
+    if (userIds.length === 0) return [];
+    // more efficient to retrieve all docs in one round trip
+    const docs = await this.UserModel.find({
+      _id: {
+        $in: userIds.map(id => fromHexStringToObjectId(id))
+      }
+    });
+    return docs.map(doc => mapDocumentToUserDTO(doc));
   }
 
   /**
@@ -114,7 +129,7 @@ export class UserService implements IUserService {
       },
       { new: true }
     );
-    if (!user) throw new UpdateRoleException();
+    if (!user) throw new CreateRoleException();
     this.logger.debug(`Updated user roles array: ${user.roles}`);
     return user;
   }

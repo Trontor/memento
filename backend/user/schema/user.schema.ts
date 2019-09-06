@@ -33,8 +33,7 @@ const RoleSchema: Schema = new Schema(
   {
     familyId: {
       type: String,
-      required: true,
-      unique: true
+      required: true
     },
     familyRole: {
       type: String,

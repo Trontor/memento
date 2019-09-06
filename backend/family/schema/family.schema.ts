@@ -1,7 +1,9 @@
 import { Schema, model, Model, Document } from "mongoose";
 import { Family } from "../dto/family.dto";
 
-export interface FamilyDocument extends Family, Document {}
+export interface FamilyDocument extends Family, Document {
+  memberIds: string[];
+}
 
 export interface IFamilyModel extends Model<FamilyDocument> {}
 
@@ -20,8 +22,8 @@ export const FamilySchema: Schema = new Schema(
     imageUrl: {
       type: String
     },
-    members: {
-      type: [Array],
+    memberIds: {
+      type: [String],
       default: []
     }
   },

@@ -33,6 +33,7 @@ export class UserResolver {
     @Inject(forwardRef(() => AuthService))
     private readonly authService: AuthService,
     private readonly userService: UserService,
+    @Inject(forwardRef(() => FamilyService))
     private readonly familyService: FamilyService
   ) {}
 

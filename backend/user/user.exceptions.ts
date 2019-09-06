@@ -9,8 +9,8 @@ export class UserNotFoundException extends NotFoundException {
   }
 }
 
-export class UpdateRoleException extends InternalServerErrorException {
+export class CreateRoleException extends InternalServerErrorException {
   constructor() {
-    super("Could not update user role");
+    super("Could not create a user role");
   }
 }

@@ -12,8 +12,8 @@ export const mapDocumentToFamilyDTO = (doc: FamilyDocument): Family => {
     name: doc.name,
     imageUrl: doc.imageUrl,
     description: doc.description,
-    // family roles
-    members: doc.members,
+    // family roles - resolver will set this
+    members: undefined,
     // timestamps
     createdAt: doc.createdAt,
     updatedAt: doc.updatedAt

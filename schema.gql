@@ -55,6 +55,7 @@ type Query {
   me: String!
   user(userId: String!): User!
   refreshToken: String!
+  family(familyId: String!): Family!
 }
 
 type Role {

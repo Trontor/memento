@@ -1,7 +1,9 @@
 import {
   Injectable,
   Logger,
-  InternalServerErrorException
+  InternalServerErrorException,
+  Inject,
+  forwardRef
 } from "@nestjs/common";
 import { User } from "../user/dto/user.dto";
 import { CreateFamilyInput } from "./inputs/family.inputs";
@@ -12,7 +14,10 @@ import { UserService } from "../user/user.service";
 import { FamilyRole } from "../user/dto/role.dto";
 import { Family } from "./dto/family.dto";
 import { mapDocumentToFamilyDTO } from "./schema/family.mapper";
-import { FamilyNotFoundException } from "./family.exceptions";
+import {
+  FamilyNotFoundException,
+  CreateFamilyException
+} from "./family.exceptions";
 import { fromHexStringToObjectId } from "../common/mongo.util";
 
 @Injectable()
@@ -22,6 +27,7 @@ export class FamilyService {
   constructor(
     @InjectModel("Family")
     private readonly FamilyModel: Model<FamilyDocument>,
+    @Inject(forwardRef(() => UserService))
     private readonly userService: UserService
   ) {}
 
@@ -38,7 +44,7 @@ export class FamilyService {
     const doc = new this.FamilyModel({
       _id: familyId,
       ...input,
-      members: currentUser.userId
+      memberIds: [currentUser.userId]
     });
     this.logger.debug(doc);
 
@@ -47,9 +53,7 @@ export class FamilyService {
       familyDoc = await doc.save();
     } catch (err) {
       this.logger.error(err);
-      throw new InternalServerErrorException(
-        "Family document could not be created"
-      );
+      throw new CreateFamilyException();
     }
 
     // make the creating user a family admin
@@ -61,12 +65,12 @@ export class FamilyService {
     return mapDocumentToFamilyDTO(familyDoc);
   }
 
-  async getFamily(id: string): Promise<Family> {
+  async getFamily(id: string): Promise<FamilyDocument> {
     const objId = fromHexStringToObjectId(id);
     const family = await this.FamilyModel.findById(objId);
     if (!family) throw new FamilyNotFoundException();
     this.logger.log(`get family: ${family.id}`);
-    return mapDocumentToFamilyDTO(family);
+    return family;
   }
 
   async getFamilies(familyIds: string[]): Promise<Family[]> {
