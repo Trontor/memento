@@ -15,6 +15,7 @@ import { UserNotFoundException, UpdateRoleException } from "./user.exceptions";
 import { User } from "./dto/user.dto";
 import { mapDocumentToUserDTO } from "./schema/user.mapper";
 import { RoleInput } from "./input/role.input";
+import { fromHexStringToObjectId } from "../common/mongo.util";
 
 @Injectable()
 export class UserService implements IUserService {
@@ -29,13 +30,7 @@ export class UserService implements IUserService {
    * @param userId user id as a string
    */
   async findOneById(userId: string): Promise<User> {
-    let id: ObjectId;
-    try {
-      id = Types.ObjectId(userId);
-    } catch (err) {
-      this.logger.error(`${userId} is invalid ObjectId`);
-      throw new UserNotFoundException();
-    }
+    const id = fromHexStringToObjectId(userId);
     const user = await this.UserModel.findById(id);
     if (!user) {
       Logger.error(`user ${id} not found`);
@@ -96,13 +91,7 @@ export class UserService implements IUserService {
    */
   async createRole(userId: string, input: RoleInput): Promise<UserDocument> {
     this.logger.log(`User ${userId} creating role ${input}`);
-    let id: ObjectId;
-    try {
-      id = Types.ObjectId(userId);
-    } catch (err) {
-      this.logger.error(`${userId} is invalid ObjectId`);
-      throw new UserNotFoundException();
-    }
+    const id: Types.ObjectId = fromHexStringToObjectId(userId);
     this.logger.debug(`user id ${id}`);
 
     /**

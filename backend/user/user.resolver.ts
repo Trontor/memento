@@ -1,4 +1,11 @@
-import { Resolver, Query, Mutation, Args } from "@nestjs/graphql";
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveProperty,
+  Parent
+} from "@nestjs/graphql";
 import { UserSignupInput, UpdateUserInput } from "./input/user.input";
 import { UserService } from "./user.service";
 import { AuthOutput } from "../auth/dto/auth.dto";
@@ -6,7 +13,8 @@ import {
   Inject,
   forwardRef,
   UseGuards,
-  NotImplementedException
+  NotImplementedException,
+  Logger
 } from "@nestjs/common";
 import { AuthService } from "../auth/auth.service";
 import { User } from "./dto/user.dto";
@@ -14,13 +22,18 @@ import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { CurrentUser } from "../auth/decorators/currentUser";
 import { UpdateRoleOutput } from "./dto/role.dto";
 import { UpdateRoleInput } from "./input/role.input";
+import { Family } from "../family/dto/family.dto";
+import { FamilyService } from "../family/family.service";
 
-@Resolver()
+@Resolver(User)
 export class UserResolver {
+  private readonly logger = new Logger(UserResolver.name);
+
   constructor(
     @Inject(forwardRef(() => AuthService))
     private readonly authService: AuthService,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly familyService: FamilyService
   ) {}
 
   @Query(returns => String)
@@ -64,5 +77,14 @@ export class UserResolver {
     @Args("input") input: UpdateRoleInput
   ) {
     throw new NotImplementedException();
+  }
+
+  @ResolveProperty("families", returns => [Family])
+  async getFamilies(@Parent() { userId, familyRoles }: User) {
+    this.logger.debug(`resolving families on user ${userId}: ${familyRoles}`);
+
+    if (!familyRoles || familyRoles.length == 0) return [];
+    const ids = familyRoles.map(({ familyId }) => familyId);
+    return await this.familyService.getFamilies(ids);
   }
 }

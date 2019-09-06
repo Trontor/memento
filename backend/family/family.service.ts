@@ -12,6 +12,8 @@ import { UserService } from "../user/user.service";
 import { FamilyRole } from "../user/dto/role.dto";
 import { Family } from "./dto/family.dto";
 import { mapDocumentToFamilyDTO } from "./schema/family.mapper";
+import { FamilyNotFoundException } from "./family.exceptions";
+import { fromHexStringToObjectId } from "../common/mongo.util";
 
 @Injectable()
 export class FamilyService {
@@ -57,5 +59,24 @@ export class FamilyService {
     });
 
     return mapDocumentToFamilyDTO(familyDoc);
+  }
+
+  async getFamily(id: string): Promise<Family> {
+    const objId = fromHexStringToObjectId(id);
+    const family = await this.FamilyModel.findById(objId);
+    if (!family) throw new FamilyNotFoundException();
+    this.logger.log(`get family: ${family.id}`);
+    return mapDocumentToFamilyDTO(family);
+  }
+
+  async getFamilies(familyIds: string[]): Promise<Family[]> {
+    if (familyIds.length === 0) return [];
+    // more efficient to retrieve all docs in one round trip
+    const docs = await this.FamilyModel.find({
+      _id: {
+        $in: familyIds.map(id => fromHexStringToObjectId(id))
+      }
+    });
+    return docs.map(doc => mapDocumentToFamilyDTO(doc));
   }
 }
