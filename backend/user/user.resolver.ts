@@ -7,7 +7,6 @@ import { AuthService } from "../auth/auth.service";
 import { User } from "./dto/user.dto";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { CurrentUser } from "../auth/decorators/currentUser";
-import { UserDocument } from "./schema/user.schema";
 
 @Resolver()
 export class UserResolver {
@@ -21,6 +20,11 @@ export class UserResolver {
   @UseGuards(JwtAuthGuard)
   async me(): Promise<string> {
     return "me";
+  }
+
+  @Query(returns => User, { name: "user" })
+  async getUser(@Args("userId") userId: string) {
+    return await this.userService.findOneById(userId);
   }
 
   @Mutation(returns => AuthOutput)

@@ -7,8 +7,8 @@ import {
 import { UserSignupInput, UpdateUserInput } from "./input/user.input";
 import { InjectModel } from "@nestjs/mongoose";
 import { UserDocument } from "./schema/user.schema";
-import { Model } from "mongoose";
-import { MongoError } from "mongodb";
+import { Model, Types } from "mongoose";
+import { MongoError, ObjectId } from "mongodb";
 import { IUserService } from "./interfaces/IUserService";
 import { UserNotFoundException } from "./user.exceptions";
 import { User } from "./dto/user.dto";
@@ -16,6 +16,24 @@ import { mapDocumentToUserDTO } from "./schema/user.mapper";
 
 @Injectable()
 export class UserService implements IUserService {
+  /**
+   * Finds user by id.
+   * @param userId user id as a string
+   */
+  async findOneById(userId: string): Promise<User> {
+    let id: ObjectId;
+    try {
+      id = Types.ObjectId(userId);
+    } catch (err) {
+      console.error(err);
+      throw new UserNotFoundException();
+    }
+    const user = await this.UserModel.findById(id);
+    if (!user) {
+      throw new UserNotFoundException();
+    }
+    return mapDocumentToUserDTO(user);
+  }
   constructor(
     @InjectModel("User")
     private readonly UserModel: Model<UserDocument>

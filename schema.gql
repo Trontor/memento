@@ -42,6 +42,7 @@ type Mutation {
 
 type Query {
   me: String!
+  user(userId: String!): User!
   refreshToken: String!
 }
 
