@@ -6,7 +6,7 @@ export class Role {
   familyId!: string;
 
   @Field(type => FamilyRole)
-  role!: FamilyRole;
+  familyRole!: FamilyRole;
 }
 
 export enum FamilyRole {

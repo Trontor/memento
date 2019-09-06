@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { GraphQLModule, GqlModuleOptions } from "@nestjs/graphql";
+import { GraphQLModule } from "@nestjs/graphql";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import { join } from "path";
 import { UserModule } from "./user/user.module";
@@ -7,6 +7,7 @@ import { AuthModule } from "./auth/auth.module";
 import { ConfigModule } from "./config/config.module";
 import { ConfigService } from "./config/config.service";
 import { MongooseModule, MongooseModuleOptions } from "@nestjs/mongoose";
+import { FamilyModule } from "./family/family.module";
 
 /**
  * Root module of the application.
@@ -52,7 +53,8 @@ import { MongooseModule, MongooseModuleOptions } from "@nestjs/mongoose";
     }),
     UserModule,
     AuthModule,
-    ConfigModule
+    ConfigModule,
+    FamilyModule
   ]
 })
 export class AppModule {}

@@ -17,7 +17,7 @@ export const mapDocumentToUserDTO = (doc: UserDocument): User => {
     dateOfBirth: doc.dateOfBirth,
     location: doc.location,
     // family roles
-    roles: doc.roles,
+    familyRoles: doc.roles,
     // timestamps
     createdAt: doc.createdAt,
     updatedAt: doc.updatedAt,

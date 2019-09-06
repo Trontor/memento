@@ -2,7 +2,8 @@ import {
   Injectable,
   BadRequestException,
   InternalServerErrorException,
-  UnauthorizedException
+  UnauthorizedException,
+  Logger
 } from "@nestjs/common";
 import { UserSignupInput, UpdateUserInput } from "./input/user.input";
 import { InjectModel } from "@nestjs/mongoose";
@@ -10,12 +11,19 @@ import { UserDocument } from "./schema/user.schema";
 import { Model, Types } from "mongoose";
 import { MongoError, ObjectId } from "mongodb";
 import { IUserService } from "./interfaces/IUserService";
-import { UserNotFoundException } from "./user.exceptions";
+import { UserNotFoundException, UpdateRoleException } from "./user.exceptions";
 import { User } from "./dto/user.dto";
 import { mapDocumentToUserDTO } from "./schema/user.mapper";
+import { RoleInput } from "./input/role.input";
 
 @Injectable()
 export class UserService implements IUserService {
+  private readonly logger = new Logger(UserService.name);
+  constructor(
+    @InjectModel("User")
+    private readonly UserModel: Model<UserDocument>
+  ) {}
+
   /**
    * Finds user by id.
    * @param userId user id as a string
@@ -25,19 +33,16 @@ export class UserService implements IUserService {
     try {
       id = Types.ObjectId(userId);
     } catch (err) {
-      console.error(err);
+      this.logger.error(`${userId} is invalid ObjectId`);
       throw new UserNotFoundException();
     }
     const user = await this.UserModel.findById(id);
     if (!user) {
+      Logger.error(`user ${id} not found`);
       throw new UserNotFoundException();
     }
     return mapDocumentToUserDTO(user);
   }
-  constructor(
-    @InjectModel("User")
-    private readonly UserModel: Model<UserDocument>
-  ) {}
 
   /**
    * Updates fields of a user.
@@ -45,7 +50,7 @@ export class UserService implements IUserService {
    * @param fields updatable fields
    */
   async update(currentUser: User, fields: Partial<UpdateUserInput>) {
-    console.log(currentUser);
+    this.logger.log(`User ${currentUser.userId} updating ${fields}`);
     if (!currentUser.userId)
       throw new InternalServerErrorException("Current user not defined");
     if (currentUser.userId !== fields.id) {
@@ -59,7 +64,7 @@ export class UserService implements IUserService {
     );
     if (!updatedUser) throw new InternalServerErrorException();
     const userDTO: User = mapDocumentToUserDTO(updatedUser);
-    console.log(userDTO);
+    this.logger.debug(userDTO);
     return userDTO;
   }
 
@@ -78,10 +83,51 @@ export class UserService implements IUserService {
     try {
       userDoc = await createdUser.save();
     } catch (err) {
-      console.error(err);
+      this.logger.error(err);
       throw this.evaluateMongoError(err, input);
     }
     return mapDocumentToUserDTO(userDoc);
+  }
+
+  /**
+   * Assigns new family role for a user joining a new family.
+   * @param userId user id
+   * @param input role input
+   */
+  async createRole(userId: string, input: RoleInput): Promise<UserDocument> {
+    this.logger.log(`User ${userId} creating role ${input}`);
+    let id: ObjectId;
+    try {
+      id = Types.ObjectId(userId);
+    } catch (err) {
+      this.logger.error(`${userId} is invalid ObjectId`);
+      throw new UserNotFoundException();
+    }
+    this.logger.debug(`user id ${id}`);
+
+    /**
+     * Inserts a new role object in the `roles` array if the
+     * the array does not contain an object with the same `familyId`.
+     */
+    const user = await this.UserModel.findOneAndUpdate(
+      {
+        _id: id,
+        // ensure familyId is unique in the `roles` array
+        "roles.familyId": { $ne: input.familyId }
+      },
+      {
+        $push: {
+          roles: {
+            familyId: input.familyId,
+            familyRole: input.familyRole
+          }
+        }
+      },
+      { new: true }
+    );
+    if (!user) throw new UpdateRoleException();
+    this.logger.debug(`Updated user roles array: ${user.roles}`);
+    return user;
   }
 
   /**

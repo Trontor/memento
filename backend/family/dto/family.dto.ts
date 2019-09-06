@@ -4,7 +4,7 @@ import { User } from "../../user/dto/user.dto";
 @ObjectType()
 export class Family {
   @Field(type => ID)
-  id!: string;
+  familyId!: string;
 
   @Field()
   name!: string;
@@ -15,15 +15,12 @@ export class Family {
   @Field({ nullable: true })
   imageUrl?: string;
 
-  @Field(type => Int)
-  numMembers!: number;
-
-  @Field(type => Int)
-  numArtifacts!: number;
-
   @Field(type => [User])
-  users?: User[];
+  members?: User[];
 
   @Field()
   createdAt!: string;
+
+  @Field()
+  updatedAt!: string;
 }

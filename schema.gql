@@ -8,15 +8,20 @@ type AuthOutput {
   user: User!
 }
 
+input CreateFamilyInput {
+  name: String!
+  imageUrl: String
+  description: String
+}
+
 type Family {
-  id: ID!
+  familyId: ID!
   name: String!
   description: String
   imageUrl: String
-  numMembers: Int!
-  numArtifacts: Int!
-  users: [User!]!
+  members: [User!]!
   createdAt: String!
+  updatedAt: String!
 }
 
 enum FamilyRole {
@@ -29,6 +34,10 @@ enum Gender {
   Female
 }
 
+input JoinFamilyInput {
+  invitationId: ID!
+}
+
 input LoginInput {
   email: String!
   password: String!
@@ -37,7 +46,9 @@ input LoginInput {
 type Mutation {
   signup(input: UserSignupInput!): AuthOutput!
   updateUser(input: UpdateUserInput!): User!
+  updateRole(input: UpdateRoleInput!): UpdateRoleOutput!
   login(input: LoginInput!): AuthOutput!
+  createFamily(input: CreateFamilyInput!): Family!
 }
 
 type Query {
@@ -48,7 +59,17 @@ type Query {
 
 type Role {
   familyId: ID!
-  role: FamilyRole!
+  familyRole: FamilyRole!
+}
+
+input RoleInput {
+  familyId: ID!
+  familyRole: FamilyRole!
+}
+
+input UpdateRoleInput {
+  userId: ID!
+  role: RoleInput!
 }
 
 type UpdateRoleOutput {
@@ -73,7 +94,7 @@ type User {
   location: String
   dateOfBirth: String
   gender: String
-  roles: [Role!]!
+  familyRoles: [Role!]!
   families: [Family!]!
   createdAt: String!
   updatedAt: String!

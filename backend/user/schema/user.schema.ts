@@ -1,6 +1,7 @@
 import { Schema, model, Model, Document, Query, Types } from "mongoose";
 import * as bcrypt from "bcrypt";
 import { User } from "../dto/user.dto";
+import { FamilyRole, Role } from "../dto/role.dto";
 
 /**
  * Use GraphQL `User` type as a single source of truth by extending the Mongoose
@@ -11,6 +12,7 @@ export interface UserDocument extends User, Document {
   // Declaring everything that is not in the GraphQL Schema for a User
   password: string;
   lowercaseEmail: string;
+  roles: Role[];
 }
 
 export interface IUserModel extends Model<UserDocument> {
@@ -23,6 +25,27 @@ export interface IUserModel extends Model<UserDocument> {
    */
   validateEmail(email: string): boolean;
 }
+
+/**
+ * Subdocument schema for a `role`
+ */
+const RoleSchema: Schema = new Schema(
+  {
+    familyId: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    familyRole: {
+      type: String,
+      enum: [FamilyRole.Normal, FamilyRole.Admin],
+      required: true
+    }
+  },
+  {
+    _id: false
+  }
+);
 
 /**
  * The actual structure of the MongoDB collection.
@@ -49,6 +72,10 @@ export const UserSchema: Schema = new Schema(
     lowercaseEmail: {
       type: String,
       unique: true
+    },
+    roles: {
+      type: [RoleSchema],
+      default: []
     },
     gender: {
       type: String

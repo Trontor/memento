@@ -1,6 +1,7 @@
 import { NestFactory } from "@nestjs/core";
 // AppModule is the root module of the application
 import { AppModule } from "./backend/app.module";
+import { Logger } from "@nestjs/common";
 
 // An async function is needed due to `await` usage
 async function bootstrap() {
@@ -13,7 +14,7 @@ async function bootstrap() {
   // Listen for routes on the specified port
   await app.listen(port);
   const host = `http://localhost:${port}`;
-  console.log(`Express server initialised at ${host}`);
-  console.log(`GraphQL server initialised at ${host}/graphql`);
+  Logger.log(`Express server initialised at ${host}`);
+  Logger.log(`GraphQL server initialised at ${host}/graphql`);
 }
 bootstrap();
