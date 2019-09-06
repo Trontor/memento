@@ -1,9 +1,10 @@
 import {
   Injectable,
   BadRequestException,
-  InternalServerErrorException
+  InternalServerErrorException,
+  UnauthorizedException
 } from "@nestjs/common";
-import { UserSignupInput } from "./input/user.input";
+import { UserSignupInput, UpdateUserInput } from "./input/user.input";
 import { InjectModel } from "@nestjs/mongoose";
 import { UserDocument } from "./schema/user.schema";
 import { Model } from "mongoose";
@@ -19,6 +20,30 @@ export class UserService implements IUserService {
     @InjectModel("User")
     private readonly UserModel: Model<UserDocument>
   ) {}
+
+  /**
+   * Updates fields of a user.
+   * @param currentUser the user object attached to the GraphQL request
+   * @param fields updatable fields
+   */
+  async update(currentUser: User, fields: Partial<UpdateUserInput>) {
+    console.log(currentUser);
+    if (!currentUser.userId)
+      throw new InternalServerErrorException("Current user not defined");
+    if (currentUser.userId !== fields.id) {
+      throw new UnauthorizedException();
+    }
+    const key = currentUser.email;
+    const updatedUser = await this.UserModel.findOneAndUpdate(
+      { lowercaseEmail: key },
+      fields,
+      { new: true, runValidators: true }
+    );
+    if (!updatedUser) throw new InternalServerErrorException();
+    const userDTO: User = mapDocumentToUserDTO(updatedUser);
+    console.log(userDTO);
+    return userDTO;
+  }
 
   async findOneByEmail(email: string): Promise<UserDocument> {
     const user = await this.UserModel.findOne({

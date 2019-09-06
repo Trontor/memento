@@ -7,7 +7,7 @@ import { User } from "../dto/user.dto";
 export const mapDocumentToUserDTO = (doc: UserDocument): User => {
   return {
     // mongodb id
-    userId: doc._id,
+    userId: doc.id,
     // user details
     email: doc.email,
     firstName: doc.firstName,

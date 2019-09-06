@@ -36,6 +36,7 @@ input LoginInput {
 
 type Mutation {
   signup(input: UserSignupInput!): AuthOutput!
+  updateUser(input: UpdateUserInput!): User!
   login(input: LoginInput!): AuthOutput!
 }
 

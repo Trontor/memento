@@ -5,10 +5,7 @@ import { AppModule } from "./backend/app.module";
 // An async function is needed due to `await` usage
 async function bootstrap() {
   // Create a nest application
-  const app = await NestFactory.create(AppModule);
-
-  // Allow CORS
-  app.enableCors();
+  const app = await NestFactory.create(AppModule, { cors: true });
 
   // Port to serve the express server on: production port or default (5000)
   const port = process.env.PORT || 5000;
