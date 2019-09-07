@@ -1,14 +1,14 @@
 import React from "react";
 import { Formik } from "formik";
 import {
-  InputContainer,
+  InputSection,
   InputField,
   InputLabel,
   Error,
   AnimateLabel
 } from "ui/Forms";
 import { ButtonPrimary } from "ui/Buttons";
-import { FormHeader } from "ui/Typography";
+import { Header } from "ui/Typography";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { NameInputContainer, SignupContainer } from "./SignupStyles";
@@ -135,9 +135,9 @@ export default function Signup(props) {
         validateOnChange={false}
         render={props => (
           <SignupContainer onSubmit={props.handleSubmit}>
-            <FormHeader>Sign up today!</FormHeader>
+            <Header underline>Sign up today!</Header>
             <NameInputContainer>
-              <InputContainer>
+              <InputSection>
                 <InputLabel>First Name</InputLabel>
                 <InputField
                   type="text"
@@ -151,9 +151,9 @@ export default function Signup(props) {
                 {props.errors.firstName && props.touched.firstName && (
                   <Error>{props.errors.firstName}</Error>
                 )}
-              </InputContainer>
+              </InputSection>
 
-              <InputContainer>
+              <InputSection>
                 <InputLabel>Last Name</InputLabel>
                 <InputField
                   type="text"
@@ -165,10 +165,10 @@ export default function Signup(props) {
                 {props.errors.lastName && props.touched.lastName && (
                   <Error>{props.errors.lastName}</Error>
                 )}
-              </InputContainer>
+              </InputSection>
             </NameInputContainer>
 
-            <InputContainer>
+            <InputSection>
               <InputLabel>Email Address</InputLabel>
               <InputField
                 type="email"
@@ -180,9 +180,9 @@ export default function Signup(props) {
               {props.errors.email && props.touched.email && (
                 <Error>{props.errors.email}</Error>
               )}
-            </InputContainer>
+            </InputSection>
 
-            <InputContainer>
+            <InputSection>
               <InputLabel>Password</InputLabel>
               <InputField
                 type="password"
@@ -194,9 +194,9 @@ export default function Signup(props) {
               {props.errors.password && props.touched.password && (
                 <Error>{props.errors.password}</Error>
               )}
-            </InputContainer>
+            </InputSection>
 
-            <InputContainer>
+            <InputSection>
               <InputLabel>Confirm Password</InputLabel>
               <InputField
                 type="password"
@@ -208,9 +208,9 @@ export default function Signup(props) {
               {props.errors.confirmPassword && (
                 <Error>{props.errors.confirmPassword}</Error>
               )}
-            </InputContainer>
+            </InputSection>
 
-            <ButtonPrimary type="submit">Sign Up</ButtonPrimary>
+            <ButtonPrimary type="submit" spacing>Sign Up</ButtonPrimary>
             <HelpText>
               Already have an account? <Link to="/login">Log in</Link>
             </HelpText>

@@ -1,11 +1,11 @@
 import React from "react";
-import { FormHeader } from "ui/Typography";
+import { Header } from "ui/Typography";
 import {
   Error,
-  InputContainer,
   InputField,
   InputLabel,
-  HelpText
+  HelpText,
+  InputSection
 } from "ui/Forms";
 import { Logo } from "components/Logo";
 import { MsgLink } from "./LoginStyles";
@@ -62,7 +62,7 @@ export default function Login(props) {
       <Logo />
 
       <LoginContainer>
-        <FormHeader>Welcome back!</FormHeader>
+        <Header underline>Welcome back!</Header>
         <Formik
           initialValues={defaultValues}
           onSubmit={(values, actions) => {
@@ -74,7 +74,7 @@ export default function Login(props) {
           render={props => (
             <form onSubmit={props.handleSubmit}>
               {/* Email Field */}
-              <InputContainer>
+              <InputSection>
                 <InputLabel>Email</InputLabel>
                 <InputField
                   type="text"
@@ -86,9 +86,9 @@ export default function Login(props) {
                 {props.errors.email && props.touched.email && (
                   <Error>{props.errors.email}</Error>
                 )}
-              </InputContainer>
+              </InputSection>
               {/* Password Field */}
-              <InputContainer>
+              <InputSection>
                 <InputLabel>Password</InputLabel>
                 <InputField
                   type="password"
@@ -100,8 +100,8 @@ export default function Login(props) {
                 {props.errors.password && props.touched.password && (
                   <Error>{props.errors.password}</Error>
                 )}
-              </InputContainer>
-              <ButtonPrimary type="submit">Login</ButtonPrimary>
+              </InputSection>
+              <ButtonPrimary type="submit" spacing>Login</ButtonPrimary>
               <HelpText>
                 Don't have an account?
                 <MsgLink to="./Signup"> Sign up</MsgLink>
@@ -113,3 +113,97 @@ export default function Login(props) {
     </>
   );
 }
+// class Log extends Component {
+//   constructor(props) {
+//     super(props);
+
+//     this.state = {
+//       email: "",
+//       password: "",
+//       formErrors: {
+//         email: "",
+//         password: ""
+//       }
+//     };
+
+//     this.handleChange = this.handleChange.bind(this);
+//     this.handleSubmit = this.handleSubmit.bind(this);
+//   }
+
+//   handleChange(e) {
+//     e.preventDefault();
+//     const { name, value } = e.target;
+//     let formErrors = this.state.formErrors;
+
+//     switch (
+//       name //sign up form validation
+//     ) {
+//       default:
+//         break;
+//       case "email":
+//         formErrors.email = value.length < 1 ? "Please enter your email" : "";
+//         break;
+//       case "password":
+//         formErrors.password =
+//           value.length < 1 ? "Please enter your password" : "";
+//         break;
+//     }
+//     this.setState({ formErrors, [name]: value }, () => console.log(this.state));
+//   }
+
+//   handleSubmit(e) {
+//     e.preventDefault();
+//     if (formValid(this.state)) {
+//       console.log("Form Submitted");
+//     } else {
+//       console.error("Form Invalid");
+//     }
+//   }
+
+//   render() {
+//     const { formErrors } = this.state;
+//     return (
+//       <>
+//         <Logo />
+//         <LoginContainer>
+//           <FormHeader>Welcome back!</FormHeader>
+//           <form onSubmit={this.handleSubmit}>
+//             <InputSection>
+//               <InputLabel>Email</InputLabel>
+//               <InputField
+//                 valid={formErrors.email.length > 0}
+//                 type="text"
+//                 name="email"
+//                 value={this.state.email}
+//                 onChange={this.handleChange}
+//               />
+//               {formErrors.email.length > 0 && (
+//                 <ErrorMsg>{formErrors.email}</ErrorMsg>
+//               )}
+//             </InputSection>
+
+//             <InputSection>
+//               <InputLabel>Password</InputLabel>
+//               <InputField
+//                 valid={formErrors.password.length > 0}
+//                 type="password"
+//                 name="password"
+//                 value={this.state.password}
+//                 onChange={this.handleChange}
+//               />
+//               {formErrors.password.length > 0 && (
+//                 <ErrorMsg>{formErrors.password}</ErrorMsg>
+//               )}
+//             </InputSection>
+
+//             <ButtonPrimary>Login</ButtonPrimary>
+//             <HelpText>
+//               Don't have an account?
+//               <MsgLink to="./Signup"> Sign up</MsgLink>
+//             </HelpText>
+//           </form>
+//         </LoginContainer>
+//       </>
+//     );
+//   }
+// }

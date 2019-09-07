@@ -1,7 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled, { css } from "styled-components";
-import { lighten } from 'polished';
 
 export const PageHeader = styled.h1`
   font-size: 32px;

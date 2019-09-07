@@ -6,36 +6,24 @@ import {
   updateRole,
   getAuthenticatedUser
 } from "./users";
-import { createFamily, getFamily } from "./family";
 import {
-  UserSignupInput,
-  UserLoginInput,
-  CreateFamilyInput,
-  User,
-  UpdateUserInput,
-  UpdateRoleInput
-} from "../generated/graphql";
+  createFamily,
+  getFamily,
+  createInvitation,
+  joinFamily
+} from "./family";
+
 import { Context } from "../utils/context";
-
-interface WithUserSignupInput {
-  input: UserSignupInput;
-}
-
-interface WithUserLoginInput {
-  input: UserLoginInput;
-}
-
-interface WithCreateFamilyInput {
-  input: CreateFamilyInput;
-}
-
-interface WithUpdateUserInput {
-  input: UpdateUserInput;
-}
-
-interface WithUpdateRoleInput {
-  input: UpdateRoleInput;
-}
+import { User, Family } from "../generated/graphql";
+import {
+  WithUserSignupInput,
+  WithUserLoginInput,
+  WithCreateFamilyInput,
+  WithUpdateUserInput,
+  WithUpdateRoleInput,
+  WithCreateInvitationInput,
+  WithJoinFamilyInput
+} from "./interfaces";
 
 const resolvers = {
   Query: {
@@ -44,6 +32,16 @@ const resolvers = {
       getAuthenticatedUser(context),
     user: (_: any, { id }: { id: string }, context: Context) =>
       getUser(id, context)
+  },
+  Family: {
+    users: async ({ id }: Family, _: any, context: Context) => {
+      console.log("nested family");
+      const { users } = await context.models.family.getFamilyById(id);
+      const promises = users.map(userId => {
+        return getUser(userId, context);
+      });
+      return Promise.all(promises);
+    }
   },
   User: {
     families: ({ roles }: User, _: any, context: Context) => {
@@ -67,7 +65,14 @@ const resolvers = {
     updateUser: (_: any, { input }: WithUpdateUserInput, context: Context) =>
       updateUser(input, context),
     updateRole: (_: any, { input }: WithUpdateRoleInput, context: Context) =>
-      updateRole(input, context)
+      updateRole(input, context),
+    createInvitation: (
+      _: any,
+      { input }: WithCreateInvitationInput,
+      context: Context
+    ) => createInvitation(input, context),
+    joinFamily: (_: any, { input }: WithJoinFamilyInput, context: Context) =>
+      joinFamily(input, context)
   }
 };
 
