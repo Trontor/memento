@@ -42,11 +42,11 @@ export class User {
   families?: Family[];
 
   @Field()
-  createdAt!: string;
+  createdAt!: Date;
 
   @Field()
-  updatedAt!: string;
+  updatedAt!: Date;
 
   @Field()
-  lastSeenAt!: string;
+  lastSeenAt!: Date;
 }

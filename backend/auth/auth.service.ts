@@ -54,8 +54,8 @@ export class AuthService {
       token
     };
     // TODO: fix type mismatch
-    // user.lastSeenAt = new Date();
-    // user.save();
+    userDoc.lastSeenAt = new Date();
+    userDoc.save();
     return result;
   }
 
@@ -101,8 +101,8 @@ export class AuthService {
     try {
       const user = await this.userService.findOneByEmail(payload.email);
       // TODO: fix type mismatch
-      // user.lastSeenAt = new Date();
-      // user.save();
+      user.lastSeenAt = new Date();
+      user.save();
       return user;
     } catch (err) {
       // catch UserNotFoundException and throw UnauthorizedException

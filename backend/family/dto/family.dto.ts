@@ -19,8 +19,8 @@ export class Family {
   members?: User[];
 
   @Field()
-  createdAt!: string;
+  createdAt!: Date;
 
   @Field()
-  updatedAt!: string;
+  updatedAt!: Date;
 }
