@@ -3,7 +3,8 @@ import {
   Inject,
   forwardRef,
   UnauthorizedException,
-  InternalServerErrorException
+  InternalServerErrorException,
+  Logger
 } from "@nestjs/common";
 import { UserService } from "../user/user.service";
 import { AuthOutput } from "./dto/auth.dto";
@@ -17,6 +18,7 @@ import { UserDocument } from "../user/schema/user.schema";
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
   constructor(
     @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,
@@ -48,12 +50,10 @@ export class AuthService {
     // If there is a successful match, generate a JWT for the user
     const { token } = this.createJwt(userDoc);
 
-    // console.log(user);
     const result: AuthOutput = {
       user: mapDocumentToUserDTO(userDoc),
       token
     };
-    // TODO: fix type mismatch
     userDoc.lastSeenAt = new Date();
     userDoc.save();
     return result;
@@ -100,7 +100,6 @@ export class AuthService {
     // This will be used when the user has already logged in and has a JWT
     try {
       const user = await this.userService.findOneByEmail(payload.email);
-      // TODO: fix type mismatch
       user.lastSeenAt = new Date();
       user.save();
       return user;
