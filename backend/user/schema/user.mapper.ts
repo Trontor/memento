@@ -18,6 +18,8 @@ export const mapDocumentToUserDTO = (doc: UserDocument): User => {
     location: doc.location,
     // family roles
     familyRoles: doc.roles,
+    // dummy array - resolver will deal with this
+    families: [],
     // timestamps
     createdAt: doc.createdAt,
     updatedAt: doc.updatedAt,

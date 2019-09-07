@@ -36,10 +36,10 @@ export class User {
   gender?: Gender;
 
   @Field(type => [Role!])
-  familyRoles?: Role[];
+  familyRoles!: Role[];
 
   @Field(type => [Family!])
-  families?: Family[];
+  families!: Family[];
 
   @Field()
   createdAt!: Date;
