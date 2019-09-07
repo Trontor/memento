@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module, forwardRef } from "@nestjs/common";
 import { InviteService } from "./invite.service";
 import { MongooseModule } from "@nestjs/mongoose";
 import { InviteSchema } from "./schema/invite.schema";
@@ -8,8 +8,9 @@ import { UserModule } from "../user/user.module";
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: "Invite", schema: InviteSchema }]),
-    UserModule
+    forwardRef(() => UserModule)
   ],
-  providers: [InviteService, InviteResolver]
+  providers: [InviteService, InviteResolver],
+  exports: [InviteService]
 })
 export class InviteModule {}

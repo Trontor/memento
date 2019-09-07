@@ -12,6 +12,7 @@ input CreateFamilyInput {
   name: String!
   imageUrl: String
   description: String
+  colour: String
 }
 
 input CreateInviteInput {
@@ -65,6 +66,7 @@ type Mutation {
   updateRole(input: UpdateRoleInput!): UpdateRoleOutput!
   login(input: LoginInput!): AuthOutput!
   createFamily(input: CreateFamilyInput!): Family!
+  joinFamily(input: JoinFamilyInput!): Family!
   createInvite(input: CreateInviteInput!): Invite!
 }
 
@@ -92,6 +94,13 @@ input SendInvitesInput {
 type SendInvitesOutput {
   sent: [String!]!
   notSent: [String!]!
+}
+
+input UpdateFamilyInput {
+  name: String
+  imageUrl: String
+  description: String
+  colour: String
 }
 
 input UpdateRoleInput {

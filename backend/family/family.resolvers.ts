@@ -11,7 +11,7 @@ import { UseGuards, Inject, forwardRef } from "@nestjs/common";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { CurrentUser } from "../auth/decorators/current-user.decorator";
 import { Family } from "./dto/family.dto";
-import { CreateFamilyInput } from "./inputs/family.inputs";
+import { CreateFamilyInput, JoinFamilyInput } from "./inputs/family.inputs";
 import { User } from "../user/dto/user.dto";
 import { UserService } from "../user/user.service";
 import { mapDocumentToFamilyDTO } from "./schema/family.mapper";
@@ -49,5 +49,14 @@ export class FamilyResolver {
     if (!memberIds || memberIds.length === 0) return [];
     const members: User[] = await this.userService.getUsers(memberIds);
     return members;
+  }
+
+  @Mutation(returns => Family)
+  @UseGuards(JwtAuthGuard)
+  async joinFamily(
+    @CurrentUser() currentUser: User,
+    @Args("input") input: JoinFamilyInput
+  ) {
+    return await this.familyService.joinFamily(currentUser, input.inviteId);
   }
 }

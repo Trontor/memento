@@ -6,7 +6,7 @@ import {
   forwardRef
 } from "@nestjs/common";
 import { User } from "../user/dto/user.dto";
-import { CreateFamilyInput } from "./inputs/family.inputs";
+import { CreateFamilyInput, UpdateFamilyInput } from "./inputs/family.inputs";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, Types } from "mongoose";
 import { FamilyDocument } from "./schema/family.schema";
@@ -16,9 +16,14 @@ import { Family } from "./dto/family.dto";
 import { mapDocumentToFamilyDTO } from "./schema/family.mapper";
 import {
   FamilyNotFoundException,
-  CreateFamilyException
+  CreateFamilyException,
+  AlreadyJoinedFamilyException
 } from "./family.exceptions";
 import { fromHexStringToObjectId } from "../common/mongo.util";
+import { InviteService } from "../invite/invite.service";
+import { isValidInvite } from "../invite/invite.util";
+import { InviteExpiredException } from "../invite/invite.exception";
+import { isUserInFamily } from "../user/user.util";
 
 @Injectable()
 export class FamilyService {
@@ -28,8 +33,51 @@ export class FamilyService {
     @InjectModel("Family")
     private readonly FamilyModel: Model<FamilyDocument>,
     @Inject(forwardRef(() => UserService))
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    @Inject(forwardRef(() => InviteService))
+    private readonly inviteService: InviteService
   ) {}
+
+  async joinFamily(currentUser: User, inviteId: string): Promise<Family> {
+    const invite = await this.inviteService.getInvite(inviteId);
+    if (!isValidInvite(invite)) throw new InviteExpiredException();
+    if (isUserInFamily(currentUser, invite.familyId))
+      throw new AlreadyJoinedFamilyException();
+
+    // TODO: use MongoDB session for causal consistency
+    const familyDoc = await this.addFamilyMembers(
+      [currentUser.userId],
+      invite.familyId
+    );
+    await this.userService.createRole(currentUser.userId, {
+      familyId: invite.familyId,
+      familyRole: FamilyRole.Normal
+    });
+    return mapDocumentToFamilyDTO(familyDoc);
+  }
+
+  private async addFamilyMembers(
+    newMemberIds: string[],
+    familyId: string
+  ): Promise<FamilyDocument> {
+    const doc = await this.FamilyModel.findOneAndUpdate(
+      {
+        _id: familyId
+      },
+      {
+        $addToSet: {
+          memberIds: { $each: newMemberIds }
+        }
+      },
+      {
+        new: true
+      }
+    );
+    if (!doc) throw new FamilyNotFoundException();
+    return doc;
+  }
+
+  async updateFamily(familyId: string, input: UpdateFamilyInput) {}
 
   async createFamily(
     currentUser: User,

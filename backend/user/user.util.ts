@@ -16,10 +16,24 @@ export const containsRole = (roles: Role[], role: RoleInput): boolean => {
   return false;
 };
 
+const containsFamilyId = (roles: Role[], familyId: string): boolean => {
+  for (let r of roles) {
+    if (r.familyId === familyId) {
+      return true;
+    }
+  }
+  return false;
+};
+
 export const isFamilyAdmin = (user: User, familyId: string): boolean => {
   if (!user || !user.familyRoles || !familyId) return false;
   return containsRole(user.familyRoles, {
     familyId,
     familyRole: FamilyRole.Admin
   });
+};
+
+export const isUserInFamily = (user: User, familyId: string): boolean => {
+  if (!user || !user.familyRoles || !familyId) return false;
+  return containsFamilyId(user.familyRoles, familyId);
 };

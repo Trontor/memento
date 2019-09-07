@@ -12,8 +12,26 @@ export class CreateFamilyInput {
   name!: string;
 
   @Field({ nullable: true })
-  imageUrl!: string;
+  imageUrl?: string;
 
   @Field({ nullable: true })
-  description!: string;
+  description?: string;
+
+  @Field({ nullable: true })
+  colour?: string;
+}
+
+@InputType()
+export class UpdateFamilyInput {
+  @Field({ nullable: true })
+  name?: string;
+
+  @Field({ nullable: true })
+  imageUrl?: string;
+
+  @Field({ nullable: true })
+  description?: string;
+
+  @Field({ nullable: true })
+  colour?: string;
 }
