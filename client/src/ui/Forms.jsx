@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { lighten,darken } from 'polished';
+import { lighten, darken } from "polished";
 
 export const InputSection = styled.div`
   margin-bottom: 25px;
@@ -10,7 +10,7 @@ export const FormSection = styled.div`
   margin-bottom: 50px;
   position: relative;
 
-  &:last-child{
+  &:last-child {
     margin-bottom: 25px;
   }
 `;
@@ -20,7 +20,7 @@ export const AnimateLabel = css`
   font-size: 11px;
   color: ${props => lighten(0.1, props.theme.palette.text)};
   transition: 0.3s ease-in-out;
-`
+`;
 
 export const InputLabel = styled.label`
   font-size: 13px;
@@ -28,29 +28,30 @@ export const InputLabel = styled.label`
   display: block;
   transition: 0.5s ease-in-out;
 
-  ${({ filled }) => filled && css`
-    transform: translateY(-150%);
-    font-size: 11px;
-    color: ${props => lighten(0.1, props.theme.palette.text)};
-    transition: 0.3s ease-in-out;
-    `
-  }
+  ${({ filled }) =>
+    filled &&
+    css`
+      transform: translateY(-150%);
+      font-size: 11px;
+      color: ${props => lighten(0.1, props.theme.palette.text)};
+      transition: 0.3s ease-in-out;
+    `}
 `;
 
 export const InstructionLabel = styled.label`
   font-size: 14px;
-  font-family: 'Livvic', sans-serif;
+  font-family: "Livvic", sans-serif;
   font-weight: bold;
   display: block;
   margin-bottom: 1em;
   opacity: 0.75;
   line-height: 1.5em;
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}) {
+  @media screen and (min-width: ${props =>
+      props.theme.breakpoints.tabletPortrait}) {
     font-size: 15px;
   }
 `;
-
 
 export const InputField = styled.input`
   font-family: "Rubik", sans-serif;
@@ -104,4 +105,14 @@ export const FormHelpText = styled.span`
 
 export const FormNav = styled.div`
   width: 100%;
+`;
+
+export const FormInputList = styled.div`
+  width: 100%;
+  padding: 6px 0;
+  margin-bottom: 3px;
+
+  &:first-child {
+    margin-top: 3px;
+  }
 `;
