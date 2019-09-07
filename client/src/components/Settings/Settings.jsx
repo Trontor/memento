@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
 import { Container } from "ui/Helpers";
 import { Header } from "ui/Typography";
 import {
@@ -8,28 +7,51 @@ import {
   SettingsContainer,
   UploadPhoto,
   UploadLabel,
-  UploadButton
+  UploadButton,
+  Calendar,
+  CountryPicker,
+  CityPicker
 } from "./SettingsStyles";
 import { InputField, FormSection, InputLabel, FormInputList } from "ui/Forms";
-import { StyledDropzone } from "components/FileDropzone";
 
 export default function Settings() {
-  const [birthday, setBirthday] = useState(new Date());
-  const [isProfileOpen, setProfileOpened] = useState(true);
-  const profileOpened = () => setProfileOpened(!isProfileOpen);
+  const [settingsHeader, setSettingsHeader] = useState({
+    profile: true,
+    account: false
+  });
+  const settingsOpened = () =>
+    setSettingsHeader({
+      profile: !settingsHeader.profile,
+      account: !settingsHeader.account
+    });
+
+  const [birthday, setBirthday] = useState(null);
+  const dateOptionHandler = date => setBirthday(date);
   const [genderOption, setGenderOption] = useState();
   const genderOptionHandler = event => setGenderOption(event.target.value);
+  const [birthCountry, setCountry, locationCountry] = useState();
+  const selectCountry = value => setCountry(value);
+  const [city, setCity] = useState();
+  const selectCity = value => setCity(value);
 
   return (
     <Container>
       <Header underline>My Settings</Header>
       <SettingsHeader>
-        <HeaderButton onClick={profileOpened} menuClick={isProfileOpen}>
+        <HeaderButton
+          onClick={settingsOpened}
+          menuClick={settingsHeader.profile}
+        >
           Profile
         </HeaderButton>
-        <HeaderButton>Account</HeaderButton>
+        <HeaderButton
+          onClick={settingsOpened}
+          menuClick={settingsHeader.account}
+        >
+          Account
+        </HeaderButton>
       </SettingsHeader>
-      <SettingsContainer menuClick={isProfileOpen}>
+      <SettingsContainer menuClick={settingsHeader.profile}>
         <FormSection>
           <UploadPhoto type="file" id="file" />
           <UploadButton size="35px" />
@@ -45,11 +67,14 @@ export default function Settings() {
         </FormSection>
         <FormSection>
           <InputLabel>Birthday</InputLabel>
-          <DatePicker
+          <Calendar
+            placeholderText="Click to select a date"
             selected={birthday}
-            onChange={date => setBirthday(date)}
+            onChange={dateOptionHandler}
             showMonthDropdown
+            showYearDropdown
             dropdownMode="select"
+            maxDate={new Date()}
           />
         </FormSection>
         <FormSection>
@@ -79,11 +104,26 @@ export default function Settings() {
               checked={genderOption === "other"}
               onChange={genderOptionHandler}
             />{" "}
-            Other: <InputField style={{ width: "100px", margin: "0" }} />
+            Other: <InputField placeholder="Please specify your gender..." />
           </FormInputList>
         </FormSection>
         <FormSection>
           <InputLabel>Place of Birth</InputLabel>
+          <CountryPicker value={birthCountry} onChange={selectCountry} />
+          <CityPicker
+            country={birthCountry}
+            value={city}
+            onChange={selectCity}
+          />
+        </FormSection>
+        <FormSection>
+          <InputLabel>Place You've Lived </InputLabel>
+          <CountryPicker value={locationCountry} onChange={selectCountry} />
+          <CityPicker
+            country={locationCountry}
+            value={city}
+            onChange={selectCity}
+          />
         </FormSection>
       </SettingsContainer>
     </Container>

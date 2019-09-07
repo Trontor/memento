@@ -1,27 +1,26 @@
 import styled from "styled-components";
-import { ButtonPrimary, ButtonSecondary } from "ui/Buttons";
-import { lighten } from "polished";
+import { ButtonSecondary } from "ui/Buttons";
 import { NewGroup } from "ui/Buttons";
+import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export const SettingsHeader = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   height: auto;
-  border-bottom: 1px solid ${props => lighten(0.35, props.theme.palette.text)};
 `;
 
-export const HeaderButton = styled.h2`
-  text-align: center;
-  margin: 0;
-  padding: 15px 0 15px 0;
-  border-radius: 5px;
-  background: ${props => (props.menuClick ? "pink" : "white")};
-  color: ${props => (props.menuClick ? "red" : "black")};
-
-  &:hover {
-    cursor: pointer;
-    color: ${props => props.theme.palette.main};
-  }
+export const HeaderButton = styled(ButtonSecondary)`
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 0;
+  border: none;
+  border-bottom: ${props =>
+    props.menuClick ? "4px solid orange" : "1px solid  gray "};
+  background: ${props =>
+    props.menuClick ? "rgba(255, 132, 77, 0.12)" : "white"};
 `;
 
 export const SettingsContainer = styled.div`
@@ -54,4 +53,40 @@ export const UploadLabel = styled.label`
 
 export const UploadButton = styled(NewGroup)`
   color: ${props => props.theme.palette.main};
+`;
+
+export const Calendar = styled(DatePicker)`
+  height: 40px;
+  width: 150%;
+  font-size: 16px;
+  font-weight: bold;
+  color: ${props => props.theme.palette.text};
+  padding: 6px;
+  margin-top: 10px;
+  border-radius: 4px;
+  border: 1px solid ${props => props.theme.palette.border};
+`;
+
+export const CountryPicker = styled(CountryDropdown)`
+  margin: 10px 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: ${props => props.theme.palette.text};
+  border: none;
+  height: 40px;
+  width: 50%;
+  background: transparent;
+  border: 1px solid ${props => props.theme.palette.border};
+`;
+
+export const CityPicker = styled(RegionDropdown)`
+  margin: 10px 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: ${props => props.theme.palette.text};
+  border: none;
+  height: 40px;
+  width: 50%;
+  background: transparent;
+  border: 1px solid ${props => props.theme.palette.border};
 `;

@@ -42,7 +42,9 @@
     "firebase-functions-test": "^0.1.6",
     "graphql": "^14.4.2",
     "jest": "^24.8.0",
+    "react-country-region-selector": "^1.4.4",
     "react-datepicker": "^2.9.6",
+    "react-day-picker": "^7.3.2",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
