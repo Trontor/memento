@@ -1,10 +1,5 @@
 import React, { Component } from "react";
-import {
-  SignupBackgroundWrapper,
-  SignupOrganic,
-  LoginBackgroundWrapper,
-  LoginOrganic
-} from "./BackgroundStyles";
+import { SignupBackgroundWrapper, SignupOrganic } from "./BackgroundStyles";
 
 export class SignupBackground extends Component {
   render() {
@@ -21,17 +16,4 @@ export class SignupBackground extends Component {
   }
 }
 
-export class LoginBackground extends Component {
-  render() {
-    return (
-      <LoginBackgroundWrapper>
-        <LoginOrganic />
-        <LoginOrganic />
-        <LoginOrganic />
-        <LoginOrganic />
-      </LoginBackgroundWrapper>
-    );
-  }
-}
-
-export default { SignupBackground, LoginBackground };
+export default SignupBackground;
