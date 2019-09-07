@@ -59,11 +59,13 @@ export class UserService implements IUserService {
    * @param currentUser the user object attached to the GraphQL request
    * @param fields updatable fields
    */
-  async update(currentUser: User, fields: Partial<UpdateUserInput>) {
-    this.logger.log(`User ${currentUser.userId} updating ${fields}`);
+  async update(currentUser: User, fields: UpdateUserInput) {
+    this.logger.log(
+      `User ${currentUser.userId} updating ${JSON.stringify(fields)}`
+    );
     if (!currentUser.userId)
       throw new InternalServerErrorException("Current user not defined");
-    if (currentUser.userId !== fields.id) {
+    if (currentUser.userId !== fields.userId) {
       throw new UnauthorizedException();
     }
     const key = currentUser.email;

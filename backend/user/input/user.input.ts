@@ -4,7 +4,7 @@ import { Gender } from "../dto/gender.dto";
 @InputType()
 export class UpdateUserInput {
   @Field(type => ID)
-  id!: string;
+  userId!: string;
 
   @Field({ nullable: true })
   location?: string;
