@@ -3,7 +3,7 @@ import { InputType, Field, ID } from "type-graphql";
 @InputType()
 export class JoinFamilyInput {
   @Field(type => ID)
-  invitationId!: string;
+  inviteId!: string;
 }
 
 @InputType()

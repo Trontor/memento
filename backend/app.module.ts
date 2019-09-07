@@ -8,6 +8,7 @@ import { ConfigModule } from "./config/config.module";
 import { ConfigService } from "./config/config.service";
 import { MongooseModule, MongooseModuleOptions } from "@nestjs/mongoose";
 import { FamilyModule } from "./family/family.module";
+import { InviteModule } from './invite/invite.module';
 
 /**
  * Root module of the application.
@@ -54,7 +55,8 @@ import { FamilyModule } from "./family/family.module";
     UserModule,
     AuthModule,
     ConfigModule,
-    FamilyModule
+    FamilyModule,
+    InviteModule
   ]
 })
 export class AppModule {}

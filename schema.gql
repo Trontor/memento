@@ -14,14 +14,23 @@ input CreateFamilyInput {
   description: String
 }
 
+input CreateInviteInput {
+  familyId: ID!
+}
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
 type Family {
   familyId: ID!
   name: String!
   description: String
   imageUrl: String
   members: [User!]!
-  createdAt: String!
-  updatedAt: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 enum FamilyRole {
@@ -34,8 +43,15 @@ enum Gender {
   Female
 }
 
+type Invite {
+  inviteId: ID!
+  familyId: ID!
+  createdAt: DateTime!
+  expiresAt: DateTime!
+}
+
 input JoinFamilyInput {
-  invitationId: ID!
+  inviteId: ID!
 }
 
 input LoginInput {
@@ -49,6 +65,7 @@ type Mutation {
   updateRole(input: UpdateRoleInput!): UpdateRoleOutput!
   login(input: LoginInput!): AuthOutput!
   createFamily(input: CreateFamilyInput!): Family!
+  createInvite(input: CreateInviteInput!): Invite!
 }
 
 type Query {
@@ -68,6 +85,15 @@ input RoleInput {
   familyRole: FamilyRole!
 }
 
+input SendInvitesInput {
+  emails: [String!]!
+}
+
+type SendInvitesOutput {
+  sent: [String!]!
+  notSent: [String!]!
+}
+
 input UpdateRoleInput {
   userId: ID!
   role: RoleInput!
@@ -79,7 +105,7 @@ type UpdateRoleOutput {
 }
 
 input UpdateUserInput {
-  id: ID!
+  userId: ID!
   location: String
   dateOfBirth: String
   gender: Gender
@@ -97,9 +123,9 @@ type User {
   gender: String
   familyRoles: [Role!]!
   families: [Family!]!
-  createdAt: String!
-  updatedAt: String!
-  lastSeenAt: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  lastSeenAt: DateTime!
 }
 
 input UserSignupInput {
