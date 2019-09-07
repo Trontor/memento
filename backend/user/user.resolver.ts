@@ -19,7 +19,7 @@ import {
 import { AuthService } from "../auth/auth.service";
 import { User } from "./dto/user.dto";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
-import { CurrentUser } from "../auth/decorators/currentUser";
+import { CurrentUser } from "../auth/decorators/current-user.decorator";
 import { UpdateRoleOutput } from "./dto/role.dto";
 import { UpdateRoleInput } from "./input/role.input";
 import { Family } from "../family/dto/family.dto";
@@ -64,6 +64,7 @@ export class UserResolver {
     @CurrentUser() user: User,
     @Args("input") input: UpdateUserInput
   ): Promise<User> {
+    this.logger.debug(user);
     const updatedUser = await this.userService.update(user, input);
     return updatedUser;
   }

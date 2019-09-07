@@ -9,7 +9,7 @@ import {
 import { FamilyService } from "./family.service";
 import { UseGuards, Inject, forwardRef } from "@nestjs/common";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
-import { CurrentUser } from "../auth/decorators/currentUser";
+import { CurrentUser } from "../auth/decorators/current-user.decorator";
 import { Family } from "./dto/family.dto";
 import { CreateFamilyInput } from "./inputs/family.inputs";
 import { User } from "../user/dto/user.dto";
