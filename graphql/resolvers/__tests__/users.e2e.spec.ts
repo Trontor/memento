@@ -9,8 +9,9 @@ import { db, clientAuth, adminAuth } from "../../utils/firebase/admin";
 import UserModel from "../../models/User";
 import { createContext } from "../../utils/context";
 import { SIGNUP } from "./mutations";
-import { EMAIL_IN_USE_ERROR_MESSAGE } from "../users";
 import FamilyModel from "../../models/Family";
+import InvitationModel from "../../models/Invitation";
+import { EMAIL_IN_USE_ERROR_MESSAGE } from "../../utils/errors";
 
 dotenv.config();
 
@@ -31,7 +32,8 @@ describe("e2e tests - users", () => {
       context: createContext(
         {
           user: new UserModel({ db, clientAuth }),
-          family: new FamilyModel({ db })
+          family: new FamilyModel({ db }),
+          invitation: new InvitationModel({ db })
         },
         adminAuth,
         db

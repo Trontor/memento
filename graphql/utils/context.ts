@@ -1,5 +1,6 @@
 import UserModel from "../models/User";
 import FamilyModel from "../models/Family";
+import InvitationModel from "../models/Invitation";
 import { ExpressContext } from "apollo-server-express/dist/ApolloServer";
 import { isEmpty } from "./validation";
 import { admin } from "./firebase/admin";
@@ -11,6 +12,7 @@ export const CONTEXT_CREATION_FAILED_ERROR_MESSAGE =
 export interface Models {
   user: UserModel;
   family: FamilyModel;
+  invitation: InvitationModel;
 }
 
 export interface Context {

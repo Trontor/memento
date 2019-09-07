@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { lighten } from "polished";
 import { Menu } from "styled-icons/feather/Menu";
 import { Close } from "styled-icons/evil/Close";
 import { PlusCircle } from "styled-icons/boxicons-regular/PlusCircle";
@@ -11,6 +12,7 @@ import { Group } from "styled-icons/material/Group";
 import { PaperPlane } from "styled-icons/boxicons-regular/PaperPlane";
 
 export const ButtonPrimary = styled.button`
+  display: inline-block;
   background: ${props => props.theme.palette.main};
   color: white;
   border: 1px solid ${props => props.theme.palette.main};
@@ -18,16 +20,22 @@ export const ButtonPrimary = styled.button`
   font-size: 15px;
   border-radius: 4px;
   ${props => props.theme.mixins.hoverFade};
-  margin-right: 20px;
+  margin-right: ${props => props.spacing ? "15px" : "0" };
 
   &:hover {
-    border: 1px solid ${props => props.theme.palette.secondary};
-    background: ${props => props.theme.palette.secondary};
+    border: 1px solid ${props => lighten(0.03, props.theme.palette.main)};
+    background: ${props => lighten(0.03, props.theme.palette.main)};
     ${props => props.theme.mixins.hoverFade};
   }
 
   &:focus {
     outline: none;
+  }
+
+  &:disabled, &[disabled] {
+    background-color: ${props => props.theme.palette.disabled};
+    border-color: ${props => props.theme.palette.disabled};
+    cursor: default;
   }
 `;
 
@@ -111,4 +119,29 @@ export const CreateFamily = styled(Group)`
   margin-top: 8px;
   margin-left: 10px;
   color: ${props => props.theme.palette.main};
+`;
+  
+export const AddButton = styled.button`
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 1px solid ${props => lighten(0.03, props.theme.palette.main)};
+  color: ${props => props.theme.palette.main};
+  margin: 10px 0;
+  position: relative;
+  display: block;
+
+  i {
+    display: block;
+  }
+
+  &:after {
+    display: block;
+    content: '${props => props.text}';
+    position: absolute;
+    top: 50%;
+    transform: translate(25px, -50%);
+    width: 115px;
+    text-align: left;
+  }
 `;

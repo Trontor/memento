@@ -1,9 +1,18 @@
 import styled, { css } from "styled-components";
 import { lighten,darken } from 'polished';
 
-export const InputContainer = styled.div`
+export const InputSection = styled.div`
   margin-bottom: 25px;
   position: relative;
+`;
+
+export const FormSection = styled.div`
+  margin-bottom: 50px;
+  position: relative;
+
+  &:last-child{
+    margin-bottom: 25px;
+  }
 `;
 
 export const AnimateLabel = css`
@@ -28,15 +37,37 @@ export const InputLabel = styled.label`
   }
 `;
 
+export const InstructionLabel = styled.label`
+  font-size: 14px;
+  font-family: 'Livvic', sans-serif;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 1em;
+  opacity: 0.75;
+  line-height: 1.5em;
+
+  @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}) {
+    font-size: 15px;
+  }
+`;
+
+
 export const InputField = styled.input`
+  font-family: "Rubik", sans-serif;
+  font-weight: normal;
   color: ${props => props.theme.palette.text};
   border: none;
   border-bottom: 1px solid ${props => props.theme.palette.border};
   width: 100%;
   font-size: 19px;
-  padding: 8px 0;
+  padding: 6px 0;
   margin-bottom: 3px;
   ${props => props.theme.mixins.hoverFade};
+
+  ::placeholder {
+    opacity: 0.4;
+    font-weight: 300;
+  }
 
   &:focus {
     outline: none;
@@ -63,4 +94,14 @@ export const HelpText = styled.span`
       color: ${props => darken(0.1, props.theme.palette.main)};
     }
   }
+`;
+
+export const FormHelpText = styled.span`
+  font-size: 11px;
+  font-weight: 300;
+  opacity: 0.6;
+`;
+
+export const FormNav = styled.div`
+  width: 100%;
 `;

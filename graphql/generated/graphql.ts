@@ -22,6 +22,10 @@ export type CreateFamilyInput = {
   description?: Maybe<Scalars['String']>,
 };
 
+export type CreateInvitationInput = {
+  familyId: Scalars['ID'],
+};
+
 export type Family = {
   __typename?: 'Family',
   id: Scalars['ID'],
@@ -44,6 +48,18 @@ export enum Gender {
   Female = 'FEMALE'
 }
 
+export type Invitation = {
+  __typename?: 'Invitation',
+  id: Scalars['ID'],
+  familyId: Scalars['ID'],
+  createdAt: Scalars['String'],
+  expiresAt: Scalars['String'],
+};
+
+export type JoinFamilyInput = {
+  invitationId: Scalars['ID'],
+};
+
 export type Mutation = {
   __typename?: 'Mutation',
   signup: AuthOutput,
@@ -51,6 +67,8 @@ export type Mutation = {
   createFamily?: Maybe<Family>,
   updateUser?: Maybe<User>,
   updateRole?: Maybe<UpdateRoleOutput>,
+  createInvitation?: Maybe<Invitation>,
+  joinFamily?: Maybe<Family>,
 };
 
 
@@ -76,6 +94,16 @@ export type MutationUpdateUserArgs = {
 
 export type MutationUpdateRoleArgs = {
   input: UpdateRoleInput
+};
+
+
+export type MutationCreateInvitationArgs = {
+  input: CreateInvitationInput
+};
+
+
+export type MutationJoinFamilyArgs = {
+  input: JoinFamilyInput
 };
 
 export type Query = {
@@ -237,6 +265,9 @@ export type ResolversTypes = {
   UpdateRoleInput: UpdateRoleInput,
   RoleInput: RoleInput,
   UpdateRoleOutput: ResolverTypeWrapper<UpdateRoleOutput>,
+  CreateInvitationInput: CreateInvitationInput,
+  Invitation: ResolverTypeWrapper<Invitation>,
+  JoinFamilyInput: JoinFamilyInput,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
 };
 
@@ -260,6 +291,9 @@ export type ResolversParentTypes = {
   UpdateRoleInput: UpdateRoleInput,
   RoleInput: RoleInput,
   UpdateRoleOutput: UpdateRoleOutput,
+  CreateInvitationInput: CreateInvitationInput,
+  Invitation: Invitation,
+  JoinFamilyInput: JoinFamilyInput,
   Boolean: Scalars['Boolean'],
 };
 
@@ -279,12 +313,21 @@ export type FamilyResolvers<ContextType = any, ParentType extends ResolversParen
   users?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>,
 };
 
+export type InvitationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Invitation'] = ResolversParentTypes['Invitation']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  familyId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  expiresAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+};
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   signup?: Resolver<ResolversTypes['AuthOutput'], ParentType, ContextType, RequireFields<MutationSignupArgs, 'input'>>,
   login?: Resolver<ResolversTypes['AuthOutput'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'input'>>,
   createFamily?: Resolver<Maybe<ResolversTypes['Family']>, ParentType, ContextType, RequireFields<MutationCreateFamilyArgs, 'input'>>,
   updateUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'input'>>,
   updateRole?: Resolver<Maybe<ResolversTypes['UpdateRoleOutput']>, ParentType, ContextType, RequireFields<MutationUpdateRoleArgs, 'input'>>,
+  createInvitation?: Resolver<Maybe<ResolversTypes['Invitation']>, ParentType, ContextType, RequireFields<MutationCreateInvitationArgs, 'input'>>,
+  joinFamily?: Resolver<Maybe<ResolversTypes['Family']>, ParentType, ContextType, RequireFields<MutationJoinFamilyArgs, 'input'>>,
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
@@ -321,6 +364,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 export type Resolvers<ContextType = any> = {
   AuthOutput?: AuthOutputResolvers<ContextType>,
   Family?: FamilyResolvers<ContextType>,
+  Invitation?: InvitationResolvers<ContextType>,
   Mutation?: MutationResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
   Role?: RoleResolvers<ContextType>,
