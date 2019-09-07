@@ -16,6 +16,6 @@ export class InviteResolver {
   @UseGuards(JwtAuthGuard, FamilyAdminGuard)
   async createInvite(@Args("input") input: CreateInviteInput) {
     this.logger.log(input);
-    // this.inviteService.createInvite(input);
+    return await this.inviteService.createInvite(input.familyId);
   }
 }
