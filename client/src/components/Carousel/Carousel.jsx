@@ -17,32 +17,21 @@ export default class Carousel extends Component {
       arrows: true
       // prevArrow: <SamplePrevArrow/>
     };
+    const imgSrc = [
+      "https://images.unsplash.com/photo-1534216801749-bb1db8970e54?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80",
+      "https://images.unsplash.com/flagged/photo-1564468780664-c91bb3af737e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80",
+      "https://images.unsplash.com/photo-1459908676235-d5f02a50184b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
+    ];
+
     return (
       <CarouselWrapper>
         <Slider {...settings}>
-          <CarouselSlide>
-            <img
-              src="https://images.unsplash.com/photo-1534216801749-bb1db8970e54?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80"
-              alt="blah"
-            />
-            <Description>
-              Store your memories for generations to come
-            </Description>
-          </CarouselSlide>
-          <CarouselSlide>
-            <img
-              src="https://images.unsplash.com/flagged/photo-1564468780664-c91bb3af737e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80"
-              alt="blah"
-            />
-            <Description>Lorem Ipsum lorem ipsum</Description>
-          </CarouselSlide>
-          <CarouselSlide>
-            <img
-              src="https://images.unsplash.com/photo-1459908676235-d5f02a50184b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
-              alt="blah"
-            />
-            <Description>Lorem Ipsum lorem ipsum</Description>
-          </CarouselSlide>
+          {imgSrc.map(image => (
+            <CarouselSlide>
+              <img src={image} alt="blah"></img>
+              <Description>Lorem Ipsum Lorem Ipsum</Description>
+            </CarouselSlide>
+          ))}
         </Slider>
       </CarouselWrapper>
     );

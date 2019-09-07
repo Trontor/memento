@@ -26,6 +26,7 @@ import { MiniLogo } from "components/Logo";
 export default function Sidebar() {
   const [isSidebarOpen, setSidebarOpened] = useState(false);
   const toggleSidebarOpened = () => setSidebarOpened(!isSidebarOpen);
+  const familyNames = ["Leung", "Siu", "Febriana", "Joshi", "Wei"];
 
   return (
     <>
@@ -40,16 +41,11 @@ export default function Sidebar() {
         </SearchHeader>
         <FamilyListContainer>
           <h3>My Families</h3>
-          <TextList>
-            <a href="#">Leung</a>
-          </TextList>
-          <TextList>
-            <a href="#">Siu</a>
-          </TextList>
-          <TextList>Febriana</TextList>
-          <TextList>Joshi</TextList>
-          <TextList>Huang</TextList>
-          <TextList>Wei</TextList>
+          {familyNames.map(name => (
+            <TextList>
+              <a href="#">{name}</a>
+            </TextList>
+          ))}
         </FamilyListContainer>
         <MenuContainer>
           <TextList>
