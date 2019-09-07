@@ -7,6 +7,9 @@ import { Edit } from "styled-icons/material/Edit";
 import { Settings } from "styled-icons/material/Settings";
 import { AddToQueue } from "styled-icons/boxicons-regular/AddToQueue";
 import { GroupAdd } from "styled-icons/material/GroupAdd";
+import { NavigateNext } from "styled-icons/material/NavigateNext";
+import { Group } from "styled-icons/material/Group";
+import { PaperPlane } from "styled-icons/boxicons-regular/PaperPlane";
 
 export const ButtonPrimary = styled.button`
   display: inline-block;
@@ -72,6 +75,10 @@ export const CloseMenuButton = styled(Close)`
   &:active {
     outline: none;
   }
+  @media screen and (min-width: ${props =>
+      props.theme.breakpoints.tabletLanscape}) {
+    display: none;
+  }
 `;
 
 export const NewGroup = styled(PlusCircle)`
@@ -99,6 +106,21 @@ export const Invite = styled(GroupAdd)`
   margin-right: 10px;
 `;
 
+export const View = styled(PaperPlane)`
+  color: gray;
+  margin-right: 10px;
+`;
+
+export const Next = styled(NavigateNext)`
+  color: ${props => props.theme.palette.main};
+`;
+
+export const CreateFamily = styled(Group)`
+  margin-top: 8px;
+  margin-left: 10px;
+  color: ${props => props.theme.palette.main};
+`;
+  
 export const AddButton = styled.button`
   width: 25px;
   height: 25px;

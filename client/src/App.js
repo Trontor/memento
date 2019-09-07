@@ -77,7 +77,6 @@ function App() {
         <Route path="/sidebar" component={Sidebar} />
         <Route path="/create-family" component={CreateFamily} />
         <Route path="/invite" component={Invite} />
-
       </Router>
     </ThemeProvider>
   );

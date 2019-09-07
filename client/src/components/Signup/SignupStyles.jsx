@@ -5,11 +5,6 @@ export const SignupContainer = styled.form`
   position: relative;
   top: 50%;
   transform: translate(0, -50%);
-
-  @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletPortrait}) {
-    /* margin: 80px; */
-  }
 `;
 
 export const SignupHeader = styled.h2`

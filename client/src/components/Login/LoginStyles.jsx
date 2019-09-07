@@ -8,10 +8,10 @@ export const LoginContainer = styled.div`
   transform: translate(-50%, -50%);
   width: 70%;
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}){
+  @media screen and (min-width: ${props =>
+      props.theme.breakpoints.tabletPortrait}) {
     width: 450px;
   }
-
 `;
 
 export const ErrorMsg = styled.div`

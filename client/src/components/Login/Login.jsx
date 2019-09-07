@@ -60,6 +60,7 @@ export default function Login(props) {
   return (
     <>
       <Logo />
+
       <LoginContainer>
         <Header underline>Welcome back!</Header>
         <Formik
@@ -112,7 +113,6 @@ export default function Login(props) {
     </>
   );
 }
-
 // class Log extends Component {
 //   constructor(props) {
 //     super(props);

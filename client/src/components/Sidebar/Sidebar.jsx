@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import {
-  ButtonPrimary,
   MenuButton,
   CloseMenuButton,
   NewGroup,
   EditProfile,
   Setting,
   NewArtefact,
-  Invite
+  Invite,
+  View
 } from "ui/Buttons";
 import {
   SidebarContainer,
@@ -18,13 +18,15 @@ import {
   FamilyListContainer,
   TextList,
   MenuContainer,
-  SettingContainer
+  Footer,
+  SidebarButtonPrimary
 } from "./SidebarStyles";
 import { MiniLogo } from "components/Logo";
 
 export default function Sidebar() {
   const [isSidebarOpen, setSidebarOpened] = useState(false);
   const toggleSidebarOpened = () => setSidebarOpened(!isSidebarOpen);
+  const famNames = ["Leung", "Siu", "Febriana", "Joshi", "Wei"];
 
   return (
     <>
@@ -39,39 +41,46 @@ export default function Sidebar() {
         </SearchHeader>
         <FamilyListContainer>
           <h3>My Families</h3>
-          <TextList>Leung</TextList>
-          <TextList>Siu</TextList>
-          <TextList>Febriana</TextList>
-          <TextList>Joshi</TextList>
-          <TextList>Huang</TextList>
-          <TextList>Wei</TextList>
+          {famNames.map(name => (
+            <TextList>
+              <a href="#">{name}</a>
+            </TextList>
+          ))}
         </FamilyListContainer>
         <MenuContainer>
           <TextList>
-            <NewGroup size="25px" />
-            New Family Group
-          </TextList>
-          <TextList>
-            <NewArtefact size="25px" />
-            New Artefact
-          </TextList>
-        </MenuContainer>
-        <SettingContainer>
-          <TextList>
             <Invite size="25px" />
-            Invite Family members
+            <a href="#">Invite Family members</a>
           </TextList>
           <TextList>
             <Setting size="25px" />
             Manage my Family groups
           </TextList>
           <TextList>
+            <NewGroup size="25px" />
+            New Family Group
+          </TextList>
+        </MenuContainer>
+        <MenuContainer>
+          <TextList>
+            <NewArtefact size="25px" />
+            New Artefact
+          </TextList>
+          <TextList>
+            <View size="25px" />
+            View my Artefacts
+          </TextList>
+        </MenuContainer>
+        <MenuContainer>
+          <TextList>
             <EditProfile size="25px" />
             Edit profile & account
           </TextList>
-        </SettingContainer>
-        <MiniLogo />
-        <ButtonPrimary>Sign Out</ButtonPrimary>
+        </MenuContainer>
+        <Footer>
+          <MiniLogo />
+          <SidebarButtonPrimary>Sign Out</SidebarButtonPrimary>
+        </Footer>
       </SidebarContainer>
     </>
   );

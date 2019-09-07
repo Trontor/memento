@@ -1,20 +1,23 @@
 import styled from "styled-components";
 import { Search } from "styled-icons/boxicons-regular/Search";
 import { lighten } from "polished";
+import { ButtonPrimary } from "../../ui/Buttons";
 
 export const SidebarContainer = styled.div`
-  display: ${props => (props.menuClick ? "block" : "none")};
+  overflow-x: hidden;
   position: absolute;
   height: 100%;
   top: 0;
-  width: 100%;
+  width: ${props => (props.menuClick ? "100%" : "0")};
   background: ${props => lighten(0.05, props.theme.palette.sidebar)};
   z-index: 999;
-  box-shadow: 5px 10px lightgrey;
+  transition: 0.5s ease-in-out;
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletPortrait}) {
-    width: 414px;
+      props.theme.breakpoints.tabletLanscape}) {
+    width: 22%;
+    box-shadow: none;
+    display: block;
   }
 `;
 
@@ -22,6 +25,11 @@ export const SearchHeader = styled.div`
   display: grid;
   grid-template-columns: 15% 85%;
   margin-top: 10px;
+
+  @media screen and (min-width: ${props =>
+      props.theme.breakpoints.tabletPortrait}) {
+    display: flex;
+  }
 `;
 
 export const SearchBar = styled.div`
@@ -32,6 +40,12 @@ export const SearchBar = styled.div`
   border: 1px solid #e0e0e0;
   background: #fcfcfc;
   border-radius: 5px;
+
+  @media screen and (min-width: ${props =>
+      props.theme.breakpoints.tabletLanscape}) {
+    float: left;
+    margin: 10px 15px;
+  }
 `;
 
 export const SearchIcon = styled(Search)`
@@ -50,6 +64,7 @@ export const SearchInput = styled.input`
   font-size: 16px;
   font-style: normal;
   line-height: 19px;
+
   &:focus {
     outline: none;
   }
@@ -60,28 +75,55 @@ export const SearchInput = styled.input`
 
 export const FamilyListContainer = styled.div`
   width: 85%;
-  height: 35%;
+  height: 30%;
   margin: 0px 15px 0px 25px;
-  border-bottom: 1px solid ${props => props.theme.palette.border};
+
+  h3 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
 `;
 
 export const TextList = styled.li`
-  margin-top: 10px;
+  margin-top: 8px;
   list-style-type: none;
   font-style: normal;
   font-weight: 300;
   font-size: 15px;
   line-height: 18px;
+  a {
+    color: ${props => props.theme.palette.text};
+    &:hover {
+      border-bottom: 3px solid ${props => props.theme.palette.main};
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+  }
 `;
 
 export const MenuContainer = styled.div`
   width: 85%;
-  margin: 0px 15px 0px 25px;
-  padding: 15px 0 15px 0;
-  border-bottom: 1px solid ${props => props.theme.palette.border};
+  margin: 10px 15px 15px 25px;
+  padding-top: 10px;
+  border-top: 1px solid ${props => props.theme.palette.border};
 `;
 
-export const SettingContainer = styled.div`
+export const Footer = styled.div`
+  position: absolute;
+  bottom: 20px;
   width: 85%;
-  margin: 15px 15px 25px 25px;
+  margin: 10px 15px 15px 10px;
+`;
+
+export const SidebarButtonPrimary = styled(ButtonPrimary)`
+  float: right;
+  font-size: 15px;
+  margin-right: 0;
+
+  @media screen and (width: ${props => props.theme.breakpoints.tabletLanscape}),
+    (min-width: ${props =>
+      props.theme.breakpoints.tabletLanscape}) and (max-width: ${props =>
+      props.theme.breakpoints.desktop}) {
+    font-size: 12px;
+  }
 `;
