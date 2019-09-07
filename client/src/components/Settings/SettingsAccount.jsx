@@ -3,7 +3,8 @@ import {
   SettingsContainer,
   SectionWrapper,
   AccountButton,
-  EditAccount
+  EditAccountButton,
+  CancelButton
 } from "./SettingsStyles";
 import { InputField, FormSection, InputLabel } from "ui/Forms";
 import { ButtonSecondary } from "ui/Buttons";
@@ -15,11 +16,22 @@ export default function SettingsAccount({ menuClick }) {
   const [editPassword, setPasswordWrapper] = useState(false);
   const editPasswordHandler = () => setPasswordWrapper(true);
   const closePasswordHandler = () => setPasswordWrapper(false);
+  console.log(editEmail);
   return (
     <SettingsContainer menuClick={menuClick.account}>
       <FormSection>
         <InputLabel>
-          Email Address <EditAccount size="25px" onClick={editEmailHandler} />
+          Email Address{" "}
+          <EditAccountButton
+            size="25px"
+            onClick={editEmailHandler}
+            editClick={editEmail}
+          />
+          <CancelButton
+            size="25px"
+            onClick={closeEmailHandler}
+            editClick={editEmail}
+          />
         </InputLabel>
         <p>vfebriana@gmail.com</p>
         <SectionWrapper editClick={editEmail}>
@@ -32,7 +44,17 @@ export default function SettingsAccount({ menuClick }) {
 
       <FormSection>
         <InputLabel>
-          Password <EditAccount size="25px" onClick={editPasswordHandler} />
+          Password{" "}
+          <EditAccountButton
+            size="25px"
+            onClick={editPasswordHandler}
+            editClick={editPassword}
+          />
+          <CancelButton
+            size="25px"
+            onClick={closePasswordHandler}
+            editClick={editPassword}
+          />
         </InputLabel>
         <p>vfebriana@gmail.com</p>
         <SectionWrapper editClick={editPassword}>

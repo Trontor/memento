@@ -4,6 +4,7 @@ import { NewGroup, EditProfile } from "ui/Buttons";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Cancel } from "styled-icons/material/Cancel";
 
 export const SettingsHeader = styled.div`
   display: grid;
@@ -96,10 +97,18 @@ export const AccountButton = styled(ButtonSecondary)`
   font-weight: bold;
 `;
 
-export const EditAccount = styled(EditProfile)`
+export const EditAccountButton = styled(EditProfile)`
   color: #4cd4ff;
   margin-left: 20px;
   float: right;
+  display: ${props => (props.editClick ? "none" : "block")};
+`;
+
+export const CancelButton = styled(Cancel)`
+  color: #4cd4ff;
+  margin-left: 20px;
+  float: right;
+  display: ${props => (props.editClick ? "block" : "none")};
 `;
 
 export const SectionWrapper = styled.div`

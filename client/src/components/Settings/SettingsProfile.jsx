@@ -81,7 +81,7 @@ export default function SettingsProfile({ menuClick }) {
             checked={genderOption === "other"}
             onChange={genderOptionHandler}
           />{" "}
-          Other: <InputField placeholder="Please specify your gender..." />
+          Other
         </FormInputList>
       </FormSection>
       <FormSection>
