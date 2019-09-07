@@ -3,11 +3,12 @@ import { Container } from "ui/Helpers";
 import { Header } from "ui/Typography";
 import { SettingsHeader, HeaderButton } from "./SettingsStyles";
 import SettingsProfile from "./SettingsProfile";
+import SettingsAccount from "./SettingsAccount";
 
 export default function Settings() {
   const [settingsHeader, setSettingsHeader] = useState({
-    profile: true,
-    account: false
+    profile: false,
+    account: true
   });
 
   const settingsOpened = settingsName => {
@@ -49,6 +50,7 @@ export default function Settings() {
         </HeaderButton>
       </SettingsHeader>
       <SettingsProfile menuClick={settingsHeader} />
+      <SettingsAccount menuClick={settingsHeader} />
     </Container>
   );
 }

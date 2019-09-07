@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { ButtonSecondary } from "ui/Buttons";
-import { NewGroup } from "ui/Buttons";
+import { NewGroup, EditProfile } from "ui/Buttons";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -89,4 +89,23 @@ export const CityPicker = styled(RegionDropdown)`
 export const PlaceWrapper = styled.div`
   display: grid;
   grid-template-columns: 60% 40%;
+`;
+
+export const AccountButton = styled(ButtonSecondary)`
+  margin-top: 15px;
+  font-weight: bold;
+`;
+
+export const EditAccount = styled(EditProfile)`
+  color: #4cd4ff;
+  margin-left: 20px;
+  float: right;
+`;
+
+export const SectionWrapper = styled.div`
+  display: ${props => (props.editClick ? "block" : "none")};
+
+  input {
+    margin-top: 10px;
+  }
 `;
