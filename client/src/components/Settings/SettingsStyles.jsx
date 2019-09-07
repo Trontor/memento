@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { ButtonSecondary } from "ui/Buttons";
 import { NewGroup } from "ui/Buttons";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
@@ -17,6 +17,7 @@ export const HeaderButton = styled(ButtonSecondary)`
   margin: 0 auto;
   border-radius: 0;
   border: none;
+  font-weight: bold;
   border-bottom: ${props =>
     props.menuClick ? "4px solid orange" : "1px solid  gray "};
   background: ${props =>
@@ -25,8 +26,6 @@ export const HeaderButton = styled(ButtonSecondary)`
 
 export const SettingsContainer = styled.div`
   display: ${props => (props.menuClick ? "block" : "none")};
-  background: white;
-  height: 500px;
   padding-top: 50px;
 `;
 
@@ -57,7 +56,7 @@ export const UploadButton = styled(NewGroup)`
 
 export const Calendar = styled(DatePicker)`
   height: 40px;
-  width: 150%;
+  width: 100%;
   font-size: 16px;
   font-weight: bold;
   color: ${props => props.theme.palette.text};
@@ -67,26 +66,27 @@ export const Calendar = styled(DatePicker)`
   border: 1px solid ${props => props.theme.palette.border};
 `;
 
-export const CountryPicker = styled(CountryDropdown)`
-  margin: 10px 0;
+const PickerStyle = css`
+  margin: 10px 10px 10px 0;
   font-size: 16px;
   font-weight: bold;
   color: ${props => props.theme.palette.text};
   border: none;
   height: 40px;
-  width: 50%;
+  width: 40%;
   background: transparent;
   border: 1px solid ${props => props.theme.palette.border};
 `;
 
+export const CountryPicker = styled(CountryDropdown)`
+  ${PickerStyle}
+`;
+
 export const CityPicker = styled(RegionDropdown)`
-  margin: 10px 0;
-  font-size: 16px;
-  font-weight: bold;
-  color: ${props => props.theme.palette.text};
-  border: none;
-  height: 40px;
-  width: 50%;
-  background: transparent;
-  border: 1px solid ${props => props.theme.palette.border};
+  ${PickerStyle}
+`;
+
+export const PlaceWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 60% 40%;
 `;
