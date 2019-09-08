@@ -119,12 +119,14 @@ export default function SettingsProfile({ menuClick, currentUser }) {
               onChange={e => handleChange(idx, e)}
             />
 
-            <InputField
-              type="text"
-              placeholder="Select Date"
-              style={{ width: "90%" }}
-              value={place.date}
+            <Calendar
+              placeholderText="Click to select a date"
+              selected={place.date}
               onChange={e => handleChange(idx, e)}
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              maxDate={new Date()}
             />
 
             {livePlaces.length > 1 && (
