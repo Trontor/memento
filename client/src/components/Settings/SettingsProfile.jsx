@@ -12,7 +12,7 @@ import {
 } from "./SettingsStyles";
 import { FormSection, InputSection, InputLabel, InputField } from "ui/Forms";
 import { DeleteButton } from "components/Invite/InviteStyles";
-import { AddButton } from "ui/Buttons";
+import { ButtonPrimary, AddButton } from "ui/Buttons";
 
 export default function SettingsProfile({ menuClick, currentUser }) {
   const [birthday, setBirthday] = useState(null);
@@ -30,7 +30,7 @@ export default function SettingsProfile({ menuClick, currentUser }) {
   const selectLocationCity = value => setLocationCity(value);
 
   const [livePlaces, setLivePlaces] = useState([{ place: "", date: null }]);
-  console.log(livePlaces);
+
   function handleChange(index, event) {
     const places = [...livePlaces];
     places[index].place = event.target.value;
@@ -160,6 +160,9 @@ export default function SettingsProfile({ menuClick, currentUser }) {
           <InputLabel>Date Moved</InputLabel>
           <Calendar placeholderText="Click to select a date" />
         </InputSection>*/}
+      <ButtonPrimary style={{ float: "right", margin: "10px" }}>
+        Save Changes
+      </ButtonPrimary>
     </SettingsContainer>
   );
 }
