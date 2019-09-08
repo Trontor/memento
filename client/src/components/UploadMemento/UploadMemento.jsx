@@ -2,11 +2,17 @@ import React, {useState} from "react";
 import { Header } from "ui/Typography";
 import { Container } from 'ui/Helpers';
 import { InstructionLabel, InputField, FormHelpText, FormSection } from 'ui/Forms';
-import { RadioOption, RadioButton, RadioButtonStyle, RadioLabel } from './UploadMementoStyles';
+import { RadioOption, RadioButton, RadioButtonStyle, RadioLabel, Tag, NewTag } from './UploadMementoStyles';
 import CreatableSelect from 'react-select/creatable';
+import { TagsContainer } from "./UploadMementoStyles";
 
 export default function UploadMemento() {
+  //define react hooks
   const [selectMementoType, setSelectMementoType] = useState("");
+  const [mementoTags, setMementoTags] = useState([]);
+
+  const tags = ["recipes", "painting", "stuffed toys", "cars", "jewellery", "photographs", "clothing", "family", "blanket", "food"];
+
   const eventOptions = [
     { value: 'birthday', label: 'Birthday' },
     { value: 'childbirth', label: 'Childbirth' },
@@ -26,7 +32,8 @@ export default function UploadMemento() {
     control: (provided) => ({
       ...provided,
       cursor: "pointer",
-      fontSize: 13
+      fontSize: 13,
+      width: "90%"
       }
     ),
     option: (provided, state) => ({
@@ -47,12 +54,26 @@ export default function UploadMemento() {
     }),
   }
 
+  const selectTag = (tag) => {
+    if (mementoTags.includes(tag)) {
+      const tags = [...mementoTags];
+      const tagIndex = tags.indexOf(tag);
+      if (tagIndex !== -1) {
+       tags.splice(tagIndex, 1);
+       setMementoTags(tags);
+      }
+    }
+    else {
+      setMementoTags([...mementoTags, tag])
+    }
+  }
+
   return (
     <Container>
       <Header underline>Create a Memento</Header>
 
       <FormSection>
-        <InstructionLabel>Is your memento an anniversary or special event?</InstructionLabel>
+        <InstructionLabel>Is your memento a special event? (e.g. anniversary, birthday, graduation)</InstructionLabel>
         <RadioOption>
           <RadioButton
             type="radio"
@@ -62,7 +83,7 @@ export default function UploadMemento() {
             onChange={e => handleRadioChange(e)}/>
           <RadioButtonStyle/>
           <RadioLabel>
-            Yes, it is an anniversary or special event.
+            Yes, it is a special event.
           </RadioLabel>
         </RadioOption>
 
@@ -75,7 +96,7 @@ export default function UploadMemento() {
             onChange={e => handleRadioChange(e)}/>
           <RadioButtonStyle/>
           <RadioLabel>
-            No, it is a special object.
+            No, but it is a special item.
           </RadioLabel>
         </RadioOption>
       </FormSection>
@@ -93,6 +114,22 @@ export default function UploadMemento() {
       )
       }
 
+      {selectMementoType!== "" && (
+        <FormSection>
+          <InstructionLabel>What does your memento contain?</InstructionLabel>
+          <TagsContainer>
+            { tags.sort().map(tag =>
+              <Tag
+                onClick={() => selectTag(tag)}
+                selected={mementoTags.includes(tag)}>
+                {tag}
+              </Tag>
+            )}
+              <NewTag><i class="fas fa-plus"></i> edit/new</NewTag>
+          </TagsContainer>
+        </FormSection>
+      )
+      }
     </Container>
   )
 }
