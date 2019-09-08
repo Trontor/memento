@@ -5,6 +5,7 @@ import { InstructionLabel, InputField, FormHelpText, FormSection } from 'ui/Form
 import { RadioOption, RadioButton, RadioButtonStyle, RadioLabel, Tag, NewTag } from './UploadMementoStyles';
 import CreatableSelect from 'react-select/creatable';
 import { TagsContainer } from "./UploadMementoStyles";
+// import UploadStep1 from "./UploadStep1";
 
 export default function UploadMemento() {
   //define react hooks

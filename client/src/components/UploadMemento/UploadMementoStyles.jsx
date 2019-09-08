@@ -1,5 +1,5 @@
 import styled, {css} from "styled-components";
-import { lighten } from "polished";
+import { lighten, darken, adjustHue } from "polished";
 
 export const RadioOption = styled.div`
   position: relative;
@@ -100,30 +100,37 @@ export const Tag = styled.li`
   ${props => props.theme.mixins.hoverFade};
 
   &:hover {
-    border-color: ${props => lighten(0.2, props.theme.palette.main)};
-    background-color: ${props => lighten(0.3, props.theme.palette.main)};
-    color: ${props => lighten(0.02, props.theme.palette.main)};
+    border-color: ${props => lighten(0.15, props.theme.palette.main)};
+    background-color: ${props => lighten(0.28, props.theme.palette.main)};
+    color: ${props => lighten(0.03, props.theme.palette.main)};
     ${props => props.theme.mixins.hoverFade};
   }
 
-  ${({selected}) => selected && css`
-    background-color: ${props => lighten(0.3, props.theme.palette.main)};
-    border-color: ${props => lighten(0.05, props.theme.palette.main)};
+  &:active, &:focus {
+    background-color: ${props => adjustHue(5, lighten(0.23, props.theme.palette.main))};
+    border-color: ${props => lighten(0.08, props.theme.palette.main)};
     color: ${props => props.theme.palette.main};
+    }
+
+  ${({selected}) => selected && css`
+    border-color: ${props => lighten(0.05, props.theme.palette.main)};
+    background-color: ${props => adjustHue(5, lighten(0.25, props.theme.palette.main))};
+    color: ${props => darken(0.08, props.theme.palette.main)};
 
     &:hover {
-      background-color: ${props => lighten(0.3, props.theme.palette.main)};
       border-color: ${props => lighten(0.05, props.theme.palette.main)};
-      color: ${props => props.theme.palette.main};
+      background-color: ${props => adjustHue(5, lighten(0.25, props.theme.palette.main))};
+      color: ${props => darken(0.08, props.theme.palette.main)};
     }
   `};
 `;
 
 export const NewTag = styled.button`
   font-family: "Livvic", sans-serif;
+  font-weight: bold;
   font-size: 14px;
   color: ${props => props.theme.palette.main};
-  border: 1px solid ${props => lighten(0.15, props.theme.palette.main)};
+  border: 1px solid ${props => lighten(0.05, props.theme.palette.main)};
   display: inline-block;
   padding: 7px 12px;
   margin: 0 8px 8px 0;
