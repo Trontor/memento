@@ -9,6 +9,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import Sidebar from "./components/Sidebar/Sidebar";
 import CreateFamily from "./components/CreateFamily/CreateFamily";
 import Invite from "./components/Invite/Invite";
+import UploadMemento from "./components/UploadMemento/UploadMemento";
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -77,6 +78,7 @@ function App() {
         <Route path="/sidebar" component={Sidebar} />
         <Route path="/create-family" component={CreateFamily} />
         <Route path="/invite" component={Invite} />
+        <Route path="/new-memento" component={UploadMemento} />
       </Router>
     </ThemeProvider>
   );
