@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import { lighten } from "polished";
-import { center } from "ui/Helpers"
 
 export const RadioOption = styled.div`
   position: relative;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   /* border: 1px solid red; */
   display: flex;
   align-items: center;
@@ -12,8 +11,6 @@ export const RadioOption = styled.div`
 
 export const RadioButtonStyle = styled.span`
   display: inline-block;
-  /* top: 50%;
-  left: 50%; */
   height: 20px;
   width: 20px;
   border: 1px solid ${props => lighten(0.6, props.theme.palette.text)};
@@ -79,7 +76,6 @@ export const RadioButton = styled.input`
 
 export const RadioLabel = styled.label`
   display: inline-block;
-  /* position: absolute; */
-  /* transform: translateY(25%); */
   margin-left: 10px;
+  font-size: 13px;
 `
