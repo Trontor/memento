@@ -20,7 +20,7 @@ export const ButtonPrimary = styled.button`
   font-size: 15px;
   border-radius: 4px;
   ${props => props.theme.mixins.hoverFade};
-  margin-right: ${props => props.spacing ? "15px" : "0" };
+  margin-right: ${props => (props.spacing ? "15px" : "0")};
 
   &:hover {
     border: 1px solid ${props => lighten(0.03, props.theme.palette.main)};
@@ -32,7 +32,8 @@ export const ButtonPrimary = styled.button`
     outline: none;
   }
 
-  &:disabled, &[disabled] {
+  &:disabled,
+  &[disabled] {
     background-color: ${props => props.theme.palette.disabled};
     border-color: ${props => props.theme.palette.disabled};
     cursor: default;
@@ -120,7 +121,7 @@ export const CreateFamily = styled(Group)`
   margin-left: 10px;
   color: ${props => props.theme.palette.main};
 `;
-  
+
 export const AddButton = styled.button`
   width: 25px;
   height: 25px;
@@ -130,6 +131,7 @@ export const AddButton = styled.button`
   margin: 10px 0;
   position: relative;
   display: block;
+  background: transparent;
 
   i {
     display: block;

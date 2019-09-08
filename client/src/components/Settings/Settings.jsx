@@ -7,8 +7,8 @@ import SettingsAccount from "./SettingsAccount";
 
 export default function Settings() {
   const [settingsHeader, setSettingsHeader] = useState({
-    profile: false,
-    account: true
+    profile: true,
+    account: false
   });
 
   const settingsOpened = settingsName => {

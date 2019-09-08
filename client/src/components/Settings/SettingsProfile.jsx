@@ -1,120 +1,126 @@
 import React, { useState } from "react";
+import { Formik } from "formik";
+//import * as yup from "yup";
 import {
   SettingsContainer,
   UploadPhoto,
-  UploadLabel,
-  UploadButton,
   Calendar,
   CountryPicker,
-  CityPicker,
-  PlaceWrapper
+  CityPicker
 } from "./SettingsStyles";
-import { InputField, FormSection, InputLabel, FormInputList } from "ui/Forms";
+import { AddButton } from "ui/Buttons";
+import { FormSection, InputSection, InputLabel, InputField } from "ui/Forms";
+import { useQuery } from "@apollo/react-hooks";
+import GET_CURRENT_USER from "queries/GetCurrentUser";
 
 export default function SettingsProfile({ menuClick }) {
+  const { data } = useQuery(GET_CURRENT_USER);
+
+  let defaultValues = {
+    firstName: "",
+    lastName: ""
+  };
+
+  //let changeLastName = <InputField type="text" />;
+
+  if (data && data.currentUser) {
+    /*changeFirstName = (
+      <InputField type="text" value={data.currentUser.firstName} />
+    );
+    changeLastName = (
+      <InputField type="text" value={data.currentUser.lastName} />
+    );*/
+    defaultValues.firstName = data.currentUser.firstName;
+    defaultValues.lastName = data.currentUser.lastName;
+  }
+
+  //console.log(defaultValues);
+
   const [birthday, setBirthday] = useState(null);
   const birthdayHandler = date => setBirthday(date);
-  const [moveDate, setMoveDate] = useState(null);
-  const moveHandler = date => setMoveDate(date);
+  const genderList = ["Man", "Woman", "Other"];
   const [genderOption, setGenderOption] = useState();
   const genderOptionHandler = event => setGenderOption(event.target.value);
-  const [birthCountry, setCountry] = useState();
-  const selectCountry = value => setCountry(value);
-  const [locationCountry, setLocationCountry] = useState();
-  const selectLocationCountry = value => setLocationCountry(value);
-  const [city, setCity] = useState();
-  const selectCity = value => setCity(value);
-  const [locationCity, setLocationCity] = useState();
-  const selectLocationCity = value => setLocationCity(value);
+  const [birthCountry, setBirthCountry] = useState();
+  const selectBirthCountry = value => setBirthCountry(value);
+  const [birthCity, setBirthCity] = useState();
+  const selectBirthCity = value => setBirthCity(value);
 
   return (
-    <SettingsContainer menuClick={menuClick.profile}>
-      <FormSection>
-        <UploadPhoto type="file" id="file" />
-        <UploadButton size="35px" />
-        <UploadLabel htmlFor="file">Add a Profile Photo</UploadLabel>
-      </FormSection>
-      <FormSection>
-        <InputLabel>First Name</InputLabel>
-        <InputField placeholder="First Name..."></InputField>
-      </FormSection>
-      <FormSection>
-        <InputLabel>Last Name</InputLabel>
-        <InputField placeholder="Last Name..."></InputField>
-      </FormSection>
-      <FormSection>
-        <InputLabel>Birthday</InputLabel>
-        <Calendar
-          placeholderText="Click to select a date"
-          selected={birthday}
-          onChange={birthdayHandler}
-          showMonthDropdown
-          showYearDropdown
-          dropdownMode="select"
-          maxDate={new Date()}
-        />
-      </FormSection>
-      <FormSection>
-        <InputLabel> Gender </InputLabel>
-        <FormInputList>
-          <input
-            type="radio"
-            value="man"
-            checked={genderOption === "man"}
-            onChange={genderOptionHandler}
-          />
-          Man
-        </FormInputList>
-        <FormInputList>
-          <input
-            type="radio"
-            value="woman"
-            checked={genderOption === "woman"}
-            onChange={genderOptionHandler}
-          />
-          Woman
-        </FormInputList>
-        <FormInputList>
-          <input
-            type="radio"
-            value="other"
-            checked={genderOption === "other"}
-            onChange={genderOptionHandler}
-          />{" "}
-          Other
-        </FormInputList>
-      </FormSection>
-      <FormSection>
-        <InputLabel>Place of Birth</InputLabel>
-        <CountryPicker value={birthCountry} onChange={selectCountry} />
-        <CityPicker country={birthCountry} value={city} onChange={selectCity} />
-      </FormSection>
-      <PlaceWrapper>
-        <FormSection>
-          <InputLabel>Place You've Lived </InputLabel>
-          <CountryPicker
-            value={locationCountry}
-            onChange={selectLocationCountry}
-          />
-          <CityPicker
-            country={locationCountry}
-            value={locationCity}
-            onChange={selectLocationCity}
-          />
-        </FormSection>
-        <FormSection>
-          <InputLabel>Date moved</InputLabel>
-          <Calendar
-            placeholderText="Click to select a date"
-            selected={moveDate}
-            onChange={moveHandler}
-            showMonthDropdown
-            showYearDropdown
-            dropdownMode="select"
-            maxDate={new Date()}
-          />
-        </FormSection>
-      </PlaceWrapper>
-    </SettingsContainer>
+    <Formik
+      initialValues={defaultValues}
+      /*validateOnBlur={false}
+      validateOnChange={false}
+      onSubmit={(values, actions) => {
+        setTimeout(() => {
+          alert(JSON.stringify(values, null, 2));
+          actions.setSubmitting(false);
+        }, 1000);
+      }}*/
+      render={props => (
+        <SettingsContainer menuClick={menuClick.profile}>
+          <FormSection>
+            <UploadPhoto type="file" id="file" />
+            <AddButton text="Add a Profile Photo">
+              <i className="fa fa-plus"></i>
+            </AddButton>
+          </FormSection>
+
+          <InputSection>
+            {/* First Name  */}
+            <InputLabel>First Name</InputLabel>
+            <InputField
+              type="text"
+              name="firstName"
+              onChange={props.handleChange}
+              value={props.values.firstName}
+            />
+          </InputSection>
+
+          <InputSection>
+            <InputLabel>Last Name</InputLabel>
+            <InputField type="text" />
+          </InputSection>
+
+          <InputSection>
+            <InputLabel>Birthday</InputLabel>
+            <Calendar
+              placeholderText="Click to select a date"
+              selected={birthday}
+              onChange={birthdayHandler}
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              maxDate={new Date()}
+            />
+          </InputSection>
+
+          <FormSection>
+            <InputLabel>Gender</InputLabel>
+            {genderList.map(gender => (
+              <InputSection>
+                <input
+                  type="radio"
+                  value={gender}
+                  checked={genderOption === gender}
+                  onChange={genderOptionHandler}
+                />
+                {gender}
+              </InputSection>
+            ))}
+          </FormSection>
+
+          <InputSection>
+            <InputLabel>Place of Birth</InputLabel>
+            <CountryPicker value={birthCountry} onChange={selectBirthCountry} />
+            <CityPicker
+              country={birthCountry}
+              value={birthCity}
+              onChange={selectBirthCity}
+            />
+          </InputSection>
+        </SettingsContainer>
+      )}
+    />
   );
 }

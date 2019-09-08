@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { ButtonSecondary } from "ui/Buttons";
-import { NewGroup, EditProfile } from "ui/Buttons";
+import { EditProfile } from "ui/Buttons";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -39,20 +39,6 @@ export const UploadPhoto = styled.input`
   position: absolute !important;
   white-space: nowrap;
   width: 1px;
-`;
-
-export const UploadLabel = styled.label`
-  font-size: 16px;
-  color: ${props => props.theme.palette.main};
-  display: inline-block;
-
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-export const UploadButton = styled(NewGroup)`
-  color: ${props => props.theme.palette.main};
 `;
 
 export const Calendar = styled(DatePicker)`
