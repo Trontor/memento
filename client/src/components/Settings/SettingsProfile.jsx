@@ -6,9 +6,13 @@ import {
   UploadLabel,
   Calendar,
   CountryPicker,
-  CityPicker
+  CityPicker,
+  PlaceWrapper,
+  PlacesList
 } from "./SettingsStyles";
 import { FormSection, InputSection, InputLabel, InputField } from "ui/Forms";
+import { DeleteButton } from "components/Invite/InviteStyles";
+import { AddButton } from "ui/Buttons";
 
 export default function SettingsProfile({ menuClick, currentUser }) {
   const [birthday, setBirthday] = useState(null);
@@ -20,6 +24,28 @@ export default function SettingsProfile({ menuClick, currentUser }) {
   const selectBirthCountry = value => setBirthCountry(value);
   const [birthCity, setBirthCity] = useState();
   const selectBirthCity = value => setBirthCity(value);
+  const [locationCountry, setLocationCountry] = useState();
+  const selectLocationCountry = value => setLocationCountry(value);
+  const [locationCity, setLocationCity] = useState();
+  const selectLocationCity = value => setLocationCity(value);
+
+  const [livePlaces, setLivePlaces] = useState([{ place: "", date: null }]);
+  console.log(livePlaces);
+  function handleChange(index, event) {
+    const places = [...livePlaces];
+    places[index].place = event.target.value;
+    setLivePlaces(places);
+  }
+
+  const addPlace = place => {
+    setLivePlaces([...livePlaces, place]);
+  };
+
+  const deletePlace = index => {
+    const place = [...livePlaces];
+    place.splice(index, 1);
+    setLivePlaces(place);
+  };
 
   return (
     <SettingsContainer menuClick={menuClick.profile}>
@@ -77,6 +103,61 @@ export default function SettingsProfile({ menuClick, currentUser }) {
           onChange={selectBirthCity}
         />
       </InputSection>
+
+      <PlaceWrapper>
+        <InputLabel>Places You've Lived</InputLabel>
+        <InputLabel>Date Moved</InputLabel>
+      </PlaceWrapper>
+      <PlacesList>
+        {livePlaces.map((place, idx) => (
+          <PlaceWrapper>
+            <InputField
+              type="text"
+              placeholder="Select City"
+              style={{ width: "90%" }}
+              value={place.place}
+              onChange={e => handleChange(idx, e)}
+            />
+
+            <InputField
+              type="text"
+              placeholder="Select Date"
+              style={{ width: "90%" }}
+              value={place.date}
+              onChange={e => handleChange(idx, e)}
+            />
+
+            {livePlaces.length > 1 && (
+              <DeleteButton onClick={() => deletePlace(idx)}>
+                <i class="fa fa-trash"></i>
+              </DeleteButton>
+            )}
+          </PlaceWrapper>
+        ))}
+      </PlacesList>
+
+      {livePlaces.length < 10 && (
+        <AddButton text="Add another" onClick={() => addPlace({ place: "" })}>
+          <i class="fa fa-plus"></i>
+        </AddButton>
+      )}
+
+      {/*<InputSection>
+          <InputLabel>Places You've Lived</InputLabel>
+          <CountryPicker
+            value={locationCountry}
+            onChange={selectLocationCountry}
+          />
+          <CityPicker
+            country={locationCountry}
+            value={locationCity}
+            onChange={selectLocationCity}
+          />
+        </InputSection>
+        <InputSection>
+          <InputLabel>Date Moved</InputLabel>
+          <Calendar placeholderText="Click to select a date" />
+        </InputSection>*/}
     </SettingsContainer>
   );
 }

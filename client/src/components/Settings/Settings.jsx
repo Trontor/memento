@@ -14,15 +14,13 @@ export default function Settings() {
   let defaultValues = {
     firstName: "",
     lastName: "",
-    email: "",
-    password: "" //email and password is not defined
+    email: "" //email and password is not defined
   };
 
   if (data && data.currentUser) {
     defaultValues.firstName = data.currentUser.firstName;
     defaultValues.lastName = data.currentUser.lastName;
     defaultValues.email = data.currentUser.email;
-    defaultValues.password = data.currentUser.password;
   }
 
   const [settingsHeader, setSettingsHeader] = useState({

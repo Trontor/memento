@@ -56,7 +56,7 @@ export default function SettingsAccount({ menuClick, currentUser }) {
             editClick={editPassword}
           />
         </InputLabel>
-
+        <p>**********</p>
         <SectionWrapper editClick={editPassword}>
           <InputField type="password" placeholder="Current Password" />
           <InputField type="password" placeholder="New Password" />

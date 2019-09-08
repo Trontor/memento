@@ -89,7 +89,7 @@ export const CityPicker = styled(RegionDropdown)`
 
 export const PlaceWrapper = styled.div`
   display: grid;
-  grid-template-columns: 60% 40%;
+  grid-template-columns: 55% 40% 5%;
 `;
 
 export const AccountButton = styled(ButtonSecondary)`
@@ -117,4 +117,10 @@ export const SectionWrapper = styled.div`
   input {
     margin-top: 10px;
   }
+`;
+
+export const PlacesList = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-row-gap: 5px;
 `;
