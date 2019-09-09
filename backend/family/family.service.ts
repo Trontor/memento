@@ -40,9 +40,16 @@ export class FamilyService {
 
   async joinFamily(currentUser: User, inviteId: string): Promise<Family> {
     const invite = await this.inviteService.getInvite(inviteId);
-    if (!isValidInvite(invite)) throw new InviteExpiredException();
-    if (isUserInFamily(currentUser, invite.familyId))
+    if (!isValidInvite(invite)) {
+      this.logger.log(`invite ${inviteId} has expired`);
+      throw new InviteExpiredException();
+    }
+    if (isUserInFamily(currentUser, invite.familyId)) {
+      this.logger.log(
+        `user ${currentUser.userId} is already in family ${invite.familyId}`
+      );
       throw new AlreadyJoinedFamilyException();
+    }
 
     // TODO: use MongoDB session for causal consistency
     const familyDoc = await this.addFamilyMembers(

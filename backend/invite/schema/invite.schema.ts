@@ -24,9 +24,10 @@ export const InviteSchema: Schema = new Schema({
 InviteSchema.pre<InviteDocument>("save", function(next) {
   const invite = this;
 
-  if (invite.createdAt.getTime() >= invite.createdAt.getTime()) {
-    next(new Error("Invite expires before its create time"));
+  if (invite.createdAt.getTime() >= invite.expiresAt.getTime()) {
+    return next(new Error("Invite expires before its create time"));
   }
+  next();
 });
 
 export interface IInviteModel extends Model<InviteDocument> {}
