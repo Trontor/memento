@@ -3,7 +3,6 @@ import { Formik } from "formik";
 import {
   SettingsContainer,
   UploadPhoto,
-  UploadButton,
   UploadLabel,
   Calendar,
   CountryPicker,
@@ -32,8 +31,8 @@ export default function SettingsProfile({ menuClick }) {
     defaultValues.firstName = data.currentUser.firstName;
     defaultValues.lastName = data.currentUser.lastName;
   }*/
-  let [file, setFile] = useState(null);
 
+  let [file, setFile] = useState(null);
   const [birthday, setBirthday] = useState(null);
   const birthdayHandler = date => setBirthday(date);
   const genderList = ["Man", "Woman", "Other"];
@@ -43,7 +42,6 @@ export default function SettingsProfile({ menuClick }) {
   const selectBirthCountry = value => setBirthCountry(value);
   const [birthCity, setBirthCity] = useState();
   const selectBirthCity = value => setBirthCity(value);
-
   const [livePlaces, setLivePlaces] = useState([{ city: "", date: null }]);
 
   function imgHandleChange(event) {
@@ -90,7 +88,6 @@ export default function SettingsProfile({ menuClick }) {
               id="file"
               onChange={e => imgHandleChange(e)}
             />
-
             <UploadLabel htmlFor="file">Add a Profile Photo</UploadLabel>
           </FormSection>
 

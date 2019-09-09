@@ -9,7 +9,7 @@ import {
 import { InputField, FormSection, InputLabel } from "ui/Forms";
 //import { ButtonSecondary } from "ui/Buttons";
 
-export default function SettingsAccount({ menuClick, currentUser }) {
+export default function SettingsAccount({ menuClick }) {
   const [editEmail, setEmailWrapper] = useState(false);
   const editEmailHandler = () => setEmailWrapper(true);
   const closeEmailHandler = () => setEmailWrapper(false);
@@ -33,9 +33,8 @@ export default function SettingsAccount({ menuClick, currentUser }) {
             editClick={editEmail}
           />
         </InputLabel>
-
+        <InputField placeholder="Email Address..." value="test123" />
         <SectionWrapper editClick={editEmail}>
-          <InputField placeholder="Email Address..."></InputField>
           <AccountButton onClick={closeEmailHandler}>
             Update Email{" "}
           </AccountButton>
@@ -56,9 +55,8 @@ export default function SettingsAccount({ menuClick, currentUser }) {
             editClick={editPassword}
           />
         </InputLabel>
-        <p>**********</p>
+        <InputField type="password" value="123" />
         <SectionWrapper editClick={editPassword}>
-          <InputField type="password" placeholder="Current Password" />
           <InputField type="password" placeholder="New Password" />
           <InputField type="password" placeholder="Confirm Password" />
           <AccountButton onClick={closePasswordHandler}>
