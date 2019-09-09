@@ -1,31 +1,37 @@
 import React, {useState} from "react";
 import { Header } from "ui/Typography";
 import { Container } from 'ui/Helpers';
-import { InstructionLabel, InputField, FormHelpText, FormSection } from 'ui/Forms';
-import { RadioOption, RadioButton, RadioButtonStyle, RadioLabel, Tag, NewTag } from './UploadMementoStyles';
-import CreatableSelect from 'react-select/creatable';
-import { TagsContainer } from "./UploadMementoStyles";
-// import UploadStep1 from "./UploadStep1";
+import UploadStep1 from "./UploadStep1";
+import UploadStep2 from "./UploadStep2";
+
+import { ButtonPrimary, ButtonSecondary } from 'ui/Buttons';
+import { AlignRight } from 'ui/Helpers';
+import { FormNav } from 'ui/Forms';
 
 export default function UploadMemento() {
   //define react hooks
   const [selectMementoType, setSelectMementoType] = useState("");
+  const [selectEventType, setSelectEventType] = useState("");
   const [mementoTags, setMementoTags] = useState([]);
+  const [currentStep, setCurrentStep] = useState(1);
 
-  const tags = ["recipes", "painting", "stuffed toys", "cars", "jewellery", "photographs", "clothing", "family", "blanket", "food"];
-
-  const eventOptions = [
-    { value: 'birthday', label: 'Birthday' },
-    { value: 'childbirth', label: 'Childbirth' },
-    { value: 'graduation', label: 'Graduation' },
-    { value: 'first date', label: 'First Date' },
-    { value: 'wedding', label: 'Wedding' },
-    { value: 'first day at school', label: 'First Day at School' }
-  ];
-
-  const handleRadioChange = e => {
-    const value = e.target.value;
+  const handleRadioChange = option => {
+    const value = option.target.value;
     setSelectMementoType(value);
+  };
+
+  const handleSetEventType = option => {
+    setSelectEventType(option);
+  };
+
+  //Go to next step
+  const nextStep = () => {
+    setCurrentStep(currentStep + 1)
+  }
+
+  //Go back to prev step
+  const prevStep = () => {
+    setCurrentStep(currentStep - 1)
   };
 
   //style react select dropdown with styles api
@@ -73,64 +79,38 @@ export default function UploadMemento() {
     <Container>
       <Header underline>Create a Memento</Header>
 
-      <FormSection>
-        <InstructionLabel>Is your memento a special event? (e.g. anniversary, birthday, graduation)</InstructionLabel>
-        <RadioOption>
-          <RadioButton
-            type="radio"
-            value="event"
-            name="mementoType"
-            checked={selectMementoType === "event"}
-            onChange={e => handleRadioChange(e)}/>
-          <RadioButtonStyle/>
-          <RadioLabel>
-            Yes, it is a special event.
-          </RadioLabel>
-        </RadioOption>
+      { currentStep === 1 && (
+      <UploadStep1
+        selectMementoType={selectMementoType}
+        selectEventType={selectEventType}
+        setSelectEventType={setSelectEventType}
+        handleRadioChange={handleRadioChange}
+        customDropdown={customDropdown}
+      />
+      )}
 
-        <RadioOption>
-          <RadioButton
-            type="radio"
-            value="object"
-            name="mementoType"
-            checked={selectMementoType === "object"}
-            onChange={e => handleRadioChange(e)}/>
-          <RadioButtonStyle/>
-          <RadioLabel>
-            No, but it is a special item.
-          </RadioLabel>
-        </RadioOption>
-      </FormSection>
+      { currentStep === 2 && (
+        <UploadStep2
+          mementoTags={mementoTags}
+          selectTag={selectTag}
+        />
+      )}
 
-      {selectMementoType === "event" && (
-        <FormSection>
-          <InstructionLabel>What kind of event is it?</InstructionLabel>
-          <CreatableSelect
-            isClearable
-            options={eventOptions}
-            placeholder="Type to create your own special event..."
-            styles={customDropdown}
-          />
-        </FormSection>
-      )
-      }
+      <FormNav>
+        { currentStep !== 1 ?
+          <ButtonSecondary onClick={prevStep}>Back</ButtonSecondary>
+          : null
+        }
 
-      {selectMementoType!== "" && (
-        <FormSection>
-          <InstructionLabel>What does your memento contain?</InstructionLabel>
-          <TagsContainer>
-            { tags.sort().map(tag =>
-              <Tag
-                onClick={() => selectTag(tag)}
-                selected={mementoTags.includes(tag)}>
-                {tag}
-              </Tag>
-            )}
-              <NewTag><i class="fas fa-plus"></i> edit/new</NewTag>
-          </TagsContainer>
-        </FormSection>
-      )
-      }
+        <AlignRight>
+          { currentStep !== 2 ?
+            <ButtonPrimary onClick={nextStep}>Next</ButtonPrimary>
+            :
+            <ButtonPrimary type="submit">Invite</ButtonPrimary>
+          }
+        </AlignRight>
+
+      </FormNav>
     </Container>
   )
 }
