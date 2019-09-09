@@ -41,12 +41,16 @@ export default function SettingsProfile({ menuClick }) {
 
   const [livePlaces, setLivePlaces] = useState([{ city: "", date: null }]);
 
-  function handleChange(index, event) {
+  function cityHandleChange(index, event) {
     const places = [...livePlaces];
     places[index].city = event.target.value;
-    console.log(event.target.value, index);
     setLivePlaces(places);
-    console.log("after change", livePlaces);
+  }
+
+  function dateHandleChange(index, value) {
+    const places = [...livePlaces];
+    places[index].date = value;
+    setLivePlaces(places);
   }
 
   const addPlace = place => {
@@ -102,6 +106,7 @@ export default function SettingsProfile({ menuClick }) {
               onChange={birthdayHandler}
               showMonthDropdown
               showYearDropdown
+              isClearable
               dropdownMode="select"
               maxDate={new Date()}
             />
@@ -141,23 +146,23 @@ export default function SettingsProfile({ menuClick }) {
               <PlaceWrapper>
                 <InputField
                   type="text"
+                  name="city"
                   placeholder="Select City"
                   style={{ width: "90%" }}
                   value={place.city}
-                  onChange={e => handleChange(idx, e)}
+                  onChange={e => cityHandleChange(idx, e)}
                 />
-                {console.log("City:", place.city)}
 
                 <Calendar
+                  name="calendar"
                   placeholderText="Click to select a date"
                   selected={place.date}
-                  onChange={e => handleChange(idx, e)}
+                  onChange={date => dateHandleChange(idx, date)}
                   showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
                   maxDate={new Date()}
                 />
-                {console.log("date:", place.date)}
 
                 {livePlaces.length > 1 && (
                   <DeleteButton onClick={() => deletePlace(idx)}>
