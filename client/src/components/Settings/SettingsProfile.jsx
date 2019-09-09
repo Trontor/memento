@@ -3,13 +3,17 @@ import { Formik } from "formik";
 import {
   SettingsContainer,
   UploadPhoto,
+  UploadButton,
+  UploadLabel,
   Calendar,
   CountryPicker,
   CityPicker,
   PlaceWrapper,
-  PlacesList
+  PlacesList,
+  ImgPreview,
+  UserAvatar
 } from "./SettingsStyles";
-import { AddButton } from "ui/Buttons";
+import { ButtonPrimary, AddButton } from "ui/Buttons";
 import { DeleteButton } from "components/Invite/InviteStyles";
 
 import { FormSection, InputSection, InputLabel, InputField } from "ui/Forms";
@@ -28,6 +32,7 @@ export default function SettingsProfile({ menuClick }) {
     defaultValues.firstName = data.currentUser.firstName;
     defaultValues.lastName = data.currentUser.lastName;
   }*/
+  let [file, setFile] = useState(null);
 
   const [birthday, setBirthday] = useState(null);
   const birthdayHandler = date => setBirthday(date);
@@ -40,6 +45,16 @@ export default function SettingsProfile({ menuClick }) {
   const selectBirthCity = value => setBirthCity(value);
 
   const [livePlaces, setLivePlaces] = useState([{ city: "", date: null }]);
+
+  function imgHandleChange(event) {
+    file = URL.createObjectURL(event.target.files[0]);
+    setFile(file);
+  }
+
+  let ProfilePicture = <UserAvatar size="125px" />;
+  if (file) {
+    ProfilePicture = <img src={file} alt="."></img>;
+  }
 
   function cityHandleChange(index, event) {
     const places = [...livePlaces];
@@ -69,10 +84,14 @@ export default function SettingsProfile({ menuClick }) {
       render={props => (
         <SettingsContainer menuClick={menuClick.profile}>
           <FormSection>
-            <UploadPhoto type="file" id="file" />
-            <AddButton text="Add a Profile Photo">
-              <i className="fa fa-plus"></i>
-            </AddButton>
+            <ImgPreview>{ProfilePicture}</ImgPreview>
+            <UploadPhoto
+              type="file"
+              id="file"
+              onChange={e => imgHandleChange(e)}
+            />
+
+            <UploadLabel htmlFor="file">Add a Profile Photo</UploadLabel>
           </FormSection>
 
           <InputSection>
@@ -181,6 +200,9 @@ export default function SettingsProfile({ menuClick }) {
               <i className="fa fa-plus"></i>
             </AddButton>
           )}
+          <ButtonPrimary style={{ float: "right", margin: "10px" }}>
+            Save Changes
+          </ButtonPrimary>
         </SettingsContainer>
       )}
     />

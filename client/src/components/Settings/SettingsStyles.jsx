@@ -1,10 +1,11 @@
 import styled, { css } from "styled-components";
 import { ButtonSecondary } from "ui/Buttons";
-import { EditProfile, NewGroup } from "ui/Buttons";
+import { EditProfile } from "ui/Buttons";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Cancel } from "styled-icons/material/Cancel";
+import { User } from "styled-icons/fa-regular/User";
 
 export const SettingsHeader = styled.div`
   display: grid;
@@ -42,17 +43,35 @@ export const UploadPhoto = styled.input`
 `;
 
 export const UploadLabel = styled.label`
+  left: 100%;
   font-size: 16px;
   color: ${props => props.theme.palette.main};
-  display: inline-block;
+  display: block;
+  text-align: center;
+  margin-top: 10px;
 
   &:hover {
     cursor: pointer;
   }
 `;
 
-export const UploadButton = styled(NewGroup)`
-  color: ${props => props.theme.palette.main};
+export const ImgPreview = styled.div`
+  display: block;
+  margin: 0 auto;
+  background: #f8f8f8;
+  height: 200px;
+  width: 200px;
+  border: 2px solid gray;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+export const UserAvatar = styled(User)`
+  color: gray;
+  margin: 35px 0 0 35px;
 `;
 
 export const Calendar = styled(DatePicker)`
