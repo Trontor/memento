@@ -13,7 +13,7 @@ export default function UploadMemento() {
   const [selectMementoType, setSelectMementoType] = useState("");
   const [selectEventType, setSelectEventType] = useState("");
   const [mementoTags, setMementoTags] = useState([]);
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(2);
 
   const handleRadioChange = option => {
     const value = option.target.value;
@@ -106,7 +106,7 @@ export default function UploadMemento() {
           { currentStep !== 2 ?
             <ButtonPrimary onClick={nextStep}>Next</ButtonPrimary>
             :
-            <ButtonPrimary type="submit">Invite</ButtonPrimary>
+            <ButtonPrimary type="submit">Upload</ButtonPrimary>
           }
         </AlignRight>
 

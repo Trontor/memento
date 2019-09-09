@@ -15,7 +15,7 @@ const Logotype = styled(Link)`
   margin-bottom: 1em;
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLanscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     text-align: left;
     left: 50px;
   }
@@ -31,9 +31,9 @@ const LogoStyle = styled.span`
   position: relative;
   margin: 5px 15px;
 
-  @media screen and (width: ${props => props.theme.breakpoints.tabletLanscape}),
+  @media screen and (width: ${props => props.theme.breakpoints.tabletLandscape}),
     (min-width: ${props =>
-      props.theme.breakpoints.tabletLanscape}) and (max-width: ${props =>
+      props.theme.breakpoints.tabletLandscape}) and (max-width: ${props =>
       props.theme.breakpoints.desktop}) {
     font-size: 20px;
     margin: 5px 15px 0 5px;

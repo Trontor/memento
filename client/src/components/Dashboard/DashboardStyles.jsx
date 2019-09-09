@@ -6,7 +6,7 @@ export const DashboardContainer = styled.div`
   top: 10%;
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLanscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     display: grid;
     grid-template-columns: 22% 78%;
     height: 100%;
@@ -34,7 +34,7 @@ export const TextWrapper = styled.div`
   }
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLanscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     position: relative;
     width: 45%;
   }

@@ -21,6 +21,6 @@ export const Container = styled.div`
 
 export const AlignRight = styled.div`
   position: absolute;
-  right: 40px;
+  right: 20px;
   display: inline-block;
 `;

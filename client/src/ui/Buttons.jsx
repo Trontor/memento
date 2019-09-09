@@ -76,7 +76,7 @@ export const CloseMenuButton = styled(Close)`
     outline: none;
   }
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLanscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     display: none;
   }
 `;

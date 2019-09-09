@@ -1,5 +1,6 @@
 import styled, {css} from "styled-components";
 import { lighten, darken, adjustHue } from "polished";
+import { center } from 'ui/Helpers';
 
 export const RadioOption = styled.div`
   position: relative;
@@ -170,3 +171,54 @@ export const NewTag = styled.button`
     }
   }
 `;
+
+export const UploadFileContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const UploadFileButton = styled.button`
+  font-size: 15px;
+  font-weight: bold;
+  z-index: 100;
+  cursor: pointer;
+`
+
+export const UploadFileIcon = styled.span`
+  display: block;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  background-color: ${props => lighten(0.25, props.theme.palette.main)};
+  position: relative;
+
+  i {
+    font-size: 40px;
+    color: ${props => props.theme.palette.main};
+    ${center};
+  }
+
+  &:hover {
+    background-color: ${props => props.theme.palette.main};
+
+    i {
+      color: white;
+    }
+  }
+
+  @media screen and (min-width: ${props => props.theme.breakpoints.mobile}) {
+    width: 100px;
+    height: 100px;
+  }
+
+  @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}) {
+    width: 120px;
+    height: 120px;
+  }
+`
+
+export const UploadFileLabel = styled.label`
+  display: inline-block;
+  padding-top: 10px;
+`

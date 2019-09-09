@@ -5,7 +5,7 @@ export const CarouselWrapper = styled.div`
   z-index: 999;
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLanscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     width: 50vw;
     position: absolute;
     top: 50%;
@@ -40,7 +40,7 @@ export const CarouselSlide = styled.div`
     }
 
     @media screen and (min-width: ${props =>
-        props.theme.breakpoints.tabletLanscape}) {
+        props.theme.breakpoints.tabletLandscape}) {
       width: 320px;
       height: 320px;
     }
