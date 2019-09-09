@@ -9,12 +9,3 @@ export class RoleInput {
   @Field(type => FamilyRole)
   familyRole!: FamilyRole;
 }
-
-@InputType()
-export class UpdateRoleInput {
-  @Field(type => ID)
-  userId!: string;
-
-  @Field(type => RoleInput)
-  role!: RoleInput;
-}

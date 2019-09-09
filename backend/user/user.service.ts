@@ -25,6 +25,28 @@ export class UserService implements IUserService {
     private readonly UserModel: Model<UserDocument>
   ) {}
 
+  async updateRole(updateeId: string, input: RoleInput): Promise<User> {
+    const user = await this.UserModel.findOneAndUpdate(
+      {
+        _id: fromHexStringToObjectId(updateeId),
+        "roles.familyId": input.familyId
+      },
+      {
+        $set: {
+          "roles.$.familyRole": input.familyRole
+        }
+      },
+      {
+        new: true
+      }
+    );
+    if (!user) {
+      this.logger.error("User not in family");
+      throw new BadRequestException("Updatee not in family");
+    }
+    return mapDocumentToUserDTO(user);
+  }
+
   /**
    * Finds user by id.
    * @param userId user id as a string

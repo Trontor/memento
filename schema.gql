@@ -63,7 +63,7 @@ input LoginInput {
 type Mutation {
   signup(input: UserSignupInput!): AuthOutput!
   updateUser(input: UpdateUserInput!): User!
-  updateRole(input: UpdateRoleInput!): UpdateRoleOutput!
+  updateRole(input: RoleInput!, userId: String!): User!
   login(input: LoginInput!): AuthOutput!
   createFamily(input: CreateFamilyInput!): Family!
   joinFamily(input: JoinFamilyInput!): Family!
@@ -101,11 +101,6 @@ input UpdateFamilyInput {
   imageUrl: String
   description: String
   colour: String
-}
-
-input UpdateRoleInput {
-  userId: ID!
-  role: RoleInput!
 }
 
 type UpdateRoleOutput {

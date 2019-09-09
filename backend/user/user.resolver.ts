@@ -21,9 +21,10 @@ import { User } from "./dto/user.dto";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { CurrentUser } from "../auth/decorators/current-user.decorator";
 import { UpdateRoleOutput } from "./dto/role.dto";
-import { UpdateRoleInput } from "./input/role.input";
+import { RoleInput } from "./input/role.input";
 import { Family } from "../family/dto/family.dto";
 import { FamilyService } from "../family/family.service";
+import { FamilyAdminGuard } from "../auth/guards/family-admin.guard";
 
 @Resolver(User)
 export class UserResolver {
@@ -72,13 +73,13 @@ export class UserResolver {
   /**
    * Updates `role` of a user in a family.
    */
-  @Mutation(returns => UpdateRoleOutput)
-  @UseGuards(JwtAuthGuard)
+  @Mutation(returns => User)
+  @UseGuards(JwtAuthGuard, FamilyAdminGuard)
   async updateRole(
-    @CurrentUser() currentUser: User,
-    @Args("input") input: UpdateRoleInput
-  ) {
-    throw new NotImplementedException();
+    @Args("userId") updateeId: string,
+    @Args("input") input: RoleInput
+  ): Promise<User> {
+    return await this.userService.updateRole(updateeId, input);
   }
 
   @ResolveProperty("families", returns => [Family])
