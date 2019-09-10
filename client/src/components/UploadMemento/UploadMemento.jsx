@@ -14,14 +14,11 @@ export default function UploadMemento() {
   const [selectEventType, setSelectEventType] = useState("");
   const [mementoTags, setMementoTags] = useState([]);
   const [currentStep, setCurrentStep] = useState(2);
+  const [mementoFiles, setMementoFiles] = useState([]);
 
   const handleRadioChange = option => {
     const value = option.target.value;
     setSelectMementoType(value);
-  };
-
-  const handleSetEventType = option => {
-    setSelectEventType(option);
   };
 
   //Go to next step
@@ -75,6 +72,19 @@ export default function UploadMemento() {
     }
   }
 
+  const addFile = (file) => {
+    setMementoFiles([...mementoFiles, file]);
+  }
+
+  const deleteFile = (file) => {
+    const files = [...mementoFiles];
+    const fileIndex = files.indexOf(file);
+    if (fileIndex !== -1) {
+      files.splice(fileIndex, 1);
+      setMementoFiles(files);
+     }
+  }
+
   return (
     <Container>
       <Header underline>Create a Memento</Header>
@@ -93,6 +103,10 @@ export default function UploadMemento() {
         <UploadStep2
           mementoTags={mementoTags}
           selectTag={selectTag}
+          addFile={addFile}
+          deleteFile={deleteFile}
+          mementoFiles={mementoFiles}
+          setMementoFiles={setMementoFiles}
         />
       )}
 
@@ -106,7 +120,7 @@ export default function UploadMemento() {
           { currentStep !== 2 ?
             <ButtonPrimary onClick={nextStep}>Next</ButtonPrimary>
             :
-            <ButtonPrimary type="submit">Upload</ButtonPrimary>
+            <ButtonPrimary type="submit">Next</ButtonPrimary>
           }
         </AlignRight>
 
