@@ -7,7 +7,6 @@ import {
   CancelButton
 } from "./SettingsStyles";
 import { InputField, FormSection, InputLabel } from "ui/Forms";
-//import { ButtonSecondary } from "ui/Buttons";
 
 export default function SettingsAccount({ menuClick }) {
   const [editEmail, setEmailWrapper] = useState(false);

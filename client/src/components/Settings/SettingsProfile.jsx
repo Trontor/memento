@@ -32,35 +32,38 @@ export default function SettingsProfile({ menuClick }) {
     defaultValues.lastName = data.currentUser.lastName;
   }*/
 
-  let [file, setFile] = useState(null);
-  const [birthday, setBirthday] = useState(null);
+  let [file, setFile] = useState(null); //file for profile picture
+  const [birthday, setBirthday] = useState(null); //birthday state
   const birthdayHandler = date => setBirthday(date);
-  const genderList = ["Man", "Woman", "Other"];
-  const [genderOption, setGenderOption] = useState();
+  const genderList = ["Male", "Female", "Other"]; //gender list
+  const [genderOption, setGenderOption] = useState(); //gender state
   const genderOptionHandler = event => setGenderOption(event.target.value);
-  const [birthCountry, setBirthCountry] = useState();
+  const [birthCountry, setBirthCountry] = useState(); //birth country state
   const selectBirthCountry = value => setBirthCountry(value);
-  const [birthCity, setBirthCity] = useState();
+  const [birthCity, setBirthCity] = useState(); //birth city state
   const selectBirthCity = value => setBirthCity(value);
-  const [livePlaces, setLivePlaces] = useState([{ city: "", date: null }]);
+
+  const [livePlaces, setLivePlaces] = useState([{ city: "", date: null }]); //place you've lived and date moved
 
   function imgHandleChange(event) {
     file = URL.createObjectURL(event.target.files[0]);
     setFile(file);
   }
 
-  let ProfilePicture = <UserAvatar size="125px" />;
+  let ProfilePicture = <UserAvatar size="125px" />; //Profile picture preview
   if (file) {
     ProfilePicture = <img src={file} alt="."></img>;
   }
 
   function cityHandleChange(index, event) {
+    //places you've lived onChange
     const places = [...livePlaces];
     places[index].city = event.target.value;
     setLivePlaces(places);
   }
 
   function dateHandleChange(index, value) {
+    //date moved onChange
     const places = [...livePlaces];
     places[index].date = value;
     setLivePlaces(places);
@@ -104,6 +107,7 @@ export default function SettingsProfile({ menuClick }) {
           </InputSection>
 
           <InputSection>
+            {/* Last Name  */}
             <InputLabel>Last Name</InputLabel>
             <InputField
               type="text"
@@ -115,6 +119,7 @@ export default function SettingsProfile({ menuClick }) {
           </InputSection>
 
           <InputSection>
+            {/* Birthday  */}
             <InputLabel>Birthday</InputLabel>
             <Calendar
               placeholderText="Click to select a date"
@@ -129,6 +134,7 @@ export default function SettingsProfile({ menuClick }) {
           </InputSection>
 
           <FormSection>
+            {/* Gender */}
             <InputLabel>Gender</InputLabel>
             {genderList.map(gender => (
               <InputSection>
@@ -144,6 +150,7 @@ export default function SettingsProfile({ menuClick }) {
           </FormSection>
 
           <InputSection>
+            {/* Place of birth  */}
             <InputLabel>Place of Birth</InputLabel>
             <CountryPicker value={birthCountry} onChange={selectBirthCountry} />
             <CityPicker
@@ -154,6 +161,7 @@ export default function SettingsProfile({ menuClick }) {
           </InputSection>
 
           <PlaceWrapper>
+            {/* Place You've Lived and Date Moved  */}
             <InputLabel>Places You've Lived</InputLabel>
             <InputLabel>Date Moved</InputLabel>
           </PlaceWrapper>
@@ -197,6 +205,8 @@ export default function SettingsProfile({ menuClick }) {
               <i className="fa fa-plus"></i>
             </AddButton>
           )}
+
+          {/* Save Changes Button  */}
           <ButtonPrimary style={{ float: "right", margin: "10px" }}>
             Save Changes
           </ButtonPrimary>
