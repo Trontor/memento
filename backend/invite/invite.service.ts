@@ -5,7 +5,11 @@ import { Model } from "mongoose";
 import uuidv4 from "uuid/v4";
 import { mapDocumentToInviteDTO } from "./schema/invite.mapper";
 import { Invite } from "./dto/invite.dto";
-import { InviteNotFoundException } from "./invite.exception";
+import {
+  InviteNotFoundException,
+  InviteExpiredException
+} from "./invite.exception";
+import { isValidInvite } from "./invite.util";
 
 @Injectable()
 export class InviteService {
@@ -17,6 +21,7 @@ export class InviteService {
   async getInvite(inviteId: string): Promise<Invite> {
     const invite = await this.InviteModel.findById(inviteId);
     if (!invite) throw new InviteNotFoundException();
+    if (!isValidInvite(invite)) throw new InviteExpiredException();
     return mapDocumentToInviteDTO(invite);
   }
   async createInvite(familyId: string): Promise<Invite> {
