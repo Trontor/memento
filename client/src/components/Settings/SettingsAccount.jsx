@@ -10,11 +10,9 @@ import { InputField, FormSection, InputLabel } from "ui/Forms";
 
 export default function SettingsAccount({ menuClick }) {
   const [editEmail, setEmailWrapper] = useState(false);
-  const editEmailHandler = () => setEmailWrapper(true);
-  const closeEmailHandler = () => setEmailWrapper(false);
+  const editEmailHandler = () => setEmailWrapper(!editEmail);
   const [editPassword, setPasswordWrapper] = useState(false);
-  const editPasswordHandler = () => setPasswordWrapper(true);
-  const closePasswordHandler = () => setPasswordWrapper(false);
+  const editPasswordHandler = () => setPasswordWrapper(!editPassword);
 
   return (
     <SettingsContainer menuClick={menuClick.account}>
@@ -28,13 +26,13 @@ export default function SettingsAccount({ menuClick }) {
           />
           <CancelButton
             size="25px"
-            onClick={closeEmailHandler}
+            onClick={editEmailHandler}
             editClick={editEmail}
           />
         </InputLabel>
         <InputField placeholder="Email Address..." value="test123" />
         <SectionWrapper editClick={editEmail}>
-          <AccountButton onClick={closeEmailHandler}>
+          <AccountButton onClick={editEmailHandler}>
             Update Email{" "}
           </AccountButton>
         </SectionWrapper>
@@ -50,7 +48,7 @@ export default function SettingsAccount({ menuClick }) {
           />
           <CancelButton
             size="25px"
-            onClick={closePasswordHandler}
+            onClick={editPasswordHandler}
             editClick={editPassword}
           />
         </InputLabel>
@@ -58,7 +56,7 @@ export default function SettingsAccount({ menuClick }) {
         <SectionWrapper editClick={editPassword}>
           <InputField type="password" placeholder="New Password" />
           <InputField type="password" placeholder="Confirm Password" />
-          <AccountButton onClick={closePasswordHandler}>
+          <AccountButton onClick={editPasswordHandler}>
             Update Password{" "}
           </AccountButton>
         </SectionWrapper>

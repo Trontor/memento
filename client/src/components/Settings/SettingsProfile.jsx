@@ -139,7 +139,7 @@ export default function SettingsProfile({ menuClick }) {
             {genderList.map(gender => (
               <InputSection>
                 <input
-                  type="radio"
+                  type="radio" //replace radio buttons
                   value={gender}
                   checked={genderOption === gender}
                   onChange={genderOptionHandler}
