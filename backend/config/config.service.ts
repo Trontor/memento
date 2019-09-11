@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import * as dotenv from "dotenv";
 import * as fs from "fs";
 import Joi from "@hapi/joi";
@@ -13,6 +13,7 @@ export interface EnvConfig {
  */
 @Injectable()
 export class ConfigService {
+  private readonly logger = new Logger(ConfigService.name);
   private readonly envConfig: EnvConfig;
 
   constructor(filePath: string) {
@@ -44,7 +45,26 @@ export class ConfigService {
         then: Joi.required()
       }),
       JWT_SECRET: Joi.string().required(),
-      JWT_EXPIRES_IN: Joi.number()
+      JWT_EXPIRES_IN: Joi.number(),
+      EMAIL_ENABLED: Joi.boolean().default(false),
+      EMAIL_HOSTNAME: Joi.string().when("EMAIL_ENABLED", {
+        is: true,
+        then: Joi.required()
+      }),
+      EMAIL_PORT: Joi.number(),
+      EMAIL_USERNAME: Joi.string().when("EMAIL_ENABLED", {
+        is: true,
+        then: Joi.required()
+      }),
+      EMAIL_PASSWORD: Joi.string().when("EMAIL_ENABLED", {
+        is: true,
+        then: Joi.required()
+      }),
+      EMAIL_FROM: Joi.string().when("EMAIL_ENABLED", {
+        is: true,
+        then: Joi.required()
+      }),
+      TEST_EMAIL_TO: Joi.string()
     });
 
     const { error, value: validatedEnvConfig } = Joi.validate(
@@ -84,6 +104,26 @@ export class ConfigService {
 
   get emailEnabled(): boolean {
     return Boolean(this.envConfig.EMAIL_ENABLED).valueOf();
+  }
+
+  get emailFrom(): string {
+    return this.envConfig.EMAIL_FROM;
+  }
+
+  get testEmailTo(): string {
+    return this.envConfig.TEST_EMAIL_TO;
+  }
+
+  get emailSmtpUri(): string {
+    const {
+      EMAIL_USERNAME,
+      EMAIL_PASSWORD,
+      EMAIL_HOSTNAME,
+      EMAIL_PORT
+    } = this.envConfig;
+    const uri = `smtp://${EMAIL_USERNAME}:${EMAIL_PASSWORD}@${EMAIL_HOSTNAME}:${EMAIL_PORT}`;
+    this.logger.log(uri);
+    return uri;
   }
 
   get mongoAuthEnabled(): boolean {

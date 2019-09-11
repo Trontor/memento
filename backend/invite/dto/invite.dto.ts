@@ -6,6 +6,9 @@ export class Invite {
   inviteId!: string;
 
   @Field(type => ID)
+  inviterId!: string;
+
+  @Field(type => ID)
   familyId!: string;
 
   @Field()

@@ -1,7 +1,10 @@
-import { InputType, ObjectType, ID, Field } from "type-graphql";
+import { InputType, ID, Field } from "type-graphql";
 
 @InputType()
 export class SendInvitesInput {
+  @Field(type => ID)
+  familyId!: string;
+
   @Field(type => [String!]!)
   emails!: string[];
 }

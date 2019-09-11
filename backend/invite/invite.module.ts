@@ -4,11 +4,15 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { InviteSchema } from "./schema/invite.schema";
 import { InviteResolver } from "./invite.resolver";
 import { UserModule } from "../user/user.module";
+import { ConfigModule } from "../config/config.module";
+import { FamilyModule } from "../family/family.module";
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: "Invite", schema: InviteSchema }]),
-    forwardRef(() => UserModule)
+    forwardRef(() => UserModule),
+    forwardRef(() => FamilyModule),
+    ConfigModule
   ],
   providers: [InviteService, InviteResolver],
   exports: [InviteService]

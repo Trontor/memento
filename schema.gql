@@ -46,6 +46,7 @@ enum Gender {
 
 type Invite {
   inviteId: ID!
+  inviterId: ID!
   familyId: ID!
   createdAt: DateTime!
   expiresAt: DateTime!
@@ -68,6 +69,7 @@ type Mutation {
   createFamily(input: CreateFamilyInput!): Family!
   joinFamily(input: JoinFamilyInput!): Family!
   createInvite(input: CreateInviteInput!): Invite!
+  inviteByEmail(input: SendInvitesInput!): Invite!
 }
 
 type Query {
@@ -89,6 +91,7 @@ input RoleInput {
 }
 
 input SendInvitesInput {
+  familyId: ID!
   emails: [String!]!
 }
 
