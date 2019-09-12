@@ -210,7 +210,9 @@ export default function Signup(props) {
               )}
             </InputSection>
 
-            <ButtonPrimary type="submit" spacing>Sign Up</ButtonPrimary>
+            <ButtonPrimary type="submit" spacing="true">
+              Sign Up
+            </ButtonPrimary>
             <HelpText>
               Already have an account? <Link to="/login">Log in</Link>
             </HelpText>

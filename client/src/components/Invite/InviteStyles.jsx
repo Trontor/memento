@@ -7,12 +7,15 @@ export const FamilyGroup = styled(ButtonSecondary)`
   width: 100%;
   margin: 0 auto;
   margin-bottom: 10px;
-  ${({selected}) => selected && css`
-    background-color: ${props => props.theme.palette.main};
-    color: white;
-  `};
+  ${({ selected }) =>
+    selected &&
+    css`
+      background-color: ${props => props.theme.palette.main};
+      color: white;
+    `};
 
-  /* @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}) {
+  /* @media screen and (min-width: ${props =>
+    props.theme.breakpoints.tabletPortrait}) {
    width: 50%;
   } */
 `;
@@ -29,6 +32,7 @@ export const EmailInvite = styled.div`
 
 export const DeleteButton = styled.button`
   color: ${props => lighten(0.55, props.theme.palette.text)};
+  background: transparent;
 
   &:hover {
     color: ${props => lighten(0.3, props.theme.palette.text)};
