@@ -24,6 +24,11 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 """
 scalar DateTime
 
+type FailedInviteOutput {
+  email: String!
+  error: String!
+}
+
 type Family {
   familyId: ID!
   name: String!
@@ -69,7 +74,7 @@ type Mutation {
   createFamily(input: CreateFamilyInput!): Family!
   joinFamily(input: JoinFamilyInput!): Family!
   createInvite(input: CreateInviteInput!): Invite!
-  inviteByEmail(input: SendInvitesInput!): Invite!
+  inviteByEmail(input: SendInvitesInput!): SendInvitesOutput!
 }
 
 type Query {
@@ -97,7 +102,7 @@ input SendInvitesInput {
 
 type SendInvitesOutput {
   sent: [String!]!
-  notSent: [String!]!
+  failed: [FailedInviteOutput!]!
 }
 
 input UpdateFamilyInput {

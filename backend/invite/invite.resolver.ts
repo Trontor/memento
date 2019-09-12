@@ -3,7 +3,11 @@ import { UseGuards, Logger } from "@nestjs/common";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { FamilyAdminGuard } from "../auth/guards/family-admin.guard";
 import { InviteService } from "./invite.service";
-import { Invite, SendInvitesOutput } from "./dto/invite.dto";
+import {
+  Invite,
+  SendInvitesOutput,
+  FailedInviteOutput
+} from "./dto/invite.dto";
 import { CreateInviteInput, SendInvitesInput } from "./inputs/invite.inputs";
 import { CurrentUser } from "../auth/decorators/current-user.decorator";
 import { User } from "../user/dto/user.dto";
@@ -29,13 +33,13 @@ export class InviteResolver {
     return await this.inviteService.createInvite(user, input.familyId);
   }
 
-  @Mutation(returns => Invite)
+  @Mutation(returns => SendInvitesOutput)
   @UseGuards(JwtAuthGuard, FamilyAdminGuard)
   async inviteByEmail(
     @CurrentUser() user: User,
     @Args("input") input: SendInvitesInput
   ) {
-    const res = await this.inviteService.sendInvitesByEmail(
+    const res: SendInvitesOutput = await this.inviteService.sendInvitesByEmail(
       user,
       input.familyId,
       input.emails

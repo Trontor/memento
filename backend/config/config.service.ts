@@ -29,7 +29,7 @@ export class ConfigService {
   }
 
   /**
-   * Validates the .env file.
+   * Validates the .env file
    * @param envConfig Raw parsed .env file
    */
   private validateInput(envConfig: EnvConfig): EnvConfig {
@@ -64,7 +64,10 @@ export class ConfigService {
         is: true,
         then: Joi.required()
       }),
-      TEST_EMAIL_TO: Joi.string()
+      TEST_EMAIL_TO: Joi.string(),
+      HOST_NAME: Joi.string()
+        .hostname()
+        .required()
     });
 
     const { error, value: validatedEnvConfig } = Joi.validate(
@@ -121,12 +124,17 @@ export class ConfigService {
       EMAIL_HOSTNAME,
       EMAIL_PORT
     } = this.envConfig;
-    const uri = `smtp://${EMAIL_USERNAME}:${EMAIL_PASSWORD}@${EMAIL_HOSTNAME}:${EMAIL_PORT}`;
+    const protocol = parseInt(EMAIL_PORT) === 465 ? "smtps" : "smtp";
+    const uri = `${protocol}://${EMAIL_USERNAME}:${EMAIL_PASSWORD}@${EMAIL_HOSTNAME}:${EMAIL_PORT}`;
     this.logger.log(uri);
     return uri;
   }
 
   get mongoAuthEnabled(): boolean {
     return Boolean(this.envConfig.MONGO_AUTH_ENABLED).valueOf();
+  }
+
+  get hostName(): string {
+    return this.envConfig.HOST_NAME;
   }
 }
