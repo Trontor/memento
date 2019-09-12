@@ -14,7 +14,7 @@ export const SidebarContainer = styled.div`
   transition: 0.5s ease-in-out;
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLanscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     width: 22%;
     box-shadow: none;
     display: block;
@@ -42,7 +42,7 @@ export const SearchBar = styled.div`
   border-radius: 5px;
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLanscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     float: left;
     margin: 10px 15px;
   }
@@ -120,9 +120,9 @@ export const SidebarButtonPrimary = styled(ButtonPrimary)`
   font-size: 15px;
   margin-right: 0;
 
-  @media screen and (width: ${props => props.theme.breakpoints.tabletLanscape}),
+  @media screen and (width: ${props => props.theme.breakpoints.tabletLandscape}),
     (min-width: ${props =>
-      props.theme.breakpoints.tabletLanscape}) and (max-width: ${props =>
+      props.theme.breakpoints.tabletLandscape}) and (max-width: ${props =>
       props.theme.breakpoints.desktop}) {
     font-size: 12px;
   }

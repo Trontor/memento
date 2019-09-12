@@ -116,3 +116,26 @@ export const FormInputList = styled.div`
     margin-top: 3px;
   }
 `;
+
+export const TextArea = styled.div`
+  > textarea {
+    width: 100%;
+    max-width: 100%;
+    border: none;
+    border-bottom: 1px solid ${props => lighten(0.6, props.theme.palette.text)};
+    font-size: 15px;
+    color: ${props => props.theme.palette.text};
+    resize: none;
+    line-height: 1.5em;
+
+    ::placeholder {
+      opacity: 0.4;
+      font-weight: 300;
+  }
+
+    &:focus {
+      outline: none;
+      border-color: ${props => lighten(0.1, props.theme.palette.main)};
+    }
+  }
+`;

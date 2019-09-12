@@ -9,6 +9,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import CreateFamily from "./components/CreateFamily/CreateFamily";
 import Invite from "./components/Invite/Invite";
 import Settings from "./components/Settings/Settings";
+import UploadMemento from "./components/UploadMemento/UploadMemento";
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -48,6 +49,8 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     letter-spacing: 0.03em;
     cursor: pointer;
+    color: ${props => props.theme.palette.text};
+    background-color: white;
 
     &:focus {
       outline: none;
@@ -77,6 +80,7 @@ function App() {
         <Route path="/create-family" component={CreateFamily} />
         <Route path="/invite" component={Invite} />
         <Route path="/settings" component={Settings} />
+        <Route path="/new-memento" component={UploadMemento} />
       </Router>
     </ThemeProvider>
   );
