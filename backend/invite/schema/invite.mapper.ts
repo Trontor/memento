@@ -8,6 +8,7 @@ export const mapDocumentToInviteDTO = (doc: InviteDocument): Invite => {
   return {
     inviteId: doc.id,
     familyId: doc.familyId,
+    inviterId: doc.inviterId,
     // datetimes
     createdAt: doc.createdAt,
     expiresAt: doc.expiresAt

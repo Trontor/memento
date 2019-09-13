@@ -8,7 +8,8 @@ import { ConfigModule } from "./config/config.module";
 import { ConfigService } from "./config/config.service";
 import { MongooseModule, MongooseModuleOptions } from "@nestjs/mongoose";
 import { FamilyModule } from "./family/family.module";
-import { InviteModule } from './invite/invite.module';
+import { InviteModule } from "./invite/invite.module";
+import { MailerModule, HandlebarsAdapter } from "@nest-modules/mailer";
 
 /**
  * Root module of the application.
@@ -35,12 +36,14 @@ import { InviteModule } from './invite/invite.module';
     // async is needed due to dynamic module setup using ConfigModule
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
+      inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
         const options: MongooseModuleOptions = {
           uri: configService.mongoUri,
           useNewUrlParser: true,
           useCreateIndex: true,
-          useFindAndModify: false
+          useFindAndModify: false,
+          useUnifiedTopology: true
         };
 
         if (configService.mongoAuthEnabled) {
@@ -49,8 +52,25 @@ import { InviteModule } from './invite/invite.module';
         }
 
         return options;
-      },
-      inject: [ConfigService]
+      }
+    }),
+    // setup mailer module
+    MailerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        transport: configService.emailSmtpUri,
+        defaults: {
+          from: configService.emailFrom
+        },
+        template: {
+          dir: __dirname + "/templates",
+          adapter: new HandlebarsAdapter(), // or new PugAdapter()
+          options: {
+            strict: true
+          }
+        }
+      })
     }),
     UserModule,
     AuthModule,

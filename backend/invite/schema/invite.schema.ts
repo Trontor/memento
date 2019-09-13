@@ -7,6 +7,10 @@ export const InviteSchema: Schema = new Schema({
   _id: {
     type: String
   },
+  inviterId: {
+    type: String,
+    required: true
+  },
   familyId: {
     type: String,
     required: true

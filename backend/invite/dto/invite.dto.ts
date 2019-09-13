@@ -6,6 +6,9 @@ export class Invite {
   inviteId!: string;
 
   @Field(type => ID)
+  inviterId!: string;
+
+  @Field(type => ID)
   familyId!: string;
 
   @Field()
@@ -16,12 +19,21 @@ export class Invite {
 }
 
 @ObjectType()
+export class FailedInviteOutput {
+  @Field()
+  email!: string;
+
+  @Field()
+  error!: string;
+}
+
+@ObjectType()
 export class SendInvitesOutput {
   // emails that were successfully sent
   @Field(type => [String!]!)
   sent!: string[];
 
   // emails that were unsuccessfully sent
-  @Field(type => [String!]!)
-  notSent!: string[];
+  @Field(type => [FailedInviteOutput!]!)
+  failed!: FailedInviteOutput[];
 }
