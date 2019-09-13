@@ -111,6 +111,7 @@ const Signup = withRouter(props => {
     onCompleted: processAuthentication
   });
 
+  let signUpErrors = [];
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -120,14 +121,8 @@ const Signup = withRouter(props => {
   }
 
   if (error) {
-    return (
-      <div>
-        {error.graphQLErrors
-          .map(err => err.message)
-          .map(message => (
-            <div>{message}</div>
-          ))}
-      </div>
+    signUpErrors = error.graphQLErrors.map(
+      gqlError => gqlError.message.message
     );
   }
   return (
@@ -217,7 +212,9 @@ const Signup = withRouter(props => {
                 <Error>{props.errors.confirmPassword}</Error>
               )}
             </InputSection>
-
+            {signUpErrors.map(error => (
+              <div>{error}</div>
+            ))}
             <ButtonPrimary type="submit" spacing>
               Sign Up
             </ButtonPrimary>

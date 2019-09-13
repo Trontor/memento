@@ -34,6 +34,7 @@ const Sidebar = props => {
   const famNames = ["Leung", "Siu", "Febriana", "Joshi", "Wei"];
   const signOut = () => {
     localStorage.removeItem("AUTH-TOKEN");
+    props.history.push("/login");
   };
 
   return (

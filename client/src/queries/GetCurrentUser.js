@@ -1,12 +1,9 @@
 import gql from "graphql-tag";
 
 export default gql`
-  query currentUser {
+  query {
     currentUser {
-      id
       firstName
-      lastName
-      imageUrl
     }
   }
 `;
