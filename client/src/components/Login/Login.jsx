@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Header } from "ui/Typography";
 import {
   Error,
@@ -42,16 +42,23 @@ const defaultValues = {
   email: process.env.REACT_APP_DEFAULT_LOGIN_EMAIL || "",
   password: process.env.REACT_APP_DEFAULT_LOGIN_PASSWORD || ""
 };
+
 export default function Login(props) {
-  const [login, { loading /*, error*/, data }] = useMutation(LOGIN, {
+  const [login, { loading, error, data }] = useMutation(LOGIN, {
     onCompleted: processAuthentication
   });
+  let loginErrors = [];
+
   if (localStorage.getItem("AUTH-TOKEN")) {
     props.history.push("/dashboard");
   }
 
   if (loading) {
     return <div>Loading...</div>;
+  }
+
+  if (error) {
+    loginErrors = error.graphQLErrors.map(gqlError => gqlError.message.message);
   }
   if (data) {
     return <div>{JSON.stringify(data)}</div>;
@@ -101,7 +108,12 @@ export default function Login(props) {
                   <Error>{props.errors.password}</Error>
                 )}
               </InputSection>
-              <ButtonPrimary type="submit" spacing>Login</ButtonPrimary>
+              {loginErrors.map((error, i) => (
+                <div key={i}>{error}</div>
+              ))}
+              <ButtonPrimary type="submit" spacing>
+                Login
+              </ButtonPrimary>
               <HelpText>
                 Don't have an account?
                 <MsgLink to="./Signup"> Sign up</MsgLink>
