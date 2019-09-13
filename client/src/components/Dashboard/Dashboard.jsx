@@ -1,17 +1,17 @@
 import React from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import {
-  DashboardContainer,
   TextWrapper,
-  ButtonWrapper,
-  TextHeading,
-  TextDetail,
-  NextButton,
-  InviteFamily
+  DashboardButtons,
+  ButtonHeading,
+  GoToButton,
+  InviteFamily,
+  CreateFamily
 } from "./DashboardStyles";
-import { CreateFamily } from "../../ui/Buttons";
 import { useQuery } from "@apollo/react-hooks";
 import GET_CURRENT_USER from "queries/GetCurrentUser";
+import { Container } from "ui/Helpers";
+import { SiteGrid} from "ui/Layout";
 
 export default function Dashboard(props) {
   const { data, error /*, loading*/ } = useQuery(GET_CURRENT_USER);
@@ -24,28 +24,31 @@ export default function Dashboard(props) {
     console.log("Success:", user);
   }
   return (
-    <>
-      {/* Main Text */}
-      <DashboardContainer>
-        <Sidebar />
+    <SiteGrid>
+      <Sidebar/>
+      <Container>
         <TextWrapper>
           {user && <div>{user.firstName}</div>}
           <h2>You don't belong to any Families at the moment. </h2>
           <p>Get started with one of the following actions: </p>
-          <ButtonWrapper onClick={() => props.history.push("/create-family")}>
+          <DashboardButtons>
             <CreateFamily size="55px" />
-            <TextHeading>Create a Family</TextHeading>
-            <TextDetail>Get your family to join Memento.</TextDetail>
-            <NextButton />
-          </ButtonWrapper>
-          <ButtonWrapper>
+            <ButtonHeading>
+              Create a Family
+              <span>And get the rest of your family on board.</span>
+            </ButtonHeading>
+            <GoToButton/>
+          </DashboardButtons>
+          <DashboardButtons>
             <InviteFamily size="55px" />
-            <TextHeading>Join an existing Family</TextHeading>
-            <TextDetail>Got an invite code? Join your family.</TextDetail>
-            <NextButton />
-          </ButtonWrapper>
+            <ButtonHeading>
+              Join an existing Family
+              <span>Got an invite code? Join your family.</span>
+            </ButtonHeading>
+            <GoToButton/>
+          </DashboardButtons>
         </TextWrapper>
-      </DashboardContainer>
-    </>
+      </Container>
+    </SiteGrid>
   );
 }

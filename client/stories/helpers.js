@@ -10,7 +10,7 @@ export const center = css`
 export const Container = styled.div`
   width: 100%;
   padding: 30px;
-  position: absolute;
+  position: relative;
   left: 50%;
   transform: translateX(-50%);
 

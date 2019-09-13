@@ -13,30 +13,25 @@ const Logotype = styled(Link)`
   position: relative;
   top: 40px;
   margin-bottom: 1em;
+  font-family: "Quicksand", sans-serif;
 
-  @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLanscape}) {
+  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
     text-align: left;
     left: 50px;
   }
 `;
 
 const LogoStyle = styled.span`
-  display: block;
-  float: left;
   color: ${props => props.theme.palette.text};
-  font-size: 25px;
+  font-size: 24px;
   text-transform: lowercase;
-  width: 35%;
   position: relative;
-  margin: 5px 15px;
+  font-family: "Quicksand", sans-serif;
 
-  @media screen and (width: ${props => props.theme.breakpoints.tabletLanscape}),
+
+  @media screen and (width: ${props => props.theme.breakpoints.tabletLandscape}),
     (min-width: ${props =>
-      props.theme.breakpoints.tabletLanscape}) and (max-width: ${props =>
-      props.theme.breakpoints.desktop}) {
-    font-size: 20px;
-    margin: 5px 15px 0 5px;
+      props.theme.breakpoints.tabletLandscape}) and (max-width: ${props => props.theme.breakpoints.desktop}) {
   }
 `;
 

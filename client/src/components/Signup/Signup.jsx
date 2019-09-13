@@ -213,9 +213,10 @@ const Signup = withRouter(props => {
               )}
             </InputSection>
             {signUpErrors.map(error => (
-              <div>{error}</div>
             ))}
-            <ButtonPrimary type="submit" spacing>
+              <div>{error}</div>
+
+            <ButtonPrimary type="submit" spacing="true">
               Sign Up
             </ButtonPrimary>
             <HelpText>
