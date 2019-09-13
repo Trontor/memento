@@ -30,7 +30,9 @@ export default function Dashboard(props) {
           {user && <div>{user.firstName}</div>}
           <h2>You don't belong to any Families at the moment. </h2>
           <p>Get started with one of the following actions: </p>
-          <DashboardButtons>
+          <DashboardButtons
+            onClick={() => props.history.push("/create-family")}
+          >
             <CreateFamily size="55px" />
             <ButtonHeading>
               Create a Family
