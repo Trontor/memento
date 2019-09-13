@@ -15,10 +15,13 @@ import GET_CURRENT_USER from "queries/GetCurrentUser";
 
 export default function Dashboard() {
   const { data, error /*, loading*/ } = useQuery(GET_CURRENT_USER);
+  let user = {};
   if (error) {
     console.log("Error loading user data:", error);
-  } else if (data) {
-    console.log("Success:", data);
+  }
+  if (data.currentUser) {
+    user = data.currentUser;
+    console.log("Success:", user);
   }
   return (
     <>
@@ -26,6 +29,7 @@ export default function Dashboard() {
       <DashboardContainer>
         <Sidebar />
         <TextWrapper>
+          {user && <div>{user.firstName}</div>}
           <h2>You don't belong to any Families at the moment. </h2>
           <p>Get started with one of the following actions: </p>
           <ButtonWrapper>
