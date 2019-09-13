@@ -10,6 +10,7 @@ import CreateFamily from "./components/CreateFamily/CreateFamily";
 import Invite from "./components/Invite/Invite";
 import Settings from "./components/Settings/Settings";
 import UploadMemento from "./components/UploadMemento/UploadMemento";
+import Sidebar from "components/Sidebar/Sidebar";
 
 const GlobalStyle = createGlobalStyle`
   html {

@@ -62,7 +62,6 @@
     "rimraf": "^3.0.0",
     "rxjs": "^6.3.3",
     "type-graphql": "^0.17.5",
-    "jest": "^24.8.0",
     "react-country-region-selector": "^1.4.4",
     "react-day-picker": "^7.3.2",
     "react-datepicker": "^2.9.6",

@@ -11,7 +11,7 @@ import {
 import { useQuery } from "@apollo/react-hooks";
 import GET_CURRENT_USER from "queries/GetCurrentUser";
 import { Container } from "ui/Helpers";
-import { SiteGrid} from "ui/Layout";
+import { SiteGrid } from "ui/Layout";
 
 export default function Dashboard(props) {
   const { data, error /*, loading*/ } = useQuery(GET_CURRENT_USER);
@@ -25,7 +25,6 @@ export default function Dashboard(props) {
   }
   return (
     <SiteGrid>
-      <Sidebar/>
       <Container>
         <TextWrapper>
           {user && <div>{user.firstName}</div>}
@@ -37,7 +36,7 @@ export default function Dashboard(props) {
               Create a Family
               <span>And get the rest of your family on board.</span>
             </ButtonHeading>
-            <GoToButton/>
+            <GoToButton />
           </DashboardButtons>
           <DashboardButtons>
             <InviteFamily size="55px" />
@@ -45,7 +44,7 @@ export default function Dashboard(props) {
               Join an existing Family
               <span>Got an invite code? Join your family.</span>
             </ButtonHeading>
-            <GoToButton/>
+            <GoToButton />
           </DashboardButtons>
         </TextWrapper>
       </Container>
