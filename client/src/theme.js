@@ -9,12 +9,14 @@ const theme = {
     text: "#44404B",
     main: "#FF7F5F",
     secondary: "#FFA217",
+    background: "#FAFBFD",
+    highlight: "#F6F9FF",
 
     error: "#F73953",
     disabled: "#ddd",
 
     border: "#D3D0DD",
-    sidebar: "#E5E5E5",
+    sidebar: "#F7f7f7",
   },
   mixins: {
     hoverFade: "transition: ease-in 0.1s"

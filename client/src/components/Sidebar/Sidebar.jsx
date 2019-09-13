@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   MenuButton,
-  CloseMenuButton,
   NewGroup,
   EditProfile,
   Setting,
@@ -11,6 +10,7 @@ import {
 } from "ui/Buttons";
 import {
   SidebarContainer,
+  CloseMenu,
   SearchHeader,
   SearchBar,
   SearchIcon,
@@ -19,7 +19,8 @@ import {
   TextList,
   MenuContainer,
   Footer,
-  SidebarButtonPrimary
+  SidebarButtonPrimary,
+  ModalBackground
 } from "./SidebarStyles";
 import { MiniLogo } from "components/Logo";
 
@@ -30,14 +31,15 @@ export default function Sidebar() {
 
   return (
     <>
-      <MenuButton size="35px" onClick={toggleSidebarOpened} />
+      {/* <ModalBackground/> */}
+      {/* <MenuButton size="35px" onClick={toggleSidebarOpened} /> */}
       <SidebarContainer menuClick={isSidebarOpen}>
         <SearchHeader>
-          <CloseMenuButton size="35px" onClick={toggleSidebarOpened} />
           <SearchBar>
-            <SearchIcon size="25px" />
-            <SearchInput placeholder="Search all artefacts" />
+            <SearchIcon/>
+            <SearchInput type="text" placeholder="Search all artefacts" />
           </SearchBar>
+          <CloseMenu size="25px" title="close menu"/>
         </SearchHeader>
         <FamilyListContainer>
           <h3>My Families</h3>
@@ -50,15 +52,15 @@ export default function Sidebar() {
         <MenuContainer>
           <TextList>
             <Invite size="25px" />
-            <a href="#">Invite Family members</a>
+            <a href="#">Invite</a>
           </TextList>
           <TextList>
             <Setting size="25px" />
-            Manage my Family groups
+            Manage Family groups
           </TextList>
           <TextList>
             <NewGroup size="25px" />
-            New Family Group
+            New Family group
           </TextList>
         </MenuContainer>
         <MenuContainer>

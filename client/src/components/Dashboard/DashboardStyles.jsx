@@ -1,85 +1,89 @@
-import styled from "styled-components";
-import { Next, Invite } from "ui/Buttons";
+import styled, {css} from "styled-components";
 import { lighten } from "polished";
-
-export const DashboardContainer = styled.div`
-  top: 10%;
-
-  @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLandscape}) {
-    display: grid;
-    grid-template-columns: 22% 78%;
-    height: 100%;
-  }
-`;
+import { Group } from "styled-icons/material/Group";
+import { NavigateNext } from "styled-icons/material/NavigateNext";
+import { UserPlus } from "styled-icons/boxicons-regular/UserPlus";
 
 export const TextWrapper = styled.div`
-  position: absolute;
-  height: 60%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
   width: 80%;
+  max-width: 580px;
+  padding: 20px 0 0 0;
+  margin: 100px auto;
   text-align: center;
-  padding: 20px;
   color: ${props => props.theme.palette.text};
+  border: 1px solid ${props => lighten(0.68, props.theme.palette.text)};
+  background-color: white;
+  border-radius: 8px;
 
   h2 {
     margin-bottom: 25px;
+    padding: 0 20px;
   }
 
-  @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletPortrait}) {
-    width: 45%;
-  }
-
-  @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLandscape}) {
-    position: relative;
-    width: 45%;
-  }
 `;
 
-export const ButtonWrapper = styled.div`
-  height: 75px;
+export const GoToButton = styled(NavigateNext)`
+  color: ${props => lighten(0.6, props.theme.palette.text)};
+  width: 48px;
+  position: relative;
+  top: 50%;
+  transform: translate(50%, -50%);
+`;
+
+export const DashboardButtons = styled.div`
   width: 100%;
-  background: ${props => lighten(0.05, props.theme.palette.sidebar)};
-  padding: 5px 0;
   display: grid;
-  grid-template-areas: "orangeButton heading icon" "orangeButton text icon";
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 70px auto 40px;
+  grid-template-columns: 70px auto 70px;
   text-align: left;
-  margin-bottom: 10px;
+  padding: 8px 20px;
+  cursor: pointer;
+  background: white;
+
+  &:hover ${GoToButton} {
+    color: ${props => lighten(0.1, props.theme.palette.main)};
+  }
+
+  &:first-of-type {
+    border-bottom: 0;
+    border-radius: 10px 10px 0 0;
+  }
+
+  &:last-of-type {
+    border-radius: 0 0 10px 10px;
+    padding-bottom: 20px;
+  }
 
   @media screen and (max-width: ${props => props.theme.breakpoints.mobile}) {
-    height: 100px;
   }
 `;
 
-export const TextHeading = styled.h4`
-  grid-area: heading;
-  padding: 0;
-  margin-top: 15px;
-  margin-left: 5px;
-  letter-spacing: 0.5px;
+export const ButtonHeading = styled.h4`
+  padding: 0 10px;
+
+  span {
+    display: block;
+    padding-top: 5px;
+    font-size: 12px;
+    font-weight: normal;
+    opacity: 0.8;
+  }
 `;
 
-export const TextDetail = styled.span`
-  grid-area: text;
-  font-size: 12px;
-  margin-top: -25px;
-  margin-left: 5px;
-  padding: 0;
-`;
-
-export const NextButton = styled(Next)`
-  grid-area: icon;
-  padding-top: 12px;
-`;
-
-export const InviteFamily = styled(Invite)`
+const ButtonIcons = css`
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   color: ${props => props.theme.palette.main};
-  margin-top: 10px;
-  margin-left: 10px;
+  width: 40px;
+  height: 40px;
+`;
+
+export const CreateFamily = styled(Group)`
+  ${ButtonIcons}
+`;
+
+export const InviteFamily = styled(UserPlus)`
+  ${ButtonIcons}
 `;
