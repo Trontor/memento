@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import { theme } from "./theme";
 import Landing from "./components/Landing/Landing";
@@ -10,6 +10,7 @@ import CreateFamily from "./components/CreateFamily/CreateFamily";
 import Invite from "./components/Invite/Invite";
 import Settings from "./components/Settings/Settings";
 import UploadMemento from "./components/UploadMemento/UploadMemento";
+import Sidebar from "components/Sidebar/Sidebar";
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -68,6 +69,19 @@ const GlobalStyle = createGlobalStyle`
   } */
 `;
 
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      localStorage.getItem("AUTH-TOKEN") ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to="/login" />
+      )
+    }
+  />
+);
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -76,10 +90,10 @@ function App() {
         <Route path="/" exact component={Landing} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/create-family" component={CreateFamily} />
-        <Route path="/invite" component={Invite} />
-        <Route path="/settings" component={Settings} />
+        <Route path={["/dashboard", "/create-family"]} component={Sidebar} />
+        <PrivateRoute path="/dashboard" component={Dashboard} />
+        <PrivateRoute path="/create-family" component={CreateFamily} />
+        <PrivateRoute path="/invite" component={Invite} />
         <Route path="/new-memento" component={UploadMemento} />
       </Router>
     </ThemeProvider>

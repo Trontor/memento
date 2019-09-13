@@ -1,0 +1,6 @@
+{
+  "watch": ["backend", "server2.ts"],
+  "ext": "ts",
+  "ignore": ["backend/**/*.spec.ts"],
+  "exec": "ts-node -r tsconfig-paths/register server2.ts"
+}

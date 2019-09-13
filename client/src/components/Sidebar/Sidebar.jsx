@@ -23,11 +23,20 @@ import {
   ModalBackground
 } from "./SidebarStyles";
 import { MiniLogo } from "components/Logo";
+import { withRouter } from "react-router-dom";
 
-export default function Sidebar() {
+const Sidebar = props => {
+  // Check for a authentication token, if not - redirect to the login page
+  if (!localStorage.getItem("AUTH-TOKEN")) {
+    props.history.push("/login");
+  }
   const [isSidebarOpen, setSidebarOpened] = useState(false);
   const toggleSidebarOpened = () => setSidebarOpened(!isSidebarOpen);
   const famNames = ["Leung", "Siu", "Febriana", "Joshi", "Wei"];
+  const signOut = () => {
+    localStorage.removeItem("AUTH-TOKEN");
+    props.history.push("/login");
+  };
 
   return (
     <>
@@ -81,9 +90,12 @@ export default function Sidebar() {
         </MenuContainer>
         <Footer>
           <MiniLogo />
-          <SidebarButtonPrimary>Sign Out</SidebarButtonPrimary>
+          <SidebarButtonPrimary onClick={signOut}>
+            Sign Out
+          </SidebarButtonPrimary>
         </Footer>
       </SidebarContainer>
     </>
   );
-}
+};
+export default withRouter(Sidebar);

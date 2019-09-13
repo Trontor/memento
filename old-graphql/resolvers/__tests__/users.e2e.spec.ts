@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import { ApolloServer, UserInputError } from "apollo-server-express";
 import { createTestClient } from "apollo-server-testing";
 import typeDefs from "../../schema.graphql";
-import resolvers from "..";
+import resolvers from "../../resolvers";
 import { db, clientAuth, adminAuth } from "../../utils/firebase/admin";
 import UserModel from "../../models/User";
 import { createContext } from "../../utils/context";

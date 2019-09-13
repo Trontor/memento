@@ -1,15 +1,17 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "outDir": "lib",
+    "declaration": true,
+    "outDir": "./dist",
     "sourceMap": true,
     "strict": true,
     "target": "es2017",
     "esModuleInterop": true,
-    "lib": ["dom", "esnext.asynciterable"]
+    "incremental": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   },
   "compileOnSave": true,
-  "exclude": ["node_modules", "functions"]
+  "exclude": ["node_modules", "dist"]
 }

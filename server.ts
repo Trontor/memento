@@ -7,7 +7,7 @@ import express, { Application, Request, Response } from "express";
 // Used to get the build from the client/build folder and serve at '/'
 import path from "path";
 // Apollo Server will handle GraphQL Requests
-import { server } from "./graphql";
+import { server } from "./old-graphql";
 // CORS package allows Cross-Origin Resource Sharing
 import cors from "cors";
 

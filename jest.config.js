@@ -5,6 +5,6 @@ module.exports = {
     "^.+\\.ts?$": "ts-jest"
   },
   testEnvironment: "node",
-  testRegex: "/graphql/.*\\.(test|spec)?\\.(ts|tsx)$",
+  testRegex: "/backend/.*\\.(test|spec)?\\.(ts|tsx)$",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"]
 };
