@@ -51,7 +51,7 @@ export const ButtonWrapper = styled.div`
   grid-template-columns: 70px auto 40px;
   text-align: left;
   margin-bottom: 10px;
-
+  cursor: pointer;
   @media screen and (max-width: ${props => props.theme.breakpoints.mobile}) {
     height: 100px;
   }

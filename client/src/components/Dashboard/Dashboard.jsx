@@ -13,7 +13,7 @@ import { CreateFamily } from "../../ui/Buttons";
 import { useQuery } from "@apollo/react-hooks";
 import GET_CURRENT_USER from "queries/GetCurrentUser";
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const { data, error /*, loading*/ } = useQuery(GET_CURRENT_USER);
   let user = {};
   if (error) {
@@ -32,7 +32,7 @@ export default function Dashboard() {
           {user && <div>{user.firstName}</div>}
           <h2>You don't belong to any Families at the moment. </h2>
           <p>Get started with one of the following actions: </p>
-          <ButtonWrapper>
+          <ButtonWrapper onClick={() => props.history.push("/create-family")}>
             <CreateFamily size="55px" />
             <TextHeading>Create a Family</TextHeading>
             <TextDetail>Get your family to join Memento.</TextDetail>

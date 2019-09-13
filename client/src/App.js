@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import { theme } from "./theme";
 import Landing from "./components/Landing/Landing";
@@ -65,6 +65,19 @@ const GlobalStyle = createGlobalStyle`
   } */
 `;
 
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      localStorage.getItem("AUTH-TOKEN") ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to="/login" />
+      )
+    }
+  />
+);
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -73,10 +86,10 @@ function App() {
         <Route path="/" exact component={Landing} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/sidebar" component={Sidebar} />
-        <Route path="/create-family" component={CreateFamily} />
-        <Route path="/invite" component={Invite} />
+        <Route path={["/dashboard", "/create-family"]} component={Sidebar} />
+        <PrivateRoute path="/dashboard" component={Dashboard} />
+        <PrivateRoute path="/create-family" component={CreateFamily} />
+        <PrivateRoute path="/invite" component={Invite} />
       </Router>
     </ThemeProvider>
   );
