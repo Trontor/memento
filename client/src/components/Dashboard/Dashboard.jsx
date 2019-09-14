@@ -12,9 +12,10 @@ import { useQuery } from "@apollo/react-hooks";
 import GET_CURRENT_USER from "queries/GetCurrentUser";
 import { Container } from "ui/Helpers";
 import { SiteGrid } from "ui/Layout";
+import { Spinner } from "ui/Loaders";
 
 export default function Dashboard(props) {
-  const { data, error /*, loading*/ } = useQuery(GET_CURRENT_USER);
+  const { data, error, loading } = useQuery(GET_CURRENT_USER);
   let user = {};
   if (error) {
     console.log("Error loading user data:", error);
@@ -22,6 +23,13 @@ export default function Dashboard(props) {
   if (data.currentUser) {
     user = data.currentUser;
     console.log("Success:", user);
+  }
+  if (true || loading) {
+    return (
+      <div>
+        <Spinner large />
+      </div>
+    );
   }
   return (
     <SiteGrid>

@@ -43,6 +43,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const client = new ApolloClient({
+  connectToDevTools: true,
   cache,
   link: authLink.concat(errorLink).concat(link)
 });
