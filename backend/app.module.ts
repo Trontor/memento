@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { GraphQLModule } from "@nestjs/graphql";
+import { GraphQLModule, GqlModuleOptions } from "@nestjs/graphql";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import { join } from "path";
 import { UserModule } from "./user/user.module";
@@ -10,6 +10,8 @@ import { MongooseModule, MongooseModuleOptions } from "@nestjs/mongoose";
 import { FamilyModule } from "./family/family.module";
 import { InviteModule } from "./invite/invite.module";
 import { MailerModule, HandlebarsAdapter } from "@nest-modules/mailer";
+import { FileModule } from "./file/file.module";
+import { UploadOptions } from "graphql-upload";
 
 /**
  * Root module of the application.
@@ -21,16 +23,31 @@ import { MailerModule, HandlebarsAdapter } from "@nest-modules/mailer";
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, "..", "client")
     }),
+    // upload custom scalar for GraphQL
+    // Upload,
     // run a graphql server at `/graphql`
-    GraphQLModule.forRoot({
-      // debug messages in responses
-      debug: true,
-      playground: true,
-      // automatically generates a schema.gql file from type-graphql code
-      autoSchemaFile: "schema.gql",
-      // pass the Express request into the GraphQL resolvers
-      // required for accessing `user` object for authentication / authorization
-      context: ({ req }) => ({ req })
+    GraphQLModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        const options: GqlModuleOptions = {
+          // debug messages in responses
+          debug: true,
+          playground: true,
+          // automatically generates a schema.gql file from type-graphql code
+          autoSchemaFile: "schema.gql",
+          // pass the Express request into the GraphQL resolvers
+          // required for accessing `user` object for authentication / authorization
+          context: ({ req }: { req: any }) => ({ req })
+        };
+        // upload settings
+        const uploads: UploadOptions = {
+          maxFileSize: configService.graphQLMaxFileSize, // 10 MB
+          maxFiles: configService.graphQLMaxFiles
+        };
+        options.uploads = uploads;
+        return options;
+      }
     }),
     // set up mongoDB connection
     // async is needed due to dynamic module setup using ConfigModule
@@ -76,7 +93,8 @@ import { MailerModule, HandlebarsAdapter } from "@nest-modules/mailer";
     AuthModule,
     ConfigModule,
     FamilyModule,
-    InviteModule
+    InviteModule,
+    FileModule
   ]
 })
 export class AppModule {}

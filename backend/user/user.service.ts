@@ -16,13 +16,16 @@ import { User } from "./dto/user.dto";
 import { mapDocumentToUserDTO } from "./schema/user.mapper";
 import { RoleInput } from "./input/role.input";
 import { fromHexStringToObjectId } from "../common/mongo.util";
+import { FileService } from "../file/file.service";
+import { IUpdateUserData } from "./interfaces/user.update.interface";
 
 @Injectable()
 export class UserService implements IUserService {
   private readonly logger = new Logger(UserService.name);
   constructor(
     @InjectModel("User")
-    private readonly UserModel: Model<UserDocument>
+    private readonly UserModel: Model<UserDocument>,
+    private readonly fileService: FileService
   ) {}
 
   async updateRole(updateeId: string, input: RoleInput): Promise<User> {
@@ -82,21 +85,49 @@ export class UserService implements IUserService {
    * @param fields updatable fields
    */
   async update(currentUser: User, fields: UpdateUserInput) {
+    const { userId: _, ...data } = fields;
+
+    // check if fields contain actual data
+    const hasData: boolean = Object.keys(data).length > 0;
+    if (!hasData) {
+      throw new BadRequestException("No data provided in UpdateUserInput");
+    }
     this.logger.log(
       `User ${currentUser.userId} updating ${JSON.stringify(fields)}`
     );
+
     if (!currentUser.userId)
       throw new InternalServerErrorException("Current user not defined");
+
+    // authorization: users can only update their own profile details
     if (currentUser.userId !== fields.userId) {
+      this.logger.log(
+        `current user id ${currentUser.userId} does not match updatee id ${fields.userId}`
+      );
       throw new UnauthorizedException();
     }
-    const key = currentUser.email;
+
+    // upload image if provided
+    let imageUrl: string | undefined = undefined;
+    if (data.image) {
+      imageUrl = await this.fileService.uploadImage(data.image);
+    }
+
+    // extract image stream from `data` and replace with imageUrl
+    const { image, ...updatableData } = data;
+    const updateData: IUpdateUserData = { ...updatableData };
+    if (imageUrl) {
+      updateData.imageUrl = imageUrl;
+    }
+
+    // do update operation
     const updatedUser = await this.UserModel.findOneAndUpdate(
-      { lowercaseEmail: key },
-      fields,
+      { lowercaseEmail: currentUser.email.toLowerCase() }, // find by email
+      { ...updateData, imageUrl },
       { new: true, runValidators: true }
     );
-    if (!updatedUser) throw new InternalServerErrorException();
+    if (!updatedUser)
+      throw new InternalServerErrorException("Could not update user");
     const userDTO: User = mapDocumentToUserDTO(updatedUser);
     this.logger.debug(userDTO);
     return userDTO;

@@ -16,6 +16,7 @@ import { User } from "../user/dto/user.dto";
 import { UserService } from "../user/user.service";
 import { mapDocumentToFamilyDTO } from "./schema/family.mapper";
 import { FamilyDocument } from "./schema/family.schema";
+import { ID } from "type-graphql";
 
 @Resolver(Family)
 export class FamilyResolver {
@@ -26,7 +27,9 @@ export class FamilyResolver {
   ) {}
 
   @Query(returns => Family, { name: "family" })
-  async getFamily(@Args("familyId") familyId: string) {
+  async getFamily(
+    @Args({ name: "familyId", type: () => ID }) familyId: string
+  ) {
     const doc: FamilyDocument = await this.familyService.getFamily(familyId);
     return mapDocumentToFamilyDTO(doc);
   }

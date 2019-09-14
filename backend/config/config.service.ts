@@ -67,7 +67,9 @@ export class ConfigService {
       TEST_EMAIL_TO: Joi.string(),
       HOST_NAME: Joi.string()
         .hostname()
-        .required()
+        .required(),
+      GRAPHQL_MAX_FILE_SIZE: Joi.number().required(),
+      GRAPHQL_MAX_FILES: Joi.number().required()
     });
 
     const { error, value: validatedEnvConfig } = Joi.validate(
@@ -136,5 +138,13 @@ export class ConfigService {
 
   get hostName(): string {
     return this.envConfig.HOST_NAME;
+  }
+
+  get graphQLMaxFileSize(): number {
+    return Number(this.envConfig.GRAPHQL_MAX_FILE_SIZE).valueOf();
+  }
+
+  get graphQLMaxFiles(): number {
+    return Number(this.envConfig.GRAPHQL_MAX_FILE_SIZE).valueOf();
   }
 }
