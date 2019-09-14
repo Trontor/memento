@@ -24,7 +24,7 @@ export default function Dashboard(props) {
     user = data.currentUser;
     console.log("Success:", user);
   }
-  if (true || loading) {
+  if (loading) {
     return (
       <div>
         <Spinner large />

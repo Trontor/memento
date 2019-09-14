@@ -24,6 +24,9 @@ import {
 } from "./SidebarStyles";
 import { withRouter } from "react-router-dom";
 import { Logo } from "ui/Logos";
+import { useQuery } from "@apollo/react-hooks";
+import { GET_USER_FAMILIES } from "queries/UserQueries";
+import { Spinner } from "ui/Loaders";
 
 const Sidebar = props => {
   // Check for a authentication token, if not - redirect to the login page
@@ -32,11 +35,15 @@ const Sidebar = props => {
   }
   const [isSidebarOpen, setSidebarOpened] = useState(false);
   const toggleSidebarOpened = () => setSidebarOpened(!isSidebarOpen);
-  const famNames = ["Leung", "Siu", "Febriana", "Joshi", "Wei"];
+  let families = [];
+  const { loading, error, data } = useQuery(GET_USER_FAMILIES);
   const signOut = () => {
     localStorage.removeItem("AUTH-TOKEN");
     props.history.push("/login");
   };
+  if (data.currentUser) {
+    families = data.currentUser.families;
+  }
 
   return (
     <>
@@ -58,11 +65,15 @@ const Sidebar = props => {
         </SearchHeader>
         <FamilyListContainer>
           <h3>My Families</h3>
-          {famNames.map(name => (
-            <TextList>
-              <a href="#">{name}</a>
-            </TextList>
-          ))}
+          {loading ? (
+            <Spinner />
+          ) : (
+            families.map(family => (
+              <TextList>
+                <a href={`/family/${family.familyId}`}>{family.name}</a>
+              </TextList>
+            ))
+          )}
         </FamilyListContainer>
         <MenuContainer>
           <TextList>
