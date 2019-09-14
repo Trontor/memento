@@ -7,7 +7,6 @@ import {
   HelpText,
   InputSection
 } from "ui/Forms";
-import { Logo } from "components/Logo";
 import { MsgLink } from "./LoginStyles";
 import { ButtonPrimary } from "ui/Buttons";
 import { LoginContainer } from "./LoginStyles";
@@ -15,6 +14,8 @@ import * as yup from "yup";
 import { Formik } from "formik";
 import { LOGIN } from "mutations/Authentication";
 import { useMutation } from "@apollo/react-hooks";
+import { Logo } from "ui/Logos";
+import { Spinner } from "ui/Loaders";
 
 const LoginValidationSchema = yup.object().shape({
   email: yup
@@ -55,7 +56,7 @@ export default function Login(props) {
   }
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Spinner></Spinner>;
   }
 
   if (error) {
@@ -67,7 +68,7 @@ export default function Login(props) {
 
   return (
     <>
-      <Logo />
+      <Logo></Logo>
 
       <LoginContainer>
         <Header underline>Welcome back!</Header>

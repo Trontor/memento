@@ -22,8 +22,8 @@ import {
   SidebarButtonPrimary,
   ModalBackground
 } from "./SidebarStyles";
-import { MiniLogo } from "components/Logo";
 import { withRouter } from "react-router-dom";
+import { Logo } from "ui/Logos";
 
 const Sidebar = props => {
   // Check for a authentication token, if not - redirect to the login page
@@ -43,12 +43,18 @@ const Sidebar = props => {
       {/* <ModalBackground/> */}
       {/* <MenuButton size="35px" onClick={toggleSidebarOpened} /> */}
       <SidebarContainer menuClick={isSidebarOpen}>
+        <Logo
+          padding="20px"
+          pointer
+          small
+          onClick={() => props.history.push("/dashboard")}
+        />
         <SearchHeader>
           <SearchBar>
-            <SearchIcon/>
+            <SearchIcon />
             <SearchInput type="text" placeholder="Search all artefacts" />
           </SearchBar>
-          <CloseMenu size="25px" title="close menu"/>
+          <CloseMenu size="25px" title="close menu" />
         </SearchHeader>
         <FamilyListContainer>
           <h3>My Families</h3>
@@ -89,7 +95,6 @@ const Sidebar = props => {
           </TextList>
         </MenuContainer>
         <Footer>
-          <MiniLogo />
           <SidebarButtonPrimary onClick={signOut}>
             Sign Out
           </SidebarButtonPrimary>

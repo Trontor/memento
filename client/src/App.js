@@ -82,7 +82,27 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   />
 );
 
+const authenticatedRoutes = [
+  {
+    name: "dashboard",
+    component: Dashboard
+  },
+  {
+    name: "create-family",
+    component: CreateFamily
+  },
+  {
+    name: "invite",
+    component: Invite
+  },
+  {
+    name: "new-memento",
+    component: UploadMemento
+  }
+];
+
 function App() {
+  const authenticatedPaths = authenticatedRoutes.map(route => "/" + route.name);
   return (
     <ThemeProvider theme={theme}>
       <Router>
@@ -90,11 +110,22 @@ function App() {
         <Route path="/" exact component={Landing} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path={["/dashboard", "/create-family"]} component={Sidebar} />
-        <PrivateRoute path="/dashboard" component={Dashboard} />
-        <PrivateRoute path="/create-family" component={CreateFamily} />
-        <PrivateRoute path="/invite" component={Invite} />
-        <Route path="/new-memento" component={UploadMemento} />
+        <Route
+          path={authenticatedPaths}
+          render={() => (
+            <div style={{ display: "flex", height: "100%" }}>
+              <Sidebar />
+              <div style={{ flex: 1 }}>
+                {authenticatedRoutes.map(route => (
+                  <PrivateRoute
+                    path={`/${route.name}`}
+                    component={route.component}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        />
       </Router>
     </ThemeProvider>
   );

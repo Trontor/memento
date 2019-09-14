@@ -15,7 +15,8 @@ const Logotype = styled(Link)`
   margin-bottom: 1em;
   font-family: "Quicksand", sans-serif;
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
+  @media screen and (min-width: ${props =>
+      props.theme.breakpoints.tabletLandscape}) {
     text-align: left;
     left: 50px;
   }
@@ -28,23 +29,24 @@ const LogoStyle = styled.span`
   position: relative;
   font-family: "Quicksand", sans-serif;
 
-
-  @media screen and (width: ${props => props.theme.breakpoints.tabletLandscape}),
+  @media screen and (width: ${props =>
+      props.theme.breakpoints.tabletLandscape}),
     (min-width: ${props =>
-      props.theme.breakpoints.tabletLandscape}) and (max-width: ${props => props.theme.breakpoints.desktop}) {
+      props.theme.breakpoints.tabletLandscape}) and (max-width: ${props =>
+      props.theme.breakpoints.desktop}) {
   }
 `;
 
-export class Logo extends Component {
+class Logo extends Component {
   render() {
     return <Logotype to="/">Memento</Logotype>;
   }
 }
 
-export class MiniLogo extends Component {
+class MiniLogo extends Component {
   render() {
     return <LogoStyle>Memento</LogoStyle>;
   }
 }
 
-export default { Logo, MiniLogo };
+// export default { Logo, MiniLogo };
