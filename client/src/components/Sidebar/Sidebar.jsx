@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   NewGroup,
   EditProfile,
@@ -10,7 +10,7 @@ import {
 import {
   SidebarContainer,
   CloseMenu,
-  SearchHeader,
+  SidebarHeader,
   SearchBar,
   SearchIcon,
   SearchInput,
@@ -30,8 +30,6 @@ const Sidebar = props => {
   if (!localStorage.getItem("AUTH-TOKEN")) {
     props.history.push("/login");
   }
-  const [isSidebarOpen, setSidebarOpened] = useState(false);
-  const toggleSidebarOpened = () => setSidebarOpened(!isSidebarOpen);
   let families = [];
   const { loading, error, data } = useQuery(GET_USER_FAMILIES);
   const signOut = () => {
@@ -43,70 +41,67 @@ const Sidebar = props => {
   }
 
   return (
-    <>
-      {/* <MenuButton size="35px" onClick={toggleSidebarOpened} /> */}
-      <SidebarContainer menuClick={isSidebarOpen}>
+    <SidebarContainer isOpen={props.sidebarOpen}>
+      <SidebarHeader>
         <Logo
           pointer
           size="small"
           onClick={() => props.history.push("/dashboard")}
         />
-        <SearchHeader>
-          <SearchBar>
-            <SearchIcon />
-            <SearchInput type="text" placeholder="Search all artefacts" />
-          </SearchBar>
-          <CloseMenu size="25px" title="close menu" />
-        </SearchHeader>
-        <FamilyListContainer>
-          {families.length > 0 && (
-            <h3>My Families</h3>
-          )}
-          {loading ? (
-            <Spinner />
-          ) : (
-            families.map(family => (
-              <TextList>
-                <a href={`/family/${family.familyId}`}>{family.name}</a>
-              </TextList>
-            ))
-          )}
-        </FamilyListContainer>
-        <MenuContainer>
-          <TextList>
-            <Invite size="25px" />
-            <a href="#">Invite</a>
-          </TextList>
-          <TextList>
-            <Setting size="25px" />
-            Manage Family groups
-          </TextList>
-          <TextList>
-            <NewGroup size="25px" />
-            New Family group
-          </TextList>
-        </MenuContainer>
-        <MenuContainer>
-          <TextList>
-            <NewArtefact size="25px" />
-            New Artefact
-          </TextList>
-          <TextList>
-            <View size="25px" />
-            View my Artefacts
-          </TextList>
-        </MenuContainer>
-        <MenuContainer>
-          <TextList>
-            <EditProfile size="25px" />
-            Edit profile & account
-          </TextList>
-        </MenuContainer>
-        <SignOutButton onClick={signOut}>
-          Sign Out
-        </SignOutButton>
-      </SidebarContainer>
-    </>
+        <CloseMenu size="25px" title="close menu" onClick={props.toggleSidebar}/>
+      </SidebarHeader>
+        <SearchBar>
+          <SearchIcon />
+          <SearchInput type="text" placeholder="Search all artefacts" />
+        </SearchBar>
+      <FamilyListContainer>
+        {families.length > 0 && (
+          <h3>My Families</h3>
+        )}
+        {loading ? (
+          <Spinner />
+        ) : (
+          families.map(family => (
+            <TextList>
+              <a href={`/family/${family.familyId}`}>{family.name}</a>
+            </TextList>
+          ))
+        )}
+      </FamilyListContainer>
+      <MenuContainer>
+        <TextList>
+          <Invite size="25px" />
+          <a href="#">Invite</a>
+        </TextList>
+        <TextList>
+          <Setting size="25px" />
+          Manage Family groups
+        </TextList>
+        <TextList>
+          <NewGroup size="25px" />
+          New Family group
+        </TextList>
+      </MenuContainer>
+      <MenuContainer>
+        <TextList>
+          <NewArtefact size="25px" />
+          New Artefact
+        </TextList>
+        <TextList>
+          <View size="25px" />
+          View my Artefacts
+        </TextList>
+      </MenuContainer>
+      <MenuContainer>
+        <TextList>
+          <EditProfile size="25px" />
+          Edit profile & account
+        </TextList>
+      </MenuContainer>
+      <SignOutButton onClick={signOut}>
+        Sign Out
+      </SignOutButton>
+    </SidebarContainer>
   );
 };
 export default withRouter(Sidebar);

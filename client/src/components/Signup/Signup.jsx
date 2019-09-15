@@ -25,14 +25,6 @@ const defaultValues = {
   confirmPassword: "compl14n7Pa$$w0rd"
 };
 
-// const defaultValues = {
-//   firstName: "",
-//   lastName: "",
-//   email: "",
-//   password: "",
-//   confirmPassword: ""
-// };
-
 /**
  * Uses a validation libary, called 'Yup' to easily specify a validation schema.
  * This is used in tandem with Formik, which has first class support for Yup

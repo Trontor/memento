@@ -1,41 +1,43 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import { Search } from "styled-icons/boxicons-regular/Search";
 import { ButtonSecondary } from "../../ui/Buttons";
 import { Close } from "styled-icons/material/Close";
 import { lighten } from "polished";
 
 export const SidebarContainer = styled.div`
-  display: none;
+  display: ${props => props.isOpen ? "block" : "none"};
+  width: ${props => props.theme.size.sidebar};
+  border-right: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
+  min-height: 100%;
+  background: ${props => props.theme.palette.sidebar};
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 20px;
+  font-size: 14px;
+  z-index: 999;
+  margin-left: -280px;
+  ${({ isOpen }) =>
+    isOpen &&
+    css`
+      transform: translateX(280px);
+      transition: transform 5s ease;
+      }
+    `}
 
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
     display: block;
-    width: ${props => props.theme.size.sidebar};
-    min-height: 100%;
-    background: ${props => props.theme.palette.sidebar};
-    border-right: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    transition: 0.5s ease-in-out;
-    padding: 20px;
-    font-size: 14px;
-    z-index: 999;
   }
 `;
 
-export const ModalBackground = styled.div`
-  background-color: rgba(0, 0, 0, 0.3);
-  width: 100%;
-  height: 100%;
-  position: absolute;
-`;
-
-export const SearchHeader = styled.div`
+export const SidebarHeader = styled.div`
   display: flex;
   flex-direction: row;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
 `;
 
 export const SearchBar = styled.div`
@@ -45,6 +47,8 @@ export const SearchBar = styled.div`
   background: #fcfcfc;
   border-radius: 4px;
   display: flex;
+  margin: 20px 0;
+
 `;
 
 export const SearchIcon = styled(Search)`
@@ -54,7 +58,7 @@ export const SearchIcon = styled(Search)`
   top: 50%;
   left: 12px;
   margin-right: 16px;
-  width: 20px;
+  width: 15px;
 `;
 
 export const SearchInput = styled.input`
@@ -107,11 +111,8 @@ export const SignOutButton = styled(ButtonSecondary)`
 `;
 
 export const CloseMenu = styled(Close)`
-  padding-left: 0;
-  opacity: 0.5;
+  color: ${props => props.theme.palette.main};
   cursor: pointer;
-  position: relative;
-  top: 10px;
 
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
     display: none;

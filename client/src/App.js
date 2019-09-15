@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import { theme } from "./theme";
@@ -110,10 +110,15 @@ const authenticatedRoutes = [
 
 function App() {
   const authenticatedPaths = authenticatedRoutes.map(route => "/" + route.name);
+
+  //Toggling sidebar
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <GlobalStyle />
+        <GlobalStyle/>
         <Route path="/" exact component={Landing} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
@@ -122,10 +127,14 @@ function App() {
           render={() => (
             <SiteGrid>
               <LeftColumn>
-                <Sidebar/>
+                <Sidebar
+                  sidebarOpen={sidebarOpen}
+                  toggleSidebar={toggleSidebar}/>
               </LeftColumn>
               <Main>
-                <Hamburger/>
+                <Hamburger
+                  sidebarOpen={sidebarOpen}
+                  toggleSidebar={toggleSidebar}/>
                 {authenticatedRoutes.map(route => (
                   <PrivateRoute
                     path={`/${route.name}`}

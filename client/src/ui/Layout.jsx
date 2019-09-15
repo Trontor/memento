@@ -7,7 +7,7 @@ export const SiteGrid = styled.div`
 `;
 
 export const LeftColumn = styled.div`
-  display: none;
+  /* display: none; */
 
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
     display: block;

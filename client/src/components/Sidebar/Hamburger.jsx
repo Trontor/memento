@@ -1,10 +1,16 @@
 import React from "react";
-import { NavBar, HamburgerMenu } from "./HamburgerStyles";
+import { NavBar, HamburgerMenu, ModalBackground } from "./HamburgerStyles";
 
-export default function Hamburger() {
+export default function Hamburger({toggleSidebar,  sidebarOpen}) {
+
   return (
-    <NavBar>
-      <HamburgerMenu/>
-    </NavBar>
+    <>
+      {sidebarOpen && (
+        <ModalBackground onClick={toggleSidebar}/>
+      )}
+      <NavBar>
+        <HamburgerMenu onClick={toggleSidebar}/>
+      </NavBar>
+    </>
   );
 }
