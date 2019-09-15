@@ -4,20 +4,19 @@ import { ButtonPrimary } from "../../ui/Buttons";
 import { Close } from "styled-icons/material/Close";
 
 export const SidebarContainer = styled.div`
-  min-width: 260px;
-  height: 100%;
-  top: 0;
-  background: ${props => props.theme.palette.sidebar};
-  z-index: 999;
-  transition: 0.5s ease-in-out;
-  padding: 20px;
-  font-size: 13px;
+  display: none;
 
-  /* @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
-    width: 250px;
-    box-shadow: none;
+  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
     display: block;
-  } */
+    min-width: 260px;
+    min-height: 100%;
+    top: 0;
+    background: ${props => props.theme.palette.sidebar};
+    /* z-index: 999; */
+    transition: 0.5s ease-in-out;
+    padding: 20px;
+    font-size: 13px;
+  }
 `;
 
 export const ModalBackground = styled.div`
@@ -35,7 +34,7 @@ export const SearchHeader = styled.div`
 
 export const SearchBar = styled.div`
   width: 100%;
-  height: 36px;
+  height: 30px;
   border: 1px solid #e0e0e0;
   background: #fcfcfc;
   border-radius: 4px;
@@ -110,4 +109,8 @@ export const CloseMenu = styled(Close)`
   cursor: pointer;
   position: relative;
   top: 10px;
+
+  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
+    display: none;
+  }
 `
