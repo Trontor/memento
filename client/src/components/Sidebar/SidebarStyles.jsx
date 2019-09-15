@@ -5,7 +5,6 @@ import { Close } from "styled-icons/material/Close";
 import { lighten } from "polished";
 
 export const SidebarContainer = styled.div`
-  display: ${props => props.isOpen ? "block" : "none"};
   width: ${props => props.theme.size.sidebar};
   border-right: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
   min-height: 100%;
@@ -19,16 +18,18 @@ export const SidebarContainer = styled.div`
   font-size: 14px;
   z-index: 999;
   margin-left: -280px;
+  transition: transform 0.5s ease-in-out;
   ${({ isOpen }) =>
     isOpen &&
     css`
       transform: translateX(280px);
-      transition: transform 5s ease;
+      transition: transform 0.5s ease-in-out;
       }
     `}
 
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
     display: block;
+    transform: translateX(280px);
   }
 `;
 

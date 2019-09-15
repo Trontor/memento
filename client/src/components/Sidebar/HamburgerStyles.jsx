@@ -23,7 +23,7 @@ export const HamburgerMenu = styled(MenuAltLeft)`
 `
 
 export const ModalBackground = styled.div`
-  background-color: ${props => props.theme.palette.sidebar};
+  background-color: ${props => props.theme.palette.background};
   opacity: 0.7;
   width: 100%;
   height: 100%;
