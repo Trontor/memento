@@ -31,7 +31,7 @@ export class ConfigService {
     } else {
       // Otherwise, just parse from .env
       console.log("Loading config from .env file");
-      config = dotenv.parse(".env");
+      config = dotenv.config() as EnvConfig;
       console.log("Config: ", config);
     }
     if (config) this.envConfig = this.validateInput(config);
