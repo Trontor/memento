@@ -8,22 +8,17 @@ export const center = css`
 `;
 
 export const Container = styled.div`
-  width: 100%;
-  padding: 20px;
-  margin: 0 auto;
+  margin: 20px 40px;
 
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}) {
   }
 
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
-    flex-grow: 1;
-    width: 600px;
   }
 
 `;
 
 export const AlignRight = styled.div`
-  position: absolute;
-  right: 20px;
+  margin-left: auto;
   display: inline-block;
 `;

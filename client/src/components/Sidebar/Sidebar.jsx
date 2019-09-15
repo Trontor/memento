@@ -18,9 +18,7 @@ import {
   FamilyListContainer,
   TextList,
   MenuContainer,
-  Footer,
-  SidebarButtonPrimary,
-  ModalBackground
+  SignOutButton
 } from "./SidebarStyles";
 import { withRouter } from "react-router-dom";
 import { Logo } from "ui/Logos";
@@ -47,13 +45,11 @@ const Sidebar = props => {
 
   return (
     <>
-      {/* <ModalBackground/> */}
       {/* <MenuButton size="35px" onClick={toggleSidebarOpened} /> */}
       <SidebarContainer menuClick={isSidebarOpen}>
         <Logo
-          padding="20px"
           pointer
-          small
+          size="small"
           onClick={() => props.history.push("/dashboard")}
         />
         <SearchHeader>
@@ -107,11 +103,9 @@ const Sidebar = props => {
             Edit profile & account
           </TextList>
         </MenuContainer>
-        <Footer>
-          <SidebarButtonPrimary onClick={signOut}>
-            Sign Out
-          </SidebarButtonPrimary>
-        </Footer>
+        <SignOutButton onClick={signOut}>
+          Sign Out
+        </SignOutButton>
       </SidebarContainer>
     </>
   );

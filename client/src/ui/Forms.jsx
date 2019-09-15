@@ -64,6 +64,7 @@ export const InputField = styled.input`
   padding: 6px 0;
   margin-bottom: 3px;
   ${props => props.theme.mixins.hoverFade};
+  background-color: inherit;
 
   ::placeholder {
     opacity: 0.4;

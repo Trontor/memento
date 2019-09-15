@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Search } from "styled-icons/boxicons-regular/Search";
-import { ButtonPrimary } from "../../ui/Buttons";
+import { ButtonSecondary } from "../../ui/Buttons";
 import { Close } from "styled-icons/material/Close";
 
 export const SidebarContainer = styled.div`
@@ -8,14 +8,18 @@ export const SidebarContainer = styled.div`
 
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
     display: block;
-    min-width: 260px;
+    width: ${props => props.theme.size.sidebar};
     min-height: 100%;
-    top: 0;
     background: ${props => props.theme.palette.sidebar};
-    /* z-index: 999; */
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     transition: 0.5s ease-in-out;
     padding: 20px;
     font-size: 13px;
+    z-index: 999;
   }
 `;
 
@@ -94,13 +98,12 @@ export const MenuContainer = styled.div`
   padding: 10px 0;
 `;
 
-export const Footer = styled.div`
-  position: absolute;
-  bottom: 20px;
-`;
 
-export const SidebarButtonPrimary = styled(ButtonPrimary)`
-  font-size: 15px;
+export const SignOutButton = styled(ButtonSecondary)`
+  margin-top: 60px;
+  width: 100%;
+  height: 32px;
+  padding: 0;
 `;
 
 export const CloseMenu = styled(Close)`

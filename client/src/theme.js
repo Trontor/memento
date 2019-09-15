@@ -20,6 +20,9 @@ const theme = {
   },
   mixins: {
     hoverFade: "transition: ease-in 0.1s"
+  },
+  size: {
+    sidebar: "260px"
   }
 };
 

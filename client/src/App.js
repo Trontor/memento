@@ -11,6 +11,7 @@ import Invite from "./components/Invite/Invite";
 import Settings from "./components/Settings/Settings";
 import UploadMemento from "./components/UploadMemento/UploadMemento";
 import Sidebar from "components/Sidebar/Sidebar";
+import { SiteGrid, LeftColumn, Main } from "ui/Layout";
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -23,7 +24,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    height: 100%;
+    min-height: 100%;
     padding: 0;
     margin: 0;
     font-size: 14px;
@@ -57,6 +58,10 @@ const GlobalStyle = createGlobalStyle`
     &:focus {
       outline: none;
     }
+  }
+
+  input {
+    background-color: none;
   }
 
   *, *::before, *::after {
@@ -114,17 +119,19 @@ function App() {
         <Route
           path={authenticatedPaths}
           render={() => (
-            <div style={{ display: "flex", height: "100%" }}>
-              <Sidebar />
-              <div style={{ flex: 1 }}>
+            <SiteGrid>
+              <LeftColumn>
+                <Sidebar/>
+              </LeftColumn>
+              <Main>
                 {authenticatedRoutes.map(route => (
                   <PrivateRoute
                     path={`/${route.name}`}
                     component={route.component}
                   />
                 ))}
-              </div>
-            </div>
+              </Main>
+            </SiteGrid>
           )}
         />
       </Router>
