@@ -24,12 +24,15 @@ export class ConfigService {
       try {
         file = fs.readFileSync(filePath);
         config = dotenv.parse(file);
+        console.log("Successfully read config from " + filePath);
       } catch (error) {
-        console.log("Error reading from " + filePath);
+        console.log("Error reading config from " + filePath);
       }
     } else {
       // Otherwise, just parse from .env
+      console.log("Loading config from .env file");
       config = dotenv.parse(".env");
+      console.log("Config: ", config);
     }
     if (config) this.envConfig = this.validateInput(config);
   }
