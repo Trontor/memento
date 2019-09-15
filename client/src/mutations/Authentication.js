@@ -8,21 +8,21 @@ export const SIGNUP = gql`
         email
         firstName
         lastName
-        id
+        userId
       }
     }
   }
 `;
 
 export const LOGIN = gql`
-  mutation login($input: UserLoginInput!) {
+  mutation login($input: LoginInput!) {
     login(input: $input) {
       token
       user {
+        userId
         email
         firstName
         lastName
-        id
       }
     }
   }

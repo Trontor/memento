@@ -80,6 +80,7 @@ type Mutation {
 type Query {
   me: String!
   user(userId: String!): User!
+  currentUser: User!
   refreshToken: String!
   family(familyId: String!): Family!
   invite(inviteId: String!): Invite!

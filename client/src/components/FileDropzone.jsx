@@ -3,7 +3,6 @@ import {useDropzone} from 'react-dropzone';
 import styled from "styled-components";
 import { lighten } from 'polished';
 
-
 const getColor = (props) => {
   if (props.isDragAccept) {
       return props => lighten(0.1, props.theme.palette.loading);
@@ -46,14 +45,14 @@ const DropzoneContainer = styled.div`
   }
 `;
 
-export function StyledDropzone(props) {
+export function StyledDropzone() {
   const {
     getRootProps,
     getInputProps,
     isDragActive,
     isDragAccept,
     isDragReject
-  } = useDropzone({accept: 'image/*'});
+  } = useDropzone({ accept: 'image/*' });
 
   return (
     <DropzoneContainer {...getRootProps({isDragActive, isDragAccept, isDragReject})}>

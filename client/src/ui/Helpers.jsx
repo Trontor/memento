@@ -11,16 +11,19 @@ export const Container = styled.div`
   width: 100%;
   padding: 20px;
   margin: 0 auto;
-  position: relative;
 
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}) {
-    width: 580px;
+  }
+
+  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
+    flex-grow: 1;
+    width: 600px;
   }
 
 `;
 
 export const AlignRight = styled.div`
   position: absolute;
-  right: 40px;
+  right: 20px;
   display: inline-block;
 `;

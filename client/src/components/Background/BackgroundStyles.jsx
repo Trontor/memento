@@ -27,7 +27,7 @@ export const SignupOrganic = styled.div`
     background: linear-gradient(225deg, #49e2e4, #d7d60b);
 
     @media screen and (max-width: ${props =>
-        props.theme.breakpoints.tabletLanscape}) {
+        props.theme.breakpoints.tabletLandscape}) {
       display: none;
     }
   }
@@ -40,7 +40,7 @@ export const SignupOrganic = styled.div`
     background: linear-gradient(45deg, #49e2e4, #7befd3);
 
     @media screen and (max-width: ${props =>
-        props.theme.breakpoints.tabletLanscape}) {
+        props.theme.breakpoints.tabletLandscape}) {
       display: none;
     }
   }
@@ -53,7 +53,7 @@ export const SignupOrganic = styled.div`
     background: linear-gradient(135deg, #ff512f, #dd0a97);
 
     @media screen and (max-width: ${props =>
-        props.theme.breakpoints.tabletLanscape}) {
+        props.theme.breakpoints.tabletLandscape}) {
       display: none;
     }
   }
@@ -66,7 +66,7 @@ export const SignupOrganic = styled.div`
     background: linear-gradient(90deg, #4efbd2, #58f981);
 
     @media screen and (max-width: ${props =>
-        props.theme.breakpoints.tabletLanscape}) {
+        props.theme.breakpoints.tabletLandscape}) {
       display: none;
     }
   }
@@ -78,7 +78,7 @@ export const SignupOrganic = styled.div`
     left: 80%;
     background: linear-gradient(135deg, #ff512f, #f4e209);
     @media screen and (max-width: ${props =>
-        props.theme.breakpoints.tabletLanscape}) {
+        props.theme.breakpoints.tabletLandscape}) {
       display: none;
     }
   }
@@ -91,7 +91,7 @@ export const SignupOrganic = styled.div`
     background: linear-gradient(225deg, #8c09f4, #5890f9);
 
     @media screen and (max-width: ${props =>
-        props.theme.breakpoints.tabletLanscape}) {
+        props.theme.breakpoints.tabletLandscape}) {
       display: none;
     }
   }

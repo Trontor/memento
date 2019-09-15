@@ -6,7 +6,7 @@ export const LandingLayout = styled.div`
   height: 100%;
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLanscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     grid-template-columns: 1fr 1fr;
   }
 `;
@@ -18,7 +18,7 @@ export const Intro = styled.section`
   padding: 20px;
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLanscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     border-right: 1px solid ${props => props.theme.palette.border};
     border-bottom: none;
   }

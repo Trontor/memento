@@ -70,6 +70,12 @@ export class UserResolver {
     return updatedUser;
   }
 
+  @Query(returns => User)
+  @UseGuards(JwtAuthGuard)
+  async currentUser(@CurrentUser() user: User): Promise<User> {
+    return user;
+  }
+
   /**
    * Updates `role` of a user in a family.
    */
