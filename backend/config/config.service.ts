@@ -33,7 +33,7 @@ export class ConfigService {
       console.log("Loading config from .env file");
       dotenv.config();
       config = {
-        MONGO_URI: process.env.MONGOURI,
+        MONGO_URI: process.env.MONGO_URI,
         MONGO_AUTH_ENABLED: process.env.MONGO_AUTH_ENABLED,
         MONGO_USER: process.env.MONGO_USER,
         MONGO_PASSWORD: process.env.MONGO_PASSWORD,
