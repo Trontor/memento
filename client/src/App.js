@@ -28,7 +28,8 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     font-size: 14px;
     font-family: "Rubik", Arial, Helvetica, sans-serif;
-    color: ${props => props.theme.palette.text}
+    color: ${props => props.theme.palette.text};
+    background-color: ${props => props.theme.palette.background};
   }
 
   a {

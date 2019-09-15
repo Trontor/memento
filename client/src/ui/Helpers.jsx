@@ -11,14 +11,13 @@ export const Container = styled.div`
   width: 100%;
   padding: 20px;
   margin: 0 auto;
-  background-color: ${props => props.theme.palette.background};
 
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}) {
-    flex-grow: 1;
   }
 
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
-    /* position: absolute; */
+    flex-grow: 1;
+    width: 600px;
   }
 
 `;

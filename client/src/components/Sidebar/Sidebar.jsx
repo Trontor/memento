@@ -64,7 +64,9 @@ const Sidebar = props => {
           <CloseMenu size="25px" title="close menu" />
         </SearchHeader>
         <FamilyListContainer>
-          <h3>My Families</h3>
+          {families.length > 0 && (
+            <h3>My Families</h3>
+          )}
           {loading ? (
             <Spinner />
           ) : (
