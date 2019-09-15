@@ -21,6 +21,8 @@ export class ConfigService {
     try {
       file = fs.readFileSync(filePath);
     } catch (error) {
+      console.log("Error reading from " + filePath);
+
       file = fs.readFileSync("development.env");
     }
 
