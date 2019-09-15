@@ -6,8 +6,7 @@ import { UserPlus } from "styled-icons/boxicons-regular/UserPlus";
 
 export const TextWrapper = styled.div`
   position: relative;
-  width: 80%;
-  max-width: 580px;
+  width: 100%;
   padding: 20px 0 0 0;
   margin: 100px auto;
   text-align: center;
@@ -16,8 +15,12 @@ export const TextWrapper = styled.div`
   background-color: white;
   border-radius: 8px;
 
+  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
+    width: 600px;
+  }
+
   h2 {
-    margin-bottom: 25px;
+    line-height: 1em;
     padding: 0 20px;
   }
 
@@ -53,9 +56,6 @@ export const DashboardButtons = styled.div`
     border-radius: 0 0 10px 10px;
     padding-bottom: 20px;
   }
-
-  @media screen and (max-width: ${props => props.theme.breakpoints.mobile}) {
-  }
 `;
 
 export const ButtonHeading = styled.h4`
@@ -76,8 +76,13 @@ const ButtonIcons = css`
   left: 50%;
   transform: translate(-50%, -50%);
   color: ${props => props.theme.palette.main};
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
+
+  @media screen and (min-width: ${props => props.theme.breakpoints.mobile}) {
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 export const CreateFamily = styled(Group)`

@@ -9,11 +9,13 @@ export const center = css`
 
 export const Container = styled.div`
   margin: 20px 40px;
-
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}) {
-  }
+  position: relative;
+  top: 40px;
 
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
+    top: 0;
+    margin: 20px auto 40px auto;
+    width: 80%;
   }
 
 `;

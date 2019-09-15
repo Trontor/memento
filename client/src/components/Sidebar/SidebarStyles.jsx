@@ -98,7 +98,6 @@ export const MenuContainer = styled.div`
   padding: 10px 0;
 `;
 
-
 export const SignOutButton = styled(ButtonSecondary)`
   margin-top: 60px;
   width: 100%;
@@ -116,4 +115,4 @@ export const CloseMenu = styled(Close)`
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
     display: none;
   }
-`
+`;

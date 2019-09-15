@@ -11,6 +11,7 @@ import Invite from "./components/Invite/Invite";
 import Settings from "./components/Settings/Settings";
 import UploadMemento from "./components/UploadMemento/UploadMemento";
 import Sidebar from "components/Sidebar/Sidebar";
+import Hamburger from "components/Sidebar/Hamburger"
 import { SiteGrid, LeftColumn, Main } from "ui/Layout";
 
 const GlobalStyle = createGlobalStyle`
@@ -124,6 +125,7 @@ function App() {
                 <Sidebar/>
               </LeftColumn>
               <Main>
+                <Hamburger/>
                 {authenticatedRoutes.map(route => (
                   <PrivateRoute
                     path={`/${route.name}`}
