@@ -14,20 +14,24 @@ export interface EnvConfig {
 @Injectable()
 export class ConfigService {
   private readonly logger = new Logger(ConfigService.name);
-  private readonly envConfig: EnvConfig;
+  private readonly envConfig: EnvConfig = {};
 
-  constructor(filePath: string) {
+  constructor(filePath: string = "") {
     let file: Buffer | undefined;
-    try {
-      file = fs.readFileSync(filePath);
-    } catch (error) {
-      console.log("Error reading from " + filePath);
-
-      file = fs.readFileSync("development.env");
+    let config = null;
+    // Check if a file path has been passed as a parameter
+    if (filePath) {
+      try {
+        file = fs.readFileSync(filePath);
+        config = dotenv.parse(file);
+      } catch (error) {
+        console.log("Error reading from " + filePath);
+      }
+    } else {
+      // Otherwise, just parse from .env
+      config = dotenv.parse(".env");
     }
-
-    const config = dotenv.parse(file);
-    this.envConfig = this.validateInput(config);
+    if (config) this.envConfig = this.validateInput(config);
   }
 
   /**
