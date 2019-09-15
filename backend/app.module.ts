@@ -19,7 +19,7 @@ import { MailerModule, HandlebarsAdapter } from "@nest-modules/mailer";
   imports: [
     // serve static React files
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, "..", "client/build")
+      rootPath: join(__dirname, "../..", "client/build")
     }),
     // run a graphql server at `/graphql`
     GraphQLModule.forRoot({
