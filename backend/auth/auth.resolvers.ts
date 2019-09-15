@@ -3,7 +3,6 @@ import { Mutation, Resolver, Args, Query, Context } from "@nestjs/graphql";
 import { AuthService } from "./auth.service";
 import { UseGuards, UnauthorizedException } from "@nestjs/common";
 import { JwtAuthGuard } from "./guards/jwt-auth.guard";
-import { UserDocument } from "../../old-graphql/models/User";
 
 @Resolver()
 export class AuthResolver {
