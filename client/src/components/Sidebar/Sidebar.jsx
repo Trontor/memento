@@ -41,7 +41,7 @@ const Sidebar = props => {
     localStorage.removeItem("AUTH-TOKEN");
     props.history.push("/login");
   };
-  if (data.currentUser) {
+  if (data && data.currentUser) {
     families = data.currentUser.families;
   }
 

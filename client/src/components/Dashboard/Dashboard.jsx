@@ -20,7 +20,7 @@ export default function Dashboard(props) {
   if (error) {
     console.log("Error loading user data:", error);
   }
-  if (data.currentUser) {
+  if (data && data.currentUser) {
     user = data.currentUser;
     console.log("Success:", user);
   }
