@@ -1,4 +1,4 @@
-import styled, {css} from "styled-components";
+import styled, { css } from "styled-components";
 import { Search } from "styled-icons/boxicons-regular/Search";
 import { ButtonSecondary } from "../../ui/Buttons";
 import { Close } from "styled-icons/material/Close";
@@ -17,17 +17,16 @@ export const SidebarContainer = styled.div`
   padding: 20px;
   font-size: 14px;
   z-index: 999;
-  margin-left: -280px;
+  margin-left: ${props => -props.theme.size.sidebar}px;
   transition: transform 0.5s ease-in-out;
-  ${({ isOpen }) =>
-    isOpen &&
+  ${props =>
+    props.isOpen &&
     css`
-      transform: translateX(280px);
+      transform: translateX(${props => props.theme.size.sidebar}px);
       transition: transform 0.5s ease-in-out;
-      }
     `}
-
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
+  @media screen and (min-width: ${props =>
+    props.theme.breakpoints.tabletLandscape}) {
     display: block;
     transform: translateX(280px);
   }
@@ -49,7 +48,6 @@ export const SearchBar = styled.div`
   border-radius: 4px;
   display: flex;
   margin: 20px 0;
-
 `;
 
 export const SearchIcon = styled(Search)`
@@ -69,7 +67,8 @@ export const SearchInput = styled.input`
   font-family: "Rubik";
   width: 100%;
 
-  &:focus, &:active {
+  &:focus,
+  &:active {
     outline: none;
   }
 
@@ -100,7 +99,7 @@ export const TextList = styled.li`
 `;
 
 export const MenuContainer = styled.div`
-  border-top: 1px solid  ${props => lighten(0.65, props.theme.palette.text)};;
+  border-top: 1px solid ${props => lighten(0.65, props.theme.palette.text)};
   padding: 10px 0;
 `;
 
@@ -115,7 +114,8 @@ export const CloseMenu = styled(Close)`
   color: ${props => props.theme.palette.main};
   cursor: pointer;
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
+  @media screen and (min-width: ${props =>
+      props.theme.breakpoints.tabletLandscape}) {
     display: none;
   }
 `;
