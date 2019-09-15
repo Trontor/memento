@@ -32,7 +32,21 @@ export class ConfigService {
       // Otherwise, just parse from .env
       console.log("Loading config from .env file");
       dotenv.config();
-      config = process.env as EnvConfig;
+      config = {
+        MONGO_URI: process.env.MONGOURI,
+        MONGO_AUTH_ENABLED: process.env.MONGO_AUTH_ENABLED,
+        MONGO_USER: process.env.MONGO_USER,
+        MONGO_PASSWORD: process.env.MONGO_PASSWORD,
+        JWT_SECRET: process.env.JWT_SECRET,
+        JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,
+        EMAIL_ENABLED: process.env.EMAIL_ENABLED,
+        EMAIL_HOSTNAME: process.env.EMAIL_HOSTNAME,
+        EMAIL_PORT: process.env.EMAIL_PORT,
+        EMAIL_USERNAME: process.env.EMAIL_USERNAME,
+        EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
+        EMAIL_FROM: process.env.EMAIL_FROM,
+        HOST_NAME: process.env.HOST_NAME
+      } as EnvConfig;
       console.log("Config: ", config);
     }
     if (config) this.envConfig = this.validateInput(config);
