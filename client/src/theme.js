@@ -16,13 +16,13 @@ const theme = {
     disabled: "#ddd",
 
     border: "#D3D0DD",
-    sidebar: "#F3F7FE",
+    sidebar: "#F7FAFE",
   },
   mixins: {
     hoverFade: "transition: ease-in 0.1s"
   },
   size: {
-    sidebar: "260px"
+    sidebar: "280px"
   }
 };
 

@@ -38,7 +38,6 @@ export default function CreateFamily() {
       <Formik
         initialValues={defaultValues}
         onSubmit={(values, actions) => {
-          // alert(JSON.stringify(values));
           const payload = {
             name: values.familyName,
             colour: values.color

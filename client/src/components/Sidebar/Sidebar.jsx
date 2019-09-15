@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  MenuButton,
   NewGroup,
   EditProfile,
   Setting,

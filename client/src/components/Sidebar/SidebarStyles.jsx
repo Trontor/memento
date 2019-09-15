@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Search } from "styled-icons/boxicons-regular/Search";
 import { ButtonSecondary } from "../../ui/Buttons";
 import { Close } from "styled-icons/material/Close";
+import { lighten } from "polished";
 
 export const SidebarContainer = styled.div`
   display: none;
@@ -11,6 +12,7 @@ export const SidebarContainer = styled.div`
     width: ${props => props.theme.size.sidebar};
     min-height: 100%;
     background: ${props => props.theme.palette.sidebar};
+    border-right: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
     position: fixed;
     top: 0;
     bottom: 0;
@@ -18,7 +20,7 @@ export const SidebarContainer = styled.div`
     -webkit-overflow-scrolling: touch;
     transition: 0.5s ease-in-out;
     padding: 20px;
-    font-size: 13px;
+    font-size: 14px;
     z-index: 999;
   }
 `;
@@ -39,13 +41,10 @@ export const SearchHeader = styled.div`
 export const SearchBar = styled.div`
   width: 100%;
   height: 30px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
   background: #fcfcfc;
   border-radius: 4px;
   display: flex;
-
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
-  }
 `;
 
 export const SearchIcon = styled(Search)`
@@ -63,11 +62,14 @@ export const SearchInput = styled.input`
   background: transparent;
   border: none;
   font-family: "Rubik";
-  font-weight: 300;
   width: 100%;
 
   &:focus, &:active {
     outline: none;
+  }
+
+  &:focus ${SearchBar} {
+    border-color: ${props => props.theme.palette.main};
   }
 `;
 
@@ -80,8 +82,7 @@ export const FamilyListContainer = styled.div`
 
 export const TextList = styled.li`
   list-style-type: none;
-  font-weight: 300;
-  line-height: 2em;
+  line-height: 30px;
 
   a {
     color: ${props => props.theme.palette.text};
@@ -94,7 +95,7 @@ export const TextList = styled.li`
 `;
 
 export const MenuContainer = styled.div`
-  border-top: 1px solid ${props => props.theme.palette.border};
+  border-top: 1px solid  ${props => lighten(0.65, props.theme.palette.text)};;
   padding: 10px 0;
 `;
 
