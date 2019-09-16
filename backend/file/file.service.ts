@@ -1,9 +1,9 @@
 import { Injectable, Logger, BadRequestException } from "@nestjs/common";
 import { Upload } from "./upload.interface";
-import { isImage } from "./file.utils";
+import { isImage, isVideo } from "./file.utils";
 import { S3Client } from "../aws/aws.s3.client";
 import uuidv4 from "uuid/v4";
-import { Readable, PassThrough, Writable } from "stream";
+import { Readable, Writable } from "stream";
 import { ManagedUpload } from "aws-sdk/clients/s3";
 import { ConfigService } from "../config/config.service";
 import * as os from "os";
@@ -25,12 +25,25 @@ export class FileService {
   public async uploadImage(filePromise: Promise<Upload>) {
     const file = await filePromise;
     const { createReadStream, filename, mimetype } = file;
-    // if (!isImage(mimetype)) {
-    if (false) {
+    if (!isImage(mimetype)) {
       this.logger.error(`"${mimetype}" not an accepted image format`);
       throw new Error("not an accepted image format");
     }
     return await this.uploadFile(createReadStream, filename);
+  }
+
+  /**
+   * Uploads a video and returns the url.
+   * @param filePromise promise of Upload
+   */
+  public async uploadVideo(filePromise: Promise<Upload>) {
+    const file = await filePromise;
+    const { createReadStream: createReadStreamFile, filename, mimetype } = file;
+    if (!isVideo(mimetype)) {
+      this.logger.error(`"${mimetype}" not an accepted video format`);
+      throw new Error("not an accepted image format");
+    }
+    return await this.uploadFile(createReadStreamFile, filename);
   }
 
   /**
@@ -67,6 +80,8 @@ export class FileService {
       // get the response from S3
       res = await uploadPromise;
       this.logger.debug(res);
+      const url: string = `${this.configService.cdnHostName}/${res.Key}`;
+      return url;
     } catch (err) {
       this.logger.error(err);
       throw new BadRequestException("File exceeds size limit");
@@ -76,9 +91,6 @@ export class FileService {
         this.logger.log(`deleted ${tmpPath}`);
       });
     }
-
-    const url: string = `${this.configService.cdnHostName}/${res.Key}`;
-    return url;
   }
 
   /**
@@ -94,6 +106,8 @@ export class FileService {
   ) {
     return new Promise<ManagedUpload.SendData>(async (resolve, reject) => {
       let totalBytes: number = 0;
+
+      const tmpStream = createWriteStream(tmpPath);
       // setup event listeners for the read stream
       readStream
         .on("data", chunk => {
@@ -105,15 +119,21 @@ export class FileService {
         .on("error", err => {
           // catches the excess file size limit errors
           this.logger.error(err);
+          readStream.destroy(err);
           reject(err);
         })
         .on("end", () => {
           this.logger.debug("Finished reading stream");
+          readStream.destroy();
         })
         // now save the incoming file to a temporary location
-        .pipe(createWriteStream(tmpPath))
+        .pipe(
+          tmpStream.on("error", err => {
+            tmpStream.destroy(err);
+            reject(err);
+          })
+        )
         .on("error", err => {
-          this.logger.error("Save tmp stream");
           this.logger.error(err);
           reject(err);
         })
@@ -122,7 +142,6 @@ export class FileService {
           // we can read from the temporary file
           createReadStream(tmpPath)
             .on("error", err => {
-              this.logger.error("Read tmp stream");
               this.logger.error(err);
               reject(err);
             })
