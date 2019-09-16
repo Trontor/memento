@@ -9,23 +9,19 @@ import {
 import { UserSignupInput, UpdateUserInput } from "./input/user.input";
 import { UserService } from "./user.service";
 import { AuthOutput } from "../auth/dto/auth.dto";
-import {
-  Inject,
-  forwardRef,
-  UseGuards,
-  NotImplementedException,
-  Logger
-} from "@nestjs/common";
+import { Inject, forwardRef, UseGuards, Logger } from "@nestjs/common";
 import { AuthService } from "../auth/auth.service";
 import { User } from "./dto/user.dto";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { CurrentUser } from "../auth/decorators/current-user.decorator";
-import { UpdateRoleOutput } from "./dto/role.dto";
 import { RoleInput } from "./input/role.input";
 import { Family } from "../family/dto/family.dto";
 import { FamilyService } from "../family/family.service";
 import { FamilyAdminGuard } from "../auth/guards/family-admin.guard";
 
+/**
+ * Resolves GraphQL mutations and queries related to users.
+ */
 @Resolver(User)
 export class UserResolver {
   private readonly logger = new Logger(UserResolver.name);
@@ -38,17 +34,19 @@ export class UserResolver {
     private readonly familyService: FamilyService
   ) {}
 
-  @Query(returns => String)
-  @UseGuards(JwtAuthGuard)
-  async me(): Promise<string> {
-    return "me";
-  }
-
+  /**
+   * Returns user id.
+   * @param userId id of user
+   */
   @Query(returns => User, { name: "user" })
   async getUser(@Args("userId") userId: string) {
     return await this.userService.findOneById(userId);
   }
 
+  /**
+   * Allows new user to signup.
+   * @param input signup fields
+   */
   @Mutation(returns => AuthOutput)
   async signup(@Args("input") input: UserSignupInput): Promise<AuthOutput> {
     const createdUser: User = await this.userService.createUser(input);
@@ -59,6 +57,11 @@ export class UserResolver {
     };
   }
 
+  /**
+   * Updates existing user.
+   * @param user user issuing the update request
+   * @param input update fields
+   */
   @Mutation(returns => User)
   @UseGuards(JwtAuthGuard)
   async updateUser(
@@ -70,6 +73,10 @@ export class UserResolver {
     return updatedUser;
   }
 
+  /**
+   * Returns user information of the current authenticated user.
+   * @param user current authenticated user
+   */
   @Query(returns => User)
   @UseGuards(JwtAuthGuard)
   async currentUser(@CurrentUser() user: User): Promise<User> {
@@ -88,6 +95,9 @@ export class UserResolver {
     return await this.userService.updateRole(updateeId, input);
   }
 
+  /**
+   * Resolves the `families` property
+   */
   @ResolveProperty("families", returns => [Family])
   async getFamilies(@Parent() { userId, familyRoles }: User) {
     this.logger.debug(`resolving families on user ${userId}: ${familyRoles}`);

@@ -16,7 +16,11 @@ import { User } from "../user/dto/user.dto";
 import { UserService } from "../user/user.service";
 import { mapDocumentToFamilyDTO } from "./schema/family.mapper";
 import { FamilyDocument } from "./schema/family.schema";
+import { ID } from "type-graphql";
 
+/**
+ * Resolves GraphQL mutations and queries related to families.
+ */
 @Resolver(Family)
 export class FamilyResolver {
   constructor(
@@ -25,12 +29,21 @@ export class FamilyResolver {
     private readonly userService: UserService
   ) {}
 
+  /**
+   * Fetches a family's data.
+   */
   @Query(returns => Family, { name: "family" })
-  async getFamily(@Args("familyId") familyId: string) {
+  async getFamily(
+    @Args({ name: "familyId", type: () => ID }) familyId: string
+  ) {
     const doc: FamilyDocument = await this.familyService.getFamily(familyId);
     return mapDocumentToFamilyDTO(doc);
   }
 
+  /**
+   * Creates a new family.
+   * User must be authenticated via valid JWT.
+   */
   @Mutation(returns => Family)
   @UseGuards(JwtAuthGuard)
   async createFamily(
@@ -41,6 +54,9 @@ export class FamilyResolver {
     return family;
   }
 
+  /**
+   * Resolves the `members` property on the `Family` object.
+   */
   @ResolveProperty("members", returns => [User])
   async getUsers(@Parent() { familyId }: Family) {
     const { memberIds }: FamilyDocument = await this.familyService.getFamily(
@@ -51,6 +67,9 @@ export class FamilyResolver {
     return members;
   }
 
+  /**
+   * Allows user to join a family.
+   */
   @Mutation(returns => Family)
   @UseGuards(JwtAuthGuard)
   async joinFamily(

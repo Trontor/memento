@@ -1,8 +1,17 @@
 import { Schema, Document, Model, model } from "mongoose";
 import { Invite } from "../dto/invite.dto";
 
-export interface InviteDocument extends Invite, Document {}
+/**
+ * Defines an `InviteDocument` using `Invite` DTO and Mongoose `Document`
+ * to allow single source of truth for model's fields.
+ */
+export interface InviteDocument extends Invite, Document {
+  // fields that are only found in the database Document
+}
 
+/**
+ * The actual structure of the Invite collection.
+ */
 export const InviteSchema: Schema = new Schema({
   _id: {
     type: String
@@ -25,6 +34,10 @@ export const InviteSchema: Schema = new Schema({
   }
 });
 
+/**
+ * Prior to saving an Invite model to the database,
+ * check if expiration time has been correctly set.
+ */
 InviteSchema.pre<InviteDocument>("save", function(next) {
   const invite = this;
 
@@ -34,8 +47,12 @@ InviteSchema.pre<InviteDocument>("save", function(next) {
   next();
 });
 
+/**
+ * More methods can be added here for future flexibility
+ */
 export interface IInviteModel extends Model<InviteDocument> {}
 
+// export a Mongoose `Model` based on `FamilyDocument` defined above
 export const InviteModel: IInviteModel = model<InviteDocument, IInviteModel>(
   "Invite",
   InviteSchema

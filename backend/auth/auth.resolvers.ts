@@ -17,7 +17,6 @@ export class AuthResolver {
     return result;
   }
 
-  // There is no username guard here because if the person has the token, they can be any user
   @Query(returns => String)
   @UseGuards(JwtAuthGuard)
   async refreshToken(@Context("req") request: any): Promise<string> {
@@ -27,7 +26,7 @@ export class AuthResolver {
       throw new UnauthorizedException(
         "Could not log-in with the provided credentials"
       );
-    const result = await this.authService.createJwt(user);
+    const result = this.authService.createJwt(user);
     if (result) return result.token;
     throw new UnauthorizedException(
       "Could not log-in with the provided credentials"
