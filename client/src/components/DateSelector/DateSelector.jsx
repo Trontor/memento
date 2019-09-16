@@ -11,7 +11,7 @@ export default function DateSelector({customDropdown}){
   const [date, setDate] = useState("");
 
   const joinDate = () => {
-    console.log(month.value + '/' + day + '/' + year);
+    console.log(year + '-' + month.value + '-' + day);
   }
 
   const months = [
