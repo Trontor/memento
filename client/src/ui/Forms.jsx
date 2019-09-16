@@ -128,6 +128,7 @@ export const TextArea = styled.div`
     color: ${props => props.theme.palette.text};
     resize: none;
     line-height: 1.5em;
+    background-color: transparent;
 
     ::placeholder {
       opacity: 0.4;
