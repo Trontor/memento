@@ -5,7 +5,7 @@ import { Close } from "styled-icons/material/Close";
 import { lighten } from "polished";
 
 export const SidebarContainer = styled.div`
-  width: ${props => props.theme.size.sidebar};
+  min-width: ${props => props.theme.size.sidebar}px;
   border-right: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
   min-height: 100%;
   background: ${props => props.theme.palette.sidebar};
@@ -25,10 +25,10 @@ export const SidebarContainer = styled.div`
       transform: translateX(${props => props.theme.size.sidebar}px);
       transition: transform 0.5s ease-in-out;
     `}
+
   @media screen and (min-width: ${props =>
     props.theme.breakpoints.tabletLandscape}) {
-    display: block;
-    transform: translateX(280px);
+    transform: translateX(${props => props.theme.size.sidebar}px);
   }
 `;
 
@@ -47,7 +47,7 @@ export const SearchBar = styled.div`
   background: #fcfcfc;
   border-radius: 4px;
   display: flex;
-  margin: 20px 0;
+  margin: 10px 0 20px 0;
 `;
 
 export const SearchIcon = styled(Search)`
@@ -79,8 +79,7 @@ export const SearchInput = styled.input`
 
 export const FamilyListContainer = styled.div`
   h3 {
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin: 5px 0;
   }
 `;
 
@@ -111,8 +110,12 @@ export const SignOutButton = styled(ButtonSecondary)`
 `;
 
 export const CloseMenu = styled(Close)`
-  color: ${props => props.theme.palette.main};
+  color: ${props => lighten(0.6, props.theme.palette.text)};
   cursor: pointer;
+
+  &:hover {
+    color: ${props => props.theme.palette.main};
+  }
 
   @media screen and (min-width: ${props =>
       props.theme.breakpoints.tabletLandscape}) {

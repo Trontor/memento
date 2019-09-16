@@ -40,6 +40,8 @@ const Sidebar = props => {
     families = data.currentUser.families;
   }
 
+  const iconSize = "22px";
+
   return (
     <SidebarContainer isOpen={props.sidebarOpen}>
       <SidebarHeader>
@@ -48,7 +50,7 @@ const Sidebar = props => {
           size="small"
           onClick={() => props.history.push("/dashboard")}
         />
-        <CloseMenu size="25px" title="close menu" onClick={props.toggleSidebar}/>
+        <CloseMenu size={iconSize} title="close menu" onClick={props.toggleSidebar}/>
       </SidebarHeader>
         <SearchBar>
           <SearchIcon />
@@ -70,31 +72,31 @@ const Sidebar = props => {
       </FamilyListContainer>
       <MenuContainer>
         <TextList>
-          <Invite size="25px" />
+          <Invite size={iconSize} />
           <a href="#">Invite</a>
         </TextList>
         <TextList>
-          <Setting size="25px" />
+          <Setting size={iconSize} />
           Manage Family groups
         </TextList>
         <TextList>
-          <NewGroup size="25px" />
+          <NewGroup size={iconSize} />
           New Family group
         </TextList>
       </MenuContainer>
       <MenuContainer>
         <TextList>
-          <NewArtefact size="25px" />
+          <NewArtefact size={iconSize} />
           New Artefact
         </TextList>
         <TextList>
-          <View size="25px" />
+          <View size={iconSize} />
           View my Artefacts
         </TextList>
       </MenuContainer>
       <MenuContainer>
         <TextList>
-          <EditProfile size="25px" />
+          <EditProfile size={iconSize} />
           Edit profile & account
         </TextList>
       </MenuContainer>

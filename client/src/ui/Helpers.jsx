@@ -8,14 +8,16 @@ export const center = css`
 `;
 
 export const Container = styled.div`
-  margin: 20px 40px;
+  margin: 20px;
   position: relative;
   top: 40px;
 
+  @media screen and (min-width: ${props => props.theme.breakpoints.mobile}) {
+    margin: 20px 40px;
+  }
+
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
     top: 0;
-    margin: 20px auto 40px auto;
-    max-width: 600px;
   }
 
 `;
