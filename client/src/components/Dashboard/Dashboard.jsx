@@ -25,7 +25,7 @@ export default function Dashboard(props) {
   if (loading) {
     return (
       <div>
-        <Spinner large />
+        <Spinner size="large" />
       </div>
     );
   }

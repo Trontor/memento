@@ -1,6 +1,6 @@
 import React from "react";
 import { InstructionLabel, FormSection } from 'ui/Forms';
-import { RadioOption, RadioButton, RadioButtonStyle, RadioLabel, Tag, NewTag } from './UploadMementoStyles';
+import { RadioOption, RadioButton, RadioButtonStyle, RadioLabel } from './UploadMementoStyles';
 import CreatableSelect from 'react-select/creatable';
 
 export default function UploadStep1({

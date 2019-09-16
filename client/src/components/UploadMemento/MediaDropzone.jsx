@@ -86,7 +86,7 @@ export function MediaDropzone() {
   });
 
   const imagePreview = mementoFiles.map(file => (
-    <img src={file.preview}/>
+    <img src={file.preview} alt={file.title}/>
   ));
 
   useEffect(() => () => {

@@ -31,7 +31,7 @@ const Sidebar = props => {
     props.history.push("/login");
   }
   let families = [];
-  const { loading, error, data } = useQuery(GET_USER_FAMILIES);
+  const { loading, data } = useQuery(GET_USER_FAMILIES);
   const signOut = () => {
     localStorage.removeItem("AUTH-TOKEN");
     props.history.push("/login");
@@ -73,7 +73,7 @@ const Sidebar = props => {
       <MenuContainer>
         <TextList>
           <Invite size={iconSize} />
-          <a href="#">Invite</a>
+          <a href={`/invite`}>Invite</a>
         </TextList>
         <TextList>
           <Setting size={iconSize} />

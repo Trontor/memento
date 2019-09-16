@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { InputField } from 'ui/Forms';
 
 export const DateInput = styled.div`

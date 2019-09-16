@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Header } from "ui/Typography";
 import {
   Error,
@@ -56,7 +56,7 @@ export default function Login(props) {
   }
 
   if (loading) {
-    return <Spinner></Spinner>;
+    return <Spinner/>;
   }
 
   if (error) {

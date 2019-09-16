@@ -25,7 +25,7 @@ const CreateFamilyValidationSchema = yup.object().shape({
 });
 
 export default function CreateFamily() {
-  const [createNewFamily, { data, error, loading }] = useMutation(
+  const [createNewFamily, /*{ data, error, loading }*/] = useMutation(
     CREATE_NEW_FAMILY
   );
   const defaultValues = {

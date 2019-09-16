@@ -1,17 +1,15 @@
 import React, {useState, useEffect} from "react";
 import Select from "react-select";
 import { DateInput, DateField } from "./DateSelectorStyles";
-import moment from 'moment'
 
 export default function DateSelector({customDropdown}){
   //Hooks for date values
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
-  const [date, setDate] = useState("");
 
   const joinDate = () => {
-    console.log(year + '-' + month.value + '-' + day);
+    return year + '-' + month.value + '-' + day;
   }
 
   const months = [

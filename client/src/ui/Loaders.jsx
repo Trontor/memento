@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
-import { lighten } from "polished";
 import { center } from "./Helpers";
 
 export const Spinner = styled.span`
+  ${center};
   border-radius: 50%;
   border-style: solid;
   display: inline-block;
@@ -52,5 +52,6 @@ const handleSpinnerSize = size => {
       return small;
     case "large":
       return large;
+    default:
   }
 };

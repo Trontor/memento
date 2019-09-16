@@ -8,7 +8,7 @@ export const center = css`
 `;
 
 export const Container = styled.div`
-  margin: 20px;
+  margin: 20px auto;
   position: relative;
   top: ${props => props.noNav ? "0px" : "40px"};
 
@@ -18,6 +18,8 @@ export const Container = styled.div`
 
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
     top: 0;
+    margin: 20px auto;
+    max-width: 600px;
   }
 `;
 
