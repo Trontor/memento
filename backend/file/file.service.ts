@@ -3,7 +3,7 @@ import { Upload } from "./upload.interface";
 import { isImage } from "./file.utils";
 import { S3Client } from "../aws/aws.s3.client";
 import uuidv4 from "uuid/v4";
-import { Readable } from "stream";
+import { Readable, PassThrough, Writable } from "stream";
 import { ManagedUpload } from "aws-sdk/clients/s3";
 import { ConfigService } from "../config/config.service";
 import * as os from "os";
@@ -41,6 +41,7 @@ export class FileService {
     createReadStreamFile: () => Readable,
     filename: string
   ): Promise<string> {
+    // create a random file id to store file
     const fileId: string = uuidv4();
     const ext = path.extname(filename);
     if (!ext) {
@@ -48,65 +49,96 @@ export class FileService {
     }
     const filepath = `${fileId}${ext}`;
     this.logger.log(filepath);
-    const { writeStream, promise } = this.s3Client.uploadStream(filepath);
+
+    // create a stream for uploading to AWS S3 bucket
+    const { writeStream, uploadPromise } = this.s3Client.uploadStream(filepath);
+
+    // temporary path to store the file locally
+    // to ensure file size is within limit before uploading to S3
     const tmpPath = path.join(os.tmpdir(), filepath);
 
-    const x: Promise<ManagedUpload.SendData> = new Promise(
-      async (resolve, reject) => {
-        let totalBytes: number = 0;
-        createReadStreamFile()
-          .on("data", chunk => {
-            totalBytes += chunk.length;
-            this.logger.debug(
-              `Received ${chunk.length} bytes of data. Total = ${totalBytes} bytes`
-            );
-          })
-          .on("error", err => {
-            this.logger.error(err);
-            reject(err);
-          })
-          .on("end", () => {
-            this.logger.debug("Finished reading stream");
-          })
-          .pipe(createWriteStream(tmpPath)) // pipe to tmp
-          .on("finish", () => {
-            createReadStream(tmpPath)
-              .on("error", err => {
-                this.logger.error("Read tmp stream");
-                this.logger.error(err);
-                throw err;
-              })
-              .pipe(writeStream) // pipe to S3
-              .on("error", err => {
-                this.logger.error("Upload S3 stream");
-                this.logger.error(err);
-                throw err;
-              });
-          })
-          .on("error", err => {
-            this.logger.error("Save tmp stream");
-            this.logger.error(err);
-            reject(err);
-          });
+    // let's finally create a stream for the incoming file
+    const readStream: Readable = createReadStreamFile();
 
-        const res: ManagedUpload.SendData = await promise;
-        this.logger.debug(res);
-        resolve(res);
-      }
-    );
-
+    let res: ManagedUpload.SendData;
     try {
-      const res = await x;
+      // wait for the upload to finish and resolve with S3 file metadata
+      await this.handleUploadWithStreams(tmpPath, readStream, writeStream);
+      // get the response from S3
+      res = await uploadPromise;
+      this.logger.debug(res);
     } catch (err) {
       this.logger.error(err);
-      throw new BadRequestException("File too large motherfucker!");
+      throw new BadRequestException("File exceeds size limit");
     } finally {
+      // delete temporary file
       unlink(tmpPath, () => {
         this.logger.log(`deleted ${tmpPath}`);
       });
     }
 
-    const url: string = `${this.configService.cdnHostName}/${filepath}`;
+    const url: string = `${this.configService.cdnHostName}/${res.Key}`;
     return url;
+  }
+
+  /**
+   * Handles streams with logging.
+   * @param tmpPath temporary path to save read stream to
+   * @param readStream readable stream of data
+   * @param writeSteam passthrough stream
+   */
+  private handleUploadWithStreams(
+    tmpPath: string,
+    readStream: Readable,
+    writeStream: Writable
+  ) {
+    return new Promise<ManagedUpload.SendData>(async (resolve, reject) => {
+      let totalBytes: number = 0;
+      // setup event listeners for the read stream
+      readStream
+        .on("data", chunk => {
+          totalBytes += chunk.length;
+          this.logger.debug(
+            `Received ${chunk.length} bytes of data. Total = ${totalBytes} bytes`
+          );
+        })
+        .on("error", err => {
+          // catches the excess file size limit errors
+          this.logger.error(err);
+          reject(err);
+        })
+        .on("end", () => {
+          this.logger.debug("Finished reading stream");
+        })
+        // now save the incoming file to a temporary location
+        .pipe(createWriteStream(tmpPath))
+        .on("error", err => {
+          this.logger.error("Save tmp stream");
+          this.logger.error(err);
+          reject(err);
+        })
+        .on("finish", () => {
+          // once temporary file has been saved without errors,
+          // we can read from the temporary file
+          createReadStream(tmpPath)
+            .on("error", err => {
+              this.logger.error("Read tmp stream");
+              this.logger.error(err);
+              reject(err);
+            })
+            // ... and finally upload the temporary file to S3 using
+            // the provided Writable stream
+            .pipe(writeStream)
+            .on("finish", () => {
+              // finished upload!
+              resolve();
+            })
+            .on("error", err => {
+              this.logger.error("Upload S3 stream");
+              this.logger.error(err);
+              reject(err);
+            });
+        });
+    });
   }
 }

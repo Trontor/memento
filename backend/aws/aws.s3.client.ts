@@ -45,7 +45,7 @@ export class S3Client {
     });
 
     return {
-      promise: manager.promise(),
+      uploadPromise: manager.promise(),
       writeStream: pass
     };
   }
