@@ -9,9 +9,14 @@ import { ConfigService } from "./config/config.service";
 import { MongooseModule, MongooseModuleOptions } from "@nestjs/mongoose";
 import { FamilyModule } from "./family/family.module";
 import { InviteModule } from "./invite/invite.module";
-import { MailerModule, HandlebarsAdapter } from "@nest-modules/mailer";
+import {
+  MailerModule,
+  HandlebarsAdapter,
+  MailerOptions
+} from "@nest-modules/mailer";
 import { FileModule } from "./file/file.module";
 import { UploadOptions } from "graphql-upload";
+import { AwsModule } from "./aws/aws.module";
 
 /**
  * Root module of the application.
@@ -29,7 +34,7 @@ import { UploadOptions } from "graphql-upload";
     GraphQLModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => {
+      useFactory: (configService: ConfigService): GqlModuleOptions => {
         const options: GqlModuleOptions = {
           // debug messages in responses
           debug: true,
@@ -54,7 +59,7 @@ import { UploadOptions } from "graphql-upload";
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => {
+      useFactory: (configService: ConfigService): MongooseModuleOptions => {
         const options: MongooseModuleOptions = {
           uri: configService.mongoUri,
           useNewUrlParser: true,
@@ -75,7 +80,7 @@ import { UploadOptions } from "graphql-upload";
     MailerModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService): MailerOptions => ({
         transport: configService.emailSmtpUri,
         defaults: {
           from: configService.emailFrom
@@ -94,7 +99,8 @@ import { UploadOptions } from "graphql-upload";
     ConfigModule,
     FamilyModule,
     InviteModule,
-    FileModule
+    FileModule,
+    AwsModule
   ]
 })
 export class AppModule {}

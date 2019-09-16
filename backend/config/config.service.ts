@@ -69,7 +69,14 @@ export class ConfigService {
         .hostname()
         .required(),
       GRAPHQL_MAX_FILE_SIZE: Joi.number().required(),
-      GRAPHQL_MAX_FILES: Joi.number().required()
+      GRAPHQL_MAX_FILES: Joi.number().required(),
+      AWS_S3_ACCESS_KEY_ID: Joi.string().required(),
+      AWS_S3_SECRET_ACCESS_KEY: Joi.string().required(),
+      AWS_S3_REGION_NAME: Joi.string().required(),
+      AWS_S3_BUCKET_NAME: Joi.string().required(),
+      CDN_HOSTNAME: Joi.string()
+        .hostname()
+        .required()
     });
 
     const { error, value: validatedEnvConfig } = Joi.validate(
@@ -146,5 +153,24 @@ export class ConfigService {
 
   get graphQLMaxFiles(): number {
     return Number(this.envConfig.GRAPHQL_MAX_FILE_SIZE).valueOf();
+  }
+
+  get awsS3RegionName(): string {
+    return this.envConfig.AWS_S3_REGION_NAME;
+  }
+
+  get awsS3Credentials() {
+    return {
+      accessKeyId: this.envConfig.AWS_S3_ACCESS_KEY_ID,
+      secretAccessKey: this.envConfig.AWS_S3_SECRET_ACCESS_KEY
+    };
+  }
+
+  get awsS3BucketName(): string {
+    return this.envConfig.AWS_S3_BUCKET_NAME;
+  }
+
+  get cdnHostName(): string {
+    return this.envConfig.CDN_HOSTNAME;
   }
 }

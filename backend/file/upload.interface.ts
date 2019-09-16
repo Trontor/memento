@@ -1,7 +1,7 @@
-import { Stream } from "stream";
+import { Readable } from "stream";
 
 export interface Upload {
-  createReadStream: () => Stream;
+  createReadStream: () => Readable;
   filename: string;
   mimetype: string;
   encoding: string;
