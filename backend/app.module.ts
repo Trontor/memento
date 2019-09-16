@@ -28,8 +28,6 @@ import { AwsModule } from "./aws/aws.module";
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, "../..", "client/build")
     }),
-    // upload custom scalar for GraphQL
-    // Upload,
     // run a graphql server at `/graphql`
     GraphQLModule.forRootAsync({
       imports: [ConfigModule],
@@ -87,7 +85,7 @@ import { AwsModule } from "./aws/aws.module";
         },
         template: {
           dir: __dirname + "/templates",
-          adapter: new HandlebarsAdapter(), // or new PugAdapter()
+          adapter: new HandlebarsAdapter(),
           options: {
             strict: true
           }

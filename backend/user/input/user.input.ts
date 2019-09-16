@@ -1,8 +1,10 @@
 import { InputType, ID, Field } from "type-graphql";
 import { Gender } from "../dto/gender.dto";
 import { GraphQLUpload } from "graphql-upload";
-// import { Upload } from "../../upload/upload.scalar";
 
+/**
+ * GraphQL input for updating a `User`.
+ */
 @InputType()
 export class UpdateUserInput {
   @Field(type => ID)
@@ -21,6 +23,9 @@ export class UpdateUserInput {
   image?: any;
 }
 
+/**
+ * GraphQL input for signing up a new `User`.
+ */
 @InputType()
 export class UserSignupInput {
   @Field()

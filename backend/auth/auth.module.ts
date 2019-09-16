@@ -10,9 +10,6 @@ import { JwtStrategy } from "./strategies/jwt.strategy";
 
 @Module({
   imports: [
-    /**
-     * Special import due to circular dependency between AuthModule and UserModule.
-     */
     forwardRef(() => UserModule),
     PassportModule.register({ defaultStrategy: "jwt", session: false }),
     ConfigModule,

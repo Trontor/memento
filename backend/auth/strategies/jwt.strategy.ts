@@ -6,9 +6,14 @@ import { JwtPayload } from "../interfaces/jwt-payload.interface";
 import { ConfigService } from "../../config/config.service";
 import { mapDocumentToUserDTO } from "../../user/schema/user.mapper";
 
+/**
+ * Validates a JWT token provided in the request header as a
+ * Bearer token.
+ */
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, "jwt") {
   constructor(private authService: AuthService, configService: ConfigService) {
+    // additional construction using custom config
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: configService.jwtSecret

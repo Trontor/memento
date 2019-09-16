@@ -19,6 +19,9 @@ import { fromHexStringToObjectId } from "../common/mongo.util";
 import { FileService } from "../file/file.service";
 import { IUpdateUserData } from "./interfaces/user.update.interface";
 
+/**
+ * Manages CRUD for users
+ */
 @Injectable()
 export class UserService implements IUserService {
   private readonly logger = new Logger(UserService.name);
@@ -28,26 +31,33 @@ export class UserService implements IUserService {
     private readonly fileService: FileService
   ) {}
 
-  async updateRole(updateeId: string, input: RoleInput): Promise<User> {
-    const user = await this.UserModel.findOneAndUpdate(
-      {
-        _id: fromHexStringToObjectId(updateeId),
-        "roles.familyId": input.familyId
-      },
-      {
-        $set: {
-          "roles.$.familyRole": input.familyRole
-        }
-      },
-      {
-        new: true
-      }
-    );
-    if (!user) {
-      this.logger.error("User not in family");
-      throw new BadRequestException("Updatee not in family");
+  /**
+   * Fetches and returns a `UserDocument` by `email`.
+   * @param email email of user to be found
+   */
+  async findOneByEmail(email: string): Promise<UserDocument> {
+    const user = await this.UserModel.findOne({
+      lowercaseEmail: email.toLowerCase()
+    }).exec();
+    if (!user) throw new UserNotFoundException();
+    return user;
+  }
+
+  /**
+   * Creates a new `UserDocument` for a newly registered user.
+   * @param input signup fields
+   */
+  async createUser(input: UserSignupInput): Promise<User> {
+    const createdUser = new this.UserModel(input);
+
+    let userDoc: UserDocument;
+    try {
+      userDoc = await createdUser.save();
+    } catch (err) {
+      this.logger.error(err);
+      throw this.evaluateMongoError(err, input);
     }
-    return mapDocumentToUserDTO(user);
+    return mapDocumentToUserDTO(userDoc);
   }
 
   /**
@@ -133,25 +143,32 @@ export class UserService implements IUserService {
     return userDTO;
   }
 
-  async findOneByEmail(email: string): Promise<UserDocument> {
-    const user = await this.UserModel.findOne({
-      lowercaseEmail: email.toLowerCase()
-    }).exec();
-    if (!user) throw new UserNotFoundException();
-    return user;
-  }
-
-  async createUser(input: UserSignupInput): Promise<User> {
-    const createdUser = new this.UserModel(input);
-
-    let userDoc: UserDocument;
-    try {
-      userDoc = await createdUser.save();
-    } catch (err) {
-      this.logger.error(err);
-      throw this.evaluateMongoError(err, input);
+  /**
+   * Updates role of a user in a family.
+   *
+   * @param updateeId id of user that is being updated
+   * @param input role data will be updated to this value
+   */
+  async updateRole(updateeId: string, input: RoleInput): Promise<User> {
+    const user = await this.UserModel.findOneAndUpdate(
+      {
+        _id: fromHexStringToObjectId(updateeId),
+        "roles.familyId": input.familyId
+      },
+      {
+        $set: {
+          "roles.$.familyRole": input.familyRole
+        }
+      },
+      {
+        new: true
+      }
+    );
+    if (!user) {
+      this.logger.error("User not in family");
+      throw new BadRequestException("Updatee not in family");
     }
-    return mapDocumentToUserDTO(userDoc);
+    return mapDocumentToUserDTO(user);
   }
 
   /**
