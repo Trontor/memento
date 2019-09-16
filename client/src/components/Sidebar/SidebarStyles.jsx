@@ -18,12 +18,12 @@ export const SidebarContainer = styled.div`
   font-size: 14px;
   z-index: 999;
   margin-left: ${props => -props.theme.size.sidebar}px;
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.4s ease-in-out;
   ${props =>
     props.isOpen &&
     css`
       transform: translateX(${props => props.theme.size.sidebar}px);
-      transition: transform 0.5s ease-in-out;
+      transition: transform 0.4s ease-in-out;
     `}
 
   @media screen and (min-width: ${props =>
@@ -110,11 +110,13 @@ export const SignOutButton = styled(ButtonSecondary)`
 `;
 
 export const CloseMenu = styled(Close)`
-  color: ${props => lighten(0.6, props.theme.palette.text)};
+  color: ${props => lighten(0.5, props.theme.palette.text)};
   cursor: pointer;
+  ${props => props.theme.mixins.hoverFade};
 
   &:hover {
     color: ${props => props.theme.palette.main};
+    ${props => props.theme.mixins.hoverFade};
   }
 
   @media screen and (min-width: ${props =>

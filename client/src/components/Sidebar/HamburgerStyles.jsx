@@ -24,9 +24,13 @@ export const HamburgerMenu = styled(MenuAltLeft)`
 
 export const ModalBackground = styled.div`
   background-color: ${props => props.theme.palette.background};
-  opacity: 0.7;
+  opacity: 0.8;
   width: 100%;
   height: 100%;
   position: absolute;
   z-index: 998;
+
+  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
+    display: none;
+  }
 `;
