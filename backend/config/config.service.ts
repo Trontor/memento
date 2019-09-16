@@ -45,9 +45,16 @@ export class ConfigService {
         EMAIL_USERNAME: process.env.EMAIL_USERNAME,
         EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
         EMAIL_FROM: process.env.EMAIL_FROM,
-        HOST_NAME: process.env.HOST_NAME
+        HOST_NAME: process.env.HOST_NAME,
+        GRAPHQL_MAX_FILES: process.env.GRAPHQL_MAX_FILES,
+        GRAPHQL_MAX_FILE_SIZE: process.env.GRAPHQL_MAX_FILE_SIZE,
+        AWS_S3_ACCESS_KEY_ID: process.env.AWS_S3_ACCESS_KEY_ID,
+        AWS_S3_BUCKET_NAME: process.env.AWS_S3_BUCKET_NAME,
+        AWS_S3_REGION_NAME: process.env.AWS_S3_REGION_NAME,
+        AWS_S3_SECRET_ACCESS_KEY: process.env.AWS_S3_SECRET_ACCESS_KEY,
+        CDN_HOSTNAME: process.env.CDN_HOSTNAME
       } as EnvConfig;
-      console.log("Config: ", config);
+      this.logger.log(`Config: ${config}`);
     }
     if (config) this.envConfig = this.validateInput(config);
   }
