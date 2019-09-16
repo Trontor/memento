@@ -70,6 +70,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  /* This code is used for debuggging the UI*/
   /* * {
     background: #000 !important;
     color: #0f0 !important;

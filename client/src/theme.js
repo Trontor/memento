@@ -22,7 +22,7 @@ const theme = {
     hoverFade: "transition: ease-in 0.1s"
   },
   size: {
-    sidebar: 280 /*px */
+    sidebar: 260 /*px */
   }
 };
 
