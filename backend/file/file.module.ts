@@ -7,6 +7,7 @@ import { AwsModuleOptions } from "../aws/interfaces/aws-options.interface";
 
 @Module({
   imports: [
+    // import AWS module for S3 client
     AwsModule.configure({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -18,6 +19,7 @@ import { AwsModuleOptions } from "../aws/interfaces/aws-options.interface";
         };
       }
     }),
+    // need config module for config values
     ConfigModule
   ],
   providers: [FileService],

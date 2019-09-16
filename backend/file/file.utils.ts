@@ -1,3 +1,6 @@
+/**
+ * Returns whether the mimetype is an accepted image.
+ */
 export const isImage = (mimetype: string) => {
   if (!mimetype || mimetype.trim() === "") return false;
   if (!mimetype.startsWith("image/")) return false;
@@ -15,6 +18,9 @@ export const isImage = (mimetype: string) => {
   }
 };
 
+/**
+ * Returns whether the mimetype is an accepted video.
+ */
 export const isVideo = (mimetype: string) => {
   if (!mimetype || mimetype.trim() === "") return false;
   if (!mimetype.startsWith("video/")) return false;

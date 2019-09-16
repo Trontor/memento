@@ -9,11 +9,16 @@ import {
 import { S3Client } from "./aws.s3.client";
 import { AWS_MODULE_OPTIONS } from "./aws.constants";
 
+/**
+ * Module for AWS services, such as S3.
+ */
 @Module({})
 export class AwsModule {
   public static configure(options: AwsModuleAsyncOptions): DynamicModule {
-    // confusingly named function: really just extracts the options out
+    // convert options into Providers
     const asyncProviders = this.createAsyncProviders(options);
+
+    // configure the S3Client as a Provider using custom options
     const S3ClientProvider = {
       provide: S3Client,
       useFactory: (awsModuleOptions: AwsModuleOptions): S3Client => {
@@ -28,12 +33,17 @@ export class AwsModule {
     return {
       module: AwsModule,
       imports: options.imports,
-      // option provider declared, so S3ClientProvider can access it in `useFactory()`
+      // option providers are in `asyncProviders`
+      // allows `S3ClientProvider` to access it in `useFactory()`
       providers: [...asyncProviders, S3ClientProvider],
       exports: [S3ClientProvider]
     };
   }
 
+  /**
+   * Creates arbitrary providers.
+   * @param options options for configuring the AwsModule
+   */
   private static createAsyncProviders(
     options: AwsModuleAsyncOptions
   ): Provider[] {
@@ -50,6 +60,10 @@ export class AwsModule {
     ];
   }
 
+  /**
+   * Creates arbitrary options providers.
+   * @param options options for configuring the AwsModule
+   */
   private static createAsyncOptionsProvider(
     options: AwsModuleAsyncOptions
   ): Provider {

@@ -10,6 +10,9 @@ import * as os from "os";
 import * as path from "path";
 import { createWriteStream, unlink, createReadStream } from "fs";
 
+/**
+ * Manages file upload, deletion, updating.
+ */
 @Injectable()
 export class FileService {
   private readonly logger = new Logger(FileService.name);

@@ -1,8 +1,11 @@
 import { ModuleMetadata, Type } from "@nestjs/common/interfaces";
 
+/**
+ * Options required by the AWS module.
+ */
 export interface AwsModuleOptions {
-  regionName: string;
-  bucketName: string;
+  regionName: string; // e.g. "us-east-1"
+  bucketName: string; // e.g. "my-bucket-name"
   credentials: {
     accessKeyId: string;
     secretAccessKey: string;

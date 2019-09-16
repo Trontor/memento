@@ -1,6 +1,10 @@
 import { ObjectType, Field, ID } from "type-graphql";
 import { User } from "../../user/dto/user.dto";
 
+/**
+ * GraphQL class for returning Family objects.
+ * Equivalent to a Data Transfer Object (DTO).
+ */
 @ObjectType()
 export class Family {
   @Field(type => ID)
