@@ -2,7 +2,11 @@ import React from "react";
 import { InstructionLabel, FormHelpText, FormSection } from 'ui/Forms';
 import { FamilyGroup } from "./InviteStyles";
 
-export default function InviteStep1({ currentStep, selectFamily, selected }) {
+export default function InviteStep1({
+  currentStep,
+  selectFamily,
+  selected
+  }){
 
   const familyGroups = [
     {

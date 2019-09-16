@@ -12,7 +12,6 @@ export default function InviteFamily() {
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedFamily, setSelectedFamily] = useState(null);
   const [inviteEmails, setInviteEmails] = useState([{ email: "", valid: false }]);
-  // const [emailError, setEmailError] = useState(false);
 
   const selectFamily = (familyName) => {
     if (selectedFamily === familyName) {
@@ -65,14 +64,8 @@ export default function InviteFamily() {
 
   return(
     <Formik
-      // validationSchema={validateEmail}
       validateOnBlur={false}
       validateOnChange={false}
-      // onSubmit={(values, actions) => {
-      //   setTimeout(() => {
-      //     actions.setSubmitting(false);
-      //   }, 1000);
-      // }}
       render={props => (
         <Container>
          {console.log(inviteEmails[0].valid)}
@@ -94,21 +87,18 @@ export default function InviteFamily() {
           />
 
           <FormNav>
-            { currentStep !== 1 ?
+            {currentStep !== 1 ?
               <ButtonSecondary onClick={prevStep}>Back</ButtonSecondary>
               : null
             }
-
               <AlignRight>
-                { currentStep !== 2 ?
+                {currentStep !== 2 ?
                   <ButtonPrimary disabled={selectedFamily == null} onClick={nextStep}>Next</ButtonPrimary>
                   :
                   <ButtonPrimary disabled={checkEmpty()} type="submit">Invite</ButtonPrimary>
                 }
               </AlignRight>
-
           </FormNav>
-
         </Container>
       )}/>
   );

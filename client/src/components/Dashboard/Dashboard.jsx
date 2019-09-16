@@ -18,17 +18,18 @@ export default function Dashboard(props) {
   if (error) {
     console.log("Error loading user data:", error);
   }
+
   if (data && data.currentUser) {
     user = data.currentUser;
     console.log("Success:", user);
   }
+
   if (loading) {
     return (
-      <div>
-        <Spinner size="large" />
-      </div>
+      <Spinner size="large" />
     );
   }
+
   return (
     <Container>
       <TextWrapper>
@@ -37,21 +38,23 @@ export default function Dashboard(props) {
         <DashboardButtons
           onClick={() => props.history.push("/create-family")}
         >
-          <CreateFamily size="55px" />
+          <CreateFamily/>
           <ButtonHeading>
             Create a Family
             <span>And get the rest of your family on board.</span>
           </ButtonHeading>
           <GoToButton />
         </DashboardButtons>
+
         <DashboardButtons>
-          <InviteFamily size="55px" />
+          <InviteFamily/>
           <ButtonHeading>
             Join an existing Family
             <span>Got an invite code? Join your family.</span>
           </ButtonHeading>
           <GoToButton />
         </DashboardButtons>
+
       </TextWrapper>
     </Container>
   );
