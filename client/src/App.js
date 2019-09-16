@@ -10,8 +10,9 @@ import CreateFamily from "./components/CreateFamily/CreateFamily";
 import Invite from "./components/Invite/Invite";
 import Settings from "./components/Settings/Settings";
 import UploadMemento from "./components/UploadMemento/UploadMemento";
-import Sidebar from "components/Sidebar/Sidebar";
-import Hamburger from "components/Sidebar/Hamburger"
+import FamilyGroup from "./components/FamilyGroup/FamilyGroup";
+import Sidebar from "./components/Sidebar/Sidebar";
+import Hamburger from "./components/Sidebar/Hamburger"
 import { SiteGrid, LeftColumn, Main } from "ui/Layout";
 
 const GlobalStyle = createGlobalStyle`
@@ -69,6 +70,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  /* This code is used for debuggging the UI*/
   /* * {
     background: #000 !important;
     color: #0f0 !important;
@@ -105,6 +107,14 @@ const authenticatedRoutes = [
   {
     name: "new-memento",
     component: UploadMemento
+  },
+  {
+    name: "settings",
+    component: Settings
+  },
+  {
+    name: "family",
+    component: FamilyGroup
   }
 ];
 

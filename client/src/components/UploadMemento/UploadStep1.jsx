@@ -1,9 +1,15 @@
 import React from "react";
-import { InstructionLabel, InputField, FormHelpText, FormSection } from 'ui/Forms';
+import { InstructionLabel, FormSection } from 'ui/Forms';
 import { RadioOption, RadioButton, RadioButtonStyle, RadioLabel, Tag, NewTag } from './UploadMementoStyles';
 import CreatableSelect from 'react-select/creatable';
 
-export default function UploadStep1({selectMementoType, selectEventType, setSelectEventType, handleRadioChange, customDropdown}){
+export default function UploadStep1({
+  selectMementoType,
+  selectEventType,
+  setSelectEventType,
+  handleRadioChange,
+  customDropdown
+  }){
 
   const eventOptions = [
     { value: 'birthday', label: 'Birthday' },
@@ -45,7 +51,7 @@ export default function UploadStep1({selectMementoType, selectEventType, setSele
         </RadioOption>
       </FormSection>
 
-      { selectMementoType === "event" && (
+      {selectMementoType === "event" && (
         <FormSection>
           <InstructionLabel>What kind of event is it?</InstructionLabel>
           <CreatableSelect

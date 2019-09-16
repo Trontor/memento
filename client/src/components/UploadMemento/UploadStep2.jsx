@@ -1,23 +1,29 @@
-import React, {useState, useEffect} from "react";
-import { InstructionLabel, InputField, FormHelpText, FormSection, TextArea } from 'ui/Forms';
-import { TagsContainer, Tag, NewTag , UploadFileButton, UploadFileIcon, UploadFileLabel, UploadFileContainer} from "./UploadMementoStyles";
+import React, {useState} from "react";
+import { InstructionLabel, InputField, FormSection, TextArea } from 'ui/Forms';
+import { AlignRight } from 'ui/Helpers';
+import { ButtonPrimary, ButtonSecondary } from 'ui/Buttons';
+import { TagsContainer, Tag, NewTag } from "./UploadMementoStyles";
 import { MediaDropzone } from "./MediaDropzone";
 import Textarea from 'react-textarea-autosize';
-import { ButtonPrimary, ButtonSecondary } from 'ui/Buttons';
-import { AlignRight } from 'ui/Helpers';
+import DateSelector from 'components/DateSelector/DateSelector';
 
-export default function UploadStep1({ selectTag, mementoTags }){
-  const tags = ["recipes", "painting", "stuffed toys", "cars", "jewellery", "photographs", "clothing", "family", "blanket", "food"];
+export default function UploadStep1({ selectTag, mementoTags, customDropdown }){
+  const tags = [
+    "recipes",
+    "painting",
+    "stuffed toys",
+    "cars",
+    "jewellery",
+    "photographs",
+    "clothing",
+    "family",
+    "blanket",
+    "food"
+  ];
 
   const [defaultTags, setDefaultTags] = useState(tags);
 
   const [newTag, setNewTag] = useState(null);
-
-  const mediaTypes = [
-    {type: "Photo", icon: "fas fa-image"},
-    {type: "Video", icon: "fas fa-film"},
-    {type: "Audio", icon: "fas fa-microphone"}
-  ]
 
   const handleChange = (tag) => {
     tag = tag.target.value;
@@ -43,19 +49,8 @@ export default function UploadStep1({ selectTag, mementoTags }){
       </FormSection>
 
       <FormSection>
-        <InstructionLabel>Upload your mementos.</InstructionLabel>
-        <UploadFileContainer>
-          {mediaTypes.map(media => (
-            <UploadFileButton>
-              <UploadFileIcon>
-              <i class={media.icon}></i>
-              </UploadFileIcon>
-              <UploadFileLabel>
-                {media.type}
-              </UploadFileLabel>
-            </UploadFileButton>
-          ))}
-        </UploadFileContainer>
+        <InstructionLabel>Enter a date of significance for this memento.</InstructionLabel>
+        <DateSelector customDropdown={customDropdown}/>
       </FormSection>
 
       <FormSection>
@@ -66,7 +61,7 @@ export default function UploadStep1({ selectTag, mementoTags }){
       <FormSection>
         <InstructionLabel>What does your memento contain?</InstructionLabel>
         <TagsContainer>
-          { tags.sort().map(tag =>
+          {tags.sort().map(tag =>
             <Tag
               onClick={() => selectTag(tag)}
               selected={mementoTags.includes(tag)}>
@@ -76,7 +71,7 @@ export default function UploadStep1({ selectTag, mementoTags }){
             <NewTag onClick={() => setNewTag("")}><i class="fas fa-plus"></i> edit/new</NewTag>
         </TagsContainer>
 
-        { newTag !== null && (
+        {newTag !== null && (
           <>
             <InputField
               placeholder="New tag name"
@@ -84,7 +79,9 @@ export default function UploadStep1({ selectTag, mementoTags }){
               onChange={e => handleChange(e)}
               // onBlur={() => setDefaultTags([...defaultTags, newTag])}
             />
+
             <ButtonPrimary onClick={() => setDefaultTags([...defaultTags, newTag])}>Create new tag</ButtonPrimary>
+
             <AlignRight>
               <ButtonSecondary onClick={() => setNewTag(null)}>Cancel</ButtonSecondary>
             </AlignRight>
