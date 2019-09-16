@@ -2,9 +2,9 @@
   "name": "memento",
   "version": "1.0.0",
   "description": "Team memento's IT project 2019",
-  "main": "dist/server2.js",
+  "main": "dist/server.js",
   "scripts": {
-    "start": "node dist/server2.js",
+    "start": "node dist/server.js",
     "lint": "tslint --project tsconfig.json",
     "gql": "cd old-graphql && graphql-codegen --config codegen.yml",
     "update": "npm i && cd client && npm i",
@@ -13,9 +13,9 @@
     "dev": "concurrently \"npm run client\" \"npm run server\"",
     "client": "npm start --prefix client",
     "postinstall": "rimraf dist && tsc -p tsconfig.build.json",
-    "server": "nodemon --exec ts-node server2.ts",
+    "server": "nodemon --exec ts-node server.ts",
     "test": "jest",
-    "start:prod": "NODE_ENV=production nodemon --exec ts-node server2.ts",
+    "start:prod": "NODE_ENV=production nodemon --exec ts-node server.ts",
     "start:debug": "nodemon --config nodemon-debug.json",
     "start:dev": "nodemon"
   },

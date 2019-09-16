@@ -7,6 +7,7 @@ import {
   Error,
   AnimateLabel
 } from "ui/Forms";
+import { withRouter } from "react-router";
 import { ButtonPrimary } from "ui/Buttons";
 import { Header } from "ui/Typography";
 import { Link } from "react-router-dom";
@@ -57,31 +58,34 @@ const SignupValidationSchema = yup.object().shape({
     .required("Password confirm is required")
 });
 
-/**
- * Processes a successful signup mutation by saving the resulting token
- * and re-routing to the dashboard.
- *
- * @param {Object} data Mutation result of the form:
- * "signup": {
- *     "token": "<token string>",
- *     "user": {
- *         "firstName": "<first name>",
- *         "lastName": "<last name>",
- *         "id": "<id gibberish>"
- *     }
- *   }
- */
-const processAuthentication = data => {
-  // Extract JWT token from response using ES6 destructuring
-  const { token } = data.signup;
-  // Store the token to localStorage, which is NOT a secure way to store
-  // sensitive information, but it is easy. See here:
-  // https://www.rdegges.com/2018/please-stop-using-local-storage/
-  localStorage.setItem("AUTH-TOKEN", token);
-};
+const Signup = withRouter(props => {
+  /**
+   * Processes a successful signup mutation by saving the resulting token
+   * and re-routing to the dashboard.
+   *
+   * @param {Object} data Mutation result of the form:
+   * "signup": {
+   *     "token": "<token string>",
+   *     "user": {
+   *         "firstName": "<first name>",
+   *         "lastName": "<last name>",
+   *         "userId": "userId
+   *     }
+   *   }
+   */
+  const processAuthentication = data => {
+    // Extract JWT token from response using ES6 destructuring
+    const { token } = data.signup;
+    // Store the token to localStorage, which is NOT a secure way to store
+    // sensitive information, but it is easy. See here:
+    // https://www.rdegges.com/2018/please-stop-using-local-storage/
+    localStorage.setItem("AUTH-TOKEN", token);
+    props.history.push("/dashboard");
+  };
 
-export default function Signup(props) {
-  if (props.history && localStorage.getItem("AUTH-TOKEN")) {
+  if (localStorage.getItem("AUTH-TOKEN")) {
+    console.log(props);
+
     props.history.push("/dashboard");
   }
   /**
@@ -103,24 +107,22 @@ export default function Signup(props) {
    *
    */
   const [signup, { loading, data, error }] = useMutation(SIGNUP, {
-    // A MutationOption that
+    // A MutationOption that fired when the mutation is completed succesfully
     onCompleted: processAuthentication
   });
+
+  let signUpErrors = [];
   if (loading) {
     return <div>Loading...</div>;
   }
+
   if (data) {
     return <div>{JSON.stringify(data)}</div>;
   }
+
   if (error) {
-    return (
-      <div>
-        {error.graphQLErrors
-          .map(err => err.message)
-          .map(message => (
-            <div>{message}</div>
-          ))}
-      </div>
+    signUpErrors = error.graphQLErrors.map(
+      gqlError => gqlError.message.message
     );
   }
   return (
@@ -128,7 +130,8 @@ export default function Signup(props) {
       <Formik
         initialValues={defaultValues}
         onSubmit={(values, actions) => {
-          signup({ variables: { input: { ...values } } });
+          const { confirmPassword, ...inputValues } = values;
+          signup({ variables: { input: inputValues } });
         }}
         validationSchema={SignupValidationSchema}
         validateOnBlur={false}
@@ -209,8 +212,12 @@ export default function Signup(props) {
                 <Error>{props.errors.confirmPassword}</Error>
               )}
             </InputSection>
-
-            <ButtonPrimary type="submit" spacing>Sign Up</ButtonPrimary>
+            {signUpErrors.map(error => (
+              <div>{error}</div>
+            ))}
+            <ButtonPrimary type="submit" spacing="true">
+              Sign Up
+            </ButtonPrimary>
             <HelpText>
               Already have an account? <Link to="/login">Log in</Link>
             </HelpText>
@@ -219,4 +226,5 @@ export default function Signup(props) {
       />
     </>
   );
-}
+});
+export default Signup;

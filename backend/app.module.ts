@@ -26,7 +26,7 @@ import { AwsModule } from "./aws/aws.module";
   imports: [
     // serve static React files
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, "..", "client")
+      rootPath: join(__dirname, "../..", "client/build")
     }),
     // upload custom scalar for GraphQL
     // Upload,

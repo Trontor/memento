@@ -1,14 +1,16 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import { theme } from "./theme";
 import Landing from "./components/Landing/Landing";
 import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
 import Dashboard from "./components/Dashboard/Dashboard";
-import Sidebar from "./components/Sidebar/Sidebar";
 import CreateFamily from "./components/CreateFamily/CreateFamily";
 import Invite from "./components/Invite/Invite";
+import Settings from "./components/Settings/Settings";
+import UploadMemento from "./components/UploadMemento/UploadMemento";
+import Sidebar from "components/Sidebar/Sidebar";
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -26,7 +28,8 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     font-size: 14px;
     font-family: "Rubik", Arial, Helvetica, sans-serif;
-    color: ${props => props.theme.palette.text}
+    color: ${props => props.theme.palette.text};
+    background-color: ${props => props.theme.palette.background};
   }
 
   a {
@@ -48,6 +51,8 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     letter-spacing: 0.03em;
     cursor: pointer;
+    color: ${props => props.theme.palette.text};
+    background-color: white;
 
     &:focus {
       outline: none;
@@ -65,7 +70,40 @@ const GlobalStyle = createGlobalStyle`
   } */
 `;
 
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      localStorage.getItem("AUTH-TOKEN") ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to="/login" />
+      )
+    }
+  />
+);
+
+const authenticatedRoutes = [
+  {
+    name: "dashboard",
+    component: Dashboard
+  },
+  {
+    name: "create-family",
+    component: CreateFamily
+  },
+  {
+    name: "invite",
+    component: Invite
+  },
+  {
+    name: "new-memento",
+    component: UploadMemento
+  }
+];
+
 function App() {
+  const authenticatedPaths = authenticatedRoutes.map(route => "/" + route.name);
   return (
     <ThemeProvider theme={theme}>
       <Router>
@@ -73,10 +111,22 @@ function App() {
         <Route path="/" exact component={Landing} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/sidebar" component={Sidebar} />
-        <Route path="/create-family" component={CreateFamily} />
-        <Route path="/invite" component={Invite} />
+        <Route
+          path={authenticatedPaths}
+          render={() => (
+            <div style={{ display: "flex", height: "100%" }}>
+              <Sidebar />
+              <div style={{ flex: 1 }}>
+                {authenticatedRoutes.map(route => (
+                  <PrivateRoute
+                    path={`/${route.name}`}
+                    component={route.component}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        />
       </Router>
     </ThemeProvider>
   );

@@ -14,18 +14,42 @@ export interface EnvConfig {
 @Injectable()
 export class ConfigService {
   private readonly logger = new Logger(ConfigService.name);
-  private readonly envConfig: EnvConfig;
+  private readonly envConfig: EnvConfig = {};
 
-  constructor(filePath: string) {
+  constructor(filePath: string = "") {
     let file: Buffer | undefined;
-    try {
-      file = fs.readFileSync(filePath);
-    } catch (error) {
-      file = fs.readFileSync("development.env");
+    let config = null;
+    // Check if a file path has been passed as a parameter
+    if (filePath) {
+      try {
+        file = fs.readFileSync(filePath);
+        config = dotenv.parse(file);
+        console.log("Successfully read config from " + filePath);
+      } catch (error) {
+        console.log("Error reading config from " + filePath);
+      }
+    } else {
+      // Otherwise, just parse from .env
+      console.log("Loading config from .env file");
+      dotenv.config();
+      config = {
+        MONGO_URI: process.env.MONGO_URI,
+        MONGO_AUTH_ENABLED: process.env.MONGO_AUTH_ENABLED,
+        MONGO_USER: process.env.MONGO_USER,
+        MONGO_PASSWORD: process.env.MONGO_PASSWORD,
+        JWT_SECRET: process.env.JWT_SECRET,
+        JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,
+        EMAIL_ENABLED: process.env.EMAIL_ENABLED,
+        EMAIL_HOSTNAME: process.env.EMAIL_HOSTNAME,
+        EMAIL_PORT: process.env.EMAIL_PORT,
+        EMAIL_USERNAME: process.env.EMAIL_USERNAME,
+        EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
+        EMAIL_FROM: process.env.EMAIL_FROM,
+        HOST_NAME: process.env.HOST_NAME
+      } as EnvConfig;
+      console.log("Config: ", config);
     }
-
-    const config = dotenv.parse(file);
-    this.envConfig = this.validateInput(config);
+    if (config) this.envConfig = this.validateInput(config);
   }
 
   /**
