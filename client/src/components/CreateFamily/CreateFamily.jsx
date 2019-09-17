@@ -50,6 +50,7 @@ export default function CreateFamily() {
         render={props => (
           <form onSubmit={props.handleSubmit}>
             <FormSection>
+              {/* Family Group Name */}
               <InstructionLabel>
                 What would you like to name your Family group?
               </InstructionLabel>
@@ -71,6 +72,7 @@ export default function CreateFamily() {
             </FormSection>
 
             <FormSection>
+              {/* Family Profile Photo */}
               <InstructionLabel>
                 Select a display photo for your Family.
               </InstructionLabel>
@@ -79,6 +81,7 @@ export default function CreateFamily() {
             </FormSection>
 
             <FormSection>
+              {/* Family Group Colour Theme */}
               <InstructionLabel>
                 Pick a colour theme for your Family group page.
               </InstructionLabel>

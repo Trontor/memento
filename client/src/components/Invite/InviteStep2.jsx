@@ -19,32 +19,31 @@ export default function InviteStep2({
 
   return(
     <FormSection>
+      {/* Email Addresses for Invite */}
       <InstructionLabel>Enter the email addresses of family members you would like to invite to <FamilyGroupName>{selected}</FamilyGroupName> :</InstructionLabel>
-
       <EmailsList>
-        {
-          inviteEmails.map((email, idx) => (
-            <>
-            <EmailInvite>
-              <InputField
-                type="email"
-                placeholder="name@example.com"
-                value={email.email}
-                onChange={e => handleChange(idx, e)}
-                onBlur={e => validateEmail(idx, e)}
-              />
-              {inviteEmails.length > 1 && (
-              <DeleteButton
-                onClick={() => deleteEmail(idx)}>
-                <i class="fa fa-trash"></i>
-              </DeleteButton>
-              )}
-            </EmailInvite>
-          </>
-          ))
-        }
+        {inviteEmails.map((email, idx) => (
+          <>
+          <EmailInvite>
+            <InputField
+              type="email"
+              placeholder="name@example.com"
+              value={email.email}
+              onChange={e => handleChange(idx, e)}
+              onBlur={e => validateEmail(idx, e)}
+            />
+            {inviteEmails.length > 1 && (
+            <DeleteButton
+              onClick={() => deleteEmail(idx)}>
+              <i class="fa fa-trash"></i>
+            </DeleteButton>
+            )}
+          </EmailInvite>
+        </>
+        ))}
       </EmailsList>
 
+      {/* Add a max of 10 email addresses at once */}
       {inviteEmails.length < 10 && (
         <AddButton
           text="Add another"

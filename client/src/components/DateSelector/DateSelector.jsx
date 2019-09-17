@@ -3,12 +3,12 @@ import Select from "react-select";
 import { DateInput, DateField } from "./DateSelectorStyles";
 
 export default function DateSelector({customDropdown}){
-  //Hooks for date values
+  // Date values
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
 
-  //Join the day, month and year values intoa string to be used for validation
+  // Join the day, month and year values intoa string to be used for validation
   const joinDate = () => {
     return year + '-' + month.value + '-' + day;
   }
@@ -28,7 +28,7 @@ export default function DateSelector({customDropdown}){
     { label: "December", value: "12"}
   ]
 
-  //Run joinDate whenever a change in the values are detected
+  // Run joinDate whenever a change in the values are detected
   useEffect(()=> {
     joinDate()
   }, [day, month, year])
