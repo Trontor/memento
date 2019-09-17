@@ -3,7 +3,15 @@ import { InstructionLabel, FormSection, InputField, FormHelpText } from 'ui/Form
 import { FamilyGroupName, EmailsList, EmailInvite, DeleteButton } from './InviteStyles';
 import { AddButton } from 'ui/Buttons';
 
-export default function InviteStep2({ currentStep, addEmail, deleteEmail, inviteEmails, selected, handleChange, validateEmail}) {
+export default function InviteStep2({
+  currentStep,
+  addEmail,
+  deleteEmail,
+  inviteEmails,
+  selected,
+  handleChange,
+  validateEmail
+  }){
 
   if (currentStep !== 2) {
     return null
@@ -37,7 +45,7 @@ export default function InviteStep2({ currentStep, addEmail, deleteEmail, invite
         }
       </EmailsList>
 
-      { inviteEmails.length < 10 && (
+      {inviteEmails.length < 10 && (
         <AddButton
           text="Add another"
           onClick={() => addEmail({email: "", valid: false})}>

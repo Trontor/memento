@@ -14,7 +14,10 @@ import { Spinner } from "ui/Loaders";
 
 export default function Dashboard(props) {
   const { data, error, loading } = useQuery(GET_CURRENT_USER);
+
   let user = {};
+
+  //Handle the states of displaying data, error and loading
   if (error) {
     console.log("Error loading user data:", error);
   }
@@ -35,6 +38,7 @@ export default function Dashboard(props) {
       <TextWrapper>
         <h2>Hello {user.firstName}!</h2>
         <p>Get started with one of the following actions: </p>
+
         <DashboardButtons
           onClick={() => props.history.push("/create-family")}
         >

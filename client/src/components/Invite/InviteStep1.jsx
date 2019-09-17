@@ -36,7 +36,6 @@ export default function InviteStep1({
         <FormHelpText>
           You are able to invite people to Family groups you are an administrator of.
         </FormHelpText>
-
       </FormSection>
     </>
   );
