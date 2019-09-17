@@ -16,7 +16,7 @@ export const TextWrapper = styled.div`
   border-radius: 8px;
 
   @media screen and (min-width: ${props =>
-    props.theme.breakpoints.tabletLandscape}) {
+  props.theme.breakpoints.tabletLandscape}) {
     width: 600px;
   }
 
@@ -33,7 +33,7 @@ export const GoToButton = styled(NavigateNext)`
   margin: 0 auto;
 
   @media screen and (min-width: ${props =>
-    props.theme.breakpoints.mobile}) {
+  props.theme.breakpoints.mobile}) {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
@@ -56,7 +56,7 @@ export const DashboardButtons = styled.div`
     }
 
   @media screen and (min-width: ${props =>
-    props.theme.breakpoints.mobile}) {
+  props.theme.breakpoints.mobile}) {
     width: 100%;
     display: grid;
     grid-template-columns: 50px auto 70px;
@@ -91,7 +91,7 @@ export const ButtonHeading = styled.h4`
   }
 
   @media screen and (min-width: ${props =>
-    props.theme.breakpoints.mobile}) {
+  props.theme.breakpoints.mobile}) {
     margin: 10px 0;
   }
 `;

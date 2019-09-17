@@ -1,10 +1,12 @@
 import styled from "styled-components";
 
+// Overall site layout
 export const SiteGrid = styled.div`
   width: 100%;
   display: flex;
 `;
 
+// Left column of site grid
 export const LeftColumn = styled.div`
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
@@ -17,6 +19,7 @@ export const LeftColumn = styled.div`
   }
 `;
 
+// Main view of site grid
 export const Main = styled.div`
   order: 1;
   width: 100%;

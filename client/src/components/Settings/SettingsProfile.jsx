@@ -16,22 +16,8 @@ import { ButtonPrimary, AddButton } from "ui/Buttons";
 import { DeleteButton } from "components/Invite/InviteStyles";
 
 import { FormSection, InputSection, InputLabel, InputField } from "ui/Forms";
-//import { useQuery } from "@apollo/react-hooks";
-//import GET_CURRENT_USER from "queries/GetCurrentUser";
 
 export default function SettingsProfile({ menuClick }) {
-  //const { data } = useQuery(GET_CURRENT_USER);
-
-  /*let defaultValues = {
-    firstName: "",
-    lastName: ""
-  };
-
-  if (data && data.currentUser) {
-    defaultValues.firstName = data.currentUser.firstName;
-    defaultValues.lastName = data.currentUser.lastName;
-  }*/
-
   let [file, setFile] = useState(null); //file for profile picture
   const [birthday, setBirthday] = useState(null); //birthday state
   const birthdayHandler = date => setBirthday(date);

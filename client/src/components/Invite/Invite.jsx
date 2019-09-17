@@ -88,7 +88,7 @@ export default function InviteFamily() {
             validateEmail={validateEmail}
           />
 
-          //A navigation container for the 'Back' and 'Next' buttons
+      {/* A navigation container for the 'Back' and 'Next' buttons */}
           <FormNav>
             {currentStep !== 1 ?
               <ButtonSecondary onClick={prevStep}>Back</ButtonSecondary>

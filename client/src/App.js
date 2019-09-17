@@ -16,6 +16,7 @@ import Hamburger from "./components/Sidebar/Hamburger"
 import { SiteGrid, LeftColumn, Main } from "ui/Layout";
 
 const GlobalStyle = createGlobalStyle`
+  /* Reset styles */
   html {
     height: 100%;
     margin: 0;
@@ -70,7 +71,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  /* This code is used for debuggging the UI*/
+  /* This code is used for debuggging */
   /* * {
     background: #000 !important;
     color: #0f0 !important;
@@ -121,7 +122,7 @@ const authenticatedRoutes = [
 function App() {
   const authenticatedPaths = authenticatedRoutes.map(route => "/" + route.name);
 
-  //Toggling sidebar
+  //Toggle sidebar
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 

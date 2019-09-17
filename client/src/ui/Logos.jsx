@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+//Logotype to be used across the site
 const StyledLogo = styled.div`
   color: ${props => props.theme.palette.text};
   font-size: ${props => props.size === "small" ? "24px" : "40px"};

@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import { center } from "./Helpers";
 
+//Pure css spinner for loading state
 export const Spinner = styled.span`
   ${center};
   border-radius: 50%;

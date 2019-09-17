@@ -1,6 +1,6 @@
 import React from "react";
 import { Header } from "ui/Typography";
-import { Container } from "ui/Helpers";
+import { Container, AlignRight } from "ui/Helpers";
 import {
   InstructionLabel,
   InputField,
@@ -10,11 +10,9 @@ import {
 } from "ui/Forms";
 import { CirclePicker } from "react-color";
 import { PickerWrapper } from "./CreateFamilyStyles";
-import { StyledDropzone } from "components/FileDropzone";
+import { StyledDropzone } from "components/FileDropzone/FileDropzone";
 import { ButtonPrimary } from "ui/Buttons";
-import { AlignRight } from "ui/Helpers";
 import { Formik } from "formik";
-
 import * as yup from "yup";
 import { useMutation } from "@apollo/react-hooks";
 import { CREATE_NEW_FAMILY } from "mutations/Family";
