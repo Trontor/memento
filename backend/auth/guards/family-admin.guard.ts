@@ -10,7 +10,10 @@ import { User } from "../../user/dto/user.dto";
 import { isFamilyAdmin } from "../../user/user.util";
 
 /**
- * Authorizes family admins
+ * Authorizes family admins by using the `familyId` in
+ * `input: {familyId: "..." }` of an incoming GraphQL query or mutation
+ * to check if the current authenticated user is a family admin
+ * of this specific family.
  */
 @Injectable()
 export class FamilyAdminGuard implements CanActivate {

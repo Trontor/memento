@@ -4,8 +4,6 @@ import { User } from "./dto/user.dto";
 
 /**
  * Checks if an array of roles already contains the same role.
- * @param roles
- * @param role
  */
 export const containsRole = (roles: Role[], role: RoleInput): boolean => {
   for (let r of roles) {
@@ -25,6 +23,9 @@ const containsFamilyId = (roles: Role[], familyId: string): boolean => {
   return false;
 };
 
+/**
+ * Checks if a user is an admin in a specific family
+ */
 export const isFamilyAdmin = (user: User, familyId: string): boolean => {
   if (!user || !user.familyRoles || !familyId) return false;
   return containsRole(user.familyRoles, {
@@ -33,6 +34,9 @@ export const isFamilyAdmin = (user: User, familyId: string): boolean => {
   });
 };
 
+/**
+ * Checks if user is in a family.
+ */
 export const isUserInFamily = (user: User, familyId: string): boolean => {
   if (!user || !user.familyRoles || !familyId) return false;
   return containsFamilyId(user.familyRoles, familyId);

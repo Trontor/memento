@@ -1,6 +1,9 @@
 import { ObjectType, Field, InputType } from "type-graphql";
 import { User } from "../../user/dto/user.dto";
 
+/**
+ * GraphQL object for authentication success.
+ */
 @ObjectType()
 export class AuthOutput {
   @Field()
@@ -10,6 +13,9 @@ export class AuthOutput {
   user!: User;
 }
 
+/**
+ * GraphQL input for logging in.
+ */
 @InputType()
 export class LoginInput {
   @Field()

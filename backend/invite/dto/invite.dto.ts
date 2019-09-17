@@ -1,5 +1,9 @@
 import { Field, ObjectType, ID } from "type-graphql";
 
+/**
+ * GraphQL class for returning Invite objects.
+ * Equivalent to a Data Transfer Object (DTO).
+ */
 @ObjectType()
 export class Invite {
   @Field(type => ID)
@@ -18,6 +22,10 @@ export class Invite {
   expiresAt!: Date;
 }
 
+/**
+ * GraphQL class for invite emails that failed to send.
+ * Equivalent to a Data Transfer Object (DTO).
+ */
 @ObjectType()
 export class FailedInviteOutput {
   @Field()
@@ -27,6 +35,10 @@ export class FailedInviteOutput {
   error!: string;
 }
 
+/**
+ * GraphQL class for return value of `inviteByEmail` mutation.
+ * Equivalent to a Data Transfer Object (DTO).
+ */
 @ObjectType()
 export class SendInvitesOutput {
   // emails that were successfully sent

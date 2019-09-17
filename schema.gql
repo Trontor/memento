@@ -70,6 +70,7 @@ type Mutation {
   signup(input: UserSignupInput!): AuthOutput!
   updateUser(input: UpdateUserInput!): User!
   updateRole(input: RoleInput!, userId: String!): User!
+  addProfilePhoto(photo: Upload!): String!
   login(input: LoginInput!): AuthOutput!
   createFamily(input: CreateFamilyInput!): Family!
   joinFamily(input: JoinFamilyInput!): Family!
@@ -82,8 +83,8 @@ type Query {
   user(userId: String!): User!
   currentUser: User!
   refreshToken: String!
-  family(familyId: String!): Family!
-  invite(inviteId: String!): Invite!
+  family(familyId: ID!): Family!
+  invite(inviteId: ID!): Invite!
 }
 
 type Role {
@@ -123,8 +124,11 @@ input UpdateUserInput {
   location: String
   dateOfBirth: String
   gender: Gender
-  imageUrl: String
+  image: Upload
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 type User {
   userId: ID!

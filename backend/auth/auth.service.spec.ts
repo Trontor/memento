@@ -3,12 +3,12 @@ import { AuthService } from "./auth.service";
 import { ConfigService } from "../config/config.service";
 import { ConfigModule } from "../config/config.module";
 import { JwtModule } from "@nestjs/jwt";
-import { UserModule } from "../user/user.module";
 import { UserService } from "../user/user.service";
 import { IUserService } from "../user/interfaces/IUserService";
 import { UserDocument, UserModel } from "../user/schema/user.schema";
-import { User } from "../user/dto/user.dto";
 import { UserSignupInput } from "../user/input/user.input";
+
+// TODO: test is not working yet
 
 class UserServiceMock implements IUserService {
   async findOneByEmail(email: string): Promise<UserDocument> {
@@ -21,7 +21,6 @@ class UserServiceMock implements IUserService {
 
 describe("AuthService", () => {
   let service: AuthService;
-  let mockUserService: IUserService;
 
   beforeEach(async () => {
     const UserServiceProvider = {
@@ -46,7 +45,6 @@ describe("AuthService", () => {
     }).compile();
 
     service = module.get<AuthService>(AuthService);
-    mockUserService = module.get<IUserService>(UserService);
   });
 
   it("should be defined", () => {

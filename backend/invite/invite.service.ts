@@ -1,10 +1,4 @@
-import {
-  Injectable,
-  Logger,
-  Inject,
-  forwardRef,
-  InternalServerErrorException
-} from "@nestjs/common";
+import { Injectable, Logger, Inject, forwardRef } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { InviteDocument } from "./schema/invite.schema";
 import { Model } from "mongoose";
@@ -22,8 +16,10 @@ import { ConfigService } from "../config/config.service";
 import { FamilyService } from "../family/family.service";
 import Joi from "@hapi/joi";
 import { Family } from "../family/dto/family.dto";
-import { join } from "path";
 
+/**
+ * Manages CRUD for invites.
+ */
 @Injectable()
 export class InviteService {
   private readonly logger = new Logger(InviteService.name);
@@ -35,12 +31,50 @@ export class InviteService {
     private readonly mailerService: MailerService
   ) {}
 
-  async sendInvitesByEmail(inviter: User, familyId: string, emails: string[]) {
-    const familyPromise = this.familyService.getFamily(familyId);
-    const invitePromise = this.createInvite(inviter, familyId);
+  /**
+   * Fetches invite from the database.
+   *
+   * @param inviteId id of invite
+   */
+  async getInvite(inviteId: string): Promise<Invite> {
+    const invite = await this.InviteModel.findById(inviteId);
+    if (!invite) throw new InviteNotFoundException();
+    if (!isValidInvite(invite)) throw new InviteExpiredException();
+    return mapDocumentToInviteDTO(invite);
+  }
 
-    const family = await familyPromise;
-    const invite = await invitePromise;
+  /**
+   * Creates a new invite in the database.
+   *
+   * @param inviter user inviting new members
+   * @param familyId id of family that `inviter` belongs to
+   */
+  async createInvite(inviter: User, familyId: string): Promise<Invite> {
+    const now = new Date();
+    const tomorrow = new Date(now.getTime() + 1000 * 60 * 60 * 24);
+    this.logger.log(`${now} => ${tomorrow}`);
+    let invite: InviteDocument = new this.InviteModel({
+      _id: uuidv4(),
+      inviterId: inviter.userId,
+      familyId: familyId,
+      createdAt: now,
+      expiresAt: tomorrow
+    });
+    invite = await invite.save();
+    this.logger.debug(invite);
+    return mapDocumentToInviteDTO(invite);
+  }
+
+  /**
+   * Sends invite emails to new members to join a family.
+   *
+   * @param inviter user inviting the new members
+   * @param familyId id of family that is inviting new members
+   * @param emails emails of new members to be invited
+   */
+  async sendInvitesByEmail(inviter: User, familyId: string, emails: string[]) {
+    const family = await this.familyService.getFamily(familyId);
+    const invite = await this.createInvite(inviter, familyId);
 
     const seenEmails = new Set<string>();
     const sent: string[] = [];
@@ -72,14 +106,19 @@ export class InviteService {
       }
     }
 
-    // await promises
+    // await promises in parallel for efficiency
     await Promise.all(promises);
-    // this.logger.debug(results);
-    // this.logger.debug(failed);
-    // this.logger.debug(sent);
     return { sent, failed };
   }
 
+  /**
+   * Returns a promise that sends an invite by email.
+   *
+   * @param inviter user inviting the new members
+   * @param invite the newly created invite
+   * @param family the family that members users will be invited to
+   * @param email email of the new member being invited
+   */
   private async sendInviteByEmailPromise(
     inviter: User,
     invite: Invite,
@@ -124,27 +163,5 @@ export class InviteService {
       this.logger.error("Cannot send email");
       throw new Error(email);
     }
-  }
-
-  async getInvite(inviteId: string): Promise<Invite> {
-    const invite = await this.InviteModel.findById(inviteId);
-    if (!invite) throw new InviteNotFoundException();
-    if (!isValidInvite(invite)) throw new InviteExpiredException();
-    return mapDocumentToInviteDTO(invite);
-  }
-  async createInvite(inviter: User, familyId: string): Promise<Invite> {
-    const now = new Date();
-    const tomorrow = new Date(now.getTime() + 1000 * 60 * 60 * 24);
-    this.logger.log(`${now} => ${tomorrow}`);
-    let invite: InviteDocument = new this.InviteModel({
-      _id: uuidv4(),
-      inviterId: inviter.userId,
-      familyId: familyId,
-      createdAt: now,
-      expiresAt: tomorrow
-    });
-    invite = await invite.save();
-    this.logger.debug(invite);
-    return mapDocumentToInviteDTO(invite);
   }
 }

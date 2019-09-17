@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+
 /**
  * Checks if the user's password provided matches the user's password hash
  *
