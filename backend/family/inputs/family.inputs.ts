@@ -1,11 +1,17 @@
 import { InputType, Field, ID } from "type-graphql";
 
+/**
+ * GraphQL input for joining a family
+ */
 @InputType()
 export class JoinFamilyInput {
   @Field(type => ID)
   inviteId!: string;
 }
 
+/**
+ * GraphQL input for creating a family
+ */
 @InputType()
 export class CreateFamilyInput {
   @Field()
@@ -21,6 +27,9 @@ export class CreateFamilyInput {
   colour?: string;
 }
 
+/**
+ * GraphQL input for updating a family
+ */
 @InputType()
 export class UpdateFamilyInput {
   @Field({ nullable: true })

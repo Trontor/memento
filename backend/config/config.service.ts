@@ -45,9 +45,16 @@ export class ConfigService {
         EMAIL_USERNAME: process.env.EMAIL_USERNAME,
         EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
         EMAIL_FROM: process.env.EMAIL_FROM,
-        HOST_NAME: process.env.HOST_NAME
+        HOST_NAME: process.env.HOST_NAME,
+        GRAPHQL_MAX_FILES: process.env.GRAPHQL_MAX_FILES,
+        GRAPHQL_MAX_FILE_SIZE: process.env.GRAPHQL_MAX_FILE_SIZE,
+        AWS_S3_ACCESS_KEY_ID: process.env.AWS_S3_ACCESS_KEY_ID,
+        AWS_S3_BUCKET_NAME: process.env.AWS_S3_BUCKET_NAME,
+        AWS_S3_REGION_NAME: process.env.AWS_S3_REGION_NAME,
+        AWS_S3_SECRET_ACCESS_KEY: process.env.AWS_S3_SECRET_ACCESS_KEY,
+        CDN_HOSTNAME: process.env.CDN_HOSTNAME
       } as EnvConfig;
-      console.log("Config: ", config);
+      this.logger.log(`Config: ${config}`);
     }
     if (config) this.envConfig = this.validateInput(config);
   }
@@ -90,6 +97,15 @@ export class ConfigService {
       }),
       TEST_EMAIL_TO: Joi.string(),
       HOST_NAME: Joi.string()
+        .hostname()
+        .required(),
+      GRAPHQL_MAX_FILE_SIZE: Joi.number().required(),
+      GRAPHQL_MAX_FILES: Joi.number().required(),
+      AWS_S3_ACCESS_KEY_ID: Joi.string().required(),
+      AWS_S3_SECRET_ACCESS_KEY: Joi.string().required(),
+      AWS_S3_REGION_NAME: Joi.string().required(),
+      AWS_S3_BUCKET_NAME: Joi.string().required(),
+      CDN_HOSTNAME: Joi.string()
         .hostname()
         .required()
     });
@@ -160,5 +176,32 @@ export class ConfigService {
 
   get hostName(): string {
     return this.envConfig.HOST_NAME;
+  }
+
+  get graphQLMaxFileSize(): number {
+    return Number(this.envConfig.GRAPHQL_MAX_FILE_SIZE).valueOf();
+  }
+
+  get graphQLMaxFiles(): number {
+    return Number(this.envConfig.GRAPHQL_MAX_FILE_SIZE).valueOf();
+  }
+
+  get awsS3RegionName(): string {
+    return this.envConfig.AWS_S3_REGION_NAME;
+  }
+
+  get awsS3Credentials() {
+    return {
+      accessKeyId: this.envConfig.AWS_S3_ACCESS_KEY_ID,
+      secretAccessKey: this.envConfig.AWS_S3_SECRET_ACCESS_KEY
+    };
+  }
+
+  get awsS3BucketName(): string {
+    return this.envConfig.AWS_S3_BUCKET_NAME;
+  }
+
+  get cdnHostName(): string {
+    return this.envConfig.CDN_HOSTNAME;
   }
 }

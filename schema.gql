@@ -78,12 +78,11 @@ type Mutation {
 }
 
 type Query {
-  me: String!
   user(userId: String!): User!
   currentUser: User!
   refreshToken: String!
-  family(familyId: String!): Family!
-  invite(inviteId: String!): Invite!
+  family(familyId: ID!): Family!
+  invite(inviteId: ID!): Invite!
 }
 
 type Role {
@@ -123,8 +122,11 @@ input UpdateUserInput {
   location: String
   dateOfBirth: String
   gender: Gender
-  imageUrl: String
+  image: Upload
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 type User {
   userId: ID!

@@ -16,6 +16,10 @@ import { mapDocumentToUserDTO } from "../user/schema/user.mapper";
 import { checkPassword } from "./auth.util";
 import { UserDocument } from "../user/schema/user.schema";
 
+/**
+ * Manages authentication of users using local strategy
+ * and JSON Web Tokens (JWT).
+ */
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger(AuthService.name);
@@ -33,9 +37,6 @@ export class AuthService {
     email: string,
     passwordAttempt: string
   ): Promise<AuthOutput> {
-    // TODO: is this sketchy, exposing the User DB Model outside of the UserService???
-    // +: Can put the validation logic in auth service
-    // - : exposing sensitive DB information outside userService?
     const userDoc = await this.userService.findOneByEmail(email);
 
     // Check the supplied password against the hash stored for this email address
@@ -63,9 +64,9 @@ export class AuthService {
    * Creates a JwtPayload for the given User
    *
    * @param {User} user
-   * @returns {{ data: JwtPayload; token: string }} The data contains the email, username, and expiration of the
-   * token depending on the environment variable. Expiration could be undefined if there is none set. token is the
-   * token created by signing the data.
+   * @returns {{ data: JwtPayload; token: string }} The data contains the email, username,
+   * and expiration of the token depending on the environment variable. Expiration could
+   * be undefined if there is none set. token is the token created by signing the data.
    * @memberof AuthService
    */
   createJwt(user: User): { data: JwtPayload; token: string } {
@@ -89,7 +90,8 @@ export class AuthService {
   }
 
   /**
-   * Verifies that the JWT payload associated with a JWT is valid by making sure the user exists
+   * Verifies that the JWT payload associated with a JWT is valid by
+   * making sure the user exists
    *
    * @param {JwtPayload} payload
    * @returns {(Promise<UserDocument>)} returns user
