@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-  MenuButton,
   NewGroup,
   EditProfile,
   Setting,
@@ -11,16 +10,14 @@ import {
 import {
   SidebarContainer,
   CloseMenu,
-  SearchHeader,
+  SidebarHeader,
   SearchBar,
   SearchIcon,
   SearchInput,
   FamilyListContainer,
   TextList,
   MenuContainer,
-  Footer,
-  SidebarButtonPrimary,
-  ModalBackground
+  SignOutButton
 } from "./SidebarStyles";
 import { withRouter } from "react-router-dom";
 import { Logo } from "ui/Logos";
@@ -33,10 +30,8 @@ const Sidebar = props => {
   if (!localStorage.getItem("AUTH-TOKEN")) {
     props.history.push("/login");
   }
-  const [isSidebarOpen, setSidebarOpened] = useState(false);
-  const toggleSidebarOpened = () => setSidebarOpened(!isSidebarOpen);
   let families = [];
-  const { loading, error, data } = useQuery(GET_USER_FAMILIES);
+  const { loading, data } = useQuery(GET_USER_FAMILIES);
   const signOut = () => {
     localStorage.removeItem("AUTH-TOKEN");
     props.history.push("/login");
@@ -45,75 +40,70 @@ const Sidebar = props => {
     families = data.currentUser.families;
   }
 
+  const iconSize = "22px";
+
   return (
-    <>
-      {/* <ModalBackground/> */}
-      {/* <MenuButton size="35px" onClick={toggleSidebarOpened} /> */}
-      <SidebarContainer menuClick={isSidebarOpen}>
+    <SidebarContainer isOpen={props.sidebarOpen}>
+      <SidebarHeader>
         <Logo
-          padding="20px"
           pointer
-          small
+          size="small"
           onClick={() => props.history.push("/dashboard")}
         />
-        <SearchHeader>
-          <SearchBar>
-            <SearchIcon />
-            <SearchInput type="text" placeholder="Search all artefacts" />
-          </SearchBar>
-          <CloseMenu size="25px" title="close menu" />
-        </SearchHeader>
-        <FamilyListContainer>
-          {families.length > 0 && (
-            <h3>My Families</h3>
-          )}
-          {loading ? (
-            <Spinner />
-          ) : (
-            families.map(family => (
-              <TextList>
-                <a href={`/family/${family.familyId}`}>{family.name}</a>
-              </TextList>
-            ))
-          )}
-        </FamilyListContainer>
-        <MenuContainer>
-          <TextList>
-            <Invite size="25px" />
-            <a href="#">Invite</a>
-          </TextList>
-          <TextList>
-            <Setting size="25px" />
-            Manage Family groups
-          </TextList>
-          <TextList>
-            <NewGroup size="25px" />
-            New Family group
-          </TextList>
-        </MenuContainer>
-        <MenuContainer>
-          <TextList>
-            <NewArtefact size="25px" />
-            New Artefact
-          </TextList>
-          <TextList>
-            <View size="25px" />
-            View my Artefacts
-          </TextList>
-        </MenuContainer>
-        <MenuContainer>
-          <TextList>
-            <EditProfile size="25px" />
-            Edit profile & account
-          </TextList>
-        </MenuContainer>
-        <Footer>
-          <SidebarButtonPrimary onClick={signOut}>
-            Sign Out
-          </SidebarButtonPrimary>
-        </Footer>
-      </SidebarContainer>
-    </>
+        <CloseMenu size={iconSize} title="close menu" onClick={props.toggleSidebar}/>
+      </SidebarHeader>
+        <SearchBar>
+          <SearchIcon />
+          <SearchInput type="text" placeholder="Search all artefacts" />
+        </SearchBar>
+      <FamilyListContainer>
+        {families.length > 0 && (
+          <h3>My Families</h3>
+        )}
+        {loading ? (
+          <Spinner />
+        ) : (
+          families.map(family => (
+            <TextList>
+              <a href={`/family/${family.familyId}`}>{family.name}</a>
+            </TextList>
+          ))
+        )}
+      </FamilyListContainer>
+      <MenuContainer>
+        <TextList>
+          <Invite size={iconSize} />
+          <a href={`/invite`}>Invite</a>
+        </TextList>
+        <TextList>
+          <Setting size={iconSize} />
+          Manage Family groups
+        </TextList>
+        <TextList>
+          <NewGroup size={iconSize} />
+          New Family group
+        </TextList>
+      </MenuContainer>
+      <MenuContainer>
+        <TextList>
+          <NewArtefact size={iconSize} />
+          New Artefact
+        </TextList>
+        <TextList>
+          <View size={iconSize} />
+          View my Artefacts
+        </TextList>
+      </MenuContainer>
+      <MenuContainer>
+        <TextList>
+          <EditProfile size={iconSize} />
+          Edit profile & account
+        </TextList>
+      </MenuContainer>
+      <SignOutButton onClick={signOut}>
+        Sign Out
+      </SignOutButton>
+    </SidebarContainer>
   );
 };
 export default withRouter(Sidebar);

@@ -19,9 +19,6 @@ const getColor = (props) => {
 
 const DropzoneContainer = styled.div`
   height: 200px;
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
   text-align: center;
   font-size: 16px;
   font-family: 'Livvic', sans-serif;
@@ -89,7 +86,7 @@ export function MediaDropzone() {
   });
 
   const imagePreview = mementoFiles.map(file => (
-    <img src={file.preview}/>
+    <img src={file.preview} alt={file.title}/>
   ));
 
   useEffect(() => () => {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Header } from "ui/Typography";
-import { Container } from "ui/Helpers";
+import { Container, AlignRight } from "ui/Helpers";
 import {
   InstructionLabel,
   InputField,
@@ -10,11 +10,9 @@ import {
 } from "ui/Forms";
 import { CirclePicker } from "react-color";
 import { PickerWrapper } from "./CreateFamilyStyles";
-import { StyledDropzone } from "components/FileDropzone";
+import { StyledDropzone } from "components/FileDropzone/FileDropzone";
 import { ButtonPrimary } from "ui/Buttons";
-import { AlignRight } from "ui/Helpers";
 import { Formik } from "formik";
-
 import * as yup from "yup";
 import { useMutation } from "@apollo/react-hooks";
 import { CREATE_NEW_FAMILY } from "mutations/Family";
@@ -25,20 +23,21 @@ const CreateFamilyValidationSchema = yup.object().shape({
 });
 
 export default function CreateFamily() {
-  const [createNewFamily, { data, error, loading }] = useMutation(
+  const [createNewFamily, /*{ data, error, loading }*/] = useMutation(
     CREATE_NEW_FAMILY
   );
+
   const defaultValues = {
     familyName: "",
     color: ""
   };
+
   return (
     <Container>
       <Header underline>Create a New Family</Header>
       <Formik
         initialValues={defaultValues}
         onSubmit={(values, actions) => {
-          // alert(JSON.stringify(values));
           const payload = {
             name: values.familyName,
             colour: values.color
@@ -51,6 +50,7 @@ export default function CreateFamily() {
         render={props => (
           <form onSubmit={props.handleSubmit}>
             <FormSection>
+              {/* Family Group Name */}
               <InstructionLabel>
                 What would you like to name your Family group?
               </InstructionLabel>
@@ -72,6 +72,7 @@ export default function CreateFamily() {
             </FormSection>
 
             <FormSection>
+              {/* Family Profile Photo */}
               <InstructionLabel>
                 Select a display photo for your Family.
               </InstructionLabel>
@@ -80,6 +81,7 @@ export default function CreateFamily() {
             </FormSection>
 
             <FormSection>
+              {/* Family Group Colour Theme */}
               <InstructionLabel>
                 Pick a colour theme for your Family group page.
               </InstructionLabel>

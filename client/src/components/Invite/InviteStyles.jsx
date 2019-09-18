@@ -13,11 +13,6 @@ export const FamilyGroup = styled(ButtonSecondary)`
       background-color: ${props => props.theme.palette.main};
       color: white;
     `};
-
-  /* @media screen and (min-width: ${props =>
-    props.theme.breakpoints.tabletPortrait}) {
-   width: 50%;
-  } */
 `;
 
 export const FamilyGroupName = styled.span`

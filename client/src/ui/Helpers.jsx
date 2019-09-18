@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 
+// Used for centering elements within its parent
 export const center = css`
   position: absolute;
   top: 50%;
@@ -7,23 +8,27 @@ export const center = css`
   transform: translate(-50%,-50%);
 `;
 
+// Used across the site as a container for the main column
 export const Container = styled.div`
-  width: 100%;
-  padding: 20px;
-  margin: 0 auto;
+  margin: 20px auto;
+  position: relative;
+  top: ${props => props.noNav ? "0px" : "40px"};
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}) {
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.mobile}) {
+    margin: 20px 40px;
   }
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
-    flex-grow: 1;
-    width: 600px;
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
+    top: 0;
+    margin: 20px auto;
+    max-width: 600px;
   }
-
 `;
 
+// Align elements to the right of the parent
 export const AlignRight = styled.div`
-  position: absolute;
-  right: 20px;
+  margin-left: auto;
   display: inline-block;
 `;

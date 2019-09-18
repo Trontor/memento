@@ -3,19 +3,19 @@ import { Header } from "ui/Typography";
 import { Container } from 'ui/Helpers';
 import UploadStep1 from "./UploadStep1";
 import UploadStep2 from "./UploadStep2";
-
 import { ButtonPrimary, ButtonSecondary } from 'ui/Buttons';
 import { AlignRight } from 'ui/Helpers';
 import { FormNav } from 'ui/Forms';
 
 export default function UploadMemento() {
-  //define react hooks
+  //Define react hooks
   const [selectMementoType, setSelectMementoType] = useState("");
   const [selectEventType, setSelectEventType] = useState("");
   const [mementoTags, setMementoTags] = useState([]);
   const [currentStep, setCurrentStep] = useState(2);
   const [mementoFiles, setMementoFiles] = useState([]);
 
+  //Handle Radio value
   const handleRadioChange = option => {
     const value = option.target.value;
     setSelectMementoType(value);
@@ -31,18 +31,17 @@ export default function UploadMemento() {
     setCurrentStep(currentStep - 1)
   };
 
-  //style react select dropdown with styles api
+  //Style react select dropdown with styles api
   const customDropdown = {
     control: (provided) => ({
       ...provided,
       cursor: "pointer",
       fontSize: 13,
-      width: "90%"
+      width: "100%",
       }
     ),
     option: (provided, state) => ({
       ...provided,
-      // color: state.isFocused ? "rgba(76, 212, 255)" : "#44404B",
       backgroundColor: state.isFocused ? "rgba(90, 150, 255, 0.15)" : state.isActive ? "rgba(76, 212, 255, 0.3)" : null,
       color: state.isSelected ? "rgba(90, 150, 255)": "#44404B",
       padding: 10,
@@ -107,6 +106,7 @@ export default function UploadMemento() {
           deleteFile={deleteFile}
           mementoFiles={mementoFiles}
           setMementoFiles={setMementoFiles}
+          customDropdown={customDropdown}
         />
       )}
 

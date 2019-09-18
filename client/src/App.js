@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import { theme } from "./theme";
@@ -10,9 +10,13 @@ import CreateFamily from "./components/CreateFamily/CreateFamily";
 import Invite from "./components/Invite/Invite";
 import Settings from "./components/Settings/Settings";
 import UploadMemento from "./components/UploadMemento/UploadMemento";
-import Sidebar from "components/Sidebar/Sidebar";
+import FamilyGroup from "./components/FamilyGroup/FamilyGroup";
+import Sidebar from "./components/Sidebar/Sidebar";
+import Hamburger from "./components/Sidebar/Hamburger"
+import { SiteGrid, LeftColumn, Main } from "ui/Layout";
 
 const GlobalStyle = createGlobalStyle`
+  /* Reset styles */
   html {
     height: 100%;
     margin: 0;
@@ -23,7 +27,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    height: 100%;
+    min-height: 100%;
     padding: 0;
     margin: 0;
     font-size: 14px;
@@ -59,10 +63,15 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  input {
+    background-color: none;
+  }
+
   *, *::before, *::after {
     box-sizing: border-box;
   }
 
+  /* This code is used for debuggging */
   /* * {
     background: #000 !important;
     color: #0f0 !important;
@@ -99,32 +108,52 @@ const authenticatedRoutes = [
   {
     name: "new-memento",
     component: UploadMemento
+  },
+  {
+    name: "settings",
+    component: Settings
+  },
+  {
+    name: "family",
+    component: FamilyGroup
   }
 ];
 
 function App() {
   const authenticatedPaths = authenticatedRoutes.map(route => "/" + route.name);
+
+  //Toggle sidebar
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <GlobalStyle />
+        <GlobalStyle/>
         <Route path="/" exact component={Landing} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route
           path={authenticatedPaths}
           render={() => (
-            <div style={{ display: "flex", height: "100%" }}>
-              <Sidebar />
-              <div style={{ flex: 1 }}>
+            <SiteGrid>
+              <LeftColumn>
+                <Sidebar
+                  sidebarOpen={sidebarOpen}
+                  toggleSidebar={toggleSidebar}/>
+              </LeftColumn>
+              <Main>
+                <Hamburger
+                  sidebarOpen={sidebarOpen}
+                  toggleSidebar={toggleSidebar}/>
                 {authenticatedRoutes.map(route => (
                   <PrivateRoute
                     path={`/${route.name}`}
                     component={route.component}
                   />
                 ))}
-              </div>
-            </div>
+              </Main>
+            </SiteGrid>
           )}
         />
       </Router>

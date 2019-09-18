@@ -1,47 +1,53 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Search } from "styled-icons/boxicons-regular/Search";
-import { ButtonPrimary } from "../../ui/Buttons";
+import { ButtonSecondary } from "../../ui/Buttons";
 import { Close } from "styled-icons/material/Close";
+import { lighten } from "polished";
 
 export const SidebarContainer = styled.div`
-  display: none;
+  min-width: ${props => props.theme.size.sidebar}px;
+  border-right: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
+  min-height: 100%;
+  background: ${props => props.theme.palette.sidebar};
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 20px;
+  font-size: 14px;
+  z-index: 999;
+  margin-left: ${props => -props.theme.size.sidebar}px;
+  transition: transform 0.4s ease-in-out;
+  ${props =>
+    props.isOpen &&
+    css`
+      transform: translateX(${props => props.theme.size.sidebar}px);
+      transition: transform 0.4s ease-in-out;
+    `}
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
-    display: block;
-    min-width: 260px;
-    min-height: 100%;
-    top: 0;
-    background: ${props => props.theme.palette.sidebar};
-    /* z-index: 999; */
-    transition: 0.5s ease-in-out;
-    padding: 20px;
-    font-size: 13px;
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
+    transform: translateX(${props => props.theme.size.sidebar}px);
   }
 `;
 
-export const ModalBackground = styled.div`
-  background-color: rgba(0, 0, 0, 0.3);
-  width: 100%;
-  height: 100%;
-  position: absolute;
-`;
-
-export const SearchHeader = styled.div`
+export const SidebarHeader = styled.div`
   display: flex;
   flex-direction: row;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
 `;
 
 export const SearchBar = styled.div`
   width: 100%;
   height: 30px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
   background: #fcfcfc;
   border-radius: 4px;
   display: flex;
-
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
-  }
+  margin: 10px 0 20px 0;
 `;
 
 export const SearchIcon = styled(Search)`
@@ -51,7 +57,7 @@ export const SearchIcon = styled(Search)`
   top: 50%;
   left: 12px;
   margin-right: 16px;
-  width: 20px;
+  width: 15px;
 `;
 
 export const SearchInput = styled.input`
@@ -59,25 +65,27 @@ export const SearchInput = styled.input`
   background: transparent;
   border: none;
   font-family: "Rubik";
-  font-weight: 300;
   width: 100%;
 
-  &:focus, &:active {
+  &:focus,
+  &:active {
     outline: none;
+  }
+
+  &:focus ${SearchBar} {
+    border-color: ${props => props.theme.palette.main};
   }
 `;
 
 export const FamilyListContainer = styled.div`
   h3 {
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin: 5px 0;
   }
 `;
 
 export const TextList = styled.li`
   list-style-type: none;
-  font-weight: 300;
-  line-height: 2em;
+  line-height: 30px;
 
   a {
     color: ${props => props.theme.palette.text};
@@ -90,27 +98,29 @@ export const TextList = styled.li`
 `;
 
 export const MenuContainer = styled.div`
-  border-top: 1px solid ${props => props.theme.palette.border};
+  border-top: 1px solid ${props => lighten(0.65, props.theme.palette.text)};
   padding: 10px 0;
 `;
 
-export const Footer = styled.div`
-  position: absolute;
-  bottom: 20px;
-`;
-
-export const SidebarButtonPrimary = styled(ButtonPrimary)`
-  font-size: 15px;
+export const SignOutButton = styled(ButtonSecondary)`
+  margin-top: 60px;
+  width: 100%;
+  height: 32px;
+  padding: 0;
 `;
 
 export const CloseMenu = styled(Close)`
-  padding-left: 0;
-  opacity: 0.5;
+  color: ${props => lighten(0.5, props.theme.palette.text)};
   cursor: pointer;
-  position: relative;
-  top: 10px;
+  ${props => props.theme.mixins.hoverFade};
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
+  &:hover {
+    color: ${props => props.theme.palette.main};
+    ${props => props.theme.mixins.hoverFade};
+  }
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
     display: none;
   }
-`
+`;

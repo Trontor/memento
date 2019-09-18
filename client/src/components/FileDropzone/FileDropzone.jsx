@@ -35,7 +35,6 @@ const DropzoneContainer = styled.div`
   margin-bottom: 6px;
 
   &:hover {
-    /* border-color: ${props => lighten(0.1, props.theme.palette.main)}; */
     color:${props => lighten(0.3, props.theme.palette.text)};
     transition: 0.3s ease-in-out;
   }

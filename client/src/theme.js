@@ -1,7 +1,7 @@
 const theme = {
   breakpoints: {
     mobile: "414px",
-    tabletPortrait: "600px",
+    tabletPortrait: "768px",
     tabletLandscape: "1024px",
     desktop: "1280px"
   },
@@ -16,10 +16,13 @@ const theme = {
     disabled: "#ddd",
 
     border: "#D3D0DD",
-    sidebar: "#F3F7FE",
+    sidebar: "#F7FAFE"
   },
   mixins: {
     hoverFade: "transition: ease-in 0.1s"
+  },
+  size: {
+    sidebar: 260 /*px */
   }
 };
 

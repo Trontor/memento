@@ -1,6 +1,5 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import { lighten } from "polished";
-import { Menu } from "styled-icons/feather/Menu";
 import { PlusCircle } from "styled-icons/boxicons-regular/PlusCircle";
 import { Edit } from "styled-icons/material/Edit";
 import { Settings } from "styled-icons/material/Settings";
@@ -8,6 +7,7 @@ import { AddToQueue } from "styled-icons/boxicons-regular/AddToQueue";
 import { GroupAdd } from "styled-icons/material/GroupAdd";
 import { PaperPlane } from "styled-icons/boxicons-regular/PaperPlane";
 
+// Primary Button Style
 export const ButtonPrimary = styled.button`
   display: inline-block;
   background: ${props => props.theme.palette.main};
@@ -37,6 +37,7 @@ export const ButtonPrimary = styled.button`
   }
 `;
 
+// Secondary Button Style
 export const ButtonSecondary = styled.button`
   border: 1px solid ${props => props.theme.palette.main};
   color: ${props => props.theme.palette.main};
@@ -48,50 +49,37 @@ export const ButtonSecondary = styled.button`
   ${props => props.theme.mixins.hoverFade};
 `;
 
-export const MenuButton = styled(Menu)`
-  margin-top: 20px;
-  margin-left: 15px;
-  background: transparent;
-  position: relative;
-  z-index: 99;
-  &:focus {
-    outline: none;
-  }
-  &:active {
-    outline: none;
-  }
+// Styling for styled-icons in sidebar
+export const IconStyle = css`
+  color: gray;
+  margin-right: 10px;
 `;
 
 export const NewGroup = styled(PlusCircle)`
-  color: gray;
-  margin-right: 10px;
+  ${IconStyle}
 `;
 
 export const NewArtefact = styled(AddToQueue)`
-  color: gray;
-  margin-right: 10px;
+  ${IconStyle}
 `;
 
 export const EditProfile = styled(Edit)`
-  color: gray;
-  margin-right: 10px;
+  ${IconStyle}
 `;
 
 export const Setting = styled(Settings)`
-  color: gray;
-  margin-right: 10px;
+  ${IconStyle}
 `;
 
 export const Invite = styled(GroupAdd)`
-  color: gray;
-  margin-right: 10px;
+  ${IconStyle}
 `;
 
 export const View = styled(PaperPlane)`
-  color: gray;
-  margin-right: 10px;
+  ${IconStyle}
 `;
 
+// Add input field button
 export const AddButton = styled.button`
   width: 25px;
   height: 25px;

@@ -1,0 +1,25 @@
+.slick-prev:before, .slick-next:before {
+  color: rgba(0, 0, 0, 0.5) !important;
+  content: '<';
+  font-weight: bold;
+  font-family: "Rubik";
+}
+
+.slick-prev:before {
+  content: '<';
+}
+
+.slick-next:before {
+  content: '>';
+}
+
+.slick-slider {
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 768px) {
+  .slick-slider {
+    width: 90%;
+  }
+}
+/*# sourceMappingURL=carousel.css.map */

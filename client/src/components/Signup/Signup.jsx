@@ -4,8 +4,7 @@ import {
   InputSection,
   InputField,
   InputLabel,
-  Error,
-  AnimateLabel
+  Error
 } from "ui/Forms";
 import { withRouter } from "react-router";
 import { ButtonPrimary } from "ui/Buttons";
@@ -24,14 +23,6 @@ const defaultValues = {
   password: "compl14n7Pa$$w0rd",
   confirmPassword: "compl14n7Pa$$w0rd"
 };
-
-// const defaultValues = {
-//   firstName: "",
-//   lastName: "",
-//   email: "",
-//   password: "",
-//   confirmPassword: ""
-// };
 
 /**
  * Uses a validation libary, called 'Yup' to easily specify a validation schema.
@@ -149,7 +140,6 @@ const Signup = withRouter(props => {
                   onBlur={props.handleBlur}
                   value={props.values.firstName}
                   filled={props.values.firstName.length > 0}
-                  onfocus={AnimateLabel}
                 />
                 {props.errors.firstName && props.touched.firstName && (
                   <Error>{props.errors.firstName}</Error>
