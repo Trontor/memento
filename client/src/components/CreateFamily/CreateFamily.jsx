@@ -16,6 +16,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { useMutation } from "@apollo/react-hooks";
 import { CREATE_NEW_FAMILY } from "mutations/Family";
+import { PageSpinnerWrapper, Spinner } from "ui/Loaders";
 
 const CreateFamilyValidationSchema = yup.object().shape({
   familyName: yup.string().required("Please enter a family name"),
@@ -23,7 +24,7 @@ const CreateFamilyValidationSchema = yup.object().shape({
 });
 
 export default function CreateFamily() {
-  const [createNewFamily, /*{ data, error, loading }*/] = useMutation(
+  const [createNewFamily, { data, error, loading }] = useMutation(
     CREATE_NEW_FAMILY
   );
 
@@ -31,6 +32,14 @@ export default function CreateFamily() {
     familyName: "",
     color: ""
   };
+
+  if (loading) {
+    return (
+      <PageSpinnerWrapper>
+        <Spinner size="large"/>
+      </PageSpinnerWrapper>
+    );
+  }
 
   return (
     <Container>
