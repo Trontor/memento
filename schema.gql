@@ -70,7 +70,6 @@ type Mutation {
   signup(input: UserSignupInput!): AuthOutput!
   updateUser(input: UpdateUserInput!): User!
   updateRole(input: RoleInput!, userId: String!): User!
-  addProfilePhoto(photo: Upload!): String!
   login(input: LoginInput!): AuthOutput!
   createFamily(input: CreateFamilyInput!): Family!
   joinFamily(input: JoinFamilyInput!): Family!
@@ -79,7 +78,6 @@ type Mutation {
 }
 
 type Query {
-  me: String!
   user(userId: String!): User!
   currentUser: User!
   refreshToken: String!
