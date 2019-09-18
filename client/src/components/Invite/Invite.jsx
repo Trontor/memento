@@ -1,58 +1,65 @@
 import React, { useState } from "react";
 import InviteStep1 from "./InviteStep1";
 import InviteStep2 from "./InviteStep2";
-import { Container } from 'ui/Helpers';
+import { Container } from "ui/Helpers";
 import { Header } from "ui/Typography";
-import { ButtonPrimary, ButtonSecondary } from 'ui/Buttons';
-import { AlignRight } from 'ui/Helpers';
-import { FormNav } from 'ui/Forms';
+import { ButtonPrimary, ButtonSecondary } from "ui/Buttons";
+import { AlignRight } from "ui/Helpers";
+import { FormNav } from "ui/Forms";
 import { Formik } from "formik";
+import { useQuery } from "@apollo/react-hooks";
+import { INVITE_LIST } from "mutations/Invite";
+import JollyLoader from "components/JollyLoader/JollyLoader";
+
+const ADMIN_ROLE = "Admin";
 
 export default function InviteFamily() {
   // Set the currentStep so that the correct step component is rendered
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(2);
   const [selectedFamily, setSelectedFamily] = useState(null);
-  const [inviteEmails, setInviteEmails] = useState([{ email: "", valid: false }]);
+  const [inviteEmails, setInviteEmails] = useState([
+    { email: "", valid: false },
+  ]);
 
-  const selectFamily = (familyName) => {
+  const selectFamily = familyName => {
     if (selectedFamily === familyName) {
-      setSelectedFamily(null)
+      setSelectedFamily(null);
+    } else {
+      setSelectedFamily(familyName);
     }
-    else {
-      setSelectedFamily(familyName)
-    };
-  }
+  };
 
   function handleChange(index, event) {
     const emails = [...inviteEmails];
     emails[index].email = event.target.value;
-    setInviteEmails(emails)
+    setInviteEmails(emails);
   }
 
-  const addEmail = (email) => {
-    setInviteEmails([...inviteEmails, email])
-  }
-
-  const deleteEmail = (index) => {
-    const emails = [...inviteEmails]
-    emails.splice(index, 1)
-    setInviteEmails(emails)
-  }
-
-  //Go to next step
-  const nextStep = () => {
-    setCurrentStep(currentStep + 1)
-  }
-
-  //Go back to prev step
-  const prevStep = () => {
-    setCurrentStep(currentStep - 1)
+  const addEmail = email => {
+    setInviteEmails([...inviteEmails, email]);
   };
 
-  function checkEmpty() {
-    return [...inviteEmails].filter(x => x !== "").length < 1;
+  const deleteEmail = index => {
+    const emails = [...inviteEmails];
+    emails.splice(index, 1);
+    setInviteEmails(emails);
+  };
+
+  //Go to next step
+  const nextStep = () => setCurrentStep(currentStep + 1);
+
+  //Go back to prev step
+  const prevStep = () => setCurrentStep(currentStep - 1);
+
+  //TODO: FIX THIS LOGIC
+  let allowInvite;
+  if (inviteEmails.length > 1) {
+    allowInvite = inviteEmails.every(x => (x.email ? x.valid : true));
+  } else {
+    allowInvite = inviteEmails.every(x => x.email && x.valid);
   }
 
+  console.log(allowInvite);
   const validateEmail = (index, e) => {
     // The following is sourced from yup's email validation regex
     // eslint-disable-next-line
@@ -60,11 +67,27 @@ export default function InviteFamily() {
 
     const emails = [...inviteEmails];
 
-    e.target.value !== "" && !e.target.value.match(emailValid) ? emails[index].valid = false : emails[index].valid = true;
-    setInviteEmails(emails)
-  };
+    const validEmail = e.target.value || e.target.value.match(emailValid);
+    emails[index].valid = validEmail;
 
-  return(
+    setInviteEmails(emails);
+  };
+  // Query for loading the family list
+  const { data, loading, error } = useQuery(INVITE_LIST);
+  let inviteFamilies = [];
+  if (data) {
+    const allowedIDs = data.currentUser.familyRoles
+      .filter(fam => fam.familyRole === ADMIN_ROLE)
+      .map(fam => fam.familyId);
+    inviteFamilies = data.currentUser.families.filter(fam =>
+      allowedIDs.includes(fam.familyId),
+    );
+  }
+  if (loading) {
+    return <JollyLoader />;
+  }
+
+  return (
     <Formik
       validateOnBlur={false}
       validateOnChange={false}
@@ -73,6 +96,7 @@ export default function InviteFamily() {
           <Header underline>Invite a Family Member</Header>
 
           <InviteStep1
+            inviteFamilies={inviteFamilies}
             currentStep={currentStep}
             selectFamily={selectFamily}
             selected={selectedFamily}
@@ -88,21 +112,28 @@ export default function InviteFamily() {
             validateEmail={validateEmail}
           />
 
-      {/* A navigation container for the 'Back' and 'Next' buttons */}
+          {/* A navigation container for the 'Back' and 'Next' buttons */}
           <FormNav>
-            {currentStep !== 1 ?
+            {currentStep !== 1 ? (
               <ButtonSecondary onClick={prevStep}>Back</ButtonSecondary>
-              : null
-            }
-              <AlignRight>
-                {currentStep !== 2 ?
-                  <ButtonPrimary disabled={selectedFamily == null} onClick={nextStep}>Next</ButtonPrimary>
-                  :
-                  <ButtonPrimary disabled={checkEmpty()} type="submit">Invite</ButtonPrimary>
-                }
-              </AlignRight>
+            ) : null}
+            <AlignRight>
+              {currentStep !== 2 ? (
+                <ButtonPrimary
+                  disabled={selectedFamily == null}
+                  onClick={nextStep}
+                >
+                  Next
+                </ButtonPrimary>
+              ) : (
+                <ButtonPrimary disabled={!allowInvite} type="submit">
+                  Invite
+                </ButtonPrimary>
+              )}
+            </AlignRight>
           </FormNav>
         </Container>
-      )}/>
+      )}
+    />
   );
 }
