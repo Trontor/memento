@@ -4,12 +4,14 @@ import {
     Inject,
     forwardRef,
     NotImplementedException,
+    BadRequestException,
+    InternalServerErrorException,
 } from "@nestjs/common";
 import { User } from "../user/dto/user.dto";
 import { CreateFamilyInput, UpdateFamilyInput } from "./inputs/family.inputs";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, Types } from "mongoose";
-import { FamilyDocument } from "./schema/family.schema";
+import { FamilyDocument, IUpdateFamilyData } from "./schema/family.schema";
 import { UserService } from "../user/user.service";
 import { FamilyRole } from "../user/dto/role.dto";
 import { Family } from "./dto/family.dto";
@@ -147,11 +149,42 @@ export class FamilyService {
 
     /**
      * Updates an existing family's data.
-     * @param familyId id of family to update
+     * @param user user making the update request
      * @param input update fields
      */
-    async updateFamily(familyId: string, input: UpdateFamilyInput) {
-        throw new NotImplementedException();
+    async updateFamily(user: User, input: UpdateFamilyInput) {
+        const { familyId, image, ...data } = input;
+        const hasData: boolean = Object.keys(data).length > 0;
+        if (!hasData) {
+            throw new BadRequestException(
+                "No data provided in UpdateFamilyInput",
+            );
+        }
+        this.logger.log(
+            `User ${user.userId} updating ${JSON.stringify(input)}`,
+        );
+
+        // upload image if provided
+        let imageUrl: string | undefined = undefined;
+        if (image) {
+            this.logger.log("Image was provided: uploading...");
+            imageUrl = await this.fileService.uploadImage(image);
+        }
+
+        const updateData: IUpdateFamilyData = data;
+        if (imageUrl) updateData.imageUrl = imageUrl;
+
+        // do update operation
+        const updatedFamily = await this.FamilyModel.findOneAndUpdate(
+            { _id: familyId },
+            updateData,
+            { new: true, runValidators: true },
+        );
+        if (!updatedFamily)
+            throw new InternalServerErrorException("Could not update family");
+        const familyDTO: Family = mapDocumentToFamilyDTO(updatedFamily);
+        this.logger.debug(familyDTO);
+        return familyDTO;
     }
 
     /**

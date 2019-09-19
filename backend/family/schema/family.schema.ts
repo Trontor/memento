@@ -48,3 +48,13 @@ export const FamilyModel: IFamilyModel = model<FamilyDocument, IFamilyModel>(
     "Family",
     FamilySchema,
 );
+
+/**
+ * Interface for the data to update family
+ */
+export interface IUpdateFamilyData {
+    name?: string;
+    imageUrl?: string;
+    description?: string;
+    colour?: string;
+}

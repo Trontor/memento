@@ -73,6 +73,7 @@ type Mutation {
   updateRole(input: RoleInput!, userId: String!): User!
   login(input: LoginInput!): AuthOutput!
   createFamily(input: CreateFamilyInput!): Family!
+  updateFamily(input: UpdateFamilyInput!): Family!
   joinFamily(input: JoinFamilyInput!): Family!
   createInvite(input: CreateInviteInput!): Invite!
   inviteByEmail(input: SendInvitesInput!): SendInvitesOutput!
@@ -107,8 +108,9 @@ type SendInvitesOutput {
 }
 
 input UpdateFamilyInput {
+  familyId: ID!
   name: String
-  imageUrl: String
+  image: Upload
   description: String
   colour: String
 }

@@ -33,11 +33,14 @@ export class CreateFamilyInput {
  */
 @InputType()
 export class UpdateFamilyInput {
+    @Field(type => ID)
+    familyId!: string;
+
     @Field({ nullable: true })
     name?: string;
 
-    @Field({ nullable: true })
-    imageUrl?: string;
+    @Field(type => GraphQLUpload, { nullable: true })
+    image?: any;
 
     @Field({ nullable: true })
     description?: string;
