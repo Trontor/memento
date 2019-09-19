@@ -1,9 +1,10 @@
 import React from 'react'
+import { Wrapper } from "ui/Helpers";
 
 export default function TagsViewer() {
   return (
-    <div>
+    <Wrapper>
       Tags Viewer
-    </div>
+    </Wrapper>
   )
 }
