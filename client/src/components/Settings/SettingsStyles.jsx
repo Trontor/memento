@@ -7,10 +7,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Cancel } from "styled-icons/material/Cancel";
 import { User } from "styled-icons/fa-regular/User";
 
-export const SettingsHeader = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  height: auto;
+export const SettingsMenu = styled.div`
+  display: flex;
+  width: 100%;
 `;
 
 export const HeaderButton = styled(ButtonSecondary)`

@@ -99,7 +99,7 @@ const Sidebar = props => {
       <MenuContainer>
         <TextList>
           <EditProfile size={iconSize} />
-          Edit profile & account
+          <a href={`/settings`}>Edit profile & account</a>
         </TextList>
       </MenuContainer>
       <SignOutButton onClick={signOut}>Sign Out</SignOutButton>

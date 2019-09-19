@@ -1,17 +1,21 @@
-import React from "react";
-import { Container } from "ui/Helpers";
 import {
-  FamilyImg,
   FamilyHeader,
-  FamilyMenu,
-  MenuTabs,
+  FamilyImg
 } from "./FamilyGroupStyles";
-import { useQuery } from "@apollo/react-hooks";
-import MementoCard from "components/MementoCard/MementoCard";
-import { LOAD_FAMILY } from "mutations/Family";
+import { MenuContainer, MenuTabs } from "ui/Navigation";
+import React, {useState} from "react";
+
+import { Container } from "ui/Helpers";
 import JollyLoader from "components/JollyLoader/JollyLoader";
+import { LOAD_FAMILY } from "mutations/Family";
+import MembersViewer from "./MembersViewer";
+import MementosViewer from "./MementosViewer";
+import TagsViewer from "./TagsViewer";
+import { useQuery } from "@apollo/react-hooks";
 
 export default function FamilyGroup(props) {
+  const menuTabs = ["Mementos", "Members", "Tags"];
+  const [currentTabIndex, setTabIndex] = useState(0)
   const familyId = props.match.params.id;
   const { data, loading, error } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
@@ -25,28 +29,20 @@ export default function FamilyGroup(props) {
     members = data.family.members;
     console.log(members);
   }
-  const menuTabs = ["Mementos", "Members", "Tags"];
-  const mementos = [
-    {
-      title: "My Painting",
-      author: "Gigi",
-      description: "Lorem ipsum I love painting",
-      coverImage: "",
-      tags: ["painting", "artwork"],
-      dateUploaded: "2 days ago",
-      dateCreated: "2018",
-    },
-    {
-      title: "My Stuffed Hippo",
-      author: "Gigi",
-      description:
-        "This is my favourite stuffed animal. I've had it since I was 5.",
-      coverImage: "",
-      tags: ["stuffed animals"],
-      dateUploaded: "3 days ago",
-      dateCreated: "1999",
-    },
-  ];
+
+  let tabComponent = null;
+  switch(menuTabs[currentTabIndex]){
+    case "Mementos":
+      tabComponent = <MementosViewer/>
+      break;
+    case "Members":
+      tabComponent = <MembersViewer members={members}/>
+      break;
+    case "Tags":
+      tabComponent = <TagsViewer/>
+    default:
+      break;
+  }
 
   return (
     <>
@@ -54,19 +50,12 @@ export default function FamilyGroup(props) {
       <FamilyHeader>
         <h1>{familyName}</h1>
       </FamilyHeader>
-      {members.map(member => (
-        <h1>
-          {member.firstName} {member.lastName}
-        </h1>
-      ))}
-      <FamilyMenu>
-        {menuTabs.map(tab => (
-          <MenuTabs>{tab}</MenuTabs>
+      <MenuContainer>
+        {menuTabs.map((tab, idx) => (
+          <MenuTabs active={currentTabIndex == idx} onClick={()=> setTabIndex(idx)}>{tab}</MenuTabs>
         ))}
-      </FamilyMenu>
-      {mementos.map(memento => (
-        <MementoCard {...memento} />
-      ))}
+      </MenuContainer>
+      {tabComponent}
       <Container noNav></Container>
     </>
   );
