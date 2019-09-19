@@ -20,10 +20,13 @@ export default function FamilyGroup(props) {
   const { data, loading, error } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
   });
+
   if (loading) {
     return <JollyLoader />;
   }
+
   let familyName, members;
+
   if (data) {
     familyName = data.family.name;
     members = data.family.members;

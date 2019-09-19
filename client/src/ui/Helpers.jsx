@@ -22,9 +22,14 @@ export const Container = styled.div`
       props.theme.breakpoints.tabletLandscape}) {
     top: 0;
     margin: 20px auto;
-    max-width: 600px;
+    max-width: 748px;
   }
 `;
+
+export const Wrapper = styled.div`
+  margin: 20px;
+  position: relative;
+`
 
 // Align elements to the right of the parent
 export const AlignRight = styled.div`
