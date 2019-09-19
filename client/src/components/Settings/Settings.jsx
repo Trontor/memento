@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { CenterText, Container } from "ui/Helpers";
 import { MenuContainer, MenuTabs } from "ui/Navigation";
-import { Container } from "ui/Helpers";
+import React, { useState } from "react";
+
 import { Header } from "ui/Typography";
 import SettingsAccount from "./SettingsAccount";
 import SettingsProfile from "./SettingsProfile";
@@ -23,7 +24,9 @@ export default function Settings() {
 
   return (
     <Container>
-      <Header underline>My Settings</Header>
+      <CenterText>
+        <Header center>My Settings</Header>
+      </CenterText>
       <MenuContainer>
         {menuTabs.map((tab, idx) => (
           <MenuTabs

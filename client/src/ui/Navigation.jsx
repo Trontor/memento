@@ -30,7 +30,7 @@ export const MenuTabs = styled.div`
     `};
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.desktop}) {
-    max-width: 260px;
+  props.theme.breakpoints.desktopLarge}) {
+    max-width: 380px;
   }
 `;

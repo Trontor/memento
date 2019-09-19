@@ -1,10 +1,12 @@
-import styled, { css } from "styled-components";
-import { ButtonSecondary } from "ui/Buttons";
-import { EditProfile } from "ui/Buttons";
-import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
+import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
+import styled, { css } from "styled-components";
+
+import { ButtonSecondary } from "ui/Buttons";
 import { Cancel } from "styled-icons/material/Cancel";
+import DatePicker from "react-datepicker";
+import { EditProfile } from "ui/Buttons";
 import { User } from "styled-icons/fa-regular/User";
 
 export const SettingsContainer = styled.div`
@@ -96,18 +98,22 @@ export const AccountButton = styled(ButtonSecondary)`
   font-weight: bold;
 `;
 
-export const EditAccountButton = styled(EditProfile)`
+const IconButtonStyle = css`
   color: #4cd4ff;
   margin-left: 20px;
   float: right;
+  cursor: pointer;
+`;
+
+export const EditAccountButton = styled(EditProfile)`
+  ${IconButtonStyle}
   display: ${props => (props.editClick ? "none" : "block")};
 `;
 
 export const CancelButton = styled(Cancel)`
-  color: #4cd4ff;
-  margin-left: 20px;
-  float: right;
+  ${IconButtonStyle}
   display: ${props => (props.editClick ? "block" : "none")};
+
 `;
 
 export const SectionWrapper = styled.div`
