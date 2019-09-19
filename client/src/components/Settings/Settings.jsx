@@ -1,57 +1,40 @@
-import { HeaderButton, SettingsMenu } from "./SettingsStyles";
 import React, { useState } from "react";
-
+import { MenuContainer, MenuTabs } from "ui/Navigation";
 import { Container } from "ui/Helpers";
 import { Header } from "ui/Typography";
 import SettingsAccount from "./SettingsAccount";
 import SettingsProfile from "./SettingsProfile";
 
 export default function Settings() {
-  const [settingsMenu, setsettingsMenu] = useState({
-    profile: true,
-    account: false,
-  });
+  const menuTabs = ["Profile", "Account"];
+  const [currentTabIndex, setTabIndex] = useState(0);
 
-  const settingsOpened = settingsName => {
-    if (
-      (settingsMenu.profile === true &&
-        settingsName.target.value === "profile") ||
-      (settingsMenu.account === true &&
-        settingsName.target.value === "account")
-    ) {
-      setsettingsMenu({
-        profile: settingsMenu.profile,
-        account: settingsMenu.account,
-      });
-    } else {
-      setsettingsMenu({
-        profile: !settingsMenu.profile,
-        account: !settingsMenu.account,
-      });
-    }
-  };
+  let tabComponent = null;
+  switch (menuTabs[currentTabIndex]) {
+    case "Profile":
+      tabComponent = <SettingsProfile />;
+      break;
+    case "Account":
+      tabComponent = <SettingsAccount />;
+      break;
+    default:
+      break;
+  }
 
   return (
     <Container>
       <Header underline>My Settings</Header>
-      <SettingsMenu>
-        <HeaderButton
-          value="profile"
-          onClick={settingsOpened}
-          menuClick={settingsMenu.profile}
-        >
-          Profile
-        </HeaderButton>
-        <HeaderButton
-          value="account"
-          onClick={settingsOpened}
-          menuClick={settingsMenu.account}
-        >
-          Account
-        </HeaderButton>
-      </SettingsMenu>
-      <SettingsProfile menuClick={settingsMenu} />
-      <SettingsAccount menuClick={settingsMenu} />
+      <MenuContainer>
+        {menuTabs.map((tab, idx) => (
+          <MenuTabs
+            active={currentTabIndex == idx}
+            onClick={() => setTabIndex(idx)}
+          >
+            {tab}
+          </MenuTabs>
+        ))}
+      </MenuContainer>
+      {tabComponent}
     </Container>
   );
 }

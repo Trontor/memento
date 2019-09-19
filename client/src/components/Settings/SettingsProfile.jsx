@@ -17,7 +17,7 @@ import { DeleteButton } from "components/Invite/InviteStyles";
 
 import { FormSection, InputSection, InputLabel, InputField } from "ui/Forms";
 
-export default function SettingsProfile({ menuClick }) {
+export default function SettingsProfile() {
   let [file, setFile] = useState(null); //file for profile picture
   const [birthday, setBirthday] = useState(null); //birthday state
   const birthdayHandler = date => setBirthday(date);
@@ -69,7 +69,7 @@ export default function SettingsProfile({ menuClick }) {
     <Formik
       initialValues={{ firstName: "Jane", lastName: "Doe" }}
       render={props => (
-        <SettingsContainer menuClick={menuClick.profile}>
+        <SettingsContainer>
           <FormSection>
             <ImgPreview>{ProfilePicture}</ImgPreview>
             <UploadPhoto

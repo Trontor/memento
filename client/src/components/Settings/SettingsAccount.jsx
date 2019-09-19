@@ -8,14 +8,14 @@ import {
 } from "./SettingsStyles";
 import { InputField, FormSection, InputLabel } from "ui/Forms";
 
-export default function SettingsAccount({ menuClick }) {
+export default function SettingsAccount() {
   const [editEmail, setEmailWrapper] = useState(false);
   const editEmailHandler = () => setEmailWrapper(!editEmail);
   const [editPassword, setPasswordWrapper] = useState(false);
   const editPasswordHandler = () => setPasswordWrapper(!editPassword);
 
   return (
-    <SettingsContainer menuClick={menuClick.account}>
+    <SettingsContainer>
       <FormSection>
         <InputLabel>
           Email Address{" "}

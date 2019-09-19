@@ -7,26 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Cancel } from "styled-icons/material/Cancel";
 import { User } from "styled-icons/fa-regular/User";
 
-export const SettingsMenu = styled.div`
-  display: flex;
-  width: 100%;
-`;
-
-export const HeaderButton = styled(ButtonSecondary)`
-  display: block;
-  width: 100%;
-  margin: 0 auto;
-  border-radius: 0;
-  border: none;
-  font-weight: bold;
-  border-bottom: ${props =>
-    props.menuClick ? "4px solid orange" : "1px solid  gray "};
-  background: ${props =>
-    props.menuClick ? "rgba(255, 132, 77, 0.12)" : "white"};
-`;
-
 export const SettingsContainer = styled.div`
-  display: ${props => (props.menuClick ? "block" : "none")};
   padding-top: 50px;
 `;
 
