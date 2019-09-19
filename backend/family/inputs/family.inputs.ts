@@ -1,12 +1,13 @@
 import { InputType, Field, ID } from "type-graphql";
+import { GraphQLUpload } from "graphql-upload";
 
 /**
  * GraphQL input for joining a family
  */
 @InputType()
 export class JoinFamilyInput {
-  @Field(type => ID)
-  inviteId!: string;
+    @Field(type => ID)
+    inviteId!: string;
 }
 
 /**
@@ -14,17 +15,17 @@ export class JoinFamilyInput {
  */
 @InputType()
 export class CreateFamilyInput {
-  @Field()
-  name!: string;
+    @Field()
+    name!: string;
 
-  @Field({ nullable: true })
-  imageUrl?: string;
+    @Field(type => GraphQLUpload, { nullable: true })
+    image?: any;
 
-  @Field({ nullable: true })
-  description?: string;
+    @Field({ nullable: true })
+    description?: string;
 
-  @Field({ nullable: true })
-  colour?: string;
+    @Field({ nullable: true })
+    colour?: string;
 }
 
 /**
@@ -32,15 +33,15 @@ export class CreateFamilyInput {
  */
 @InputType()
 export class UpdateFamilyInput {
-  @Field({ nullable: true })
-  name?: string;
+    @Field({ nullable: true })
+    name?: string;
 
-  @Field({ nullable: true })
-  imageUrl?: string;
+    @Field({ nullable: true })
+    imageUrl?: string;
 
-  @Field({ nullable: true })
-  description?: string;
+    @Field({ nullable: true })
+    description?: string;
 
-  @Field({ nullable: true })
-  colour?: string;
+    @Field({ nullable: true })
+    colour?: string;
 }

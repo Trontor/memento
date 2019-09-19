@@ -6,8 +6,8 @@ import { Family } from "../dto/family.dto";
  * to allow single source of truth for model's fields.
  */
 export interface FamilyDocument extends Family, Document {
-  // fields that are only found in the database Document
-  memberIds: string[];
+    // fields that are only found in the database Document
+    memberIds: string[];
 }
 
 /**
@@ -19,29 +19,32 @@ export interface IFamilyModel extends Model<FamilyDocument> {}
  * The actual structure of the Family collection.
  */
 export const FamilySchema: Schema = new Schema(
-  {
-    name: {
-      type: String,
-      required: true
+    {
+        name: {
+            type: String,
+            required: true,
+        },
+        description: {
+            type: String,
+        },
+        imageUrl: {
+            type: String,
+        },
+        memberIds: {
+            type: [String],
+            default: [],
+        },
+        colour: {
+            type: String,
+        },
     },
-    description: {
-      type: String
+    {
+        timestamps: true,
     },
-    imageUrl: {
-      type: String
-    },
-    memberIds: {
-      type: [String],
-      default: []
-    }
-  },
-  {
-    timestamps: true
-  }
 );
 
 // export a Mongoose `Model` based on `FamilyDocument` defined above
 export const FamilyModel: IFamilyModel = model<FamilyDocument, IFamilyModel>(
-  "Family",
-  FamilySchema
+    "Family",
+    FamilySchema,
 );
