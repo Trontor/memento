@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { InputField } from 'ui/Forms';
+import { InputField } from "ui/Forms";
 
 export const DateInput = styled.div`
   display: grid;

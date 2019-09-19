@@ -27,7 +27,7 @@ export const SidebarContainer = styled.div`
     `}
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+    props.theme.breakpoints.tabletLandscape}) {
     transform: translateX(${props => props.theme.size.sidebar}px);
   }
 `;
@@ -120,7 +120,7 @@ export const CloseMenu = styled(Close)`
   }
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     display: none;
   }
 `;

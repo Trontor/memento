@@ -10,7 +10,7 @@ import {
   PlaceWrapper,
   PlacesList,
   ImgPreview,
-  UserAvatar
+  UserAvatar,
 } from "./SettingsStyles";
 import { ButtonPrimary, AddButton } from "ui/Buttons";
 import { DeleteButton } from "components/Invite/InviteStyles";

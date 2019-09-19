@@ -9,7 +9,7 @@ export const SiteGrid = styled.div`
 // Left column of site grid
 export const LeftColumn = styled.div`
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     display: block;
     flex-grow: 0;
     flex-shrink: 1;
@@ -25,7 +25,7 @@ export const Main = styled.div`
   width: 100%;
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     flex-grow: 2;
     display: inline-block;
   }

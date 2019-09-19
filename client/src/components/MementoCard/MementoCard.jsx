@@ -7,11 +7,11 @@ import {
   MementoAuthor,
   MementoCoverImg,
   MementoDescription,
-  MementoTags
- } from "./MementoCardStyles";
+  MementoTags,
+} from "./MementoCardStyles";
 
 export default function MementoCard(props) {
-  return(
+  return (
     <Card>
       <MementoTitle>{props.title}</MementoTitle>
       <UploadDate>{props.dateUploaded}</UploadDate>
@@ -20,8 +20,8 @@ export default function MementoCard(props) {
       <MementoDescription>{props.description}</MementoDescription>
       <MementoCoverImg></MementoCoverImg>
       {props.tags.map(tag => (
-        <MementoTags>{tag}</MementoTags>)
-      )}
+        <MementoTags>{tag}</MementoTags>
+      ))}
     </Card>
   );
 }

@@ -8,7 +8,7 @@ import SettingsAccount from "./SettingsAccount";
 export default function Settings() {
   const [settingsHeader, setSettingsHeader] = useState({
     profile: true,
-    account: false
+    account: false,
   });
 
   const settingsOpened = settingsName => {
@@ -20,12 +20,12 @@ export default function Settings() {
     ) {
       setSettingsHeader({
         profile: settingsHeader.profile,
-        account: settingsHeader.account
+        account: settingsHeader.account,
       });
     } else {
       setSettingsHeader({
         profile: !settingsHeader.profile,
-        account: !settingsHeader.account
+        account: !settingsHeader.account,
       });
     }
   };

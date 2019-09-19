@@ -4,7 +4,7 @@ import {
   SectionWrapper,
   AccountButton,
   EditAccountButton,
-  CancelButton
+  CancelButton,
 } from "./SettingsStyles";
 import { InputField, FormSection, InputLabel } from "ui/Forms";
 

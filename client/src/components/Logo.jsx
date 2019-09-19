@@ -16,7 +16,7 @@ const Logotype = styled(Link)`
   font-family: "Quicksand", sans-serif;
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     text-align: left;
     left: 50px;
   }
