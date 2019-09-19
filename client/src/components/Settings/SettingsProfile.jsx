@@ -1,21 +1,27 @@
-import React, { useState } from "react";
-import { Formik } from "formik";
+import { AddButton, ButtonPrimary } from "ui/Buttons";
 import {
-  SettingsContainer,
-  UploadPhoto,
-  UploadLabel,
   Calendar,
-  CountryPicker,
   CityPicker,
+  CountryPicker,
+  ImgPreview,
   PlaceWrapper,
   PlacesList,
-  ImgPreview,
+  SettingsContainer,
+  UploadLabel,
+  UploadPhoto,
   UserAvatar,
 } from "./SettingsStyles";
-import { ButtonPrimary, AddButton } from "ui/Buttons";
-import { DeleteButton } from "components/Invite/InviteStyles";
+import { FormSection, InputField, InputLabel, InputSection } from "ui/Forms";
+import {
+  RadioButton,
+  RadioButtonStyle,
+  RadioLabel,
+  RadioOption,
+} from "ui/Forms";
+import React, { useState } from "react";
 
-import { FormSection, InputSection, InputLabel, InputField } from "ui/Forms";
+import { DeleteButton } from "components/Invite/InviteStyles";
+import { Formik } from "formik";
 
 export default function SettingsProfile() {
   let [file, setFile] = useState(null); //file for profile picture
@@ -124,13 +130,16 @@ export default function SettingsProfile() {
             <InputLabel>Gender</InputLabel>
             {genderList.map(gender => (
               <InputSection>
-                <input
-                  type="radio" //replace radio buttons
-                  value={gender}
-                  checked={genderOption === gender}
-                  onChange={genderOptionHandler}
-                />
-                {gender}
+                <RadioOption>
+                  <RadioButton
+                    type="radio"
+                    value={gender}
+                    checked={genderOption === gender}
+                    onChange={genderOptionHandler}
+                  />
+                  <RadioButtonStyle />
+                  <RadioLabel>{gender}</RadioLabel>
+                </RadioOption>
               </InputSection>
             ))}
           </FormSection>

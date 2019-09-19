@@ -1,12 +1,13 @@
-import React from "react";
-import { InstructionLabel, FormSection } from "ui/Forms";
+import { FormSection, InstructionLabel } from "ui/Forms";
 import {
-  RadioOption,
   RadioButton,
   RadioButtonStyle,
   RadioLabel,
-} from "./UploadMementoStyles";
+  RadioOption,
+} from "ui/Forms";
+
 import CreatableSelect from "react-select/creatable";
+import React from "react";
 
 export default function UploadStep1({
   selectMementoType,
