@@ -1,6 +1,6 @@
-import React from 'react';
-import { configure, addDecorator } from '@storybook/react';
-import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import React from "react";
+import { configure, addDecorator } from "@storybook/react";
+import { ThemeProvider, createGlobalStyle } from "styled-components";
 import { theme } from "../stories/theme";
 
 const GlobalStyle = createGlobalStyle`
@@ -53,17 +53,18 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const passTheme = story =>
+const passTheme = story => (
   <ThemeProvider theme={theme}>
     <>
-      <GlobalStyle/>
+      <GlobalStyle />
       {story()}
     </>
-  </ThemeProvider>;
+  </ThemeProvider>
+);
 
 addDecorator(passTheme);
 
-const req = require.context('../stories', true, /\.stories\.js$/);
+const req = require.context("../stories", true, /\.stories\.js$/);
 function loadStories() {
   req.keys().forEach(filename => req(filename));
 }

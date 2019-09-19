@@ -4,7 +4,7 @@ export const center = css`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 `;
 
 export const Container = styled.div`
@@ -14,11 +14,13 @@ export const Container = styled.div`
   left: 50%;
   transform: translateX(-50%);
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletPortrait}) {
+  @media screen and (min-width: ${props =>
+      props.theme.breakpoints.tabletPortrait}) {
     width: 70%;
   }
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
+  @media screen and (min-width: ${props =>
+      props.theme.breakpoints.tabletLandscape}) {
     width: 50%;
   }
 `;

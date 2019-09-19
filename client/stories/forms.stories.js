@@ -1,7 +1,7 @@
-import React from 'react';
-import { storiesOf } from '@storybook/react';
+import React from "react";
+import { storiesOf } from "@storybook/react";
 import styled from "styled-components";
-import { lighten } from 'polished';
+import { lighten } from "polished";
 
 export const InputField = styled.input`
   font-family: "Rubik", sans-serif;
@@ -32,11 +32,9 @@ export const FormHelpText = styled.span`
   opacity: 0.5;
 `;
 
-storiesOf('Forms', module)
-  .add('Default', () =>
-    <>
-     <InputField placeholder="This is placeholder text."/>
-     <FormHelpText>This is some text to help the user.</FormHelpText>
-    </>
-  )
-;
+storiesOf("Forms", module).add("Default", () => (
+  <>
+    <InputField placeholder="This is placeholder text." />
+    <FormHelpText>This is some text to help the user.</FormHelpText>
+  </>
+));
