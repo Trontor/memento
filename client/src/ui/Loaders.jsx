@@ -11,6 +11,7 @@ export const PageSpinnerWrapper = styled.div`
 
 //Pure css spinner for loading state
 export const Spinner = styled.span`
+  ${center};
   border-radius: 50%;
   border-style: solid;
   display: inline-block;

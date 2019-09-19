@@ -129,7 +129,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <GlobalStyle />
+        <GlobalStyle/>
         <Route path="/" exact component={Landing} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
