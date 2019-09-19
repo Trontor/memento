@@ -5,14 +5,16 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { FamilySchema } from "./schema/family.schema";
 import { UserModule } from "../user/user.module";
 import { InviteModule } from "../invite/invite.module";
+import { FileModule } from "../file/file.module";
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: "Family", schema: FamilySchema }]),
-    forwardRef(() => UserModule),
-    forwardRef(() => InviteModule)
-  ],
-  providers: [FamilyService, FamilyResolver],
-  exports: [FamilyService]
+    imports: [
+        MongooseModule.forFeature([{ name: "Family", schema: FamilySchema }]),
+        forwardRef(() => UserModule),
+        forwardRef(() => InviteModule),
+        FileModule,
+    ],
+    providers: [FamilyService, FamilyResolver],
+    exports: [FamilyService],
 })
 export class FamilyModule {}

@@ -4,6 +4,7 @@ import {
     InternalServerErrorException,
     UnauthorizedException,
     Logger,
+    ForbiddenException,
 } from "@nestjs/common";
 import { UserSignupInput, UpdateUserInput } from "./input/user.input";
 import { InjectModel } from "@nestjs/mongoose";
@@ -116,7 +117,7 @@ export class UserService implements IUserService {
             this.logger.log(
                 `current user id ${currentUser.userId} does not match updatee id ${fields.userId}`,
             );
-            throw new UnauthorizedException();
+            throw new ForbiddenException();
         }
 
         // upload image if provided

@@ -7,24 +7,27 @@ import { User } from "../../user/dto/user.dto";
  */
 @ObjectType()
 export class Family {
-  @Field(type => ID)
-  familyId!: string;
+    @Field(type => ID)
+    familyId!: string;
 
-  @Field()
-  name!: string;
+    @Field()
+    name!: string;
 
-  @Field({ nullable: true })
-  description?: string;
+    @Field({ nullable: true })
+    description?: string;
 
-  @Field({ nullable: true })
-  imageUrl?: string;
+    @Field({ nullable: true })
+    imageUrl?: string;
 
-  @Field(type => [User])
-  members?: User[];
+    @Field(type => [User])
+    members?: User[];
 
-  @Field()
-  createdAt!: Date;
+    @Field({ nullable: true })
+    colour?: string;
 
-  @Field()
-  updatedAt!: Date;
+    @Field()
+    createdAt!: Date;
+
+    @Field()
+    updatedAt!: Date;
 }
