@@ -5,7 +5,7 @@ import {
   Setting,
   NewArtefact,
   Invite,
-  View
+  View,
 } from "ui/Buttons";
 import {
   SidebarContainer,
@@ -17,7 +17,7 @@ import {
   FamilyListContainer,
   TextList,
   MenuContainer,
-  SignOutButton
+  SignOutButton,
 } from "./SidebarStyles";
 import { withRouter } from "react-router-dom";
 import { Logo } from "ui/Logos";
@@ -50,16 +50,18 @@ const Sidebar = props => {
           size="small"
           onClick={() => props.history.push("/dashboard")}
         />
-        <CloseMenu size={iconSize} title="close menu" onClick={props.toggleSidebar}/>
+        <CloseMenu
+          size={iconSize}
+          title="close menu"
+          onClick={props.toggleSidebar}
+        />
       </SidebarHeader>
-        <SearchBar>
-          <SearchIcon />
-          <SearchInput type="text" placeholder="Search all artefacts" />
-        </SearchBar>
+      <SearchBar>
+        <SearchIcon />
+        <SearchInput type="text" placeholder="Search all artefacts" />
+      </SearchBar>
       <FamilyListContainer>
-        {families.length > 0 && (
-          <h3>My Families</h3>
-        )}
+        {families.length > 0 && <h3>My Families</h3>}
         {loading ? (
           <Spinner />
         ) : (
@@ -100,9 +102,7 @@ const Sidebar = props => {
           Edit profile & account
         </TextList>
       </MenuContainer>
-      <SignOutButton onClick={signOut}>
-        Sign Out
-      </SignOutButton>
+      <SignOutButton onClick={signOut}>Sign Out</SignOutButton>
     </SidebarContainer>
   );
 };

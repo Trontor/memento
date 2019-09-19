@@ -1,11 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
-import {
-  InputSection,
-  InputField,
-  InputLabel,
-  Error
-} from "ui/Forms";
+import { InputSection, InputField, InputLabel, Error } from "ui/Forms";
 import { withRouter } from "react-router";
 import { ButtonPrimary } from "ui/Buttons";
 import { Header } from "ui/Typography";
@@ -21,7 +16,7 @@ const defaultValues = {
   lastName: "Doe",
   email: `test-account-${Math.trunc(Math.random() * 1000000)}@email.com`,
   password: "compl14n7Pa$$w0rd",
-  confirmPassword: "compl14n7Pa$$w0rd"
+  confirmPassword: "compl14n7Pa$$w0rd",
 };
 
 /**
@@ -46,7 +41,7 @@ const SignupValidationSchema = yup.object().shape({
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match")
-    .required("Password confirm is required")
+    .required("Password confirm is required"),
 });
 
 const Signup = withRouter(props => {
@@ -99,7 +94,7 @@ const Signup = withRouter(props => {
    */
   const [signup, { loading, data, error }] = useMutation(SIGNUP, {
     // A MutationOption that fired when the mutation is completed succesfully
-    onCompleted: processAuthentication
+    onCompleted: processAuthentication,
   });
 
   let signUpErrors = [];
@@ -113,7 +108,7 @@ const Signup = withRouter(props => {
 
   if (error) {
     signUpErrors = error.graphQLErrors.map(
-      gqlError => gqlError.message.message
+      gqlError => gqlError.message.message,
     );
   }
   return (

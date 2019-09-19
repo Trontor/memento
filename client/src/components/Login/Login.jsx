@@ -5,7 +5,7 @@ import {
   InputField,
   InputLabel,
   HelpText,
-  InputSection
+  InputSection,
 } from "ui/Forms";
 import { MsgLink } from "./LoginStyles";
 import { ButtonPrimary } from "ui/Buttons";
@@ -22,7 +22,7 @@ const LoginValidationSchema = yup.object().shape({
     .string()
     .email("Please enter a valid email")
     .required("Please enter your email"),
-  password: yup.string().required("Password is required")
+  password: yup.string().required("Password is required"),
 });
 
 /**
@@ -32,7 +32,7 @@ const LoginValidationSchema = yup.object().shape({
  */
 const defaultValues = {
   email: process.env.REACT_APP_DEFAULT_LOGIN_EMAIL || "",
-  password: process.env.REACT_APP_DEFAULT_LOGIN_PASSWORD || ""
+  password: process.env.REACT_APP_DEFAULT_LOGIN_PASSWORD || "",
 };
 
 export default function Login(props) {
@@ -47,7 +47,7 @@ export default function Login(props) {
   };
 
   const [login, { loading, error, data }] = useMutation(LOGIN, {
-    onCompleted: processAuthentication
+    onCompleted: processAuthentication,
   });
   let loginErrors = [];
 
@@ -56,7 +56,7 @@ export default function Login(props) {
   }
 
   if (loading) {
-    return <Spinner/>;
+    return <Spinner />;
   }
 
   if (error) {

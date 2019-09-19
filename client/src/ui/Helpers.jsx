@@ -5,22 +5,21 @@ export const center = css`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 `;
 
 // Used across the site as a container for the main column
 export const Container = styled.div`
   margin: 20px auto;
   position: relative;
-  top: ${props => props.noNav ? "0px" : "40px"};
+  top: ${props => (props.noNav ? "0px" : "40px")};
 
-  @media screen and (min-width: ${props =>
-  props.theme.breakpoints.mobile}) {
+  @media screen and (min-width: ${props => props.theme.breakpoints.mobile}) {
     margin: 20px 40px;
   }
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     top: 0;
     margin: 20px auto;
     max-width: 600px;

@@ -1,6 +1,6 @@
-import styled, {css} from "styled-components";
+import styled, { css } from "styled-components";
 import { lighten, darken, adjustHue } from "polished";
-import { center } from 'ui/Helpers';
+import { center } from "ui/Helpers";
 
 export const RadioOption = styled.div`
   position: relative;
@@ -21,7 +21,7 @@ export const RadioButtonStyle = styled.span`
 
   &:after {
     display: none;
-    content: '';
+    content: "";
     width: 170%;
     height: 170%;
     background-color: ${props => props.theme.palette.main};
@@ -32,7 +32,6 @@ export const RadioButtonStyle = styled.span`
     left: 50%;
     transform: translate(-50%, -50%);
     ${props => props.theme.mixins.hoverFade};
-
   }
 `;
 
@@ -79,7 +78,7 @@ export const RadioLabel = styled.label`
   display: inline-block;
   margin-left: 10px;
   font-size: 13px;
-`
+`;
 
 export const TagsContainer = styled.ul`
   display: flex;
@@ -107,23 +106,29 @@ export const Tag = styled.li`
     ${props => props.theme.mixins.hoverFade};
   }
 
-  &:active, &:focus {
-    background-color: ${props => adjustHue(5, lighten(0.23, props.theme.palette.main))};
+  &:active,
+  &:focus {
+    background-color: ${props =>
+      adjustHue(5, lighten(0.23, props.theme.palette.main))};
     border-color: ${props => lighten(0.08, props.theme.palette.main)};
     color: ${props => props.theme.palette.main};
-    }
+  }
 
-  ${({selected}) => selected && css`
-    border-color: ${props => lighten(0.05, props.theme.palette.main)};
-    background-color: ${props => adjustHue(5, lighten(0.25, props.theme.palette.main))};
-    color: ${props => darken(0.08, props.theme.palette.main)};
-
-    &:hover {
+  ${({ selected }) =>
+    selected &&
+    css`
       border-color: ${props => lighten(0.05, props.theme.palette.main)};
-      background-color: ${props => adjustHue(5, lighten(0.25, props.theme.palette.main))};
+      background-color: ${props =>
+        adjustHue(5, lighten(0.25, props.theme.palette.main))};
       color: ${props => darken(0.08, props.theme.palette.main)};
-    }
-  `};
+
+      &:hover {
+        border-color: ${props => lighten(0.05, props.theme.palette.main)};
+        background-color: ${props =>
+          adjustHue(5, lighten(0.25, props.theme.palette.main))};
+        color: ${props => darken(0.08, props.theme.palette.main)};
+      }
+    `};
 `;
 
 export const NewTag = styled.button`
@@ -162,7 +167,7 @@ export const NewTag = styled.button`
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      content: '';
+      content: "";
       width: 16px;
       height: 16px;
       border: 1px solid ${props => props.theme.palette.main};
@@ -183,7 +188,7 @@ export const UploadFileButton = styled.button`
   font-weight: bold;
   z-index: 100;
   cursor: pointer;
-`
+`;
 
 export const UploadFileIcon = styled.span`
   display: block;
@@ -207,20 +212,19 @@ export const UploadFileIcon = styled.span`
     }
   }
 
-  @media screen and (min-width: ${props =>
-  props.theme.breakpoints.mobile}) {
+  @media screen and (min-width: ${props => props.theme.breakpoints.mobile}) {
     width: 100px;
     height: 100px;
   }
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletPortrait}) {
+      props.theme.breakpoints.tabletPortrait}) {
     width: 120px;
     height: 120px;
   }
-`
+`;
 
 export const UploadFileLabel = styled.label`
   display: inline-block;
   padding-top: 10px;
-`
+`;

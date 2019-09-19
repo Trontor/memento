@@ -10,17 +10,18 @@ export const NavBar = styled.div`
   background-color: ${props => props.theme.palette.background};
   z-index: 997;
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
+  @media screen and (min-width: ${props =>
+      props.theme.breakpoints.tabletLandscape}) {
     display: none;
   }
-`
+`;
 
 export const HamburgerMenu = styled(MenuAltLeft)`
   cursor: pointer;
   color: ${props => props.theme.palette.main};
   margin: 10px 0 0 30px;
   width: 30px;
-`
+`;
 
 export const ModalBackground = styled.div`
   background-color: ${props => props.theme.palette.background};
@@ -30,7 +31,8 @@ export const ModalBackground = styled.div`
   position: absolute;
   z-index: 998;
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
+  @media screen and (min-width: ${props =>
+      props.theme.breakpoints.tabletLandscape}) {
     display: none;
   }
 `;

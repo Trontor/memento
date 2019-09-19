@@ -137,7 +137,7 @@ export const TextArea = styled.div`
     ::placeholder {
       opacity: 0.4;
       font-weight: 300;
-  }
+    }
 
     &:focus {
       outline: none;

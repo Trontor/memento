@@ -16,7 +16,7 @@ export const TextWrapper = styled.div`
   border-radius: 8px;
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     width: 600px;
   }
 
@@ -24,7 +24,6 @@ export const TextWrapper = styled.div`
     line-height: 1em;
     padding: 0 20px;
   }
-
 `;
 
 export const GoToButton = styled(NavigateNext)`
@@ -32,31 +31,28 @@ export const GoToButton = styled(NavigateNext)`
   width: 36px;
   margin: 0 auto;
 
-  @media screen and (min-width: ${props =>
-  props.theme.breakpoints.mobile}) {
+  @media screen and (min-width: ${props => props.theme.breakpoints.mobile}) {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
     width: 48px;
   }
-
 `;
 
 export const DashboardButtons = styled.div`
-    display: grid;
-    grid-template-columns: 100%;
-    cursor: pointer;
+  display: grid;
+  grid-template-columns: 100%;
+  cursor: pointer;
 
-    &:first-of-type {
-      margin-bottom: 20px;
-    }
+  &:first-of-type {
+    margin-bottom: 20px;
+  }
 
-    &:hover ${GoToButton} {
-      color: ${props => lighten(0.1, props.theme.palette.main)};
-    }
+  &:hover ${GoToButton} {
+    color: ${props => lighten(0.1, props.theme.palette.main)};
+  }
 
-  @media screen and (min-width: ${props =>
-  props.theme.breakpoints.mobile}) {
+  @media screen and (min-width: ${props => props.theme.breakpoints.mobile}) {
     width: 100%;
     display: grid;
     grid-template-columns: 50px auto 70px;
@@ -90,8 +86,7 @@ export const ButtonHeading = styled.h4`
     line-height: 1.25em;
   }
 
-  @media screen and (min-width: ${props =>
-  props.theme.breakpoints.mobile}) {
+  @media screen and (min-width: ${props => props.theme.breakpoints.mobile}) {
     margin: 10px 0;
   }
 `;

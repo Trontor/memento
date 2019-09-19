@@ -7,27 +7,18 @@ export const Card = styled.div`
   border-bottom: 1px solid ${props => lighten(0.6, props.theme.palette.text)};
 `;
 
-export const MementoTitle = styled.div`
+export const MementoTitle = styled.div``;
 
-`;
+export const MementoAuthor = styled.div``;
 
-export const MementoAuthor = styled.div`
+export const MementoCoverImg = styled.div``;
 
-`;
+export const MementoDescription = styled.div``;
 
-export const MementoCoverImg = styled.div`
-
-`;
-
-export const MementoDescription = styled.div`
-`;
-
-export const UploadDate = styled.span`
-`;
+export const UploadDate = styled.span``;
 
 export const MementoDate = styled.span`
   display: block;
 `;
 
-export const MementoTags = styled.a`
-`;
+export const MementoTags = styled.a``;
