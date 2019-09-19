@@ -1,9 +1,10 @@
+import { HeaderButton, SettingsMenu } from "./SettingsStyles";
 import React, { useState } from "react";
+
 import { Container } from "ui/Helpers";
 import { Header } from "ui/Typography";
-import { SettingsMenu, HeaderButton } from "./SettingsStyles";
-import SettingsProfile from "./SettingsProfile";
 import SettingsAccount from "./SettingsAccount";
+import SettingsProfile from "./SettingsProfile";
 
 export default function Settings() {
   const [settingsMenu, setsettingsMenu] = useState({
