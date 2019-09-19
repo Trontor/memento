@@ -1,21 +1,21 @@
-import React from 'react';
-import {useDropzone} from 'react-dropzone';
+import React from "react";
+import { useDropzone } from "react-dropzone";
 import styled, { css } from "styled-components";
-import { storiesOf } from '@storybook/react';
-import { lighten } from 'polished';
+import { storiesOf } from "@storybook/react";
+import { lighten } from "polished";
 
-const getColor = (props) => {
+const getColor = props => {
   if (props.isDragAccept) {
-      return props => lighten(0.1, props.theme.palette.loading);
+    return props => lighten(0.1, props.theme.palette.loading);
   }
   if (props.isDragReject) {
-      return props => props.theme.palette.error;
+    return props => props.theme.palette.error;
   }
   if (props.isDragActive) {
-      return props => props.theme.palette.main;
+    return props => props.theme.palette.main;
   }
-  return '#eee';
-}
+  return "#eee";
+};
 
 const DropzoneContainer = styled.div`
   height: 200px;
@@ -52,19 +52,17 @@ export function StyledDropzone(props) {
     getInputProps,
     isDragActive,
     isDragAccept,
-    isDragReject
-  } = useDropzone({accept: 'image/*'});
+    isDragReject,
+  } = useDropzone({ accept: "image/*" });
 
   return (
-    <DropzoneContainer {...getRootProps({isDragActive, isDragAccept, isDragReject})}>
+    <DropzoneContainer
+      {...getRootProps({ isDragActive, isDragAccept, isDragReject })}
+    >
       <input {...getInputProps()} />
       <p>Drag a file here or click to upload.</p>
     </DropzoneContainer>
   );
 }
 
-storiesOf('Uploader', module)
-  .add('Drag and Drop', () =>
-    <StyledDropzone/>
-  )
-;
+storiesOf("Uploader", module).add("Drag and Drop", () => <StyledDropzone />);
