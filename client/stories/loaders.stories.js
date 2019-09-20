@@ -1,8 +1,8 @@
-import React from 'react';
-import { storiesOf } from '@storybook/react';
+import React from "react";
+import { storiesOf } from "@storybook/react";
 import styled, { css } from "styled-components";
-import { lighten } from 'polished';
-import { center } from './helpers'
+import { lighten } from "polished";
+import { center } from "./helpers";
 
 export const Spinner = styled.span`
   border-radius: 50%;
@@ -12,22 +12,27 @@ export const Spinner = styled.span`
   height: 1em;
   animation: spinner 1.2s cubic-bezier(0.5, 0.7, 0.8, 0.5) infinite;
   border-right-color: ${props => props.theme.palette.main};
-  border-left-color: rgba(0,0,0,0.05);
-  border-top-color: rgba(0,0,0,0.05);
-  border-bottom-color: rgba(0,0,0,0.05);
+  border-left-color: rgba(0, 0, 0, 0.05);
+  border-top-color: rgba(0, 0, 0, 0.05);
+  border-bottom-color: rgba(0, 0, 0, 0.05);
   ${({ size }) => handleSpinnerSize(size)};
-  ${({light}) => light && css`
-    border-right-color: white;
-    border-left-color: rgba(255,255,255,0.3);
-    border-top-color: rgba(255,255,255,0.3);
-    border-bottom-color: rgba(255,255,255,0.3);
-    border-width: 3px;
-  `}
-;
+  ${({ light }) =>
+    light &&
+    css`
+      border-right-color: white;
+      border-left-color: rgba(255, 255, 255, 0.3);
+      border-top-color: rgba(255, 255, 255, 0.3);
+      border-bottom-color: rgba(255, 255, 255, 0.3);
+      border-width: 3px;
+    `};
 
   @keyframes spinner {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 `;
 
@@ -52,13 +57,10 @@ const handleSpinnerSize = size => {
   }
 };
 
-storiesOf('Loading', module)
-  .add('Small', () =>
-  <>
-    <Spinner size="small"/>
-  </>
-  )
-  .add('Large', () =>
-    <Spinner size="large"/>
-  )
-  ;
+storiesOf("Loading", module)
+  .add("Small", () => (
+    <>
+      <Spinner size="small" />
+    </>
+  ))
+  .add("Large", () => <Spinner size="large" />);

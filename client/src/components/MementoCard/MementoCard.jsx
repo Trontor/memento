@@ -1,17 +1,18 @@
-import React from "react";
 import {
   Card,
-  MementoTitle,
-  UploadDate,
-  MementoDate,
   MementoAuthor,
   MementoCoverImg,
+  MementoDate,
   MementoDescription,
-  MementoTags
- } from "./MementoCardStyles";
+  MementoTags,
+  MementoTitle,
+  UploadDate,
+} from "./MementoCardStyles";
+
+import React from "react";
 
 export default function MementoCard(props) {
-  return(
+  return (
     <Card>
       <MementoTitle>{props.title}</MementoTitle>
       <UploadDate>{props.dateUploaded}</UploadDate>
@@ -20,8 +21,8 @@ export default function MementoCard(props) {
       <MementoDescription>{props.description}</MementoDescription>
       <MementoCoverImg></MementoCoverImg>
       {props.tags.map(tag => (
-        <MementoTags>{tag}</MementoTags>)
-      )}
+        <MementoTags>{tag}</MementoTags>
+      ))}
     </Card>
   );
 }

@@ -1,4 +1,4 @@
-import styled, {css} from "styled-components";
+import styled, { css } from "styled-components";
 import { lighten } from "polished";
 import { PlusCircle } from "styled-icons/boxicons-regular/PlusCircle";
 import { Edit } from "styled-icons/material/Edit";

@@ -18,7 +18,7 @@ const gqlEndpoint =
 console.log("Linking GraphQL to Apollo Client at: " + gqlEndpoint);
 
 const link = new HttpLink({
-  uri: gqlEndpoint
+  uri: gqlEndpoint,
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -26,8 +26,8 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : ""
-    }
+      authorization: token ? `Bearer ${token}` : "",
+    },
   };
 });
 
@@ -35,8 +35,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
     graphQLErrors.map(({ message, locations, path }) =>
       console.log(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-      )
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+      ),
     );
 
   if (networkError) console.log(`[Network error]: ${networkError}`);
@@ -45,14 +45,14 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 const client = new ApolloClient({
   connectToDevTools: true,
   cache,
-  link: authLink.concat(errorLink).concat(link)
+  link: authLink.concat(errorLink).concat(link),
 });
 
 ReactDOM.render(
   <ApolloProvider client={client}>
     <App />
   </ApolloProvider>,
-  document.getElementById("root")
+  document.getElementById("root"),
 );
 
 // If you want your app to work offline and load faster, you can change

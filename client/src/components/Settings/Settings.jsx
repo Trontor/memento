@@ -1,56 +1,43 @@
+import { CenterText, Container } from "ui/Helpers";
+import { MenuContainer, MenuTabs } from "ui/Navigation";
 import React, { useState } from "react";
-import { Container } from "ui/Helpers";
+
 import { Header } from "ui/Typography";
-import { SettingsHeader, HeaderButton } from "./SettingsStyles";
-import SettingsProfile from "./SettingsProfile";
 import SettingsAccount from "./SettingsAccount";
+import SettingsProfile from "./SettingsProfile";
 
 export default function Settings() {
-  const [settingsHeader, setSettingsHeader] = useState({
-    profile: true,
-    account: false
-  });
+  const menuTabs = ["Profile", "Account"];
+  const [currentTabIndex, setTabIndex] = useState(0);
 
-  const settingsOpened = settingsName => {
-    if (
-      (settingsHeader.profile === true &&
-        settingsName.target.value === "profile") ||
-      (settingsHeader.account === true &&
-        settingsName.target.value === "account")
-    ) {
-      setSettingsHeader({
-        profile: settingsHeader.profile,
-        account: settingsHeader.account
-      });
-    } else {
-      setSettingsHeader({
-        profile: !settingsHeader.profile,
-        account: !settingsHeader.account
-      });
-    }
-  };
+  let tabComponent = null;
+  switch (menuTabs[currentTabIndex]) {
+    case "Profile":
+      tabComponent = <SettingsProfile />;
+      break;
+    case "Account":
+      tabComponent = <SettingsAccount />;
+      break;
+    default:
+      break;
+  }
 
   return (
     <Container>
-      <Header underline>My Settings</Header>
-      <SettingsHeader>
-        <HeaderButton
-          value="profile"
-          onClick={settingsOpened}
-          menuClick={settingsHeader.profile}
-        >
-          Profile
-        </HeaderButton>
-        <HeaderButton
-          value="account"
-          onClick={settingsOpened}
-          menuClick={settingsHeader.account}
-        >
-          Account
-        </HeaderButton>
-      </SettingsHeader>
-      <SettingsProfile menuClick={settingsHeader} />
-      <SettingsAccount menuClick={settingsHeader} />
+      <CenterText>
+        <Header center>My Settings</Header>
+      </CenterText>
+      <MenuContainer>
+        {menuTabs.map((tab, idx) => (
+          <MenuTabs
+            active={currentTabIndex == idx}
+            onClick={() => setTabIndex(idx)}
+          >
+            {tab}
+          </MenuTabs>
+        ))}
+      </MenuContainer>
+      {tabComponent}
     </Container>
   );
 }

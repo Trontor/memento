@@ -1,23 +1,29 @@
-import React, { useState } from "react";
-import { Formik } from "formik";
+import { AddButton, ButtonPrimary } from "ui/Buttons";
 import {
-  SettingsContainer,
-  UploadPhoto,
-  UploadLabel,
   Calendar,
-  CountryPicker,
   CityPicker,
+  CountryPicker,
+  ImgPreview,
   PlaceWrapper,
   PlacesList,
-  ImgPreview,
-  UserAvatar
+  SettingsContainer,
+  UploadLabel,
+  UploadPhoto,
+  UserAvatar,
 } from "./SettingsStyles";
-import { ButtonPrimary, AddButton } from "ui/Buttons";
+import { FormSection, InputField, InputLabel, InputSection } from "ui/Forms";
+import {
+  RadioButton,
+  RadioButtonStyle,
+  RadioLabel,
+  RadioOption,
+} from "ui/Forms";
+import React, { useState } from "react";
+
 import { DeleteButton } from "components/Invite/InviteStyles";
+import { Formik } from "formik";
 
-import { FormSection, InputSection, InputLabel, InputField } from "ui/Forms";
-
-export default function SettingsProfile({ menuClick }) {
+export default function SettingsProfile() {
   let [file, setFile] = useState(null); //file for profile picture
   const [birthday, setBirthday] = useState(null); //birthday state
   const birthdayHandler = date => setBirthday(date);
@@ -69,7 +75,7 @@ export default function SettingsProfile({ menuClick }) {
     <Formik
       initialValues={{ firstName: "Jane", lastName: "Doe" }}
       render={props => (
-        <SettingsContainer menuClick={menuClick.profile}>
+        <SettingsContainer>
           <FormSection>
             <ImgPreview>{ProfilePicture}</ImgPreview>
             <UploadPhoto
@@ -124,13 +130,16 @@ export default function SettingsProfile({ menuClick }) {
             <InputLabel>Gender</InputLabel>
             {genderList.map(gender => (
               <InputSection>
-                <input
-                  type="radio" //replace radio buttons
-                  value={gender}
-                  checked={genderOption === gender}
-                  onChange={genderOptionHandler}
-                />
-                {gender}
+                <RadioOption>
+                  <RadioButton
+                    type="radio"
+                    value={gender}
+                    checked={genderOption === gender}
+                    onChange={genderOptionHandler}
+                  />
+                  <RadioButtonStyle />
+                  <RadioLabel>{gender}</RadioLabel>
+                </RadioOption>
               </InputSection>
             ))}
           </FormSection>

@@ -5,30 +5,38 @@ export const center = css`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 `;
 
 // Used across the site as a container for the main column
 export const Container = styled.div`
-  margin: 20px auto;
+  margin: 30px auto;
   position: relative;
-  top: ${props => props.noNav ? "0px" : "40px"};
+  top: ${props => (props.noNav ? "0px" : "40px")};
 
-  @media screen and (min-width: ${props =>
-  props.theme.breakpoints.mobile}) {
-    margin: 20px 40px;
+  @media screen and (min-width: ${props => props.theme.breakpoints.mobile}) {
+    margin: 30px 40px;
   }
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     top: 0;
-    margin: 20px auto;
-    max-width: 600px;
+    margin: 30px auto;
+    max-width: 748px;
   }
 `;
+
+export const Wrapper = styled.div`
+  margin: 20px;
+  position: relative;
+`
 
 // Align elements to the right of the parent
 export const AlignRight = styled.div`
   margin-left: auto;
   display: inline-block;
+`;
+
+export const CenterText = styled.div`
+  text-align: center;
 `;
