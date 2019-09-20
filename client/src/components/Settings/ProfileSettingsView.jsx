@@ -10,6 +10,10 @@ import {
   UploadLabel,
   UploadPhoto,
   UserAvatar,
+  SectionWrapper,
+  AccountButton,
+  EditAccountButton,
+  CancelButton,
 } from "./SettingsStyles";
 import { FormSection, InputField, InputLabel, InputSection } from "ui/Forms";
 import {
@@ -17,11 +21,13 @@ import {
   RadioButtonStyle,
   RadioLabel,
   RadioOption,
+  DefaultInput,
 } from "ui/Forms";
 import React, { useState } from "react";
-
 import { DeleteButton } from "components/Invite/InviteStyles";
 import { Formik } from "formik";
+import { useQuery } from "@apollo/react-hooks";
+import GET_CURRENT_USER from "queries/GetCurrentUser";
 
 export default function SettingsProfile() {
   let [file, setFile] = useState(null); //file for profile picture
@@ -34,8 +40,20 @@ export default function SettingsProfile() {
   const selectBirthCountry = value => setBirthCountry(value);
   const [birthCity, setBirthCity] = useState(); //birth city state
   const selectBirthCity = value => setBirthCity(value);
-
   const [livePlaces, setLivePlaces] = useState([{ city: "", date: null }]); //place you've lived and date moved
+
+  const { data, error, loading } = useQuery(GET_CURRENT_USER);
+
+  let user = {};
+
+  //Handle the states of displaying data, error and loading
+  if (error) {
+    console.log("Error loading user data:", error);
+  }
+
+  if (data && data.currentUser) {
+    user = data.currentUser;
+  }
 
   function imgHandleChange(event) {
     file = URL.createObjectURL(event.target.files[0]);
@@ -71,6 +89,26 @@ export default function SettingsProfile() {
     setLivePlaces(place);
   };
 
+  const [editFirstName, setFirstName] = useState(false);
+  const editFirstNameHandler = () => setFirstName(!editFirstName);
+
+  const [editLastName, setLastName] = useState(false);
+  const editLastNameHandler = () => setLastName(!editLastName);
+
+  let defaultFirstName = <DefaultInput>{user.firstName}</DefaultInput>;
+  if (editFirstName) {
+    defaultFirstName = (
+      <InputField type="text" name="firstName" value={user.firstName} />
+    );
+  }
+
+  let defaultLastName = <DefaultInput>{user.lastName}</DefaultInput>;
+  if (editLastName) {
+    defaultLastName = (
+      <InputField type="text" name="lastName" value={user.lastName} />
+    );
+  }
+
   return (
     <Formik
       initialValues={{ firstName: "Jane", lastName: "Doe" }}
@@ -87,29 +125,47 @@ export default function SettingsProfile() {
           </FormSection>
 
           <FormSection>
-            <InputSection>
-              {/* First Name  */}
-              <InputLabel>First Name</InputLabel>
-              <InputField
-                type="text"
-                name="firstName"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                value={props.values.firstName}
+            <InputLabel>
+              First Name
+              <EditAccountButton
+                size="25px"
+                onClick={editFirstNameHandler}
+                editClick={editFirstName}
               />
-            </InputSection>
+              <CancelButton
+                size="25px"
+                onClick={editFirstNameHandler}
+                editClick={editFirstName}
+              />
+            </InputLabel>
+            {defaultFirstName}
+            <SectionWrapper editClick={editFirstName}>
+              <AccountButton onClick={editFirstNameHandler}>
+                Update First Name
+              </AccountButton>
+            </SectionWrapper>
+          </FormSection>
 
-            <InputSection>
-              {/* Last Name  */}
-              <InputLabel>Last Name</InputLabel>
-              <InputField
-                type="text"
-                name="lastName"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                value={props.values.lastName}
+          <FormSection>
+            <InputLabel>
+              Last Name
+              <EditAccountButton
+                size="25px"
+                onClick={editLastNameHandler}
+                editClick={editLastName}
               />
-            </InputSection>
+              <CancelButton
+                size="25px"
+                onClick={editLastNameHandler}
+                editClick={editLastName}
+              />
+            </InputLabel>
+            {defaultLastName}
+            <SectionWrapper editClick={editLastName}>
+              <AccountButton onClick={editLastNameHandler}>
+                Update Last Name
+              </AccountButton>
+            </SectionWrapper>
           </FormSection>
 
           <FormSection>
@@ -131,18 +187,18 @@ export default function SettingsProfile() {
             {/* Gender */}
             <InputLabel>Gender</InputLabel>
             <InputSection>
-            {genderList.map(gender => (
-              <RadioOption>
-                <RadioButton
-                  type="radio"
-                  value={gender}
-                  checked={genderOption === gender}
-                  onChange={genderOptionHandler}
-                />
-                <RadioButtonStyle />
-                <RadioLabel>{gender}</RadioLabel>
-              </RadioOption>
-            ))}
+              {genderList.map(gender => (
+                <RadioOption>
+                  <RadioButton
+                    type="radio"
+                    value={gender}
+                    checked={genderOption === gender}
+                    onChange={genderOptionHandler}
+                  />
+                  <RadioButtonStyle />
+                  <RadioLabel>{gender}</RadioLabel>
+                </RadioOption>
+              ))}
             </InputSection>
           </FormSection>
 
