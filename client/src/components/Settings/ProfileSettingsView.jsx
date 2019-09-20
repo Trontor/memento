@@ -86,31 +86,33 @@ export default function SettingsProfile() {
             <UploadLabel htmlFor="file">Add a Profile Photo</UploadLabel>
           </FormSection>
 
-          <InputSection>
-            {/* First Name  */}
-            <InputLabel>First Name</InputLabel>
-            <InputField
-              type="text"
-              name="firstName"
-              onChange={props.handleChange}
-              onBlur={props.handleBlur}
-              value={props.values.firstName}
-            />
-          </InputSection>
+          <FormSection>
+            <InputSection>
+              {/* First Name  */}
+              <InputLabel>First Name</InputLabel>
+              <InputField
+                type="text"
+                name="firstName"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.firstName}
+              />
+            </InputSection>
 
-          <InputSection>
-            {/* Last Name  */}
-            <InputLabel>Last Name</InputLabel>
-            <InputField
-              type="text"
-              name="lastName"
-              onChange={props.handleChange}
-              onBlur={props.handleBlur}
-              value={props.values.lastName}
-            />
-          </InputSection>
+            <InputSection>
+              {/* Last Name  */}
+              <InputLabel>Last Name</InputLabel>
+              <InputField
+                type="text"
+                name="lastName"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.lastName}
+              />
+            </InputSection>
+          </FormSection>
 
-          <InputSection>
+          <FormSection>
             {/* Birthday  */}
             <InputLabel>Birthday</InputLabel>
             <Calendar
@@ -123,28 +125,28 @@ export default function SettingsProfile() {
               dropdownMode="select"
               maxDate={new Date()}
             />
-          </InputSection>
+          </FormSection>
 
           <FormSection>
             {/* Gender */}
             <InputLabel>Gender</InputLabel>
+            <InputSection>
             {genderList.map(gender => (
-              <InputSection>
-                <RadioOption>
-                  <RadioButton
-                    type="radio"
-                    value={gender}
-                    checked={genderOption === gender}
-                    onChange={genderOptionHandler}
-                  />
-                  <RadioButtonStyle />
-                  <RadioLabel>{gender}</RadioLabel>
-                </RadioOption>
-              </InputSection>
+              <RadioOption>
+                <RadioButton
+                  type="radio"
+                  value={gender}
+                  checked={genderOption === gender}
+                  onChange={genderOptionHandler}
+                />
+                <RadioButtonStyle />
+                <RadioLabel>{gender}</RadioLabel>
+              </RadioOption>
             ))}
+            </InputSection>
           </FormSection>
 
-          <InputSection>
+          <FormSection>
             {/* Place of birth  */}
             <InputLabel>Place of Birth</InputLabel>
             <CountryPicker value={birthCountry} onChange={selectBirthCountry} />
@@ -153,7 +155,7 @@ export default function SettingsProfile() {
               value={birthCity}
               onChange={selectBirthCity}
             />
-          </InputSection>
+          </FormSection>
 
           <PlaceWrapper>
             {/* Place You've Lived and Date Moved  */}

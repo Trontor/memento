@@ -148,7 +148,7 @@ export const TextArea = styled.div`
 
 export const RadioOption = styled.div`
   position: relative;
-  margin-bottom: 10px;
+  margin: 12px 0;
   display: flex;
   align-items: center;
 `;
