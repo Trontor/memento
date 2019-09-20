@@ -5,12 +5,13 @@ import {
   ButtonHeading,
   GoToButton,
   InviteFamily,
-  CreateFamily
+  CreateFamily,
 } from "./DashboardStyles";
 import { useQuery } from "@apollo/react-hooks";
 import GET_CURRENT_USER from "queries/GetCurrentUser";
 import { Container } from "ui/Helpers";
 import { Spinner } from "ui/Loaders";
+import JollyLoader from "components/JollyLoader/JollyLoader";
 
 export default function Dashboard(props) {
   const { data, error, loading } = useQuery(GET_CURRENT_USER);
@@ -28,9 +29,7 @@ export default function Dashboard(props) {
   }
 
   if (loading) {
-    return (
-      <Spinner size="large" />
-    );
+    return <JollyLoader />;
   }
 
   return (
@@ -39,10 +38,8 @@ export default function Dashboard(props) {
         <h2>Hello {user.firstName}!</h2>
         <p>Get started with one of the following actions: </p>
 
-        <DashboardButtons
-          onClick={() => props.history.push("/create-family")}
-        >
-          <CreateFamily/>
+        <DashboardButtons onClick={() => props.history.push("/create-family")}>
+          <CreateFamily />
           <ButtonHeading>
             Create a Family
             <span>And get the rest of your family on board.</span>
@@ -51,14 +48,13 @@ export default function Dashboard(props) {
         </DashboardButtons>
 
         <DashboardButtons>
-          <InviteFamily/>
+          <InviteFamily />
           <ButtonHeading>
             Join an existing Family
             <span>Got an invite code? Join your family.</span>
           </ButtonHeading>
           <GoToButton />
         </DashboardButtons>
-
       </TextWrapper>
     </Container>
   );

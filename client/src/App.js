@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import { theme } from "./theme";
@@ -12,7 +12,7 @@ import Settings from "./components/Settings/Settings";
 import UploadMemento from "./components/UploadMemento/UploadMemento";
 import FamilyGroup from "./components/FamilyGroup/FamilyGroup";
 import Sidebar from "./components/Sidebar/Sidebar";
-import Hamburger from "./components/Sidebar/Hamburger"
+import Hamburger from "./components/Sidebar/Hamburger";
 import { SiteGrid, LeftColumn, Main } from "ui/Layout";
 
 const GlobalStyle = createGlobalStyle`
@@ -95,28 +95,28 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 const authenticatedRoutes = [
   {
     name: "dashboard",
-    component: Dashboard
+    component: Dashboard,
   },
   {
     name: "create-family",
-    component: CreateFamily
+    component: CreateFamily,
   },
   {
     name: "invite",
-    component: Invite
+    component: Invite,
   },
   {
     name: "new-memento",
-    component: UploadMemento
+    component: UploadMemento,
   },
   {
     name: "settings",
-    component: Settings
+    component: Settings,
   },
   {
-    name: "family",
-    component: FamilyGroup
-  }
+    name: "family/:id",
+    component: FamilyGroup,
+  },
 ];
 
 function App() {
@@ -140,12 +140,14 @@ function App() {
               <LeftColumn>
                 <Sidebar
                   sidebarOpen={sidebarOpen}
-                  toggleSidebar={toggleSidebar}/>
+                  toggleSidebar={toggleSidebar}
+                />
               </LeftColumn>
               <Main>
                 <Hamburger
                   sidebarOpen={sidebarOpen}
-                  toggleSidebar={toggleSidebar}/>
+                  toggleSidebar={toggleSidebar}
+                />
                 {authenticatedRoutes.map(route => (
                   <PrivateRoute
                     path={`/${route.name}`}

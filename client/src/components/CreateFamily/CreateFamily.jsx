@@ -6,7 +6,7 @@ import {
   InputField,
   FormHelpText,
   FormSection,
-  Error
+  Error,
 } from "ui/Forms";
 import { CirclePicker } from "react-color";
 import { PickerWrapper } from "./CreateFamilyStyles";
@@ -16,21 +16,36 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { useMutation } from "@apollo/react-hooks";
 import { CREATE_NEW_FAMILY } from "mutations/Family";
+import JollyLoader from "components/JollyLoader/JollyLoader";
 
 const CreateFamilyValidationSchema = yup.object().shape({
   familyName: yup.string().required("Please enter a family name"),
-  color: yup.string().required("Please select a color for your family.")
+  color: yup.string().required("Please select a color for your family."),
 });
 
-export default function CreateFamily() {
-  const [createNewFamily, /*{ data, error, loading }*/] = useMutation(
-    CREATE_NEW_FAMILY
+const loadingFamilyQuotes = [
+  "Creating family...",
+  "Assimilating hierarchy...",
+  "Forging kinship...",
+  "Loading lavishly...",
+  "OwO",
+];
+export default function CreateFamily(props) {
+  const [createNewFamily, { data, error, loading }] = useMutation(
+    CREATE_NEW_FAMILY,
   );
 
   const defaultValues = {
     familyName: "",
-    color: ""
+    color: "",
   };
+  if (data && data.createFamily) {
+    const { familyId } = data.createFamily;
+    props.history.push("/family/" + familyId);
+  }
+  if (loading) {
+    return <JollyLoader quotes={loadingFamilyQuotes} />;
+  }
 
   return (
     <Container>
@@ -40,7 +55,7 @@ export default function CreateFamily() {
         onSubmit={(values, actions) => {
           const payload = {
             name: values.familyName,
-            colour: values.color
+            colour: values.color,
           };
           createNewFamily({ variables: { input: payload } });
         }}

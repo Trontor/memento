@@ -3,7 +3,8 @@ const theme = {
     mobile: "414px",
     tabletPortrait: "768px",
     tabletLandscape: "1024px",
-    desktop: "1280px"
+    desktop: "1280px",
+    desktopLarge: "1440px"
   },
   palette: {
     text: "#44404B",
@@ -16,14 +17,14 @@ const theme = {
     disabled: "#ddd",
 
     border: "#D3D0DD",
-    sidebar: "#F7FAFE"
+    sidebar: "#F7FAFE",
   },
   mixins: {
-    hoverFade: "transition: ease-in 0.1s"
+    hoverFade: "transition: ease-in 0.1s",
   },
   size: {
-    sidebar: 260 /*px */
-  }
+    sidebar: 260 /*px */,
+  },
 };
 
 export { theme };

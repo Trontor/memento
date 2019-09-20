@@ -1,6 +1,14 @@
 import styled, { css } from "styled-components";
 import { center } from "./Helpers";
 
+export const PageSpinnerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+`;
+
 //Pure css spinner for loading state
 export const Spinner = styled.span`
   ${center};
@@ -42,9 +50,9 @@ const small = css`
 `;
 
 const large = css`
-  width: 3em;
-  height: 3em;
-  border-width: 6px;
+  width: 8em;
+  height: 8em;
+  border-width: 16px;
 `;
 
 const handleSpinnerSize = size => {
@@ -54,5 +62,6 @@ const handleSpinnerSize = size => {
     case "large":
       return large;
     default:
+      return;
   }
 };

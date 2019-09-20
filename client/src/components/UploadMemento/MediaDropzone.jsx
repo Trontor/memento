@@ -1,27 +1,27 @@
-import React, {useState, useEffect} from 'react';
-import {useDropzone} from 'react-dropzone';
+import React, { useState, useEffect } from "react";
+import { useDropzone } from "react-dropzone";
 import styled from "styled-components";
-import { lighten } from 'polished';
-import { center } from 'ui/Helpers';
+import { lighten } from "polished";
+import { center } from "ui/Helpers";
 
-const getColor = (props) => {
+const getColor = props => {
   if (props.isDragAccept) {
-      return props => props.theme.palette.loading;
+    return props => props.theme.palette.loading;
   }
   if (props.isDragReject) {
-      return props => props.theme.palette.error;
+    return props => props.theme.palette.error;
   }
   if (props.isDragActive) {
-      return props => props.theme.palette.main;
+    return props => props.theme.palette.main;
   }
-  return '#eee';
-}
+  return "#eee";
+};
 
 const DropzoneContainer = styled.div`
   height: 200px;
   text-align: center;
   font-size: 16px;
-  font-family: 'Livvic', sans-serif;
+  font-family: "Livvic", sans-serif;
   font-weight: 600;
   padding: 20px;
   border: 3px solid ${props => getColor(props)};
@@ -40,7 +40,6 @@ const DropzoneContainer = styled.div`
       color: ${props => props.theme.palette.main};
     }
   }
-
 `;
 
 const DropzoneContent = styled.div`
@@ -53,9 +52,8 @@ const DropzoneContent = styled.div`
     color: ${props => lighten(0.1, props.theme.palette.main)};
     padding-bottom: 20px;
     transition: 0.2s ease-in-out;
-
   }
-`
+`;
 
 const PreviewContainer = styled.div`
   width: 100%;
@@ -65,7 +63,7 @@ const PreviewContainer = styled.div`
     margin-bottom: 12px;
     display: block;
   }
-`
+`;
 
 export function MediaDropzone() {
   const [mementoFiles, setMementoFiles] = useState([]);
@@ -75,37 +73,44 @@ export function MediaDropzone() {
     getInputProps,
     isDragActive,
     isDragAccept,
-    isDragReject
+    isDragReject,
   } = useDropzone({
     accept: "image/*,audio/*,video/*",
     onDrop: acceptedFiles => {
-      setMementoFiles(acceptedFiles.map(file => Object.assign(file, {
-        preview: URL.createObjectURL(file)
-      })));
-    }
+      setMementoFiles(
+        acceptedFiles.map(file =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          }),
+        ),
+      );
+    },
   });
 
   const imagePreview = mementoFiles.map(file => (
-    <img src={file.preview} alt={file.title}/>
+    <img src={file.preview} alt={file.title} />
   ));
 
-  useEffect(() => () => {
-    // Make sure to revoke the data uris to avoid memory leaks
-    mementoFiles.forEach(file => URL.revokeObjectURL(file.preview));
-  }, [mementoFiles]);
+  useEffect(
+    () => () => {
+      // Make sure to revoke the data uris to avoid memory leaks
+      mementoFiles.forEach(file => URL.revokeObjectURL(file.preview));
+    },
+    [mementoFiles],
+  );
 
   return (
     <>
-      <DropzoneContainer {...getRootProps({isDragActive, isDragAccept, isDragReject})}>
+      <DropzoneContainer
+        {...getRootProps({ isDragActive, isDragAccept, isDragReject })}
+      >
         <input {...getInputProps()} />
         <DropzoneContent>
           <i class="fas fa-upload"></i>
           Drag & drop or browse files to upload.
         </DropzoneContent>
       </DropzoneContainer>
-      <PreviewContainer>
-        {imagePreview}
-      </PreviewContainer>
+      <PreviewContainer>{imagePreview}</PreviewContainer>
     </>
   );
 }
