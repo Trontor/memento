@@ -1,10 +1,20 @@
 import React from "react";
 import { CenterText, Container } from "ui/Helpers";
 import { Header } from "ui/Typography";
-import { UserAvatar, ImgPreview, InputLabel } from "ui/Forms";
+import { UserAvatar, InputLabel } from "ui/Forms";
 import { useQuery } from "@apollo/react-hooks";
 import GET_CURRENT_USER from "queries/GetCurrentUser";
-import { ProfileField, Title } from "./UserProfileStyles";
+import {
+  ProfileField,
+  Title,
+  ProfileWrapper,
+  UserImg,
+  UserEmail,
+  UserBday,
+  UserLocation,
+  PlaceWrapper,
+  Span,
+} from "./UserProfileStyles";
 
 export default function UserProfile() {
   let ProfilePicture = <UserAvatar size="125px" />;
@@ -27,28 +37,55 @@ export default function UserProfile() {
         <Header underline>My Profile</Header>
       </CenterText>
 
-      <ImgPreview>{ProfilePicture}</ImgPreview>
-      <CenterText>
-        <h2>
-          {user.firstName} {user.lastName}
-        </h2>
-      </CenterText>
+      <ProfileWrapper>
+        <UserImg>{ProfilePicture}</UserImg>
+        <div>
+          <Title>
+            {user.firstName} {user.lastName}
+          </Title>
+
+          <ProfileField>
+            <UserLocation size="25px" />
+            <Span>Melbourne, Australia</Span>
+          </ProfileField>
+
+          <ProfileField>
+            <UserBday size="25px" />
+            <Span>23/02/00</Span>
+          </ProfileField>
+
+          <ProfileField>
+            <UserEmail size="25px" />
+            <Span>{user.email}</Span>
+          </ProfileField>
+        </div>
+      </ProfileWrapper>
 
       <ProfileField>
-        <Title>Email: {user.email}</Title>
+        <InputLabel>Gender</InputLabel>
+        <Span>Female</Span>
       </ProfileField>
 
       <ProfileField>
-        <Title>Birthday: 23/02/00</Title>
+        <InputLabel>Place of Birth</InputLabel>
+        <Span>Indonesia</Span>
       </ProfileField>
 
       <ProfileField>
-        <Title>Gender: Female</Title>
+        <InputLabel>Place I've Lived</InputLabel>
+        <PlaceWrapper>
+          <Span>Surabaya, Indonesia</Span>
+          <Span> February, 2000 - March, 2000</Span>
+        </PlaceWrapper>
+        <PlaceWrapper>
+          <Span>Jakarta, Indonesia</Span>
+          <Span> 2000 - 2016</Span>
+        </PlaceWrapper>
+        <PlaceWrapper>
+          <Span>Melbourne, Australia</Span>
+          <Span> July, 2016 - now </Span>
+        </PlaceWrapper>
       </ProfileField>
-
-      <Title>Place of Birth: Indonesia </Title>
-      <Title>Places I've Lived: Jakarta 2000-2016</Title>
-      <Title>Email: {user.email}</Title>
     </Container>
   );
 }
