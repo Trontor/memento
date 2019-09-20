@@ -2,9 +2,9 @@ import { CenterText, Container } from "ui/Helpers";
 import { MenuContainer, MenuTabs } from "ui/Navigation";
 import React, { useState } from "react";
 
+import AccountSettingsView from "./AccountSettingsView";
 import { Header } from "ui/Typography";
-import SettingsAccount from "./SettingsAccount";
-import SettingsProfile from "./SettingsProfile";
+import ProfileSettingsView from "./ProfileSettingsView";
 
 export default function Settings() {
   const menuTabs = ["Profile", "Account"];
@@ -13,10 +13,10 @@ export default function Settings() {
   let tabComponent = null;
   switch (menuTabs[currentTabIndex]) {
     case "Profile":
-      tabComponent = <SettingsProfile />;
+      tabComponent = <ProfileSettingsView/>;
       break;
     case "Account":
-      tabComponent = <SettingsAccount />;
+      tabComponent = <AccountSettingsView/>;
       break;
     default:
       break;
