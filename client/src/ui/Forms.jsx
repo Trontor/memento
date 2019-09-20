@@ -1,5 +1,6 @@
 import { darken, lighten } from "polished";
 import styled, { css } from "styled-components";
+import { User } from "styled-icons/fa-regular/User";
 
 // Single-line text input field
 export const InputField = styled.input`
@@ -233,4 +234,23 @@ export const DefaultInput = styled.div`
   font-size: 19px;
   padding: 6px 0;
   margin-top: 10px;
+`;
+
+export const ImgPreview = styled.div`
+  display: block;
+  margin: 0 auto;
+  background: #f8f8f8;
+  height: 200px;
+  width: 200px;
+  border: 2px solid gray;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+export const UserAvatar = styled(User)`
+  color: gray;
+  margin: 35px 0 0 35px;
 `;
