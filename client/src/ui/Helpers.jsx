@@ -14,14 +14,16 @@ export const Container = styled.div`
   position: relative;
   top: ${props => (props.noNav ? "0px" : "40px")};
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.mobile}) {
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.mobile}) {
     margin: 30px 40px;
   }
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLandscape}) {
+  props.theme.breakpoints.tabletLandscape}) {
     top: 0;
     margin: 30px auto;
+    width: 70%;
     max-width: 748px;
   }
 `;

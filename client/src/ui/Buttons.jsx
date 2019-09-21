@@ -101,3 +101,9 @@ export const AddButton = styled.button`
     text-align: left;
   }
 `;
+
+export const EditButton = styled(Edit)`
+  color: ${props => lighten(0.35, props.theme.palette.text)};
+  cursor: pointer;
+`;
+
