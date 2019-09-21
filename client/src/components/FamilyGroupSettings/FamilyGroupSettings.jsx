@@ -11,6 +11,7 @@ import {
 import React, { useState } from 'react'
 
 import { CirclePicker } from "react-color";
+import EditForm from "components/EditInput/EditInput";
 import { Header } from "ui/Typography";
 import JollyLoader from "components/JollyLoader/JollyLoader";
 import { LOAD_FAMILY } from "mutations/Family";
@@ -19,7 +20,7 @@ import { useQuery } from "@apollo/react-hooks";
 
 export default function FamilyGroupSettings(props) {
   const familyId = props.match.params.id;
-  const  [toggleEdit, setToggleEdit] = useState(false);
+  const [toggleEdit, setToggleEdit] = useState(false);
   const { data, loading, error } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
   });
@@ -49,6 +50,9 @@ export default function FamilyGroupSettings(props) {
         <Header center>Family Group Settings</Header>
       </CenterText>
         <FormSection>
+          <EditForm/>
+        </FormSection>
+        <FormSection>
           <EditInput>
             <div>
               <InputLabel>
@@ -63,6 +67,7 @@ export default function FamilyGroupSettings(props) {
             }
           </EditInput>
         </FormSection>
+
         <FormSection>
           <InputLabel>
             Colour Theme
@@ -77,6 +82,7 @@ export default function FamilyGroupSettings(props) {
             />
           </div>
         </FormSection>
+
         <FormSection>
           <InputLabel>
             Family Group Photo
@@ -85,6 +91,7 @@ export default function FamilyGroupSettings(props) {
             <StyledDropzone/>
           </div>
         </FormSection>
+
         <FormSection>
           <InputLabel>
             Members
