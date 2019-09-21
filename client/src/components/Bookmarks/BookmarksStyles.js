@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { SearchBar, SearchIcon, SearchInput } from "../Sidebar/SidebarStyles";
+import { Bookmark } from "styled-icons/boxicons-solid/Bookmark";
 
 export const BookmarksSearchBar = styled(SearchBar)`
   height: 50px;
@@ -34,7 +35,17 @@ export const Item = styled.div`
 `;
 
 export const Description = styled.div`
+  display: grid;
+  grid-template-rows: 10% 90%;
   background: ${props => props.theme.palette.main};
   color: white;
   padding: 0 10px;
+`;
+
+export const BookmarksIcon = styled(Bookmark)`
+  color: white;
+  width: 35px;
+  margin-left: 175px;
+  margin-top: -4px;
+  cursor: pointer;
 `;

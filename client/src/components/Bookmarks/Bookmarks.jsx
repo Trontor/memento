@@ -8,6 +8,7 @@ import {
   BookmarksWrapper,
   Item,
   Description,
+  BookmarksIcon,
 } from "./BookmarksStyles";
 
 export default function Bookmarks() {
@@ -33,10 +34,11 @@ export default function Bookmarks() {
         <BookmarksSearchInput type="text" placeholder="Search all bookmarks" />
       </BookmarksSearchBar>
       <BookmarksWrapper>
-        {imageSrc.map(image => (
+        {imageSrc.map((image, idx) => (
           <Item>
-            <img src={image} alt="blah"></img>
+            <img src={image} alt="blah" />
             <Description>
+              <BookmarksIcon />
               <h2>Bookmarks</h2>
             </Description>
           </Item>
