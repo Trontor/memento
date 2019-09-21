@@ -17,7 +17,10 @@ import {
 } from "./UserProfileStyles";
 
 export default function UserProfile() {
-  let ProfilePicture = <UserAvatar size="125px" />;
+  let ProfilePicture = (
+    <img src="https://images.unsplash.com/photo-1506827155776-53ce0b5d56b4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80" />
+  );
+  //<UserAvatar size="125px" />;
   const { data, error, loading } = useQuery(GET_CURRENT_USER);
 
   let user = {};
@@ -51,7 +54,7 @@ export default function UserProfile() {
 
           <ProfileField>
             <UserBday size="25px" />
-            <Span>23/02/00</Span>
+            <Span>23/02/2000</Span>
           </ProfileField>
 
           <ProfileField>
@@ -74,15 +77,15 @@ export default function UserProfile() {
       <ProfileField>
         <InputLabel>Place I've Lived</InputLabel>
         <PlaceWrapper>
-          <Span>Surabaya, Indonesia</Span>
-          <Span> February, 2000 - March, 2000</Span>
+          <Span>Surabaya</Span>
+          <Span> February, 2000 - March, 2001</Span>
         </PlaceWrapper>
         <PlaceWrapper>
-          <Span>Jakarta, Indonesia</Span>
-          <Span> 2000 - 2016</Span>
+          <Span>Jakarta</Span>
+          <Span> 2001 - 2016</Span>
         </PlaceWrapper>
         <PlaceWrapper>
-          <Span>Melbourne, Australia</Span>
+          <Span>Melbourne</Span>
           <Span> July, 2016 - now </Span>
         </PlaceWrapper>
       </ProfileField>

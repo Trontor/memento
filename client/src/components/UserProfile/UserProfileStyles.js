@@ -25,6 +25,11 @@ export const Title = styled.h2`
 
 export const UserImg = styled(ImgPreview)`
   margin: 0;
+
+  img {
+    object-fit: cover;
+    width: 100%;
+  }
 `;
 
 export const IconStyle = css`
