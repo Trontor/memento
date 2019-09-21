@@ -1,33 +1,36 @@
-import { AddButton, ButtonPrimary } from "ui/Buttons";
 import {
+  AccountButton,
   Calendar,
+  CancelButton,
   CityPicker,
   CountryPicker,
+  EditAccountButton,
   ImgPreview,
   PlaceWrapper,
   PlacesList,
+  SectionWrapper,
   SettingsContainer,
   UploadLabel,
   UploadPhoto,
   UserAvatar,
-  SectionWrapper,
-  AccountButton,
-  EditAccountButton,
-  CancelButton,
 } from "./SettingsStyles";
+import { AddButton, ButtonPrimary } from "ui/Buttons";
 import { FormSection, InputField, InputLabel, InputSection } from "ui/Forms";
 import {
   RadioButton,
   RadioButtonStyle,
   RadioLabel,
   RadioOption,
-  DefaultInput,
-} from "ui/Forms";
+} from "ui/Radio";
 import React, { useState } from "react";
+
+import {
+  DefaultInput
+} from "ui/Forms";
 import { DeleteButton } from "components/Invite/InviteStyles";
 import { Formik } from "formik";
-import { useQuery } from "@apollo/react-hooks";
 import GET_CURRENT_USER from "queries/GetCurrentUser";
+import { useQuery } from "@apollo/react-hooks";
 
 export default function SettingsProfile() {
   let [file, setFile] = useState(null); //file for profile picture

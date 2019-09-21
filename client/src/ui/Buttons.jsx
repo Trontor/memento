@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 
 import { AddToQueue } from "styled-icons/boxicons-regular/AddToQueue";
+import { Cancel } from "styled-icons/material/Cancel";
 import { Edit } from "styled-icons/material/Edit";
 import { GroupAdd } from "styled-icons/material/GroupAdd";
 import { PaperPlane } from "styled-icons/boxicons-regular/PaperPlane";
@@ -102,8 +103,25 @@ export const AddButton = styled.button`
   }
 `;
 
-export const EditButton = styled(Edit)`
+const ButtonIconStyle = css`
   color: ${props => lighten(0.35, props.theme.palette.text)};
   cursor: pointer;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  ${props => props.theme.mixins.hoverFade};
+
+  &:hover {
+    color: ${props => props.theme.palette.text};
+    ${props => props.theme.mixins.hoverFade};
+  }
 `;
 
+export const EditButton = styled(Edit)`
+  ${ButtonIconStyle}
+`;
+
+export const CancelButton = styled(Cancel)`
+  ${ButtonIconStyle}
+`;
