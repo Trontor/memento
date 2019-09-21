@@ -14,6 +14,7 @@ import FamilyGroup from "./components/FamilyGroup/FamilyGroup";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Hamburger from "./components/Sidebar/Hamburger";
 import { SiteGrid, LeftColumn, Main } from "ui/Layout";
+import Bookmarks from "./components/Bookmarks/Bookmarks";
 
 const GlobalStyle = createGlobalStyle`
   /* Reset styles */
@@ -129,10 +130,11 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <GlobalStyle/>
+        <GlobalStyle />
         <Route path="/" exact component={Landing} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/bookmarks" component={Bookmarks} />
         <Route
           path={authenticatedPaths}
           render={() => (
