@@ -45,6 +45,7 @@ export default function FamilyGroupSettings(props) {
           <EditForm
             value={familyName}
             inputLabel="Family Name"
+            name="Family Name"
           />
         </FormSection>
 

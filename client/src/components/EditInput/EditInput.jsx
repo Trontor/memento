@@ -1,4 +1,4 @@
-import { ButtonSecondary, CancelButton, EditButton } from "ui/Buttons";
+import { CancelButton, EditButton } from "ui/Buttons";
 import {
   DefaultInput,
   EditInput,
@@ -7,6 +7,8 @@ import {
   InputLabel
 } from "ui/Forms";
 import React, { useState } from 'react';
+
+import { UpdateButton } from "./EditInput";
 
 export default function EditForm(props) {
   const [toggleEdit, setToggleEdit] = useState(false);
@@ -33,6 +35,9 @@ export default function EditForm(props) {
           <CancelButton size="25px" onClick={() => setToggleEdit(!toggleEdit)}/>
         }
       </EditInput>
+      {toggleEdit && (
+        <UpdateButton>Update {props.name}</UpdateButton>
+      )}
     </FormSection>
   )
 }
