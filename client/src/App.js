@@ -120,7 +120,7 @@ const authenticatedRoutes = [
     component: FamilyGroup,
   },
   {
-    name: "familysettings",
+    name: "familysettings/:id",
     component: FamilyGroupSettings,
   }
 ];

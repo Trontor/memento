@@ -1,3 +1,4 @@
+import { AdminTag, Member, MembersList } from "./FamilyGroupSettingsStyles";
 import { ButtonSecondary, CancelButton, EditButton } from "ui/Buttons";
 import { CenterText, Container } from "ui/Helpers";
 import {
@@ -10,31 +11,35 @@ import {
 import React, { useState } from 'react'
 
 import { CirclePicker } from "react-color";
-import GET_CURRENT_USER from "queries/GetCurrentUser";
 import { Header } from "ui/Typography";
-import { SettingsWrapper } from "./FamilyGroupSettingsStyles";
+import JollyLoader from "components/JollyLoader/JollyLoader";
+import { LOAD_FAMILY } from "mutations/Family";
+import { StyledDropzone } from "components/FileDropzone/FileDropzone";
 import { useQuery } from "@apollo/react-hooks";
 
 export default function FamilyGroupSettings(props) {
   const familyId = props.match.params.id;
-  const { data, error, loading } = useQuery(GET_CURRENT_USER);
   const  [toggleEdit, setToggleEdit] = useState(false);
+  const { data, loading, error } = useQuery(LOAD_FAMILY, {
+    variables: { id: familyId },
+  });
 
-  let user = {};
-
-  if (error) {
-    console.log("Error loading user data:", error);
+  if (loading) {
+    return <JollyLoader />;
   }
 
-  if (data && data.currentUser) {
-    user = data.currentUser;
+  let familyName, members;
+
+  if (data) {
+    familyName = data.family.name;
+    members = data.family.members;
+    console.log(members);
   }
 
-
-  let defaultValue = <DefaultInput>Value</DefaultInput>;
+  let defaultValue = <DefaultInput>{familyName}</DefaultInput>;
   if (toggleEdit) {
     defaultValue = (
-      <InputField type="text" name="firstName" value={user.firstName} />
+      <InputField type="text" name="familyName" value={familyName}/>
     );
   }
 
@@ -74,8 +79,26 @@ export default function FamilyGroupSettings(props) {
         </FormSection>
         <FormSection>
           <InputLabel>
+            Family Group Photo
+          </InputLabel>
+          <div style={{marginTop:'15px'}}>
+            <StyledDropzone/>
+          </div>
+        </FormSection>
+        <FormSection>
+          <InputLabel>
             Members
           </InputLabel>
+          <MembersList>
+            {members.map(member => (
+              <Member>
+                {member.firstName} {member.lastName}
+                <AdminTag>
+                  Admin
+                </AdminTag>
+              </Member>
+            ))}
+          </MembersList>
         </FormSection>
     </Container>
   )
