@@ -5,6 +5,7 @@ import { Edit } from "styled-icons/material/Edit";
 import { GroupAdd } from "styled-icons/material/GroupAdd";
 import { PaperPlane } from "styled-icons/boxicons-regular/PaperPlane";
 import { Settings } from "styled-icons/material/Settings";
+import { Bookmark } from "styled-icons/boxicons-regular/Bookmark";
 import { lighten } from "polished";
 
 // Primary Button Style
@@ -72,6 +73,10 @@ export const Invite = styled(GroupAdd)`
 `;
 
 export const View = styled(PaperPlane)`
+  ${IconStyle}
+`;
+
+export const Bookmarks = styled(Bookmark)`
   ${IconStyle}
 `;
 

@@ -118,6 +118,10 @@ const authenticatedRoutes = [
     name: "family/:id",
     component: FamilyGroup,
   },
+  {
+    name: "bookmarks",
+    component: Bookmarks,
+  },
 ];
 
 function App() {
@@ -134,7 +138,7 @@ function App() {
         <Route path="/" exact component={Landing} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/bookmarks" component={Bookmarks} />
+
         <Route
           path={authenticatedPaths}
           render={() => (
