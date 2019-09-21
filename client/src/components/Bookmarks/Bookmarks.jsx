@@ -34,7 +34,7 @@ export default function Bookmarks() {
         <BookmarksSearchInput type="text" placeholder="Search all bookmarks" />
       </BookmarksSearchBar>
       <BookmarksWrapper>
-        {imageSrc.map((image, idx) => (
+        {imageSrc.map(image => (
           <Item>
             <img src={image} alt="blah" />
             <Description>
