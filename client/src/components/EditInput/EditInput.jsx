@@ -11,10 +11,10 @@ import React, { useState } from 'react';
 export default function EditForm(props) {
   const [toggleEdit, setToggleEdit] = useState(false);
 
-  let defaultValue = <DefaultInput>value</DefaultInput>;
+  let defaultValue = <DefaultInput>{props.value}</DefaultInput>;
   if (toggleEdit) {
     defaultValue = (
-      <InputField type="text" name="familyName" value="value"/>
+      <InputField type="text" value={props.value}/>
     );
   }
 
@@ -23,7 +23,7 @@ export default function EditForm(props) {
       <EditInput>
         <div>
           <InputLabel>
-            Input Field
+            {props.inputLabel}
           </InputLabel>
           {defaultValue}
         </div>

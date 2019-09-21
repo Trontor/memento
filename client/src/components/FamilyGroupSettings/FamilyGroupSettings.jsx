@@ -50,7 +50,10 @@ export default function FamilyGroupSettings(props) {
         <Header center>Family Group Settings</Header>
       </CenterText>
         <FormSection>
-          <EditForm/>
+          <EditForm
+            value={familyName}
+            inputLabel="Family Name"
+          />
         </FormSection>
         <FormSection>
           <EditInput>
