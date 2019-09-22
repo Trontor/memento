@@ -1,23 +1,35 @@
-import React, { useState } from "react";
-import { Formik } from "formik";
+import { AddButton, ButtonPrimary } from "ui/Buttons";
 import {
-  SettingsContainer,
-  UploadPhoto,
-  UploadLabel,
   Calendar,
-  CountryPicker,
   CityPicker,
+  CountryPicker,
+  ImgPreview,
   PlaceWrapper,
   PlacesList,
-  ImgPreview,
+  SettingsContainer,
+  UploadLabel,
+  UploadPhoto,
   UserAvatar,
+  SectionWrapper,
+  AccountButton,
+  EditAccountButton,
+  CancelButton,
 } from "./SettingsStyles";
-import { ButtonPrimary, AddButton } from "ui/Buttons";
+import { FormSection, InputField, InputLabel, InputSection } from "ui/Forms";
+import {
+  RadioButton,
+  RadioButtonStyle,
+  RadioLabel,
+  RadioOption,
+  DefaultInput,
+} from "ui/Forms";
+import React, { useState } from "react";
 import { DeleteButton } from "components/Invite/InviteStyles";
+import { Formik } from "formik";
+import { useQuery } from "@apollo/react-hooks";
+import GET_CURRENT_USER from "queries/GetCurrentUser";
 
-import { FormSection, InputSection, InputLabel, InputField } from "ui/Forms";
-
-export default function SettingsProfile({ menuClick }) {
+export default function SettingsProfile() {
   let [file, setFile] = useState(null); //file for profile picture
   const [birthday, setBirthday] = useState(null); //birthday state
   const birthdayHandler = date => setBirthday(date);
@@ -28,8 +40,20 @@ export default function SettingsProfile({ menuClick }) {
   const selectBirthCountry = value => setBirthCountry(value);
   const [birthCity, setBirthCity] = useState(); //birth city state
   const selectBirthCity = value => setBirthCity(value);
-
   const [livePlaces, setLivePlaces] = useState([{ city: "", date: null }]); //place you've lived and date moved
+
+  const { data, error, loading } = useQuery(GET_CURRENT_USER);
+
+  let user = {};
+
+  //Handle the states of displaying data, error and loading
+  if (error) {
+    console.log("Error loading user data:", error);
+  }
+
+  if (data && data.currentUser) {
+    user = data.currentUser;
+  }
 
   function imgHandleChange(event) {
     file = URL.createObjectURL(event.target.files[0]);
@@ -65,11 +89,31 @@ export default function SettingsProfile({ menuClick }) {
     setLivePlaces(place);
   };
 
+  const [editFirstName, setFirstName] = useState(false);
+  const editFirstNameHandler = () => setFirstName(!editFirstName);
+
+  const [editLastName, setLastName] = useState(false);
+  const editLastNameHandler = () => setLastName(!editLastName);
+
+  let defaultFirstName = <DefaultInput>{user.firstName}</DefaultInput>;
+  if (editFirstName) {
+    defaultFirstName = (
+      <InputField type="text" name="firstName" value={user.firstName} />
+    );
+  }
+
+  let defaultLastName = <DefaultInput>{user.lastName}</DefaultInput>;
+  if (editLastName) {
+    defaultLastName = (
+      <InputField type="text" name="lastName" value={user.lastName} />
+    );
+  }
+
   return (
     <Formik
       initialValues={{ firstName: "Jane", lastName: "Doe" }}
       render={props => (
-        <SettingsContainer menuClick={menuClick.profile}>
+        <SettingsContainer>
           <FormSection>
             <ImgPreview>{ProfilePicture}</ImgPreview>
             <UploadPhoto
@@ -80,31 +124,51 @@ export default function SettingsProfile({ menuClick }) {
             <UploadLabel htmlFor="file">Add a Profile Photo</UploadLabel>
           </FormSection>
 
-          <InputSection>
-            {/* First Name  */}
-            <InputLabel>First Name</InputLabel>
-            <InputField
-              type="text"
-              name="firstName"
-              onChange={props.handleChange}
-              onBlur={props.handleBlur}
-              value={props.values.firstName}
-            />
-          </InputSection>
+          <FormSection>
+            <InputLabel>
+              First Name
+              <EditAccountButton
+                size="25px"
+                onClick={editFirstNameHandler}
+                editClick={editFirstName}
+              />
+              <CancelButton
+                size="25px"
+                onClick={editFirstNameHandler}
+                editClick={editFirstName}
+              />
+            </InputLabel>
+            {defaultFirstName}
+            <SectionWrapper editClick={editFirstName}>
+              <AccountButton onClick={editFirstNameHandler}>
+                Update First Name
+              </AccountButton>
+            </SectionWrapper>
+          </FormSection>
 
-          <InputSection>
-            {/* Last Name  */}
-            <InputLabel>Last Name</InputLabel>
-            <InputField
-              type="text"
-              name="lastName"
-              onChange={props.handleChange}
-              onBlur={props.handleBlur}
-              value={props.values.lastName}
-            />
-          </InputSection>
+          <FormSection>
+            <InputLabel>
+              Last Name
+              <EditAccountButton
+                size="25px"
+                onClick={editLastNameHandler}
+                editClick={editLastName}
+              />
+              <CancelButton
+                size="25px"
+                onClick={editLastNameHandler}
+                editClick={editLastName}
+              />
+            </InputLabel>
+            {defaultLastName}
+            <SectionWrapper editClick={editLastName}>
+              <AccountButton onClick={editLastNameHandler}>
+                Update Last Name
+              </AccountButton>
+            </SectionWrapper>
+          </FormSection>
 
-          <InputSection>
+          <FormSection>
             {/* Birthday  */}
             <InputLabel>Birthday</InputLabel>
             <Calendar
@@ -117,25 +181,28 @@ export default function SettingsProfile({ menuClick }) {
               dropdownMode="select"
               maxDate={new Date()}
             />
-          </InputSection>
+          </FormSection>
 
           <FormSection>
             {/* Gender */}
             <InputLabel>Gender</InputLabel>
-            {genderList.map(gender => (
-              <InputSection>
-                <input
-                  type="radio" //replace radio buttons
-                  value={gender}
-                  checked={genderOption === gender}
-                  onChange={genderOptionHandler}
-                />
-                {gender}
-              </InputSection>
-            ))}
+            <InputSection>
+              {genderList.map(gender => (
+                <RadioOption>
+                  <RadioButton
+                    type="radio"
+                    value={gender}
+                    checked={genderOption === gender}
+                    onChange={genderOptionHandler}
+                  />
+                  <RadioButtonStyle />
+                  <RadioLabel>{gender}</RadioLabel>
+                </RadioOption>
+              ))}
+            </InputSection>
           </FormSection>
 
-          <InputSection>
+          <FormSection>
             {/* Place of birth  */}
             <InputLabel>Place of Birth</InputLabel>
             <CountryPicker value={birthCountry} onChange={selectBirthCountry} />
@@ -144,7 +211,7 @@ export default function SettingsProfile({ menuClick }) {
               value={birthCity}
               onChange={selectBirthCity}
             />
-          </InputSection>
+          </FormSection>
 
           <PlaceWrapper>
             {/* Place You've Lived and Date Moved  */}

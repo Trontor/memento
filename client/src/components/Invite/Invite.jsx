@@ -1,15 +1,16 @@
-import React, { useState } from "react";
-import InviteStep1 from "./InviteStep1";
-import InviteStep2 from "./InviteStep2";
-import { Container } from "ui/Helpers";
-import { Header } from "ui/Typography";
 import { ButtonPrimary, ButtonSecondary } from "ui/Buttons";
+import React, { useState } from "react";
+
 import { AlignRight } from "ui/Helpers";
+import { Container } from "ui/Helpers";
 import { FormNav } from "ui/Forms";
 import { Formik } from "formik";
-import { useQuery } from "@apollo/react-hooks";
+import { Header } from "ui/Typography";
 import { INVITE_LIST } from "mutations/Invite";
+import InviteStep1 from "./InviteStep1";
+import InviteStep2 from "./InviteStep2";
 import JollyLoader from "components/JollyLoader/JollyLoader";
+import { useQuery } from "@apollo/react-hooks";
 
 const ADMIN_ROLE = "Admin";
 
@@ -75,7 +76,7 @@ export default function InviteFamily() {
   // Query for loading the family list
   const { data, loading, error } = useQuery(INVITE_LIST);
   let inviteFamilies = [];
-  if (data) {
+  if (data && data.currentUser) {
     const allowedIDs = data.currentUser.familyRoles
       .filter(fam => fam.familyRole === ADMIN_ROLE)
       .map(fam => fam.familyId);

@@ -1,14 +1,15 @@
-import React from "react";
 import {
   Card,
-  MementoTitle,
-  UploadDate,
-  MementoDate,
   MementoAuthor,
   MementoCoverImg,
+  MementoDate,
   MementoDescription,
   MementoTags,
+  MementoTitle,
+  UploadDate,
 } from "./MementoCardStyles";
+
+import React from "react";
 
 export default function MementoCard(props) {
   return (

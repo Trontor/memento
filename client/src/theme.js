@@ -4,6 +4,7 @@ const theme = {
     tabletPortrait: "768px",
     tabletLandscape: "1024px",
     desktop: "1280px",
+    desktopLarge: "1440px"
   },
   palette: {
     text: "#44404B",

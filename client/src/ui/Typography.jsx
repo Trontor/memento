@@ -7,7 +7,7 @@ export const Header = styled.h1`
 
   @media screen and (min-width: ${props =>
       props.theme.breakpoints.tabletPortrait}) {
-    font-size: 36px;
+    font-size: 32px;
   }
 
   ${({ underline }) =>
