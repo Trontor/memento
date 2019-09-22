@@ -14,6 +14,7 @@ import FamilyGroup from "./components/FamilyGroup/FamilyGroup";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Hamburger from "./components/Sidebar/Hamburger";
 import { SiteGrid, LeftColumn, Main } from "ui/Layout";
+import AcceptInvite from "components/AcceptInvite/AcceptInvite";
 
 const GlobalStyle = createGlobalStyle`
   /* Reset styles */
@@ -102,8 +103,13 @@ const authenticatedRoutes = [
     component: CreateFamily,
   },
   {
-    name: "invite",
+    name: "invite/",
     component: Invite,
+    exact: true,
+  },
+  {
+    name: "invite/accept/:inviteId",
+    component: AcceptInvite,
   },
   {
     name: "new-memento",
@@ -152,6 +158,7 @@ function App() {
                   <PrivateRoute
                     path={`/${route.name}`}
                     component={route.component}
+                    exact={route.exact}
                   />
                 ))}
               </Main>
