@@ -1,29 +1,29 @@
-import React from "react";
 import {
-  NewGroup,
-  EditProfile,
-  Setting,
-  NewArtefact,
-  Invite,
-  View,
-} from "ui/Buttons";
-import {
-  SidebarContainer,
   CloseMenu,
-  SidebarHeader,
+  FamilyListContainer,
+  MenuContainer,
+  NewFamilyGroup,
   SearchBar,
   SearchIcon,
   SearchInput,
-  FamilyListContainer,
-  TextList,
-  MenuContainer,
+  SidebarContainer,
+  SidebarHeader,
   SignOutButton,
+  TextList
 } from "./SidebarStyles";
-import { withRouter } from "react-router-dom";
-import { Logo } from "ui/Logos";
-import { useQuery } from "@apollo/react-hooks";
+import {
+  EditProfile,
+  Invite,
+  NewArtefact,
+  View
+} from "ui/Buttons";
+
 import { GET_USER_FAMILIES } from "queries/UserQueries";
+import { Logo } from "ui/Logos";
+import React from "react";
 import { Spinner } from "ui/Loaders";
+import { useQuery } from "@apollo/react-hooks";
+import { withRouter } from "react-router-dom";
 
 const Sidebar = props => {
   // Check for a authentication token, if not - redirect to the login page
@@ -40,7 +40,7 @@ const Sidebar = props => {
     families = data.currentUser.families;
   }
 
-  const iconSize = "22px";
+  const iconSize = "20px";
 
   return (
     <SidebarContainer isOpen={props.sidebarOpen}>
@@ -72,28 +72,23 @@ const Sidebar = props => {
           ))
         )}
       </FamilyListContainer>
+        <NewFamilyGroup onClick={() => props.history.push("/create-family")}>
+          New Family group
+        </NewFamilyGroup>
       <MenuContainer>
         <TextList>
           <Invite size={iconSize} />
           <a href={`/invite`}>Invite</a>
         </TextList>
-        <TextList>
-          <Setting size={iconSize} />
-          Manage Family groups
-        </TextList>
-        <TextList>
-          <NewGroup size={iconSize} />
-          New Family group
-        </TextList>
       </MenuContainer>
       <MenuContainer>
         <TextList>
           <NewArtefact size={iconSize} />
-          New Artefact
+          <a href={`/new-memento`}>New Memento</a>
         </TextList>
         <TextList>
           <View size={iconSize} />
-          View my Artefacts
+          View my Mementos
         </TextList>
       </MenuContainer>
       <MenuContainer>

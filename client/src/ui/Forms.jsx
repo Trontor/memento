@@ -148,7 +148,7 @@ export const TextArea = styled.div`
 
 export const RadioOption = styled.div`
   position: relative;
-  margin-bottom: 10px;
+  margin: 12px 0;
   display: flex;
   align-items: center;
 `;
@@ -222,4 +222,15 @@ export const RadioLabel = styled.label`
   display: inline-block;
   margin-left: 10px;
   font-size: 13px;
+`;
+
+export const DefaultInput = styled.div`
+  font-family: "Rubik", sans-serif;
+  font-weight: normal;
+  color: ${props => props.theme.palette.text};
+  border: none;
+  width: 100%;
+  font-size: 19px;
+  padding: 6px 0;
+  margin-top: 10px;
 `;

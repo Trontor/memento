@@ -1,14 +1,14 @@
 import styled, { css } from "styled-components";
-import { lighten } from "polished";
-import { PlusCircle } from "styled-icons/boxicons-regular/PlusCircle";
-import { Edit } from "styled-icons/material/Edit";
-import { Settings } from "styled-icons/material/Settings";
+
 import { AddToQueue } from "styled-icons/boxicons-regular/AddToQueue";
+import { Edit } from "styled-icons/material/Edit";
 import { GroupAdd } from "styled-icons/material/GroupAdd";
 import { PaperPlane } from "styled-icons/boxicons-regular/PaperPlane";
+import { Settings } from "styled-icons/material/Settings";
+import { lighten } from "polished";
 
 // Primary Button Style
-export const ButtonPrimary = styled.button`
+export const ButtonPrimary = styled.button.attrs(() => ({ type: "button" }))`
   display: inline-block;
   background: ${props => props.theme.palette.main};
   color: white;
@@ -38,7 +38,7 @@ export const ButtonPrimary = styled.button`
 `;
 
 // Secondary Button Style
-export const ButtonSecondary = styled.button`
+export const ButtonSecondary = styled.button.attrs(() => ({ type: "button" }))`
   border: 1px solid ${props => props.theme.palette.main};
   color: ${props => props.theme.palette.main};
   background-color: transparent;
@@ -51,12 +51,8 @@ export const ButtonSecondary = styled.button`
 
 // Styling for styled-icons in sidebar
 export const IconStyle = css`
-  color: gray;
+  color: ${props => lighten(0.35, props.theme.palette.text)};
   margin-right: 10px;
-`;
-
-export const NewGroup = styled(PlusCircle)`
-  ${IconStyle}
 `;
 
 export const NewArtefact = styled(AddToQueue)`
@@ -80,7 +76,7 @@ export const View = styled(PaperPlane)`
 `;
 
 // Add input field button
-export const AddButton = styled.button`
+export const AddButton = styled.button.attrs(() => ({ type: "button" }))`
   width: 25px;
   height: 25px;
   border-radius: 50%;

@@ -7,7 +7,7 @@ import { mapDocumentToInviteDTO } from "./schema/invite.mapper";
 import { Invite, FailedInviteOutput } from "./dto/invite.dto";
 import {
   InviteNotFoundException,
-  InviteExpiredException
+  InviteExpiredException,
 } from "./invite.exception";
 import { isValidInvite } from "./invite.util";
 import { User } from "../user/dto/user.dto";
@@ -28,7 +28,7 @@ export class InviteService {
     @Inject(forwardRef(() => FamilyService))
     private readonly familyService: FamilyService,
     private readonly configService: ConfigService,
-    private readonly mailerService: MailerService
+    private readonly mailerService: MailerService,
   ) {}
 
   /**
@@ -58,7 +58,7 @@ export class InviteService {
       inviterId: inviter.userId,
       familyId: familyId,
       createdAt: now,
-      expiresAt: tomorrow
+      expiresAt: tomorrow,
     });
     invite = await invite.save();
     this.logger.debug(invite);
@@ -91,7 +91,7 @@ export class InviteService {
           inviter,
           invite,
           family,
-          email
+          email,
         )
           .then(email => {
             // successfully sent to this email
@@ -123,12 +123,12 @@ export class InviteService {
     inviter: User,
     invite: Invite,
     family: Family,
-    email: string
+    email: string,
   ) {
     // validate email syntax
     const validatedEmail: Joi.ValidationResult<string> = Joi.validate(
       email,
-      Joi.string().email({ minDomainSegments: 2 })
+      Joi.string().email({ minDomainSegments: 2 }),
     );
     if (validatedEmail.error) {
       this.logger.error(email);
@@ -138,7 +138,7 @@ export class InviteService {
     const inviteLink: string =
       "https://" +
       this.configService.hostName +
-      `/invites/inviteId=${invite.inviteId}`;
+      `/invite/accept/${invite.inviteId}`;
 
     // define message
     const mailOptions: ISendMailOptions = {
@@ -148,9 +148,10 @@ export class InviteService {
       context: {
         familyName: family.name,
         inviterName: `${inviter.firstName} ${inviter.lastName}`,
-        inviteLink
-      }
+        inviteLink,
+      },
     };
+    this.logger.log(this.configService.handlebarsTemplatesDir);
     try {
       const res = await this.mailerService.sendMail(mailOptions);
       if (!res.accepted) {
@@ -158,9 +159,10 @@ export class InviteService {
         throw new Error();
       }
       this.logger.debug(res);
+      this.logger.log(res);
       return email;
     } catch (err) {
-      this.logger.error("Cannot send email");
+      this.logger.error(err);
       throw new Error(email);
     }
   }

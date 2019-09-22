@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components";
-import { Search } from "styled-icons/boxicons-regular/Search";
+
 import { ButtonSecondary } from "../../ui/Buttons";
 import { Close } from "styled-icons/material/Close";
+import { Search } from "styled-icons/boxicons-regular/Search";
 import { lighten } from "polished";
 
 export const SidebarContainer = styled.div`
@@ -80,6 +81,7 @@ export const SearchInput = styled.input`
 export const FamilyListContainer = styled.div`
   h3 {
     margin: 5px 0;
+    font-size: 13px;
   }
 `;
 
@@ -122,5 +124,26 @@ export const CloseMenu = styled(Close)`
   @media screen and (min-width: ${props =>
       props.theme.breakpoints.tabletLandscape}) {
     display: none;
+  }
+`;
+
+export const NewFamilyGroup = styled.div`
+  cursor: pointer;
+  font-family: "Livvic";
+  font-size: 12px;
+  color: ${props => lighten(0.35, props.theme.palette.text)};
+  margin-bottom: 10px;
+  ${props => props.theme.mixins.hoverFade};
+
+  &:before {
+    content: "+";
+    display: inline-block;
+    padding-right: 6px;
+    font-size: 16px;
+  }
+
+  &:hover {
+    color: ${props => props.theme.palette.main};
+    ${props => props.theme.mixins.hoverFade};
   }
 `;
