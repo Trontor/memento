@@ -1,20 +1,16 @@
 import { AdminTag, Member, MembersList } from "./FamilyGroupSettingsStyles";
-import { ButtonSecondary, CancelButton, EditButton } from "ui/Buttons";
 import { CenterText, Container } from "ui/Helpers";
 import {
-  DefaultInput,
-  EditInput,
   FormSection,
-  InputField,
   InputLabel
 } from "ui/Forms";
-import React, { useState } from 'react'
 
 import { CirclePicker } from "react-color";
-import EditForm from "components/EditInput/EditInput";
+import EditInput from "components/EditInput/EditInput";
 import { Header } from "ui/Typography";
 import JollyLoader from "components/JollyLoader/JollyLoader";
 import { LOAD_FAMILY } from "mutations/Family";
+import React from 'react'
 import { StyledDropzone } from "components/FileDropzone/FileDropzone";
 import { useQuery } from "@apollo/react-hooks";
 
@@ -42,7 +38,7 @@ export default function FamilyGroupSettings(props) {
         <Header center>Family Group Settings</Header>
       </CenterText>
         <FormSection>
-          <EditForm
+          <EditInput
             value={familyName}
             inputLabel="Family Name"
             name="Family Name"

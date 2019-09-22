@@ -1,20 +1,16 @@
+import { AddButton, ButtonPrimary } from "ui/Buttons";
 import {
-  AccountButton,
   Calendar,
-  CancelButton,
   CityPicker,
   CountryPicker,
-  EditAccountButton,
   ImgPreview,
   PlaceWrapper,
   PlacesList,
-  SectionWrapper,
   SettingsContainer,
   UploadLabel,
   UploadPhoto,
   UserAvatar,
 } from "./SettingsStyles";
-import { AddButton, ButtonPrimary } from "ui/Buttons";
 import { FormSection, InputField, InputLabel, InputSection } from "ui/Forms";
 import {
   RadioButton,
@@ -24,10 +20,8 @@ import {
 } from "ui/Radio";
 import React, { useState } from "react";
 
-import {
-  DefaultInput
-} from "ui/Forms";
 import { DeleteButton } from "components/Invite/InviteStyles";
+import EditInput from "components/EditInput/EditInput";
 import { Formik } from "formik";
 import GET_CURRENT_USER from "queries/GetCurrentUser";
 import { useQuery } from "@apollo/react-hooks";
@@ -92,26 +86,6 @@ export default function SettingsProfile() {
     setLivePlaces(place);
   };
 
-  const [editFirstName, setFirstName] = useState(false);
-  const editFirstNameHandler = () => setFirstName(!editFirstName);
-
-  const [editLastName, setLastName] = useState(false);
-  const editLastNameHandler = () => setLastName(!editLastName);
-
-  let defaultFirstName = <DefaultInput>{user.firstName}</DefaultInput>;
-  if (editFirstName) {
-    defaultFirstName = (
-      <InputField type="text" name="firstName" value={user.firstName} />
-    );
-  }
-
-  let defaultLastName = <DefaultInput>{user.lastName}</DefaultInput>;
-  if (editLastName) {
-    defaultLastName = (
-      <InputField type="text" name="lastName" value={user.lastName} />
-    );
-  }
-
   return (
     <Formik
       initialValues={{ firstName: "Jane", lastName: "Doe" }}
@@ -128,47 +102,19 @@ export default function SettingsProfile() {
           </FormSection>
 
           <FormSection>
-            <InputLabel>
-              First Name
-              <EditAccountButton
-                size="25px"
-                onClick={editFirstNameHandler}
-                editClick={editFirstName}
-              />
-              <CancelButton
-                size="25px"
-                onClick={editFirstNameHandler}
-                editClick={editFirstName}
-              />
-            </InputLabel>
-            {defaultFirstName}
-            <SectionWrapper editClick={editFirstName}>
-              <AccountButton onClick={editFirstNameHandler}>
-                Update First Name
-              </AccountButton>
-            </SectionWrapper>
+            {/* First Name */}
+            <EditInput
+              value={user.firstName}
+              inputLabel="First Name"
+            />
           </FormSection>
 
           <FormSection>
-            <InputLabel>
-              Last Name
-              <EditAccountButton
-                size="25px"
-                onClick={editLastNameHandler}
-                editClick={editLastName}
-              />
-              <CancelButton
-                size="25px"
-                onClick={editLastNameHandler}
-                editClick={editLastName}
-              />
-            </InputLabel>
-            {defaultLastName}
-            <SectionWrapper editClick={editLastName}>
-              <AccountButton onClick={editLastNameHandler}>
-                Update Last Name
-              </AccountButton>
-            </SectionWrapper>
+            {/* Last Name */}
+            <EditInput
+              value={user.lastName}
+              inputLabel="Last Name"
+            />
           </FormSection>
 
           <FormSection>

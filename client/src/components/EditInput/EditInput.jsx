@@ -1,28 +1,39 @@
 import { CancelButton, EditButton } from "ui/Buttons";
 import {
   DefaultInput,
-  EditInput,
-  FormSection,
+  InputEdit,
   InputField,
-  InputLabel
+  InputLabel,
+  InputSection
 } from "ui/Forms";
 import React, { useState } from 'react';
 
-import { UpdateButton } from "./EditInput";
+import { UpdateButton } from "./EditInputStyles";
 
-export default function EditForm(props) {
+export default function EditInput(props) {
   const [toggleEdit, setToggleEdit] = useState(false);
 
   let defaultValue = <DefaultInput>{props.value}</DefaultInput>;
   if (toggleEdit) {
-    defaultValue = (
-      <InputField type="text" value={props.value}/>
-    );
+    if (props.password) {
+      defaultValue = (
+        <>
+          <InputField type="password" value={props.value}/>
+          <InputField type="password" placeholder="New Password" />
+          <InputField type="password" placeholder="Confirm Password" />
+        </>
+      );
+    }
+    else {
+      defaultValue = (
+        <InputField type="text" value={props.value}/>
+      );
+    }
   }
 
   return (
-    <FormSection>
-      <EditInput>
+    <>
+      <InputEdit>
         <div>
           <InputLabel>
             {props.inputLabel}
@@ -34,11 +45,11 @@ export default function EditForm(props) {
         ):
           <CancelButton size="25px" onClick={() => setToggleEdit(!toggleEdit)}/>
         }
-      </EditInput>
+      </InputEdit>
       {toggleEdit && (
-        <UpdateButton>Update {props.name}</UpdateButton>
+        <UpdateButton>Update {props.inputLabel}</UpdateButton>
       )}
-    </FormSection>
+    </>
   )
 }
 

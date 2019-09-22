@@ -107,9 +107,8 @@ const ButtonIconStyle = css`
   color: ${props => lighten(0.35, props.theme.palette.text)};
   cursor: pointer;
   position: relative;
-  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   ${props => props.theme.mixins.hoverFade};
 
   &:hover {

@@ -29,7 +29,7 @@ export const InputField = styled.input`
 
 //Used to wrap around each input
 export const InputSection = styled.div`
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   position: relative;
 `;
 
@@ -155,8 +155,9 @@ export const DefaultInput = styled.div`
   padding-top: 8px;
 `;
 
-export const EditInput = styled.div`
+export const InputEdit = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 25px;
+  grid-column-gap: 10px;
 `;
