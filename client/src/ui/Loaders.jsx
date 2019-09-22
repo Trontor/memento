@@ -8,14 +8,6 @@ export const PageSpinnerWrapper = styled.div`
   height: 100vh;
 `;
 
-export const PageSpinnerWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 100vh;
-`;
-
 //Pure css spinner for loading state
 export const Spinner = styled.span`
   border-radius: 50%;
