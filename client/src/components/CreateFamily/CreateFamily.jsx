@@ -1,22 +1,24 @@
-import React from "react";
-import { Header } from "ui/Typography";
-import { Container, AlignRight } from "ui/Helpers";
+import * as yup from "yup";
+
+import { AlignRight, Container } from "ui/Helpers";
 import {
-  InstructionLabel,
-  InputField,
+  Error,
   FormHelpText,
   FormSection,
-  Error,
+  InputField,
+  InstructionLabel,
 } from "ui/Forms";
-import { CirclePicker } from "react-color";
-import { PickerWrapper } from "./CreateFamilyStyles";
-import { StyledDropzone } from "components/FileDropzone/FileDropzone";
+
 import { ButtonPrimary } from "ui/Buttons";
-import { Formik } from "formik";
-import * as yup from "yup";
-import { useMutation } from "@apollo/react-hooks";
 import { CREATE_NEW_FAMILY } from "mutations/Family";
+import { CirclePicker } from "react-color";
+import { Formik } from "formik";
+import { Header } from "ui/Typography";
 import JollyLoader from "components/JollyLoader/JollyLoader";
+import { PickerWrapper } from "./CreateFamilyStyles";
+import React from "react";
+import { StyledDropzone } from "components/FileDropzone/FileDropzone";
+import { useMutation } from "@apollo/react-hooks";
 
 const CreateFamilyValidationSchema = yup.object().shape({
   familyName: yup.string().required("Please enter a family name"),
@@ -31,7 +33,7 @@ const loadingFamilyQuotes = [
   "OwO",
 ];
 export default function CreateFamily(props) {
-  const [createNewFamily, { data, error, loading }] = useMutation(
+const [createNewFamily, { data, loading, /* error */ }] = useMutation(
     CREATE_NEW_FAMILY,
   );
 

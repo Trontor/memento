@@ -2,7 +2,6 @@ import styled, { css } from "styled-components";
 
 import { ButtonSecondary } from "../../ui/Buttons";
 import { Close } from "styled-icons/material/Close";
-import { PlusCircle } from "styled-icons/boxicons-regular/PlusCircle";
 import { Search } from "styled-icons/boxicons-regular/Search";
 import { lighten } from "polished";
 

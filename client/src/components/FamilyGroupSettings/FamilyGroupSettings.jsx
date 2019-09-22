@@ -16,7 +16,7 @@ import { useQuery } from "@apollo/react-hooks";
 
 export default function FamilyGroupSettings(props) {
   const familyId = props.match.params.id;
-  const { data, loading, error } = useQuery(LOAD_FAMILY, {
+  const { data, loading, /* error */} = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
   });
 

@@ -3,8 +3,7 @@ import {
   DefaultInput,
   InputEdit,
   InputField,
-  InputLabel,
-  InputSection
+  InputLabel
 } from "ui/Forms";
 import React, { useState } from 'react';
 

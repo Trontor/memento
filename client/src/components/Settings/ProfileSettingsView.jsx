@@ -39,7 +39,7 @@ export default function SettingsProfile() {
   const selectBirthCity = value => setBirthCity(value);
   const [livePlaces, setLivePlaces] = useState([{ city: "", date: null }]); //place you've lived and date moved
 
-  const { data, error, loading } = useQuery(GET_CURRENT_USER);
+  const { data, error, /* loading */ } = useQuery(GET_CURRENT_USER);
 
   let user = {};
 

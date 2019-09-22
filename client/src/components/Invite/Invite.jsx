@@ -74,7 +74,7 @@ export default function InviteFamily() {
     setInviteEmails(emails);
   };
   // Query for loading the family list
-  const { data, loading, error } = useQuery(INVITE_LIST);
+  const { data, loading, /* error */ } = useQuery(INVITE_LIST);
   let inviteFamilies = [];
   if (data && data.currentUser) {
     const allowedIDs = data.currentUser.familyRoles

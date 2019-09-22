@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
 import { PageSpinnerWrapper, Spinner } from "ui/Loaders";
+import React, { useEffect, useState } from "react";
+
 import { JollyQuote } from "./JollyLoaderStyles";
 
 let usedQuotes = [];
@@ -25,6 +26,7 @@ export default function JollyLoader(props) {
   useEffect(() => {
     const id = setInterval(tick, 2500);
     return () => clearInterval(id);
+    // eslint-disable-next-line
   }, [currentQuote]);
 
   return (
