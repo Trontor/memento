@@ -6,13 +6,25 @@ import {
   EditAccountButton,
   CancelButton,
 } from "./SettingsStyles";
-import { InputField, FormSection, InputLabel } from "ui/Forms";
+import { InputField, FormSection, InputLabel, DefaultInput } from "ui/Forms";
 
 export default function SettingsAccount() {
   const [editEmail, setEmailWrapper] = useState(false);
   const editEmailHandler = () => setEmailWrapper(!editEmail);
   const [editPassword, setPasswordWrapper] = useState(false);
   const editPasswordHandler = () => setPasswordWrapper(!editPassword);
+
+  let defaultEmail = <DefaultInput>test123@gmail.com</DefaultInput>;
+  if (editEmail) {
+    defaultEmail = (
+      <InputField placeholder="Email Address..." value="test123@gmail.com" />
+    );
+  }
+
+  let defaultPassword = <DefaultInput>******</DefaultInput>;
+  if (editPassword) {
+    defaultPassword = <InputField type="password" value="123" />;
+  }
 
   return (
     <SettingsContainer>
@@ -30,7 +42,7 @@ export default function SettingsAccount() {
             editClick={editEmail}
           />
         </InputLabel>
-        <InputField placeholder="Email Address..." value="test123" />
+        {defaultEmail}
         <SectionWrapper editClick={editEmail}>
           <AccountButton onClick={editEmailHandler}>
             Update Email{" "}
@@ -52,7 +64,7 @@ export default function SettingsAccount() {
             editClick={editPassword}
           />
         </InputLabel>
-        <InputField type="password" value="123" />
+        {defaultPassword}
         <SectionWrapper editClick={editPassword}>
           <InputField type="password" placeholder="New Password" />
           <InputField type="password" placeholder="Confirm Password" />
