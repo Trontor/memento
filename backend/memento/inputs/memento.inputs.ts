@@ -2,7 +2,7 @@ import { InputType, Field, ID, Int } from "type-graphql";
 import { CreateMediaInput } from "./media.inputs";
 
 @InputType()
-export class CreateMementoDatesInput {
+export class CreateMementoDateInput {
   @Field(type => Int, { nullable: true })
   day?: number;
 
@@ -22,6 +22,9 @@ export class CreateMementoInput {
   familyId!: string;
 
   @Field()
+  type!: string;
+
+  @Field()
   description!: string;
 
   @Field({ nullable: true })
@@ -30,6 +33,6 @@ export class CreateMementoInput {
   @Field(type => [CreateMediaInput], { nullable: true })
   media?: CreateMediaInput[];
 
-  @Field(type => [CreateMementoDatesInput], { nullable: true })
-  dates?: CreateMementoDatesInput[];
+  @Field(type => [CreateMementoDateInput], { nullable: true })
+  dates?: CreateMementoDateInput[];
 }

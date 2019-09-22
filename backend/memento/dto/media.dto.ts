@@ -20,8 +20,8 @@ export class Media {
   type!: MediaType;
 
   @Field()
-  url?: string;
+  url!: string;
 
-  @Field()
+  @Field({ nullable: true })
   caption?: string;
 }

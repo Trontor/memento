@@ -1,4 +1,4 @@
-import { Schema, model, Model, Document, Query, Types } from "mongoose";
+import { Schema, model, Model, Document, Query } from "mongoose";
 import * as bcrypt from "bcrypt";
 import { User } from "../dto/user.dto";
 import { FamilyRole, Role } from "../dto/role.dto";
@@ -33,17 +33,17 @@ const RoleSchema: Schema = new Schema(
   {
     familyId: {
       type: String,
-      required: true
+      required: true,
     },
     familyRole: {
       type: String,
       enum: [FamilyRole.Normal, FamilyRole.Admin],
-      required: true
-    }
+      required: true,
+    },
   },
   {
-    _id: false
-  }
+    _id: false,
+  },
 );
 
 /**
@@ -53,49 +53,49 @@ export const UserSchema: Schema = new Schema(
   {
     firstName: {
       type: String,
-      required: true
+      required: true,
     },
     lastName: {
       type: String,
-      required: true
+      required: true,
     },
     email: {
       type: String,
       unique: true,
-      required: true
+      required: true,
     },
     password: {
       type: String,
-      required: true
+      required: true,
     },
     lowercaseEmail: {
       type: String,
-      unique: true
+      unique: true,
     },
     roles: {
       type: [RoleSchema],
-      default: []
+      default: [],
     },
     gender: {
-      type: String
+      type: String,
     },
     dateOfBirth: {
-      type: String
+      type: String,
     },
     location: {
-      type: String
+      type: String,
     },
     imageUrl: {
-      type: String
+      type: String,
     },
     lastSeenAt: {
       type: Date,
-      default: Date.now
-    }
+      default: Date.now,
+    },
   },
   {
-    timestamps: true
-  }
+    timestamps: true,
+  },
 );
 
 function validateEmail(email: string) {
@@ -137,7 +137,7 @@ UserSchema.pre<Query<UserDocument>>("findOneAndUpdate", function(next) {
   if (updateFields.email) {
     this.update(
       {},
-      { $set: { lowercaseEmail: updateFields.email.toLowerCase() } }
+      { $set: { lowercaseEmail: updateFields.email.toLowerCase() } },
     );
   }
   next();
@@ -150,5 +150,5 @@ UserSchema.statics.validateEmail = function(email: string): boolean {
 
 export const UserModel: IUserModel = model<UserDocument, IUserModel>(
   "User",
-  UserSchema
+  UserSchema,
 );

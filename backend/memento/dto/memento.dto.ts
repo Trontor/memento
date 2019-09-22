@@ -11,13 +11,13 @@ import { Media } from "./media.dto";
  */
 @ObjectType()
 export class MementoDate {
-  @Field(type => Int)
+  @Field(type => Int, { nullable: true })
   day?: number;
 
-  @Field(type => Int)
+  @Field(type => Int, { nullable: true })
   month?: number;
 
-  @Field(type => Int)
+  @Field(type => Int, { nullable: true })
   year?: number;
 }
 
@@ -35,6 +35,9 @@ export class Memento {
 
   @Field(type => User)
   uploader!: User;
+
+  @Field()
+  type!: string;
 
   @Field()
   description!: string;

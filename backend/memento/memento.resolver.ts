@@ -7,6 +7,7 @@ import { CurrentUser } from "../auth/decorators/current-user.decorator";
 import { Memento } from "./dto/memento.dto";
 import { User } from "../user/dto/user.dto";
 import { FamilyMemberGuard } from "../auth/guards/family-member.guard";
+import { CreateMementoInput } from "./inputs/memento.inputs";
 
 /**
  * Resolves GraphQL mutations and queries related to Mementos.
@@ -23,7 +24,7 @@ export class MementoResolver {
     @CurrentUser() user: User,
     @Args("input") input: CreateMementoInput,
   ) {
-    return this.mementoService.createMemento(user);
+    return this.mementoService.createMemento(user, input);
   }
 
   @Query(returns => Memento, { name: "memento" })

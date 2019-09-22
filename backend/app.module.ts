@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module, Logger } from "@nestjs/common";
 import { GraphQLModule, GqlModuleOptions } from "@nestjs/graphql";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import { join } from "path";
@@ -17,6 +17,7 @@ import {
 import { FileModule } from "./file/file.module";
 import { UploadOptions } from "graphql-upload";
 import { AwsModule } from "./aws/aws.module";
+import { MementoModule } from "./memento/memento.module";
 
 /**
  * Root module of the application.
@@ -33,10 +34,16 @@ import { AwsModule } from "./aws/aws.module";
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService): GqlModuleOptions => {
+        if (configService.isDevEnv)
+          Logger.log(
+            "In development mode: GraphQL Playground and debug traces started",
+          );
+        else Logger.log("In production: playground and debug traces disabled");
+
         const options: GqlModuleOptions = {
           // debug messages in responses
-          debug: true,
-          playground: true,
+          debug: configService.isDevEnv,
+          playground: configService.isDevEnv,
           // automatically generates a schema.gql file from type-graphql code
           autoSchemaFile: "schema.gql",
           // pass the Express request into the GraphQL resolvers
@@ -100,6 +107,7 @@ import { AwsModule } from "./aws/aws.module";
     InviteModule,
     FileModule,
     AwsModule,
+    MementoModule,
   ],
 })
 export class AppModule {}

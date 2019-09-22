@@ -67,7 +67,9 @@ export class ConfigService {
    */
   private validateInput(envConfig: EnvConfig): EnvConfig {
     const envVarsSchema: Joi.ObjectSchema = Joi.object({
-      NODE_ENV: Joi.string().valid(["production", "development"]),
+      NODE_ENV: Joi.string()
+        .valid(["production", "development"])
+        .default("production"),
       MONGO_URI: Joi.string().required(),
       MONGO_AUTH_ENABLED: Joi.boolean().default(false),
       MONGO_USER: Joi.string().when("MONGO_AUTH_ENABLED", {
@@ -123,6 +125,10 @@ export class ConfigService {
       );
     }
     return validatedEnvConfig;
+  }
+
+  get isDevEnv(): boolean {
+    return this.envConfig.NODE_ENV === "development";
   }
 
   get jwtExpiresIn(): number | undefined {

@@ -1,9 +1,24 @@
-import { Schema } from "mongoose";
+import { Schema, Model, model, Types, Document } from "mongoose";
+import { Memento } from "../dto/memento.dto";
+import { MediaType } from "../dto/media.dto";
+
+/**
+ * Use GraphQL `Memento` type as a single source of truth by extending the Mongoose
+ * `MementoDocument` from the `Memento` class.
+ * Issue: This can lead to messy bloated `MementoDocument`.
+ */
+export interface MementoDocument extends Memento, Document {
+  // Declaring everything that is not in the GraphQL Schema for a User
+  inFamily: Types.ObjectId;
+  uploadedBy: Types.ObjectId;
+}
+
+export interface IMementoModel extends Model<MementoDocument> {}
 
 const MediaSchema: Schema = new Schema({
   type: {
     type: String,
-    enum: ["image", "video"],
+    enum: [MediaType.Image, MediaType.Video],
     required: true,
   },
   url: {
@@ -14,6 +29,8 @@ const MediaSchema: Schema = new Schema({
     type: String,
   },
 });
+
+export const MediaModel = model("Media", MediaSchema);
 
 const DateSchema: Schema = new Schema({
   day: {
@@ -27,6 +44,8 @@ const DateSchema: Schema = new Schema({
   },
 });
 
+export const DateModel = model("Media", MediaSchema);
+
 /**
  * The actual structure of the Memento collection.
  */
@@ -34,12 +53,18 @@ export const MementoSchema: Schema = new Schema(
   {
     type: {
       type: String,
-      enum: ["event", "object"],
       required: true,
     },
-    uploader: {
+    inFamily: {
+      // family which memento belongs to
+      type: Schema.Types.ObjectId,
+      ref: "Family",
+      required: true,
+    },
+    uploadedBy: {
       // uploader's userId
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
     description: {
@@ -66,3 +91,8 @@ export const MementoSchema: Schema = new Schema(
     timestamps: true,
   },
 );
+
+export const MementoModel: IMementoModel = model<
+  MementoDocument,
+  IMementoModel
+>("Memento", MementoSchema);
