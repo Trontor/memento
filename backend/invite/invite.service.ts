@@ -138,7 +138,7 @@ export class InviteService {
     const inviteLink: string =
       "https://" +
       this.configService.hostName +
-      `/invites/inviteId=${invite.inviteId}`;
+      `/invite/accept/${invite.inviteId}`;
 
     // define message
     const mailOptions: ISendMailOptions = {
@@ -151,6 +151,7 @@ export class InviteService {
         inviteLink,
       },
     };
+    this.logger.log(this.configService.handlebarsTemplatesDir);
     try {
       const res = await this.mailerService.sendMail(mailOptions);
       if (!res.accepted) {
@@ -158,7 +159,7 @@ export class InviteService {
         throw new Error();
       }
       this.logger.debug(res);
-      this.logger.log(JSON.stringify(res));
+      this.logger.log(res);
       return email;
     } catch (err) {
       this.logger.error(err);

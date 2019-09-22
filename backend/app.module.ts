@@ -86,10 +86,7 @@ import path from "path";
         },
         template: {
           // templates are not found in `dist` dir as they are static, not TS
-          dir:
-            process.env.NODE_ENV === "production"
-              ? path.join(__dirname + "../../backend/templates")
-              : __dirname + "/templates",
+          dir: configService.handlebarsTemplatesDir,
           adapter: new HandlebarsAdapter(),
           options: {
             strict: true,
