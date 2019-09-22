@@ -17,7 +17,6 @@ import {
 import { FileModule } from "./file/file.module";
 import { UploadOptions } from "graphql-upload";
 import { AwsModule } from "./aws/aws.module";
-import path from "path";
 
 /**
  * Root module of the application.
