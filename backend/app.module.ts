@@ -66,10 +66,10 @@ import { AwsModule } from "./aws/aws.module";
           useUnifiedTopology: true,
         };
 
-        if (configService.mongoAuthEnabled) {
-          options.user = configService.mongoUser;
-          options.pass = configService.mongoPassword;
-        }
+                if (configService.mongoAuthEnabled) {
+                    options.user = configService.mongoUser;
+                    options.pass = configService.mongoPassword;
+                }
 
         return options;
       },

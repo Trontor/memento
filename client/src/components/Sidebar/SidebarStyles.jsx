@@ -129,14 +129,14 @@ export const CloseMenu = styled(Close)`
 
 export const NewFamilyGroup = styled.div`
   cursor: pointer;
-  font-family: "Livvic";
+  font-family: 'Livvic';
   font-size: 12px;
   color: ${props => lighten(0.35, props.theme.palette.text)};
   margin-bottom: 10px;
   ${props => props.theme.mixins.hoverFade};
 
   &:before {
-    content: "+";
+    content: '+';
     display: inline-block;
     padding-right: 6px;
     font-size: 16px;
