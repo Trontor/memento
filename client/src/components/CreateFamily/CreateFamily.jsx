@@ -43,6 +43,9 @@ export default function CreateFamily(props) {
     const { familyId } = data.createFamily;
     props.history.push("/family/" + familyId);
   }
+  if (error) {
+    // handle error
+  }
   if (loading) {
     return <JollyLoader quotes={loadingFamilyQuotes} />;
   }

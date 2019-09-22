@@ -36,9 +36,13 @@ export default function InviteFamily() {
   // GraphQL mutation for sending the invites
   const [sendInviteByEmail, inviteMutationInfo] = useMutation(INVITE_BY_EMAIL);
 
+  if (error) {
+    // Handle loading error
+  }
+
   // Handles when the invite mutation has returned a result
   /*
-    Result is of the format:
+  Result is of the format:
     {
       sent: [emailA, emailB, ...]
       failed: [{emailA, errorA}, ...]

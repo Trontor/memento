@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { center } from "./Helpers";
 
 export const PageSpinnerWrapper = styled.div`
   display: flex;
