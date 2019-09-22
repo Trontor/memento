@@ -50,6 +50,9 @@ export default function SettingsProfile() {
   if (error) {
     console.log("Error loading user data:", error);
   }
+  if (loading) {
+    // loading state
+  }
 
   if (data && data.currentUser) {
     user = data.currentUser;

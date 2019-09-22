@@ -10,7 +10,6 @@ import {
 import { useQuery } from "@apollo/react-hooks";
 import GET_CURRENT_USER from "queries/GetCurrentUser";
 import { Container } from "ui/Helpers";
-import { Spinner } from "ui/Loaders";
 import JollyLoader from "components/JollyLoader/JollyLoader";
 
 export default function Dashboard(props) {

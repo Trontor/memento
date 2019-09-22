@@ -135,8 +135,7 @@ export const UploadFileIcon = styled.span`
     }
   }
 
-  @media screen and (min-width: ${props =>
-  props.theme.breakpoints.mobile}) {
+  @media screen and (min-width: ${props => props.theme.breakpoints.mobile}) {
     width: 100px;
     height: 100px;
   }

@@ -20,8 +20,9 @@ export default function InviteStep1({
         </InstructionLabel>
         {inviteFamilies.map(family => (
           <FamilyGroup
-            selected={selected === family.name}
-            onClick={() => selectFamily(family.name)}
+            type="button"
+            selected={selected === family}
+            onClick={() => selectFamily(family)}
           >
             {family.name}
           </FamilyGroup>
