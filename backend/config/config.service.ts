@@ -1,6 +1,7 @@
 import { Injectable, Logger } from "@nestjs/common";
 import * as dotenv from "dotenv";
 import * as fs from "fs";
+import path from "path";
 import Joi from "@hapi/joi";
 
 export interface EnvConfig {
@@ -33,6 +34,7 @@ export class ConfigService {
       console.log("Loading config from .env file");
       dotenv.config();
       config = {
+        NODE_ENV: process.env.NODE_ENV,
         MONGO_URI: process.env.MONGO_URI,
         MONGO_AUTH_ENABLED: process.env.MONGO_AUTH_ENABLED,
         MONGO_USER: process.env.MONGO_USER,
@@ -52,9 +54,9 @@ export class ConfigService {
         AWS_S3_BUCKET_NAME: process.env.AWS_S3_BUCKET_NAME,
         AWS_S3_REGION_NAME: process.env.AWS_S3_REGION_NAME,
         AWS_S3_SECRET_ACCESS_KEY: process.env.AWS_S3_SECRET_ACCESS_KEY,
-        CDN_HOSTNAME: process.env.CDN_HOSTNAME
+        CDN_HOSTNAME: process.env.CDN_HOSTNAME,
       } as EnvConfig;
-      this.logger.log(`Config: ${config}`);
+      this.logger.log(`Config: ${JSON.stringify(config)}`);
     }
     if (config) this.envConfig = this.validateInput(config);
   }
@@ -65,35 +67,36 @@ export class ConfigService {
    */
   private validateInput(envConfig: EnvConfig): EnvConfig {
     const envVarsSchema: Joi.ObjectSchema = Joi.object({
+      NODE_ENV: Joi.string().valid(["production", "development"]),
       MONGO_URI: Joi.string().required(),
       MONGO_AUTH_ENABLED: Joi.boolean().default(false),
       MONGO_USER: Joi.string().when("MONGO_AUTH_ENABLED", {
         is: true,
-        then: Joi.required()
+        then: Joi.required(),
       }),
       MONGO_PASSWORD: Joi.string().when("MONGO_AUTH_ENABLED", {
         is: true,
-        then: Joi.required()
+        then: Joi.required(),
       }),
       JWT_SECRET: Joi.string().required(),
       JWT_EXPIRES_IN: Joi.number(),
       EMAIL_ENABLED: Joi.boolean().default(false),
       EMAIL_HOSTNAME: Joi.string().when("EMAIL_ENABLED", {
         is: true,
-        then: Joi.required()
+        then: Joi.required(),
       }),
       EMAIL_PORT: Joi.number(),
       EMAIL_USERNAME: Joi.string().when("EMAIL_ENABLED", {
         is: true,
-        then: Joi.required()
+        then: Joi.required(),
       }),
       EMAIL_PASSWORD: Joi.string().when("EMAIL_ENABLED", {
         is: true,
-        then: Joi.required()
+        then: Joi.required(),
       }),
       EMAIL_FROM: Joi.string().when("EMAIL_ENABLED", {
         is: true,
-        then: Joi.required()
+        then: Joi.required(),
       }),
       TEST_EMAIL_TO: Joi.string(),
       HOST_NAME: Joi.string()
@@ -107,16 +110,16 @@ export class ConfigService {
       AWS_S3_BUCKET_NAME: Joi.string().required(),
       CDN_HOSTNAME: Joi.string()
         .hostname()
-        .required()
+        .required(),
     });
 
     const { error, value: validatedEnvConfig } = Joi.validate(
       envConfig,
-      envVarsSchema
+      envVarsSchema,
     );
     if (error) {
       throw new Error(
-        `Config validation error in your env file: ${error.message}`
+        `Config validation error in your env file: ${error.message}`,
       );
     }
     return validatedEnvConfig;
@@ -162,7 +165,7 @@ export class ConfigService {
       EMAIL_USERNAME,
       EMAIL_PASSWORD,
       EMAIL_HOSTNAME,
-      EMAIL_PORT
+      EMAIL_PORT,
     } = this.envConfig;
     const protocol = parseInt(EMAIL_PORT) === 465 ? "smtps" : "smtp";
     const uri = `${protocol}://${EMAIL_USERNAME}:${EMAIL_PASSWORD}@${EMAIL_HOSTNAME}:${EMAIL_PORT}`;
@@ -193,7 +196,7 @@ export class ConfigService {
   get awsS3Credentials() {
     return {
       accessKeyId: this.envConfig.AWS_S3_ACCESS_KEY_ID,
-      secretAccessKey: this.envConfig.AWS_S3_SECRET_ACCESS_KEY
+      secretAccessKey: this.envConfig.AWS_S3_SECRET_ACCESS_KEY,
     };
   }
 
@@ -203,5 +206,15 @@ export class ConfigService {
 
   get cdnHostName(): string {
     return this.envConfig.CDN_HOSTNAME;
+  }
+
+  get handlebarsTemplatesDir(): string {
+    const prodTemplatesPath = path.join(
+      __dirname + "../../../../backend/templates",
+    );
+    this.logger.debug(prodTemplatesPath);
+    return this.envConfig.NODE_ENV === "production"
+      ? prodTemplatesPath
+      : __dirname + "/templates";
   }
 }

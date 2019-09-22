@@ -17,7 +17,6 @@ import {
 import { FileModule } from "./file/file.module";
 import { UploadOptions } from "graphql-upload";
 import { AwsModule } from "./aws/aws.module";
-import path from "path";
 
 /**
  * Root module of the application.
@@ -86,10 +85,7 @@ import path from "path";
         },
         template: {
           // templates are not found in `dist` dir as they are static, not TS
-          dir:
-            process.env.NODE_ENV === "production"
-              ? path.join(__dirname + "../../backend/templates")
-              : __dirname + "/templates",
+          dir: configService.handlebarsTemplatesDir,
           adapter: new HandlebarsAdapter(),
           options: {
             strict: true,
