@@ -113,6 +113,7 @@ export const EditAccountButton = styled(EditProfile)`
 export const CancelButton = styled(Cancel)`
   ${IconButtonStyle}
   display: ${props => (props.editClick ? "block" : "none")};
+
 `;
 
 export const SectionWrapper = styled.div`

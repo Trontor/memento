@@ -9,7 +9,7 @@ import { Settings } from "styled-icons/material/Settings";
 import { lighten } from "polished";
 
 // Primary Button Style
-export const ButtonPrimary = styled.button`
+export const ButtonPrimary = styled.button.attrs(() => ({ type: "button" }))`
   display: inline-block;
   background: ${props => props.theme.palette.main};
   color: white;
@@ -39,7 +39,7 @@ export const ButtonPrimary = styled.button`
 `;
 
 // Secondary Button Style
-export const ButtonSecondary = styled.button`
+export const ButtonSecondary = styled.button.attrs(() => ({ type: "button" }))`
   border: 1px solid ${props => props.theme.palette.main};
   color: ${props => props.theme.palette.main};
   background-color: transparent;
@@ -77,7 +77,7 @@ export const View = styled(PaperPlane)`
 `;
 
 // Add input field button
-export const AddButton = styled.button`
+export const AddButton = styled.button.attrs(() => ({ type: "button" }))`
   width: 25px;
   height: 25px;
   border-radius: 50%;
