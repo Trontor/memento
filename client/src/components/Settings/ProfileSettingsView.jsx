@@ -88,7 +88,7 @@ export default function SettingsProfile() {
 
   return (
     <Formik
-      initialValues={{ firstName: "Jane", lastName: "Doe" }}
+      initialValues={{ firstName: "Chicken", lastName: user.lastName }}
       render={props => (
         <SettingsContainer>
           <FormSection>
@@ -104,16 +104,20 @@ export default function SettingsProfile() {
           <FormSection>
             {/* First Name */}
             <EditInput
-              value={user.firstName}
+              value={props.values.firstName}
               inputLabel="First Name"
+              handleChange={props.handleChange}
+              name="firstName"
             />
           </FormSection>
 
           <FormSection>
             {/* Last Name */}
             <EditInput
-              value={user.lastName}
+              value={props.values.lastName}
               inputLabel="Last Name"
+              handleChange={props.handleChange}
+              name="lastName"
             />
           </FormSection>
 

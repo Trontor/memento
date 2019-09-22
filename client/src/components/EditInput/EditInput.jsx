@@ -11,7 +11,7 @@ import { UpdateButton } from "./EditInputStyles";
 
 export default function EditInput(props) {
   const [toggleEdit, setToggleEdit] = useState(false);
-
+  console.log(props)
   let defaultValue = <DefaultInput>{props.value}</DefaultInput>;
   if (toggleEdit) {
     if (props.password) {
@@ -25,7 +25,9 @@ export default function EditInput(props) {
     }
     else {
       defaultValue = (
-        <InputField type="text" value={props.value}/>
+        <InputField
+          {...props}
+          type="text"/>
       );
     }
   }
