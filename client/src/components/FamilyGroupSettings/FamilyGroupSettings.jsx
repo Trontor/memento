@@ -1,4 +1,5 @@
 import { AdminTag, Member, MembersList } from "./FamilyGroupSettingsStyles";
+import { Back, SettingsHeader, ViewProfile } from "ui/Navigation";
 import { CenterText, Container } from "ui/Helpers";
 import {
   FormSection,
@@ -34,9 +35,16 @@ export default function FamilyGroupSettings(props) {
 
   return (
     <Container>
-      <CenterText>
+      <SettingsHeader>
+        <ViewProfile>
+          <>
+          <Back/>
+          Family Group
+          </>
+        </ViewProfile>
         <Header center>Family Group Settings</Header>
-      </CenterText>
+        <div></div>
+      </SettingsHeader>
         <FormSection>
           <EditInput
             value={familyName}

@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 
+import { KeyboardArrowLeft } from "styled-icons/material/KeyboardArrowLeft";
 import { lighten } from "polished";
 
 export const MenuContainer = styled.div`
@@ -34,3 +35,19 @@ export const MenuTabs = styled.div`
     max-width: 380px;
   }
 `;
+
+export const SettingsHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+`;
+
+export const ViewProfile = styled.div`
+  
+`;
+
+export const Back = styled(KeyboardArrowLeft)`
+  width: 30px;
+`
