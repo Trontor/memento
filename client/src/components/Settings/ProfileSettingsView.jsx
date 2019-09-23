@@ -8,15 +8,14 @@ import {
   SettingsContainer,
   UploadLabel,
   UploadPhoto,
-  UserAvatar,
 } from "./SettingsStyles";
 import {
   FormSection,
+  ImgPreview,
   InputField,
   InputLabel,
   InputSection,
   UserAvatar,
-  ImgPreview,
 } from "ui/Forms";
 import {
   RadioButton,
