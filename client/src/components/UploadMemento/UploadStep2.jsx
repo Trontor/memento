@@ -25,9 +25,9 @@ export default function UploadStep1({
     "food",
   ];
 
-    const [defaultTags, setDefaultTags] = useState(tags);
+  const [defaultTags, setDefaultTags] = useState(tags);
 
-    const [newTag, setNewTag] = useState(null);
+  const [newTag, setNewTag] = useState(null);
 
   const handleChange = tag => {
     tag = tag.target.value;

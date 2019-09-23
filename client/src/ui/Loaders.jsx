@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { center } from "./Helpers";
 
 export const PageSpinnerWrapper = styled.div`
   display: flex;
@@ -11,7 +10,6 @@ export const PageSpinnerWrapper = styled.div`
 
 //Pure css spinner for loading state
 export const Spinner = styled.span`
-  ${center};
   border-radius: 50%;
   border-style: solid;
   display: inline-block;

@@ -3,6 +3,7 @@ import {
   Calendar,
   CityPicker,
   CountryPicker,
+  ImgPreview,
   PlaceWrapper,
   PlacesList,
   SettingsContainer,
@@ -10,27 +11,17 @@ import {
   UploadPhoto,
   UserAvatar,
 } from "./SettingsStyles";
-import {
-  FormSection,
-  InputField,
-  InputLabel,
-  InputSection,
-  UserAvatar,
-  ImgPreview,
-} from "ui/Forms";
+import { FormSection, InputField, InputLabel, InputSection } from "ui/Forms";
 import {
   RadioButton,
   RadioButtonStyle,
   RadioLabel,
   RadioOption,
-} from "ui/Radio";
+} from "ui/Forms";
 import React, { useState } from "react";
 
 import { DeleteButton } from "components/Invite/InviteStyles";
-import EditInput from "components/EditInput/EditInput";
 import { Formik } from "formik";
-import GET_CURRENT_USER from "queries/GetCurrentUser";
-import { useQuery } from "@apollo/react-hooks";
 
 export default function SettingsProfile() {
   let [file, setFile] = useState(null); //file for profile picture
@@ -43,20 +34,8 @@ export default function SettingsProfile() {
   const selectBirthCountry = value => setBirthCountry(value);
   const [birthCity, setBirthCity] = useState(); //birth city state
   const selectBirthCity = value => setBirthCity(value);
+
   const [livePlaces, setLivePlaces] = useState([{ city: "", date: null }]); //place you've lived and date moved
-
-  const { data, error, /* loading */ } = useQuery(GET_CURRENT_USER);
-
-  let user = {};
-
-  //Handle the states of displaying data, error and loading
-  if (error) {
-    console.log("Error loading user data:", error);
-  }
-
-  if (data && data.currentUser) {
-    user = data.currentUser;
-  }
 
   function imgHandleChange(event) {
     file = URL.createObjectURL(event.target.files[0]);
@@ -94,7 +73,7 @@ export default function SettingsProfile() {
 
   return (
     <Formik
-      initialValues={{ firstName: "Chicken", lastName: user.lastName }}
+      initialValues={{ firstName: "Jane", lastName: "Doe" }}
       render={props => (
         <SettingsContainer>
           <FormSection>
@@ -107,27 +86,31 @@ export default function SettingsProfile() {
             <UploadLabel htmlFor="file">Add a Profile Photo</UploadLabel>
           </FormSection>
 
-          <FormSection>
-            {/* First Name */}
-            <EditInput
-              value={props.values.firstName}
-              inputLabel="First Name"
-              handleChange={props.handleChange}
+          <InputSection>
+            {/* First Name  */}
+            <InputLabel>First Name</InputLabel>
+            <InputField
+              type="text"
               name="firstName"
+              onChange={props.handleChange}
+              onBlur={props.handleBlur}
+              value={props.values.firstName}
             />
-          </FormSection>
+          </InputSection>
 
-          <FormSection>
-            {/* Last Name */}
-            <EditInput
-              value={props.values.lastName}
-              inputLabel="Last Name"
-              handleChange={props.handleChange}
+          <InputSection>
+            {/* Last Name  */}
+            <InputLabel>Last Name</InputLabel>
+            <InputField
+              type="text"
               name="lastName"
+              onChange={props.handleChange}
+              onBlur={props.handleBlur}
+              value={props.values.lastName}
             />
-          </FormSection>
+          </InputSection>
 
-          <FormSection>
+          <InputSection>
             {/* Birthday  */}
             <InputLabel>Birthday</InputLabel>
             <Calendar
@@ -140,13 +123,13 @@ export default function SettingsProfile() {
               dropdownMode="select"
               maxDate={new Date()}
             />
-          </FormSection>
+          </InputSection>
 
           <FormSection>
             {/* Gender */}
             <InputLabel>Gender</InputLabel>
-            <InputSection>
-              {genderList.map(gender => (
+            {genderList.map(gender => (
+              <InputSection>
                 <RadioOption>
                   <RadioButton
                     type="radio"
@@ -157,11 +140,11 @@ export default function SettingsProfile() {
                   <RadioButtonStyle />
                   <RadioLabel>{gender}</RadioLabel>
                 </RadioOption>
-              ))}
-            </InputSection>
+              </InputSection>
+            ))}
           </FormSection>
 
-          <FormSection>
+          <InputSection>
             {/* Place of birth  */}
             <InputLabel>Place of Birth</InputLabel>
             <CountryPicker value={birthCountry} onChange={selectBirthCountry} />
@@ -170,7 +153,7 @@ export default function SettingsProfile() {
               value={birthCity}
               onChange={selectBirthCity}
             />
-          </FormSection>
+          </InputSection>
 
           <PlaceWrapper>
             {/* Place You've Lived and Date Moved  */}

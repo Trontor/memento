@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 
 import { AddToQueue } from "styled-icons/boxicons-regular/AddToQueue";
+import { Cancel } from "styled-icons/material/Cancel";
 import { Edit } from "styled-icons/material/Edit";
 import { GroupAdd } from "styled-icons/material/GroupAdd";
 import { PaperPlane } from "styled-icons/boxicons-regular/PaperPlane";
@@ -8,7 +9,7 @@ import { Settings } from "styled-icons/material/Settings";
 import { lighten } from "polished";
 
 // Primary Button Style
-export const ButtonPrimary = styled.button`
+export const ButtonPrimary = styled.button.attrs(() => ({ type: "button" }))`
   display: inline-block;
   background: ${props => props.theme.palette.main};
   color: white;
@@ -38,7 +39,7 @@ export const ButtonPrimary = styled.button`
 `;
 
 // Secondary Button Style
-export const ButtonSecondary = styled.button`
+export const ButtonSecondary = styled.button.attrs(() => ({ type: "button" }))`
   border: 1px solid ${props => props.theme.palette.main};
   color: ${props => props.theme.palette.main};
   background-color: transparent;
@@ -76,7 +77,7 @@ export const View = styled(PaperPlane)`
 `;
 
 // Add input field button
-export const AddButton = styled.button`
+export const AddButton = styled.button.attrs(() => ({ type: "button" }))`
   width: 25px;
   height: 25px;
   border-radius: 50%;
@@ -100,4 +101,26 @@ export const AddButton = styled.button`
     width: 115px;
     text-align: left;
   }
+`;
+
+const ButtonIconStyle = css`
+  color: ${props => lighten(0.35, props.theme.palette.text)};
+  cursor: pointer;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  ${props => props.theme.mixins.hoverFade};
+
+  &:hover {
+    color: ${props => props.theme.palette.text};
+    ${props => props.theme.mixins.hoverFade};
+  }
+`;
+
+export const EditButton = styled(Edit)`
+  ${ButtonIconStyle}
+`;
+
+export const CancelButton = styled(Cancel)`
+  ${ButtonIconStyle}
 `;

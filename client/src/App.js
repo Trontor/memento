@@ -1,20 +1,22 @@
+import { LeftColumn, Main, SiteGrid } from "ui/Layout";
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { Redirect, Route, BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
-import { theme } from "./theme";
+
+import CreateFamily from "./components/CreateFamily/CreateFamily";
+import Dashboard from "./components/Dashboard/Dashboard";
+import FamilyGroup from "./components/FamilyGroup/FamilyGroup";
+import FamilyGroupSettings from "./components/FamilyGroupSettings/FamilyGroupSettings";
+import Hamburger from "./components/Sidebar/Hamburger";
+import Invite from "./components/Invite/Invite";
 import Landing from "./components/Landing/Landing";
 import Login from "./components/Login/Login";
-import Signup from "./components/Signup/Signup";
-import Dashboard from "./components/Dashboard/Dashboard";
-import CreateFamily from "./components/CreateFamily/CreateFamily";
-import Invite from "./components/Invite/Invite";
 import Settings from "./components/Settings/Settings";
-import UploadMemento from "./components/UploadMemento/UploadMemento";
-import FamilyGroup from "./components/FamilyGroup/FamilyGroup";
 import Sidebar from "./components/Sidebar/Sidebar";
-import Hamburger from "./components/Sidebar/Hamburger";
-import { SiteGrid, LeftColumn, Main } from "ui/Layout";
+import Signup from "./components/Signup/Signup";
+import UploadMemento from "./components/UploadMemento/UploadMemento";
 import UserProfile from "./components/UserProfile/UserProfile";
+import { theme } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
   /* Reset styles */
@@ -118,6 +120,10 @@ const authenticatedRoutes = [
     name: "family/:id",
     component: FamilyGroup,
   },
+  {
+    name: "familysettings/:id",
+    component: FamilyGroupSettings,
+  }
 ];
 
 function App() {

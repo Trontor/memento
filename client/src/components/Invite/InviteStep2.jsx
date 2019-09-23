@@ -20,7 +20,6 @@ export default function InviteStep2({
   inviteEmails,
   selected,
   handleChange,
-  validateEmail,
 }) {
   if (currentStep !== 2) {
     return null;
@@ -31,7 +30,7 @@ export default function InviteStep2({
       {/* Email Addresses for Invite */}
       <InstructionLabel>
         Enter the email addresses of family members you would like to invite to{" "}
-        <FamilyGroupName>{selected}</FamilyGroupName> :
+        <FamilyGroupName>{selected.name}</FamilyGroupName> :
       </InstructionLabel>
       <EmailsList>
         {inviteEmails.map((email, idx) => (
@@ -42,7 +41,6 @@ export default function InviteStep2({
                 placeholder="name@example.com"
                 value={email.email}
                 onChange={e => handleChange(idx, e)}
-                onBlur={e => validateEmail(idx, e)}
               />
               {inviteEmails.length > 1 && (
                 <DeleteButton onClick={() => deleteEmail(idx)}>

@@ -17,7 +17,7 @@ export default function FamilyGroup(props) {
   const menuTabs = ["Mementos", "Members", "Tags"];
   const [currentTabIndex, setTabIndex] = useState(0)
   const familyId = props.match.params.id;
-  const { data, loading, error } = useQuery(LOAD_FAMILY, {
+  const { data, loading, /* error */ } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
   });
 
@@ -43,6 +43,7 @@ export default function FamilyGroup(props) {
       break;
     case "Tags":
       tabComponent = <TagsViewer/>
+      break;
     default:
       break;
   }
@@ -55,7 +56,7 @@ export default function FamilyGroup(props) {
       </FamilyHeader>
       <MenuContainer>
         {menuTabs.map((tab, idx) => (
-          <MenuTabs active={currentTabIndex == idx} onClick={()=> setTabIndex(idx)}>{tab}</MenuTabs>
+          <MenuTabs active={currentTabIndex === idx} onClick={()=> setTabIndex(idx)}>{tab}</MenuTabs>
         ))}
       </MenuContainer>
       {tabComponent}
