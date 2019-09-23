@@ -3,31 +3,33 @@ import {
   Calendar,
   CityPicker,
   CountryPicker,
-  ImgPreview,
   PlaceWrapper,
   PlacesList,
   SettingsContainer,
   UploadLabel,
   UploadPhoto,
-  UserAvatar,
-  SectionWrapper,
-  AccountButton,
-  EditAccountButton,
-  CancelButton,
 } from "./SettingsStyles";
-import { FormSection, InputField, InputLabel, InputSection } from "ui/Forms";
+import {
+  FormSection,
+  ImgPreview,
+  InputField,
+  InputLabel,
+  InputSection,
+  UserAvatar,
+} from "ui/Forms";
 import {
   RadioButton,
   RadioButtonStyle,
   RadioLabel,
   RadioOption,
-  DefaultInput,
-} from "ui/Forms";
+} from "ui/Radio";
 import React, { useState } from "react";
+
 import { DeleteButton } from "components/Invite/InviteStyles";
+import EditInput from "components/EditInput/EditInput";
 import { Formik } from "formik";
-import { useQuery } from "@apollo/react-hooks";
 import GET_CURRENT_USER from "queries/GetCurrentUser";
+import { useQuery } from "@apollo/react-hooks";
 
 export default function SettingsProfile() {
   let [file, setFile] = useState(null); //file for profile picture
@@ -42,16 +44,13 @@ export default function SettingsProfile() {
   const selectBirthCity = value => setBirthCity(value);
   const [livePlaces, setLivePlaces] = useState([{ city: "", date: null }]); //place you've lived and date moved
 
-  const { data, error, loading } = useQuery(GET_CURRENT_USER);
+  const { data, error, /* loading */ } = useQuery(GET_CURRENT_USER);
 
   let user = {};
 
   //Handle the states of displaying data, error and loading
   if (error) {
     console.log("Error loading user data:", error);
-  }
-  if (loading) {
-    // loading state
   }
 
   if (data && data.currentUser) {
@@ -92,29 +91,9 @@ export default function SettingsProfile() {
     setLivePlaces(place);
   };
 
-  const [editFirstName, setFirstName] = useState(false);
-  const editFirstNameHandler = () => setFirstName(!editFirstName);
-
-  const [editLastName, setLastName] = useState(false);
-  const editLastNameHandler = () => setLastName(!editLastName);
-
-  let defaultFirstName = <DefaultInput>{user.firstName}</DefaultInput>;
-  if (editFirstName) {
-    defaultFirstName = (
-      <InputField type="text" name="firstName" value={user.firstName} />
-    );
-  }
-
-  let defaultLastName = <DefaultInput>{user.lastName}</DefaultInput>;
-  if (editLastName) {
-    defaultLastName = (
-      <InputField type="text" name="lastName" value={user.lastName} />
-    );
-  }
-
   return (
     <Formik
-      initialValues={{ firstName: "Jane", lastName: "Doe" }}
+      initialValues={{ firstName: "Chicken", lastName: user.lastName }}
       render={props => (
         <SettingsContainer>
           <FormSection>
@@ -128,47 +107,23 @@ export default function SettingsProfile() {
           </FormSection>
 
           <FormSection>
-            <InputLabel>
-              First Name
-              <EditAccountButton
-                size="25px"
-                onClick={editFirstNameHandler}
-                editClick={editFirstName}
-              />
-              <CancelButton
-                size="25px"
-                onClick={editFirstNameHandler}
-                editClick={editFirstName}
-              />
-            </InputLabel>
-            {defaultFirstName}
-            <SectionWrapper editClick={editFirstName}>
-              <AccountButton onClick={editFirstNameHandler}>
-                Update First Name
-              </AccountButton>
-            </SectionWrapper>
+            {/* First Name */}
+            <EditInput
+              value={props.values.firstName}
+              inputLabel="First Name"
+              handleChange={props.handleChange}
+              name="firstName"
+            />
           </FormSection>
 
           <FormSection>
-            <InputLabel>
-              Last Name
-              <EditAccountButton
-                size="25px"
-                onClick={editLastNameHandler}
-                editClick={editLastName}
-              />
-              <CancelButton
-                size="25px"
-                onClick={editLastNameHandler}
-                editClick={editLastName}
-              />
-            </InputLabel>
-            {defaultLastName}
-            <SectionWrapper editClick={editLastName}>
-              <AccountButton onClick={editLastNameHandler}>
-                Update Last Name
-              </AccountButton>
-            </SectionWrapper>
+            {/* Last Name */}
+            <EditInput
+              value={props.values.lastName}
+              inputLabel="Last Name"
+              handleChange={props.handleChange}
+              name="lastName"
+            />
           </FormSection>
 
           <FormSection>

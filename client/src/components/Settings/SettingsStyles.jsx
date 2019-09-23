@@ -7,7 +7,6 @@ import { ButtonSecondary } from "ui/Buttons";
 import { Cancel } from "styled-icons/material/Cancel";
 import DatePicker from "react-datepicker";
 import { EditProfile } from "ui/Buttons";
-import { User } from "styled-icons/fa-regular/User";
 
 export const SettingsContainer = styled.div`
   padding-top: 50px;
@@ -35,25 +34,6 @@ export const UploadLabel = styled.label`
   &:hover {
     cursor: pointer;
   }
-`;
-
-export const ImgPreview = styled.div`
-  display: block;
-  margin: 0 auto;
-  background: #f8f8f8;
-  height: 200px;
-  width: 200px;
-  border: 2px solid gray;
-
-  img {
-    width: 100%;
-    height: 100%;
-  }
-`;
-
-export const UserAvatar = styled(User)`
-  color: gray;
-  margin: 35px 0 0 35px;
 `;
 
 export const Calendar = styled(DatePicker)`

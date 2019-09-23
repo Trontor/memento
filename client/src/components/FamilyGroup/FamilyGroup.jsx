@@ -1,6 +1,9 @@
-import { FamilyHeader, FamilyImg } from "./FamilyGroupStyles";
+import {
+  FamilyHeader,
+  FamilyImg
+} from "./FamilyGroupStyles";
 import { MenuContainer, MenuTabs } from "ui/Navigation";
-import React, { useState } from "react";
+import React, {useState} from "react";
 
 import { Container } from "ui/Helpers";
 import JollyLoader from "components/JollyLoader/JollyLoader";
@@ -12,15 +15,12 @@ import { useQuery } from "@apollo/react-hooks";
 
 export default function FamilyGroup(props) {
   const menuTabs = ["Mementos", "Members", "Tags"];
-  const [currentTabIndex, setTabIndex] = useState(0);
+  const [currentTabIndex, setTabIndex] = useState(0)
   const familyId = props.match.params.id;
-  const { data, loading, error } = useQuery(LOAD_FAMILY, {
+  const { data, loading, /* error */ } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
   });
 
-  if (error) {
-    //handle error
-  }
   if (loading) {
     return <JollyLoader />;
   }
@@ -34,15 +34,15 @@ export default function FamilyGroup(props) {
   }
 
   let tabComponent = null;
-  switch (menuTabs[currentTabIndex]) {
+  switch(menuTabs[currentTabIndex]){
     case "Mementos":
-      tabComponent = <MementosViewer />;
+      tabComponent = <MementosViewer/>
       break;
     case "Members":
-      tabComponent = <MembersViewer members={members} />;
+      tabComponent = <MembersViewer members={members}/>
       break;
     case "Tags":
-      tabComponent = <TagsViewer />;
+      tabComponent = <TagsViewer/>
       break;
     default:
       break;
@@ -56,12 +56,7 @@ export default function FamilyGroup(props) {
       </FamilyHeader>
       <MenuContainer>
         {menuTabs.map((tab, idx) => (
-          <MenuTabs
-            active={currentTabIndex === idx}
-            onClick={() => setTabIndex(idx)}
-          >
-            {tab}
-          </MenuTabs>
+          <MenuTabs active={currentTabIndex === idx} onClick={()=> setTabIndex(idx)}>{tab}</MenuTabs>
         ))}
       </MenuContainer>
       {tabComponent}

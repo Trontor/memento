@@ -1,10 +1,12 @@
 import styled, { css } from "styled-components";
 
 import { AddToQueue } from "styled-icons/boxicons-regular/AddToQueue";
+import { Cancel } from "styled-icons/material/Cancel";
 import { Edit } from "styled-icons/material/Edit";
 import { GroupAdd } from "styled-icons/material/GroupAdd";
 import { PaperPlane } from "styled-icons/boxicons-regular/PaperPlane";
 import { Settings } from "styled-icons/material/Settings";
+import { Bookmark } from "styled-icons/boxicons-regular/Bookmark";
 import { lighten } from "polished";
 
 // Primary Button Style
@@ -75,6 +77,10 @@ export const View = styled(PaperPlane)`
   ${IconStyle}
 `;
 
+export const Bookmarks = styled(Bookmark)`
+  ${IconStyle}
+`;
+
 // Add input field button
 export const AddButton = styled.button.attrs(() => ({ type: "button" }))`
   width: 25px;
@@ -100,4 +106,26 @@ export const AddButton = styled.button.attrs(() => ({ type: "button" }))`
     width: 115px;
     text-align: left;
   }
+`;
+
+const ButtonIconStyle = css`
+  color: ${props => lighten(0.35, props.theme.palette.text)};
+  cursor: pointer;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  ${props => props.theme.mixins.hoverFade};
+
+  &:hover {
+    color: ${props => props.theme.palette.text};
+    ${props => props.theme.mixins.hoverFade};
+  }
+`;
+
+export const EditButton = styled(Edit)`
+  ${ButtonIconStyle}
+`;
+
+export const CancelButton = styled(Cancel)`
+  ${ButtonIconStyle}
 `;
