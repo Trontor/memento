@@ -3,15 +3,20 @@ import {
   Calendar,
   CityPicker,
   CountryPicker,
-  ImgPreview,
   PlaceWrapper,
   PlacesList,
   SettingsContainer,
   UploadLabel,
   UploadPhoto,
-  UserAvatar,
 } from "./SettingsStyles";
-import { FormSection, InputField, InputLabel, InputSection } from "ui/Forms";
+import {
+  FormSection,
+  ImgPreview,
+  InputField,
+  InputLabel,
+  InputSection,
+  UserAvatar,
+} from "ui/Forms";
 import {
   RadioButton,
   RadioButtonStyle,

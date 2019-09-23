@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Redirect, Route, BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 
+import Bookmarks from "./components/Bookmarks/Bookmarks";
 import CreateFamily from "./components/CreateFamily/CreateFamily";
 import Dashboard from "./components/Dashboard/Dashboard";
 import FamilyGroup from "./components/FamilyGroup/FamilyGroup";
@@ -15,6 +16,7 @@ import Settings from "./components/Settings/Settings";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Signup from "./components/Signup/Signup";
 import UploadMemento from "./components/UploadMemento/UploadMemento";
+import UserProfile from "./components/UserProfile/UserProfile";
 import { theme } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
@@ -122,6 +124,14 @@ const authenticatedRoutes = [
   {
     name: "familysettings/:id",
     component: FamilyGroupSettings,
+  },
+  {
+    name: "bookmarks",
+    component: Bookmarks,
+  },
+  {
+    name: "profile",
+    component: UserProfile
   }
 ];
 
