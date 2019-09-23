@@ -13,11 +13,13 @@ import Invite from "./components/Invite/Invite";
 import Landing from "./components/Landing/Landing";
 import Login from "./components/Login/Login";
 import Settings from "./components/Settings/Settings";
+import InviteCode from "./components/AcceptInvite/InviteCode";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Signup from "./components/Signup/Signup";
 import UploadMemento from "./components/UploadMemento/UploadMemento";
 import UserProfile from "./components/UserProfile/UserProfile";
 import { theme } from "./theme";
+import AcceptInvite from "components/AcceptInvite/AcceptInvite";
 
 const GlobalStyle = createGlobalStyle`
   /* Reset styles */
@@ -106,8 +108,18 @@ const authenticatedRoutes = [
     component: CreateFamily,
   },
   {
-    name: "invite",
+    name: "invite/",
     component: Invite,
+    exact: true,
+  },
+  {
+    name: "invite/accept/",
+    component: InviteCode,
+    exact: true,
+  },
+  {
+    name: "invite/accept/:inviteId",
+    component: AcceptInvite,
   },
   {
     name: "new-memento",
@@ -131,8 +143,8 @@ const authenticatedRoutes = [
   },
   {
     name: "profile",
-    component: UserProfile
-  }
+    component: UserProfile,
+  },
 ];
 
 function App() {
@@ -168,6 +180,7 @@ function App() {
                   <PrivateRoute
                     path={`/${route.name}`}
                     component={route.component}
+                    exact={route.exact}
                   />
                 ))}
               </Main>
