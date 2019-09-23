@@ -14,6 +14,7 @@ import FamilyGroup from "./components/FamilyGroup/FamilyGroup";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Hamburger from "./components/Sidebar/Hamburger";
 import { SiteGrid, LeftColumn, Main } from "ui/Layout";
+import UserProfile from "./components/UserProfile/UserProfile";
 import Bookmarks from "./components/Bookmarks/Bookmarks";
 
 const GlobalStyle = createGlobalStyle`
@@ -138,6 +139,7 @@ function App() {
         <Route path="/" exact component={Landing} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/userprofile" component={UserProfile} />
 
         <Route
           path={authenticatedPaths}
