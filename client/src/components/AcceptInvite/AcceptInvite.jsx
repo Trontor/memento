@@ -14,8 +14,9 @@ export default function AcceptInvite(props) {
     acceptInvite({ variables: { input: { inviteId } } });
   }, [acceptInvite, inviteId]);
 
-  if (data) {
-    console.log(data);
+  if (data && data.joinFamily) {
+    const familyId = data.joinFamily.familyId;
+    props.history.push("/family/" + familyId);
   }
   if (loading) {
     return <JollyLoader quotes={["Reedeeming invite..."]} />;

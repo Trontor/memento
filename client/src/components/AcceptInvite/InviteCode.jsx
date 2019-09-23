@@ -3,8 +3,6 @@ import { Container, CenterText } from "ui/Helpers";
 import { Header } from "ui/Typography";
 import { InputField } from "ui/Forms";
 import { ButtonPrimary } from "ui/Buttons";
-import { useMutation } from "@apollo/react-hooks";
-import { ACCEPT_INVITE } from "mutations/Invite";
 
 export default function InviteCode(props) {
   const [inviteId, setInviteId] = useState("");
