@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Redirect, Route, BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 
+import Bookmarks from "./components/Bookmarks/Bookmarks";
 import CreateFamily from "./components/CreateFamily/CreateFamily";
 import Dashboard from "./components/Dashboard/Dashboard";
 import FamilyGroup from "./components/FamilyGroup/FamilyGroup";
@@ -123,6 +124,14 @@ const authenticatedRoutes = [
   {
     name: "familysettings/:id",
     component: FamilyGroupSettings,
+  },
+  {
+    name: "bookmarks",
+    component: Bookmarks,
+  },
+  {
+    name: "profile",
+    component: UserProfile
   }
 ];
 
@@ -140,7 +149,6 @@ function App() {
         <Route path="/" exact component={Landing} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/userprofile" component={UserProfile} />
         <Route
           path={authenticatedPaths}
           render={() => (

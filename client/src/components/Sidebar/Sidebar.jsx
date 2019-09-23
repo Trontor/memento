@@ -9,14 +9,9 @@ import {
   SidebarContainer,
   SidebarHeader,
   SignOutButton,
-  TextList
+  TextList,
 } from "./SidebarStyles";
-import {
-  EditProfile,
-  Invite,
-  NewArtefact,
-  View
-} from "ui/Buttons";
+import { EditProfile, Invite, NewArtefact, View, Bookmarks } from "ui/Buttons";
 
 import { GET_USER_FAMILIES } from "queries/UserQueries";
 import { Logo } from "ui/Logos";
@@ -72,9 +67,9 @@ const Sidebar = props => {
           ))
         )}
       </FamilyListContainer>
-        <NewFamilyGroup onClick={() => props.history.push("/create-family")}>
-          New Family group
-        </NewFamilyGroup>
+      <NewFamilyGroup onClick={() => props.history.push("/create-family")}>
+        New Family group
+      </NewFamilyGroup>
       <MenuContainer>
         <TextList>
           <Invite size={iconSize} />
@@ -89,6 +84,10 @@ const Sidebar = props => {
         <TextList>
           <View size={iconSize} />
           View my Mementos
+        </TextList>
+        <TextList>
+          <Bookmarks size={iconSize} />
+          <a href={`/bookmarks`}>Bookmarks</a>
         </TextList>
       </MenuContainer>
       <MenuContainer>
