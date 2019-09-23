@@ -15,6 +15,7 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import Hamburger from "./components/Sidebar/Hamburger";
 import { SiteGrid, LeftColumn, Main } from "ui/Layout";
 import UserProfile from "./components/UserProfile/UserProfile";
+import Bookmarks from "./components/Bookmarks/Bookmarks";
 
 const GlobalStyle = createGlobalStyle`
   /* Reset styles */
@@ -118,6 +119,10 @@ const authenticatedRoutes = [
     name: "family/:id",
     component: FamilyGroup,
   },
+  {
+    name: "bookmarks",
+    component: Bookmarks,
+  },
 ];
 
 function App() {
@@ -135,6 +140,7 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/userprofile" component={UserProfile} />
+
         <Route
           path={authenticatedPaths}
           render={() => (
