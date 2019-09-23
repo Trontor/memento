@@ -2,7 +2,6 @@ import {
   Injectable,
   Logger,
   InternalServerErrorException,
-  BadRequestException,
 } from "@nestjs/common";
 import { User } from "../user/dto/user.dto";
 import { CreateMementoInput } from "./inputs/memento.inputs";
@@ -12,7 +11,10 @@ import { MementoDocument } from "./schema/memento.schema";
 import { fromHexStringToObjectId } from "../common/mongo.util";
 import { FileService } from "../file/file.service";
 import { MediaType, Media } from "./dto/media.dto";
-import { InvalidMediaTypeException } from "./memento.exceptions";
+import {
+  InvalidMediaTypeException,
+  MementoNotFoundException,
+} from "./memento.exceptions";
 import { CreateMediaInput } from "./inputs/media.inputs";
 import { mapDocumentToMementoDTO } from "./schema/memento.mapper";
 import { Memento } from "./dto/memento.dto";
@@ -30,6 +32,24 @@ export class MementoService {
     private readonly MementoModel: Model<MementoDocument>,
     private readonly fileService: FileService,
   ) {}
+
+  async findById(mementoId: string): Promise<MementoDocument> {
+    const doc = await this.MementoModel.findById(mementoId);
+    if (!doc) throw new MementoNotFoundException();
+    return doc;
+  }
+
+  /**
+   * Fetches all Mementos belonging to a family.
+   * @param familyId id of family
+   */
+  async getAllFamilyMementos(familyId: string): Promise<Memento[]> {
+    const id: Types.ObjectId = fromHexStringToObjectId(familyId);
+    const docs = await this.MementoModel.find({ inFamily: id })
+      .populate("inFamily")
+      .populate("uploadedBy");
+    return docs.map(doc => mapDocumentToMementoDTO(doc));
+  }
 
   /**
    * Creates a new Memento.

@@ -1,6 +1,8 @@
 import { Schema, Model, model, Types, Document } from "mongoose";
 import { Memento } from "../dto/memento.dto";
 import { MediaType } from "../dto/media.dto";
+import { Family } from "../../family/dto/family.dto";
+import { User } from "../../user/dto/user.dto";
 
 /**
  * Use GraphQL `Memento` type as a single source of truth by extending the Mongoose
@@ -9,8 +11,8 @@ import { MediaType } from "../dto/media.dto";
  */
 export interface MementoDocument extends Memento, Document {
   // Declaring everything that is not in the GraphQL Schema for a User
-  inFamily: Types.ObjectId;
-  uploadedBy: Types.ObjectId;
+  inFamily: Types.ObjectId | Family;
+  uploadedBy: Types.ObjectId | User;
 }
 
 export interface IMementoModel extends Model<MementoDocument> {}
