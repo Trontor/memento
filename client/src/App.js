@@ -12,6 +12,7 @@ import Settings from "./components/Settings/Settings";
 import UploadMemento from "./components/UploadMemento/UploadMemento";
 import FamilyGroup from "./components/FamilyGroup/FamilyGroup";
 import Sidebar from "./components/Sidebar/Sidebar";
+import InviteCode from "./components/AcceptInvite/InviteCode";
 import Hamburger from "./components/Sidebar/Hamburger";
 import { SiteGrid, LeftColumn, Main } from "ui/Layout";
 import AcceptInvite from "components/AcceptInvite/AcceptInvite";
@@ -105,6 +106,11 @@ const authenticatedRoutes = [
   {
     name: "invite/",
     component: Invite,
+    exact: true,
+  },
+  {
+    name: "invite/accept/",
+    component: InviteCode,
     exact: true,
   },
   {
