@@ -33,13 +33,14 @@ const loadingFamilyQuotes = [
   "OwO",
 ];
 export default function CreateFamily(props) {
-const [createNewFamily, { data, loading, /* error */ }] = useMutation(
+  const [createNewFamily, { data, loading /* error */ }] = useMutation(
     CREATE_NEW_FAMILY,
   );
 
   const defaultValues = {
     familyName: "",
     color: "",
+    file: null,
   };
   if (data && data.createFamily) {
     const { familyId } = data.createFamily;
@@ -55,9 +56,12 @@ const [createNewFamily, { data, loading, /* error */ }] = useMutation(
       <Formik
         initialValues={defaultValues}
         onSubmit={(values, actions) => {
+          console.log(values);
+
           const payload = {
             name: values.familyName,
             colour: values.color,
+            image: values.file,
           };
           createNewFamily({ variables: { input: payload } });
         }}
@@ -93,7 +97,18 @@ const [createNewFamily, { data, loading, /* error */ }] = useMutation(
               <InstructionLabel>
                 Select a display photo for your Family.
               </InstructionLabel>
-              <StyledDropzone />
+              {props.values.file ? (
+                <div>
+                  {props.values.file.name}{" "}
+                  <button onClick={() => props.setFieldValue("file", null)}>
+                    Remove
+                  </button>
+                </div>
+              ) : (
+                <StyledDropzone
+                  onFilesAdded={files => props.setFieldValue("file", files[0])}
+                />
+              )}
               <FormHelpText>You can upload a photo later.</FormHelpText>
             </FormSection>
 

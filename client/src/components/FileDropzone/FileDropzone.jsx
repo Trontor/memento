@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import styled from "styled-components";
 import { lighten } from "polished";
@@ -44,21 +44,29 @@ const DropzoneContainer = styled.div`
   }
 `;
 
-export function StyledDropzone() {
+export function StyledDropzone({ onFilesAdded }) {
+  const onDrop = useCallback(acceptedFiles => {
+    console.log(acceptedFiles);
+    if (onFilesAdded) onFilesAdded(acceptedFiles);
+  }, []);
+
   const {
     getRootProps,
     getInputProps,
     isDragActive,
     isDragAccept,
     isDragReject,
-  } = useDropzone({ accept: "image/*" });
-
+  } = useDropzone({ onDrop, accept: "image/*" });
   return (
     <DropzoneContainer
       {...getRootProps({ isDragActive, isDragAccept, isDragReject })}
     >
       <input {...getInputProps()} />
-      <p>Drag a file here or click to upload.</p>
+      {isDragActive ? (
+        <p>Drop your image here ...</p>
+      ) : (
+        <p>Drag a file here or click to upload.</p>
+      )}
     </DropzoneContainer>
   );
 }
