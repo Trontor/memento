@@ -1,5 +1,4 @@
 import { Settings } from "styled-icons/material/Settings";
-import { center } from "ui/Helpers";
 import { lighten } from "polished";
 import styled from "styled-components";
 

@@ -1,12 +1,12 @@
 import { AdminTag, Member, MembersList } from "./FamilyGroupSettingsStyles";
-import { BackButton, BackToView, SettingsHeader, ViewProfile } from "ui/Navigation";
-import { CenterText, Container } from "ui/Helpers";
+import { BackButton, BackToView, SettingsHeader } from "ui/Navigation";
 import {
   FormSection,
   InputLabel
 } from "ui/Forms";
 
 import { CirclePicker } from "react-color";
+import { Container } from "ui/Helpers";
 import EditInput from "components/EditInput/EditInput";
 import { Header } from "ui/Typography";
 import JollyLoader from "components/JollyLoader/JollyLoader";
@@ -38,9 +38,6 @@ export default function FamilyGroupSettings(props) {
       <SettingsHeader>
         <BackToView>
           <BackButton onClick={() => props.history.push("/family/" + familyId)}/>
-          {/* <span>
-            {familyName}
-          </span> */}
         </BackToView>
         <Header center>Family Group Settings</Header>
         <div></div>

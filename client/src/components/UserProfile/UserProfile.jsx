@@ -1,27 +1,28 @@
-import React from "react";
 import { CenterText, Container } from "ui/Helpers";
-import { Header } from "ui/Typography";
-import { UserAvatar, InputLabel } from "ui/Forms";
-import { useQuery } from "@apollo/react-hooks";
-import GET_CURRENT_USER from "queries/GetCurrentUser";
 import {
-  ProfileField,
-  Title,
-  ProfileWrapper,
-  UserImg,
-  UserEmail,
-  UserBday,
-  UserLocation,
   PlaceWrapper,
+  ProfileField,
+  ProfileWrapper,
   Span,
+  Title,
+  UserBday,
+  UserEmail,
+  UserImg,
+  UserLocation,
 } from "./UserProfileStyles";
+
+import GET_CURRENT_USER from "queries/GetCurrentUser";
+import { Header } from "ui/Typography";
+import { InputLabel } from "ui/Forms";
+import React from "react";
+import { useQuery } from "@apollo/react-hooks";
 
 export default function UserProfile() {
   let ProfilePicture = (
-    <img src="https://images.unsplash.com/photo-1506827155776-53ce0b5d56b4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80" />
+    <img src="https://images.unsplash.com/photo-1506827155776-53ce0b5d56b4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80" alt="alt"/>
   );
   //<UserAvatar size="125px" />;
-  const { data, error, loading } = useQuery(GET_CURRENT_USER);
+  const { data, error } = useQuery(GET_CURRENT_USER);
 
   let user = {};
 
