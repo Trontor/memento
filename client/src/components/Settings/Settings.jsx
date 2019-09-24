@@ -42,7 +42,7 @@ export default function Settings(props) {
         <BackToView>
           <BackButton onClick={() => props.history.push("/profile/" + user.userId)}/>
         </BackToView>
-        <Header center>Family Group Settings</Header>
+        <Header center>My Settings</Header>
         <div></div>
       </SettingsHeader>
       <MenuContainer>
