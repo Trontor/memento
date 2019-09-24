@@ -62,7 +62,7 @@ const GlobalStyle = createGlobalStyle`
     letter-spacing: 0.03em;
     cursor: pointer;
     color: ${props => props.theme.palette.text};
-    background-color: white;
+    background-color: ${props => props.theme.palette.background};
 
     &:focus {
       outline: none;

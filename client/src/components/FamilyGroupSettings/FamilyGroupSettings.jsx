@@ -1,5 +1,5 @@
 import { AdminTag, Member, MembersList } from "./FamilyGroupSettingsStyles";
-import { Back, SettingsHeader, ViewProfile } from "ui/Navigation";
+import { BackButton, BackToView, SettingsHeader, ViewProfile } from "ui/Navigation";
 import { CenterText, Container } from "ui/Helpers";
 import {
   FormSection,
@@ -36,12 +36,12 @@ export default function FamilyGroupSettings(props) {
   return (
     <Container>
       <SettingsHeader>
-        <ViewProfile>
-          <>
-          <Back/>
-          Family Group
-          </>
-        </ViewProfile>
+        <BackToView>
+          <BackButton onClick={() => props.history.push("/family/" + familyId)}/>
+          {/* <span>
+            {familyName}
+          </span> */}
+        </BackToView>
         <Header center>Family Group Settings</Header>
         <div></div>
       </SettingsHeader>
