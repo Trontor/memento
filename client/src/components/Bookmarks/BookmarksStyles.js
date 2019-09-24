@@ -18,7 +18,9 @@ export const BookmarksSearchInput = styled(SearchInput)`
 
 export const BookmarksWrapper = styled.div`
   display: grid;
-  grid-template-columns: 33% 33% 33%;
+  position: relative;
+  object-fit: cover;
+  grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
 `;
 
 export const Item = styled.div`
