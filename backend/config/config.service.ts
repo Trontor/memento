@@ -1,4 +1,4 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable, Logger, Scope } from "@nestjs/common";
 import * as dotenv from "dotenv";
 import * as fs from "fs";
 import path from "path";
@@ -216,11 +216,17 @@ export class ConfigService {
 
   get handlebarsTemplatesDir(): string {
     const prodTemplatesPath = path.join(
-      __dirname + "../../../../backend/templates",
+      __dirname,
+      "..",
+      "..",
+      "..",
+      "..",
+      "backend",
+      "templates",
     );
-    this.logger.debug(prodTemplatesPath);
+    const devTemplatesPath = path.join(__dirname, "..", "templates");
     return this.envConfig.NODE_ENV === "production"
       ? prodTemplatesPath
-      : __dirname + "/templates";
+      : devTemplatesPath;
   }
 }
