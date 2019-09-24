@@ -4,7 +4,7 @@ import {
   Mutation,
   Args,
   ResolveProperty,
-  Parent
+  Parent,
 } from "@nestjs/graphql";
 import { UserSignupInput, UpdateUserInput } from "./input/user.input";
 import { UserService } from "./user.service";
@@ -12,12 +12,12 @@ import { AuthOutput } from "../auth/dto/auth.dto";
 import { Inject, forwardRef, UseGuards, Logger } from "@nestjs/common";
 import { AuthService } from "../auth/auth.service";
 import { User } from "./dto/user.dto";
-import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { CurrentUser } from "../auth/decorators/current-user.decorator";
 import { RoleInput } from "./input/role.input";
 import { Family } from "../family/dto/family.dto";
 import { FamilyService } from "../family/family.service";
 import { FamilyAdminGuard } from "../auth/guards/family-admin.guard";
+import { JwtAuthGuard } from "../auth/guards/jwt.guard";
 
 /**
  * Resolves GraphQL mutations and queries related to users.
@@ -30,8 +30,7 @@ export class UserResolver {
     @Inject(forwardRef(() => AuthService))
     private readonly authService: AuthService,
     private readonly userService: UserService,
-    @Inject(forwardRef(() => FamilyService))
-    private readonly familyService: FamilyService
+    private readonly familyService: FamilyService,
   ) {}
 
   /**
@@ -50,10 +49,10 @@ export class UserResolver {
   @Mutation(returns => AuthOutput)
   async signup(@Args("input") input: UserSignupInput): Promise<AuthOutput> {
     const createdUser: User = await this.userService.createUser(input);
-    const { token } = this.authService.createJwt(createdUser);
+    const { token } = await this.authService.createJwt(createdUser);
     return {
       user: createdUser,
-      token
+      token,
     };
   }
 
@@ -64,9 +63,10 @@ export class UserResolver {
    */
   @Mutation(returns => User)
   @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   async updateUser(
     @CurrentUser() user: User,
-    @Args("input") input: UpdateUserInput
+    @Args("input") input: UpdateUserInput,
   ): Promise<User> {
     this.logger.debug(user);
     const updatedUser = await this.userService.update(user, input);
@@ -90,7 +90,7 @@ export class UserResolver {
   @UseGuards(JwtAuthGuard, FamilyAdminGuard)
   async updateRole(
     @Args("userId") updateeId: string,
-    @Args("input") input: RoleInput
+    @Args("input") input: RoleInput,
   ): Promise<User> {
     return await this.userService.updateRole(updateeId, input);
   }

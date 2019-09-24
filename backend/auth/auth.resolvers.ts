@@ -2,7 +2,7 @@ import { LoginInput, AuthOutput } from "./dto/auth.dto";
 import { Mutation, Resolver, Args, Query, Context } from "@nestjs/graphql";
 import { AuthService } from "./auth.service";
 import { UseGuards, UnauthorizedException } from "@nestjs/common";
-import { JwtAuthGuard } from "./guards/jwt-auth.guard";
+import { JwtAuthGuard } from "./guards/jwt.guard";
 
 @Resolver()
 export class AuthResolver {
@@ -12,7 +12,7 @@ export class AuthResolver {
   async login(@Args("input") { email, password }: LoginInput) {
     const result: AuthOutput = await this.authService.loginWithEmailAndPassword(
       email,
-      password
+      password,
     );
     return result;
   }
@@ -24,12 +24,12 @@ export class AuthResolver {
     const user = request.user;
     if (!user)
       throw new UnauthorizedException(
-        "Could not log-in with the provided credentials"
+        "Could not log-in with the provided credentials",
       );
-    const result = this.authService.createJwt(user);
+    const result = await this.authService.createJwt(user);
     if (result) return result.token;
     throw new UnauthorizedException(
-      "Could not log-in with the provided credentials"
+      "Could not log-in with the provided credentials",
     );
   }
 }

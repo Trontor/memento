@@ -31,7 +31,9 @@ export class MementoService {
     @InjectModel("Memento")
     private readonly MementoModel: Model<MementoDocument>,
     private readonly fileService: FileService,
-  ) {}
+  ) {
+    this.logger.debug("Creating new instance...");
+  }
 
   async findById(mementoId: string): Promise<MementoDocument> {
     const doc = await this.MementoModel.findById(mementoId);

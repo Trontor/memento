@@ -4,6 +4,9 @@ import {
   InternalServerErrorException,
   Logger,
   ForbiddenException,
+  forwardRef,
+  Inject,
+  Scope,
 } from "@nestjs/common";
 import { UserSignupInput, UpdateUserInput } from "./input/user.input";
 import { InjectModel } from "@nestjs/mongoose";
@@ -18,6 +21,7 @@ import { RoleInput } from "./input/role.input";
 import { fromHexStringToObjectId } from "../common/mongo.util";
 import { FileService } from "../file/file.service";
 import { IUpdateUserData } from "./interfaces/user.update.interface";
+import { UsersDataLoader } from "./user.dataloader";
 
 /**
  * Manages CRUD for users
@@ -29,17 +33,21 @@ export class UserService implements IUserService {
     @InjectModel("User")
     private readonly UserModel: Model<UserDocument>,
     private readonly fileService: FileService,
-  ) {}
+    private readonly usersDataLoader: UsersDataLoader,
+  ) {
+    this.logger.debug("Creating User Service...");
+  }
 
   /**
    * Fetches and returns a `UserDocument` by `email`.
    * @param email email of user to be found
    */
   async findOneByEmail(email: string): Promise<UserDocument> {
-    const user = await this.UserModel.findOne({
+    const user: UserDocument | null = await this.UserModel.findOne({
       lowercaseEmail: email.toLowerCase(),
     }).exec();
     if (!user) throw new UserNotFoundException();
+    this.usersDataLoader.prime(user.id, user);
     return user;
   }
 
@@ -65,13 +73,13 @@ export class UserService implements IUserService {
    * @param userId user id as a string
    */
   async findOneById(userId: string): Promise<User> {
-    const id = fromHexStringToObjectId(userId);
-    const user = await this.UserModel.findById(id);
-    if (!user) {
-      Logger.error(`user ${id} not found`);
-      throw new UserNotFoundException();
+    try {
+      const user = await this.usersDataLoader.load(userId);
+      return mapDocumentToUserDTO(user);
+    } catch (err) {
+      this.logger.error(err);
+      throw err;
     }
-    return mapDocumentToUserDTO(user);
   }
 
   /**
@@ -81,42 +89,80 @@ export class UserService implements IUserService {
   async getUsers(userIds: string[]): Promise<User[]> {
     if (userIds.length === 0) return [];
     // more efficient to retrieve all docs in one round trip
-    const docs = await this.UserModel.find({
-      _id: {
-        $in: userIds.map(id => fromHexStringToObjectId(id)),
-      },
-    });
+    const docs = await this.usersDataLoader.loadMany(userIds);
     return docs.map(doc => mapDocumentToUserDTO(doc));
   }
 
   /**
    * Updates fields of a user.
+   *
    * @param currentUser the user object attached to the GraphQL request
    * @param fields updatable fields
    */
   async update(currentUser: User, fields: UpdateUserInput) {
-    const { userId: _, ...data } = fields;
+    const { userId: updateeId, ...data } = fields;
 
-    // check if fields contain actual data
-    const hasData: boolean = Object.keys(data).length > 0;
-    if (!hasData) {
-      throw new BadRequestException("No data provided in UpdateUserInput");
-    }
+    this.validateForUpdate(currentUser, updateeId, data);
+
     this.logger.log(
       `User ${currentUser.userId} updating ${JSON.stringify(fields)}`,
     );
 
-    if (!currentUser.userId)
+    const updateData: IUpdateUserData = await this.processUpdateInput(data);
+
+    // do update operation
+    const updatedUser: UserDocument = await this.updateUserDocument(
+      currentUser.userId,
+      updateData,
+    );
+
+    const userDTO: User = mapDocumentToUserDTO(updatedUser);
+    this.logger.debug(userDTO);
+    return userDTO;
+  }
+
+  /**
+   * Throws errors if provided parameters are not valid for update operation.
+   * @param currentUser current user
+   * @param fields update fields
+   */
+  private async validateForUpdate(
+    currentUser: User,
+    updateeId: string,
+    data: Partial<UpdateUserInput>,
+  ) {
+    // check if fields contain actual data
+    const hasData: boolean = Object.keys(data).length > 0;
+    if (!hasData) {
+      this.logger.log("no update data provided");
+      throw new BadRequestException("No data provided in UpdateUserInput");
+    }
+
+    if (!currentUser.userId) {
+      this.logger.error(
+        "authenticated `currentUser` does not have `userId` property",
+      );
       throw new InternalServerErrorException("Current user not defined");
+    }
 
     // authorization: users can only update their own profile details
-    if (currentUser.userId !== fields.userId) {
+    if (currentUser.userId !== updateeId) {
       this.logger.log(
-        `current user id ${currentUser.userId} does not match updatee id ${fields.userId}`,
+        `current user id ${currentUser.userId} does not match updatee id ${updateeId}`,
       );
       throw new ForbiddenException();
     }
+  }
 
+  /**
+   * Processes user update input and returns `updateData` for use in
+   * directly updating the actual `UserDocument`.
+   *
+   * @param data user update data
+   */
+  private async processUpdateInput(
+    data: Partial<UpdateUserInput>,
+  ): Promise<IUpdateUserData> {
     // upload image if provided
     let imageUrl: string | undefined = undefined;
     if (data.image) {
@@ -129,18 +175,26 @@ export class UserService implements IUserService {
     if (imageUrl) {
       updateData.imageUrl = imageUrl;
     }
+    return updateData;
+  }
 
-    // do update operation
+  /**
+   * Updates a user document by id and clears cache for this id.
+   *
+   * @param userId id of user document that will be updated
+   * @param data new data to update doc
+   */
+  private async updateUserDocument(userId: string, data: IUpdateUserData) {
     const updatedUser = await this.UserModel.findOneAndUpdate(
-      { lowercaseEmail: currentUser.email.toLowerCase() }, // find by email
-      { ...updateData, imageUrl },
+      { _id: fromHexStringToObjectId(userId) },
+      data,
       { new: true, runValidators: true },
     );
     if (!updatedUser)
       throw new InternalServerErrorException("Could not update user");
-    const userDTO: User = mapDocumentToUserDTO(updatedUser);
-    this.logger.debug(userDTO);
-    return userDTO;
+
+    this.usersDataLoader.clear(userId);
+    return updatedUser;
   }
 
   /**
@@ -168,6 +222,7 @@ export class UserService implements IUserService {
       this.logger.error("User not in family");
       throw new BadRequestException("Updatee not in family");
     }
+    this.usersDataLoader.clear(updateeId);
     return mapDocumentToUserDTO(user);
   }
 
@@ -203,6 +258,7 @@ export class UserService implements IUserService {
     );
     if (!user) throw new CreateRoleException();
     this.logger.debug(`Updated user roles array: ${user.roles}`);
+    this.usersDataLoader.clear(userId);
     return user;
   }
 

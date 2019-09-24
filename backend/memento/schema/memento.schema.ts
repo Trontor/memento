@@ -1,8 +1,8 @@
 import { Schema, Model, model, Types, Document } from "mongoose";
 import { Memento } from "../dto/memento.dto";
 import { MediaType } from "../dto/media.dto";
-import { Family } from "../../family/dto/family.dto";
-import { User } from "../../user/dto/user.dto";
+import { FamilyDocument } from "../../family/schema/family.schema";
+import { UserDocument } from "../../user/schema/user.schema";
 
 /**
  * Use GraphQL `Memento` type as a single source of truth by extending the Mongoose
@@ -11,42 +11,48 @@ import { User } from "../../user/dto/user.dto";
  */
 export interface MementoDocument extends Memento, Document {
   // Declaring everything that is not in the GraphQL Schema for a User
-  inFamily: Types.ObjectId | Family;
-  uploadedBy: Types.ObjectId | User;
+  inFamily: Types.ObjectId | FamilyDocument;
+  uploadedBy: Types.ObjectId | UserDocument;
 }
 
 export interface IMementoModel extends Model<MementoDocument> {}
 
-const MediaSchema: Schema = new Schema({
-  type: {
-    type: String,
-    enum: [MediaType.Image, MediaType.Video],
-    required: true,
+const MediaSchema: Schema = new Schema(
+  {
+    type: {
+      type: String,
+      enum: [MediaType.Image, MediaType.Video],
+      required: true,
+    },
+    url: {
+      type: String,
+      required: true,
+    },
+    caption: {
+      type: String,
+    },
   },
-  url: {
-    type: String,
-    required: true,
+  {
+    _id: false,
   },
-  caption: {
-    type: String,
-  },
-});
+);
 
-export const MediaModel = model("Media", MediaSchema);
-
-const DateSchema: Schema = new Schema({
-  day: {
-    type: Number,
+const DateSchema: Schema = new Schema(
+  {
+    day: {
+      type: Number,
+    },
+    month: {
+      type: Number,
+    },
+    year: {
+      type: Number,
+    },
   },
-  month: {
-    type: Number,
+  {
+    _id: false,
   },
-  year: {
-    type: Number,
-  },
-});
-
-export const DateModel = model("Media", MediaSchema);
+);
 
 /**
  * The actual structure of the Memento collection.

@@ -1,4 +1,4 @@
-import { Injectable, Logger, Inject, forwardRef } from "@nestjs/common";
+import { Injectable, Logger, Inject, forwardRef, Scope } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { InviteDocument } from "./schema/invite.schema";
 import { Model } from "mongoose";
@@ -20,7 +20,7 @@ import { Family } from "../family/dto/family.dto";
 /**
  * Manages CRUD for invites.
  */
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class InviteService {
   private readonly logger = new Logger(InviteService.name);
   constructor(
@@ -29,7 +29,9 @@ export class InviteService {
     private readonly familyService: FamilyService,
     private readonly configService: ConfigService,
     private readonly mailerService: MailerService,
-  ) {}
+  ) {
+    this.logger.debug("Creating new instance...");
+  }
 
   /**
    * Fetches invite from the database.

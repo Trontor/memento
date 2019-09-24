@@ -30,7 +30,7 @@ export const isFamilyAdmin = (user: User, familyId: string): boolean => {
   if (!user || !user.familyRoles || !familyId) return false;
   return containsRole(user.familyRoles, {
     familyId,
-    familyRole: FamilyRole.Admin
+    familyRole: FamilyRole.Admin,
   });
 };
 

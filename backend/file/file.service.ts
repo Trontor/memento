@@ -1,4 +1,4 @@
-import { Injectable, Logger, BadRequestException } from "@nestjs/common";
+import { Injectable, Logger, BadRequestException, Scope } from "@nestjs/common";
 import { Upload } from "./upload.interface";
 import { isImage, isVideo } from "./file.utils";
 import { S3Client } from "../aws/aws.s3.client";
@@ -19,7 +19,9 @@ export class FileService {
   constructor(
     private readonly s3Client: S3Client,
     private readonly configService: ConfigService,
-  ) {}
+  ) {
+    this.logger.debug("Creating new instance...");
+  }
 
   /**
    * Uploads an image and returns the url.
