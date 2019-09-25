@@ -20,7 +20,8 @@ export const BookmarksWrapper = styled.div`
   display: grid;
   position: relative;
   object-fit: cover;
-  grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(225px, 0.75fr));
+  justify-content: center;
 `;
 
 export const Item = styled.div`
@@ -47,7 +48,7 @@ export const Description = styled.div`
 export const BookmarksIcon = styled(Bookmark)`
   color: white;
   width: 35px;
-  margin-left: 175px;
+
   margin-top: -4px;
   cursor: pointer;
 `;

@@ -7,14 +7,12 @@ import { Location } from "styled-icons/icomoon/Location";
 export const ProfileWrapper = styled.div`
   display: grid;
   position: relative;
-
   grid-template-columns: 200px auto;
   grid-gap: 25px;
 
   @media screen and (max-width: ${props =>
       props.theme.breakpoints.tabletPortrait}) {
-    grid-template-columns: 1fr;
-    align-items: center;
+    display: block;
   }
 `;
 
@@ -36,6 +34,11 @@ export const UserImg = styled(ImgPreview)`
   img {
     object-fit: cover;
     width: 100%;
+  }
+
+  @media screen and (max-width: ${props =>
+      props.theme.breakpoints.tabletPortrait}) {
+    justify-content: center;
   }
 `;
 
