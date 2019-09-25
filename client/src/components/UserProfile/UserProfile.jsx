@@ -49,7 +49,7 @@ export default function UserProfile() {
 
       <ProfileWrapper>
         <UserImg>{ProfilePicture}</UserImg>
-        <div>
+        <ProfileField>
           <Title>
             {user.firstName} {user.lastName}
           </Title>
@@ -68,7 +68,7 @@ export default function UserProfile() {
             <UserEmail size="25px" />
             <Span>{user.email}</Span>
           </ProfileField>
-        </div>
+        </ProfileField>
       </ProfileWrapper>
 
       <ProfileField>

@@ -5,15 +5,20 @@ import { BirthdayCake } from "styled-icons/fa-solid/BirthdayCake";
 import { Location } from "styled-icons/icomoon/Location";
 
 export const ProfileWrapper = styled.div`
-  width: 100%;
-  margin: auto;
   display: grid;
-  grid-template-columns: 30% 70%;
+  position: relative;
+  grid-template-columns: 200px auto;
+  grid-gap: 25px;
+
+  @media screen and (max-width: ${props =>
+      props.theme.breakpoints.tabletPortrait}) {
+    display: block;
+  }
 `;
 
 export const ProfileField = styled.div`
   width: 100%;
-  margin: 10px auto;
+  margin-top: 5px;
   padding: 5px 0;
 `;
 
@@ -24,11 +29,16 @@ export const Title = styled.h2`
 `;
 
 export const UserImg = styled(ImgPreview)`
-  margin: 0;
+  position: relative;
 
   img {
     object-fit: cover;
     width: 100%;
+  }
+
+  @media screen and (max-width: ${props =>
+      props.theme.breakpoints.tabletPortrait}) {
+    justify-content: center;
   }
 `;
 
