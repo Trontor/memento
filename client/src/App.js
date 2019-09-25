@@ -4,7 +4,6 @@ import {
   Redirect,
   Route,
   BrowserRouter as Router,
-  withRouter,
   Switch,
 } from "react-router-dom";
 import { ThemeProvider, createGlobalStyle } from "styled-components";

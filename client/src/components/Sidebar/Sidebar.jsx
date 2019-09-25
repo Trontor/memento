@@ -34,7 +34,7 @@ const Sidebar = props => {
     signOut();
   }
 
-  const { loading, refetch } = useQuery(GET_USER_FAMILIES, {
+  const { refetch } = useQuery(GET_USER_FAMILIES, {
     fetchPolicy: "cache-and-network",
     onCompleted: data => {
       setFamilies(data.currentUser.families);
