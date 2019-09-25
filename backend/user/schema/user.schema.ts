@@ -6,13 +6,17 @@ import { FamilyRole, Role } from "../dto/role.dto";
 /**
  * Use GraphQL `User` type as a single source of truth by extending the Mongoose
  * `UserDocument` from the `User` class.
- * Issue: This can lead to messy bloated `UserDocument`.
  */
 export interface UserDocument extends User, Document {
   // Declaring everything that is not in the GraphQL Schema for a User
   password: string;
   lowercaseEmail: string;
   roles: Role[];
+
+  /**
+   * Converts `UserDocument` to `User` to return to the client
+   */
+  toDTO(): User;
 }
 
 export interface IUserModel extends Model<UserDocument> {
@@ -97,6 +101,29 @@ export const UserSchema: Schema = new Schema(
     timestamps: true,
   },
 );
+
+UserSchema.methods.toDTO = function(): User {
+  return {
+    // mongodb id
+    userId: this.id,
+    // user details
+    email: this.email,
+    firstName: this.firstName,
+    lastName: this.lastName,
+    gender: this.gender,
+    imageUrl: this.imageUrl,
+    dateOfBirth: this.dateOfBirth,
+    location: this.location,
+    // family roles
+    familyRoles: this.roles,
+    // dummy array - resolver will deal with this
+    families: [],
+    // timestamps
+    createdAt: this.createdAt,
+    updatedAt: this.updatedAt,
+    lastSeenAt: this.lastSeenAt,
+  };
+};
 
 function validateEmail(email: string) {
   // tslint:disable-next-line:max-line-length

@@ -19,7 +19,6 @@ import { Family } from "../family/dto/family.dto";
 import { FamilyService } from "../family/family.service";
 import { FamilyAdminGuard } from "../auth/guards/family-admin.guard";
 import { UserDataLoaderById, USER_LOADER_BY_ID } from "./user.dataloader";
-import { mapDocumentToUserDTO } from "./schema/user.mapper";
 import {
   FAMILY_LOADER_BY_ID,
   FamilyDataLoaderById,
@@ -53,7 +52,7 @@ export class UserResolver {
   async getUser(@Args("userId") userId: string) {
     const doc = await this.usersDataLoaderById.load(userId);
     this.logger.debug(doc);
-    return mapDocumentToUserDTO(doc);
+    return doc.toDTO();
   }
 
   /**

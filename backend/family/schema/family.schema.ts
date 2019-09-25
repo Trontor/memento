@@ -9,8 +9,8 @@ export const FAMILY_COLLECTION = "Family";
  * to allow single source of truth for model's fields.
  */
 export interface FamilyDocument extends Family, Document {
-    // fields that are only found in the database Document
-    memberIds: string[];
+  // fields that are only found in the database Document
+  memberIds: string[];
 }
 
 /**
@@ -22,42 +22,42 @@ export interface IFamilyModel extends Model<FamilyDocument> {}
  * The actual structure of the Family collection.
  */
 export const FamilySchema: Schema = new Schema(
-    {
-        name: {
-            type: String,
-            required: true,
-        },
-        description: {
-            type: String,
-        },
-        imageUrl: {
-            type: String,
-        },
-        memberIds: {
-            type: [String],
-            default: [],
-        },
-        colour: {
-            type: String,
-        },
+  {
+    name: {
+      type: String,
+      required: true,
     },
-    {
-        timestamps: true,
+    description: {
+      type: String,
     },
+    imageUrl: {
+      type: String,
+    },
+    memberIds: {
+      type: [String],
+      default: [],
+    },
+    colour: {
+      type: String,
+    },
+  },
+  {
+    timestamps: true,
+  },
 );
 
 // export a Mongoose `Model` based on `FamilyDocument` defined above
 export const FamilyModel: IFamilyModel = model<FamilyDocument, IFamilyModel>(
-    "Family",
-    FamilySchema,
+  "Family",
+  FamilySchema,
 );
 
 /**
  * Interface for the data to update family
  */
 export interface IUpdateFamilyData {
-    name?: string;
-    imageUrl?: string;
-    description?: string;
-    colour?: string;
+  name?: string;
+  imageUrl?: string;
+  description?: string;
+  colour?: string;
 }

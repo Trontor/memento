@@ -25,7 +25,6 @@ import { FamilyAdminGuard } from "../auth/guards/family-admin.guard";
 import { USER_LOADER_BY_ID, UserDataLoaderById } from "../user/user.dataloader";
 import { FAMILY_LOADER_BY_ID, FamilyDataLoaderById } from "./family.dataloader";
 import { UserDocument } from "../user/schema/user.schema";
-import { mapDocumentToUserDTO } from "../user/schema/user.mapper";
 
 /**
  * Resolves GraphQL mutations and queries related to families.
@@ -92,7 +91,7 @@ export class FamilyResolver {
     const members: UserDocument[] = await this.userLoaderById.loadMany(
       family.memberIds,
     );
-    return members.map(doc => mapDocumentToUserDTO(doc));
+    return members.map(doc => doc.toDTO());
   }
 
   /**
