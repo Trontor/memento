@@ -8,7 +8,6 @@ import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { setContext } from "apollo-link-context";
 import { createUploadLink } from "apollo-upload-client";
-import { HttpLink } from "apollo-link-http";
 import { onError } from "apollo-link-error";
 
 const cache = new InMemoryCache();
