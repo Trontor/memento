@@ -85,7 +85,7 @@ export default function SettingsProfile() {
       console.log("Updated user data... refetching current user!");
       currentUserStatus.refetch();
     }
-  }, [user]);
+  }, [user, currentUserStatus]);
 
   // Loading state
   if (currentUserStatus.loading || updateUserStatus.loading || !user) {

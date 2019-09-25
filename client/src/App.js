@@ -1,6 +1,12 @@
 import { LeftColumn, Main, SiteGrid } from "ui/Layout";
 import React, { useState } from "react";
-import { Redirect, Route, BrowserRouter as Router } from "react-router-dom";
+import {
+  Redirect,
+  Route,
+  BrowserRouter as Router,
+  withRouter,
+  Switch,
+} from "react-router-dom";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 
 import Bookmarks from "./components/Bookmarks/Bookmarks";
@@ -158,12 +164,11 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <GlobalStyle />
-        <Route path="/" exact component={Landing} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        <Route
-          path={authenticatedPaths}
-          render={() => (
+        <Switch>
+          <Route path="/" exact component={Landing} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route paths={authenticatedPaths}>
             <SiteGrid>
               <LeftColumn>
                 <Sidebar
@@ -180,14 +185,14 @@ function App() {
                   <PrivateRoute
                     key={route.name}
                     path={`/${route.name}`}
-                    component={route.component}
                     exact={route.exact}
+                    component={route.component}
                   />
                 ))}
               </Main>
             </SiteGrid>
-          )}
-        />
+          </Route>
+        </Switch>
       </Router>
     </ThemeProvider>
   );

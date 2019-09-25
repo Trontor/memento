@@ -1,7 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
 import { InputSection, InputField, InputLabel, Error } from "ui/Forms";
-import { withRouter } from "react-router";
 import { ButtonPrimary } from "ui/Buttons";
 import { Header } from "ui/Typography";
 import { Link } from "react-router-dom";
@@ -9,6 +8,7 @@ import * as yup from "yup";
 import { NameInputContainer, SignupContainer } from "./SignupStyles";
 import { HelpText } from "ui/Forms";
 import { useMutation } from "@apollo/react-hooks";
+import { withRouter } from "react-router-dom";
 import { SIGNUP } from "mutations/Authentication";
 
 const defaultValues = {
@@ -44,7 +44,7 @@ const SignupValidationSchema = yup.object().shape({
     .required("Password confirm is required"),
 });
 
-const Signup = withRouter(props => {
+const Signup = props => {
   /**
    * Processes a successful signup mutation by saving the resulting token
    * and re-routing to the dashboard.
@@ -211,5 +211,5 @@ const Signup = withRouter(props => {
       />
     </>
   );
-});
-export default Signup;
+};
+export default withRouter(Signup);
