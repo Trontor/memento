@@ -1,6 +1,9 @@
 import { Schema, model, Model, Document } from "mongoose";
 import { Family } from "../dto/family.dto";
 
+// Name of family collection
+export const FAMILY_COLLECTION = "Family";
+
 /**
  * Defines a `FamilyDocument` using `Family` DTO and Mongoose `Document`
  * to allow single source of truth for model's fields.
