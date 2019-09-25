@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import { AddToQueue } from "styled-icons/boxicons-regular/AddToQueue";
 import { Cancel } from "styled-icons/material/Cancel";
 import { Edit } from "styled-icons/material/Edit";
+import { Check } from "styled-icons/material/Check";
 import { GroupAdd } from "styled-icons/material/GroupAdd";
 import { PaperPlane } from "styled-icons/boxicons-regular/PaperPlane";
 import { Settings } from "styled-icons/material/Settings";
@@ -127,5 +128,9 @@ export const EditButton = styled(Edit)`
 `;
 
 export const CancelButton = styled(Cancel)`
+  ${ButtonIconStyle}
+`;
+
+export const TickButton = styled(Check)`
   ${ButtonIconStyle}
 `;

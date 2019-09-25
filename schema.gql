@@ -48,6 +48,7 @@ enum FamilyRole {
 enum Gender {
   Male
   Female
+  Other
 }
 
 type Invite {
@@ -122,6 +123,8 @@ type UpdateRoleOutput {
 
 input UpdateUserInput {
   userId: ID!
+  firstName: String!
+  lastName: String
   location: String
   dateOfBirth: String
   gender: Gender

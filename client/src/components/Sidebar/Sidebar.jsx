@@ -61,7 +61,7 @@ const Sidebar = props => {
           <Spinner />
         ) : (
           families.map(family => (
-            <TextList>
+            <TextList key={family.familyId}>
               <a href={`/family/${family.familyId}`}>{family.name}</a>
             </TextList>
           ))

@@ -1,10 +1,10 @@
-import { AddButton, ButtonPrimary } from "ui/Buttons";
+import { /* AddButton ,*/ ButtonPrimary } from "ui/Buttons";
 import {
   Calendar,
-  CityPicker,
+  RegionPicket,
   CountryPicker,
-  PlaceWrapper,
-  PlacesList,
+  /* PlaceWrapper,
+  PlacesList, */
   SettingsContainer,
   UploadLabel,
   UploadPhoto,
@@ -12,7 +12,7 @@ import {
 import {
   FormSection,
   ImgPreview,
-  InputField,
+  // InputField,
   InputLabel,
   InputSection,
   UserAvatar,
@@ -23,100 +23,139 @@ import {
   RadioLabel,
   RadioOption,
 } from "ui/Radio";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { DeleteButton } from "components/Invite/InviteStyles";
+// import { DeleteButton } from "components/Invite/InviteStyles";
 import EditInput from "components/EditInput/EditInput";
 import { Formik } from "formik";
 import GET_CURRENT_USER from "queries/GetCurrentUser";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { UPDATE_USER } from "mutations/User";
+import JollyLoader from "components/JollyLoader/JollyLoader";
+
+const convertUserDataToFormValues = user => {
+  // Extract 'country' and 'region' from the concatenated format
+  let locationCountry, locationRegion;
+  if (user.location) {
+    locationCountry = user.location.split(",")[0].trim();
+    locationRegion = user.location.split(",")[1].trim();
+  }
+  // Handle parsing of date of birth from ISO format
+  let dateOfBirth;
+  if (user.dateOfBirth) {
+    dateOfBirth = new Date(Date.parse(user.dateOfBirth));
+  }
+  return {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    file: null,
+    dateOfBirth,
+    locationRegion,
+    locationCountry,
+    gender: user.gender,
+  };
+};
 
 export default function SettingsProfile() {
-  const [file, setFile] = useState(null); //file for profile picture
-  const [birthday, setBirthday] = useState(null); //birthday state
-  const birthdayHandler = date => setBirthday(date);
-  const genderList = ["Male", "Female", "Other"]; //gender list
-  const [genderOption, setGenderOption] = useState(); //gender state
-  const genderOptionHandler = event => setGenderOption(event.target.value);
-  const [birthCountry, setBirthCountry] = useState(); //birth country state
-  const selectBirthCountry = value => setBirthCountry(value);
-  const [birthCity, setBirthCity] = useState(); //birth city state
-  const selectBirthCity = value => setBirthCity(value);
-  const [livePlaces, setLivePlaces] = useState([{ city: "", date: null }]); //place you've lived and date moved
+  // User data
+  const [user, setUser] = useState(null);
+  // List of possible genders (infinite)
+  const genderList = ["Male", "Female", "Other"];
 
-  const { data, error /* loading */ } = useQuery(GET_CURRENT_USER);
-  const [updateUser, updateUserResults] = useMutation(UPDATE_USER);
-  let user = {};
+  // Stores information about the current user, and the form values
+  let defaultFormValues = null;
+
+  // Query to retrieve user settings, and mutation to update user settings
+  const currentUserStatus = useQuery(GET_CURRENT_USER, {
+    fetchPolicy: "cache-and-network",
+    onCompleted: data => {
+      const user = data.currentUser;
+      console.log("Loaded User Data:", user);
+      setUser(user);
+    },
+  });
+
+  const [updateUser, updateUserStatus] = useMutation(UPDATE_USER, {
+    onCompleted: () => {
+      setUser(null);
+    },
+  });
+  useEffect(() => {
+    if (!user) {
+      console.log("Updated user data... refetching current user!");
+      currentUserStatus.refetch();
+    }
+  }, [user]);
+
+  // Loading state
+  if (currentUserStatus.loading || updateUserStatus.loading || !user) {
+    return <JollyLoader />;
+  }
+  defaultFormValues = convertUserDataToFormValues(user);
+
   //Handle the states of displaying data, error and loading
-  if (error) {
-    console.log("Error loading user data:", error);
+  if (currentUserStatus.error) {
+    console.log("Error loading user data:", currentUserStatus.error);
   }
-  if (updateUserResults.data) {
-    window.location.reload(true);
-  }
+  console.log(currentUserStatus);
 
-  if (data && data.currentUser) {
-    user = data.currentUser;
-    console.log("Loaded:", user);
-  }
-
-  function imgHandleChange(event) {
-    setFile(event.target.files[0]);
-  }
-
-  let ProfilePicture = <UserAvatar size="125px" />; //Profile picture preview
-  if (file) {
-    ProfilePicture = <img src={URL.createObjectURL(file)} alt="."></img>;
-  } else if (user) {
-    ProfilePicture = <img src={user.imageUrl} alt="."></img>;
-  }
-
-  function cityHandleChange(index, event) {
-    //places you've lived onChange
-    const places = [...livePlaces];
-    places[index].city = event.target.value;
-    setLivePlaces(places);
-  }
-
-  function dateHandleChange(index, value) {
-    //date moved onChange
-    const places = [...livePlaces];
-    places[index].date = value;
-    setLivePlaces(places);
-  }
-
-  const addPlace = place => {
-    setLivePlaces([...livePlaces, place]);
+  /**
+   * Returns the most appropriate JSX element to represent the user's profile
+   * picture.
+   * @param {File} file A file, if exists.
+   */
+  const getProfilePicture = file => {
+    if (file) {
+      return <img src={URL.createObjectURL(file)} alt="."></img>;
+    } else if (user.imageUrl) {
+      return <img src={user.imageUrl} alt="."></img>;
+    } else {
+      return <UserAvatar size="125px" />;
+    }
   };
 
-  const deletePlace = index => {
-    const place = [...livePlaces];
-    place.splice(index, 1);
-    setLivePlaces(place);
+  /**
+   * Handles the Formik form submit (when the 'Save Changes' button is pressed)
+   * @param {any} values Formik values object
+   */
+  const handleFormSubmit = values => {
+    // Concatenate location if both country and region values exist
+    let location;
+    if (values.locationCountry && values.locationRegion) {
+      location = `${values.locationCountry.trim()}, ${values.locationRegion.trim()}`;
+    }
+    // Set up the basic payload
+    let payload = {
+      userId: user.userId,
+      gender: values.gender,
+      dateOfBirth: values.dateOfBirth,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      location,
+    };
+    // Only add the "image" attribute if a new file has been selected
+    if (values.file) {
+      payload["image"] = values.file;
+    }
+    console.log("Payload:", payload);
+    updateUser({ variables: { input: payload } });
   };
+  console.log("Rendering formik: ", defaultFormValues);
 
   return (
     <Formik
-      onSubmit={() => {
-        const payload = {
-          userId: user.userId,
-          image: file,
-        };
-        console.log("Payload:", payload);
-
-        updateUser({ variables: { input: payload } });
-      }}
-      initialValues={{ firstName: "Chicken", lastName: user.lastName }}
+      enableReinitialize
+      onSubmit={handleFormSubmit}
+      initialValues={defaultFormValues}
       render={props => (
         <form onSubmit={props.handleSubmit}>
           <SettingsContainer>
             <FormSection>
-              <ImgPreview>{ProfilePicture}</ImgPreview>
+              <ImgPreview>{getProfilePicture(props.values.file)}</ImgPreview>
               <UploadPhoto
                 type="file"
                 id="file"
-                onChange={e => imgHandleChange(e)}
+                onChange={e => props.setFieldValue("file", e.target.files[0])}
               />
               <UploadLabel htmlFor="file">Add a Profile Photo</UploadLabel>
             </FormSection>
@@ -124,20 +163,20 @@ export default function SettingsProfile() {
             <FormSection>
               {/* First Name */}
               <EditInput
+                name="firstName"
                 value={props.values.firstName}
                 inputLabel="First Name"
-                handleChange={props.handleChange}
-                name="firstName"
+                onChange={props.handleChange}
               />
             </FormSection>
 
             <FormSection>
               {/* Last Name */}
               <EditInput
+                name="lastName"
                 value={props.values.lastName}
                 inputLabel="Last Name"
-                handleChange={props.handleChange}
-                name="lastName"
+                onChange={props.handleChange}
               />
             </FormSection>
 
@@ -145,12 +184,14 @@ export default function SettingsProfile() {
               {/* Birthday  */}
               <InputLabel>Birthday</InputLabel>
               <Calendar
+                name="dateOfBirth"
                 placeholderText="Click to select a date"
-                selected={birthday}
-                onChange={birthdayHandler}
+                selected={props.values.dateOfBirth}
                 showMonthDropdown
                 showYearDropdown
                 isClearable
+                dateFormat="dd/MM/yyyy"
+                onChange={date => props.setFieldValue("dateOfBirth", date)}
                 dropdownMode="select"
                 maxDate={new Date()}
               />
@@ -161,12 +202,17 @@ export default function SettingsProfile() {
               <InputLabel>Gender</InputLabel>
               <InputSection>
                 {genderList.map(gender => (
-                  <RadioOption>
+                  <RadioOption key={gender}>
                     <RadioButton
+                      name="gender"
                       type="radio"
                       value={gender}
-                      checked={genderOption === gender}
-                      onChange={genderOptionHandler}
+                      checked={
+                        props.values.gender &&
+                        props.values.gender.toLowerCase() ===
+                          gender.toLowerCase()
+                      }
+                      onChange={props.handleChange}
                     />
                     <RadioButtonStyle />
                     <RadioLabel>{gender}</RadioLabel>
@@ -176,21 +222,27 @@ export default function SettingsProfile() {
             </FormSection>
 
             <FormSection>
-              {/* Place of birth  */}
-              <InputLabel>Place of Birth</InputLabel>
+              {/* Location */}
+              <InputLabel>Location</InputLabel>
               <CountryPicker
-                value={birthCountry}
-                onChange={selectBirthCountry}
+                name="locationCountry"
+                value={props.values.locationCountry}
+                onChange={country =>
+                  props.setFieldValue("locationCountry", country)
+                }
               />
-              <CityPicker
-                country={birthCountry}
-                value={birthCity}
-                onChange={selectBirthCity}
+              <RegionPicket
+                name="locationRegion"
+                country={props.values.locationCountry}
+                value={props.values.locationRegion}
+                onChange={region =>
+                  props.setFieldValue("locationRegion", region)
+                }
               />
             </FormSection>
 
-            <PlaceWrapper>
-              {/* Place You've Lived and Date Moved  */}
+            {/* <PlaceWrapper>
+              
               <InputLabel>Places You've Lived</InputLabel>
               <InputLabel>Date Moved</InputLabel>
             </PlaceWrapper>
@@ -233,15 +285,17 @@ export default function SettingsProfile() {
               >
                 <i className="fa fa-plus"></i>
               </AddButton>
-            )}
+            )} */}
 
             {/* Save Changes Button  */}
-            <ButtonPrimary
-              type="submit"
-              style={{ float: "right", margin: "10px" }}
-            >
-              Save Changes
-            </ButtonPrimary>
+            {props.dirty && (
+              <ButtonPrimary
+                type="submit"
+                style={{ float: "right", margin: "10px" }}
+              >
+                Save Changes
+              </ButtonPrimary>
+            )}
           </SettingsContainer>
         </form>
       )}

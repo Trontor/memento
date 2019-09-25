@@ -178,6 +178,7 @@ function App() {
                 />
                 {authenticatedRoutes.map(route => (
                   <PrivateRoute
+                    key={route.name}
                     path={`/${route.name}`}
                     component={route.component}
                     exact={route.exact}
