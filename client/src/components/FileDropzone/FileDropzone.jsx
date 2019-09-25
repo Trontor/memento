@@ -45,10 +45,13 @@ const DropzoneContainer = styled.div`
 `;
 
 export function StyledDropzone({ onFilesAdded }) {
-  const onDrop = useCallback(acceptedFiles => {
-    console.log(acceptedFiles);
-    if (onFilesAdded) onFilesAdded(acceptedFiles);
-  }, []);
+  const onDrop = useCallback(
+    acceptedFiles => {
+      console.log(acceptedFiles);
+      if (onFilesAdded) onFilesAdded(acceptedFiles);
+    },
+    [onFilesAdded],
+  );
 
   const {
     getRootProps,

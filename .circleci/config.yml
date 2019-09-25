@@ -122,7 +122,7 @@ workflows:
             branches:
               only:
                 - master
-                - develop
+                # - develop
       - heroku/deploy-via-git:
           requires:
             - build-client
