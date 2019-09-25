@@ -87,7 +87,7 @@ export class FileService {
       // get the response from S3
       res = await uploadPromise;
       this.logger.debug(res);
-      const url: string = `${this.configService.cdnHostName}/${res.Key}`;
+      const url: string = `https://${this.configService.cdnHostName}/${res.Key}`;
       return url;
     } catch (err) {
       this.logger.error(err);
