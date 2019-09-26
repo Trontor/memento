@@ -11,6 +11,11 @@ export const FAMILY_COLLECTION = "Family";
 export interface FamilyDocument extends Family, Document {
   // fields that are only found in the database Document
   memberIds: string[];
+
+  /**
+   * Converts `FamilyDocument` to `Family` DTO
+   */
+  toDTO(): Family;
 }
 
 /**
@@ -45,6 +50,26 @@ export const FamilySchema: Schema = new Schema(
     timestamps: true,
   },
 );
+
+/**
+ * Maps Mongoose `FamilyDocument` to GraphQL `Family` type.
+ */
+FamilySchema.methods.toDTO = function(): Family {
+  return {
+    // mongodb id
+    familyId: this.id,
+    // user details
+    name: this.name,
+    imageUrl: this.imageUrl,
+    description: this.description,
+    colour: this.colour,
+    // family roles - resolver will set this
+    members: [],
+    // timestamps
+    createdAt: this.createdAt,
+    updatedAt: this.updatedAt,
+  };
+};
 
 // export a Mongoose `Model` based on `FamilyDocument` defined above
 export const FamilyModel: IFamilyModel = model<FamilyDocument, IFamilyModel>(

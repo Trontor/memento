@@ -1,18 +1,20 @@
 import { Schema, Model, model, Types, Document } from "mongoose";
 import { Memento } from "../dto/memento.dto";
 import { MediaType } from "../dto/media.dto";
-import { Family } from "../../family/dto/family.dto";
-import { User } from "../../user/dto/user.dto";
 
 /**
  * Use GraphQL `Memento` type as a single source of truth by extending the Mongoose
  * `MementoDocument` from the `Memento` class.
- * Issue: This can lead to messy bloated `MementoDocument`.
  */
 export interface MementoDocument extends Memento, Document {
   // Declaring everything that is not in the GraphQL Schema for a User
-  inFamily: Types.ObjectId | Family;
-  uploadedBy: Types.ObjectId | User;
+  inFamily: Types.ObjectId;
+  uploadedBy: Types.ObjectId;
+
+  /**
+   * Converts `MementoDocument` to `Memento` DTO
+   */
+  toDTO(): Memento;
 }
 
 export interface IMementoModel extends Model<MementoDocument> {}
@@ -32,8 +34,6 @@ const MediaSchema: Schema = new Schema({
   },
 });
 
-export const MediaModel = model("Media", MediaSchema);
-
 const DateSchema: Schema = new Schema({
   day: {
     type: Number,
@@ -45,8 +45,6 @@ const DateSchema: Schema = new Schema({
     type: Number,
   },
 });
-
-export const DateModel = model("Media", MediaSchema);
 
 /**
  * The actual structure of the Memento collection.
@@ -93,6 +91,28 @@ export const MementoSchema: Schema = new Schema(
     timestamps: true,
   },
 );
+
+/**
+ * Maps Mongoose `MementoDocument` to GraphQL `Memento` type.
+ */
+MementoSchema.methods.toDTO = function(): Memento {
+  return {
+    // mongodb id
+    mementoId: this.id,
+    location: this.location,
+    type: this.type,
+    dates: this.dates,
+    // dummy: resolved if requested
+    family: this.family,
+    // dummy: resolved if requested
+    uploader: this.uploader,
+    media: this.media,
+    description: this.description,
+    // timestamps
+    createdAt: this.createdAt,
+    updatedAt: this.updatedAt,
+  };
+};
 
 export const MementoModel: IMementoModel = model<
   MementoDocument,

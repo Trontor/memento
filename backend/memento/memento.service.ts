@@ -16,7 +16,6 @@ import {
   MementoNotFoundException,
 } from "./memento.exceptions";
 import { CreateMediaInput } from "./inputs/media.inputs";
-import { mapDocumentToMementoDTO } from "./schema/memento.mapper";
 import { Memento } from "./dto/memento.dto";
 import { validateMementoInput } from "./memento.util";
 
@@ -43,12 +42,10 @@ export class MementoService {
    * Fetches all Mementos belonging to a family.
    * @param familyId id of family
    */
-  async getAllFamilyMementos(familyId: string): Promise<Memento[]> {
+  async getAllFamilyMementos(familyId: string): Promise<MementoDocument[]> {
     const id: Types.ObjectId = fromHexStringToObjectId(familyId);
-    const docs = await this.MementoModel.find({ inFamily: id })
-      .populate("inFamily")
-      .populate("uploadedBy");
-    return docs.map(doc => mapDocumentToMementoDTO(doc));
+    const docs = await this.MementoModel.find({ inFamily: id });
+    return docs;
   }
 
   /**
@@ -94,7 +91,7 @@ export class MementoService {
       this.logger.error(err);
       throw new InternalServerErrorException("Could not save Memento");
     }
-    return mapDocumentToMementoDTO(doc);
+    return doc.toDTO();
   }
 
   /**

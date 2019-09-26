@@ -4,7 +4,6 @@ import {
   forwardRef,
   UnauthorizedException,
   InternalServerErrorException,
-  Logger,
 } from "@nestjs/common";
 import { UserService } from "../user/user.service";
 import { AuthOutput } from "./dto/auth.dto";
@@ -21,7 +20,6 @@ import { UserDocument } from "../user/schema/user.schema";
  */
 @Injectable()
 export class AuthService {
-  private readonly logger = new Logger(AuthService.name);
   constructor(
     @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,

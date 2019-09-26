@@ -24,13 +24,13 @@ export const createFamilyLoaderById = (
     FamilyId,
     FamilyDocument
   > = async keys => {
-    // const objectIds: Types.ObjectId[] = keys.map(k =>
-    //   fromHexStringToObjectId(k as string),
-    // );
+    const objectIds: Types.ObjectId[] = keys.map(k =>
+      fromHexStringToObjectId(k as string),
+    );
 
     console.log(keys);
     const loadedEntities = await Family.find({
-      _id: { $in: keys },
+      _id: { $in: objectIds },
     }).exec();
 
     // sort by keys

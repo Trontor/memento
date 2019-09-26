@@ -1,7 +1,7 @@
 import { Resolver, Query, ResolveProperty, Parent } from "@nestjs/graphql";
 import { MementoService } from "./memento.service";
 import { Mutation, Args } from "@nestjs/graphql";
-import { UseGuards, Logger, NotImplementedException } from "@nestjs/common";
+import { UseGuards, Logger, Inject } from "@nestjs/common";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { CurrentUser } from "../auth/decorators/current-user.decorator";
 import { Memento } from "./dto/memento.dto";
@@ -10,9 +10,17 @@ import { FamilyMemberGuard } from "../auth/guards/family-member.guard";
 import { CreateMementoInput } from "./inputs/memento.inputs";
 import { Family } from "../family/dto/family.dto";
 import { MementoDocument } from "./schema/memento.schema";
-import { FamilyService } from "../family/family.service";
-import { Types } from "mongoose";
-import { mapDocumentToFamilyDTO } from "../family/schema/family.mapper";
+
+import {
+  FAMILY_LOADER_BY_ID,
+  FamilyDataLoaderById,
+} from "../family/family.dataloader";
+import { USER_LOADER_BY_ID, UserDataLoaderById } from "../user/user.dataloader";
+import {
+  MEMENTO_LOADER_BY_ID,
+  MementoDataLoaderById,
+} from "./memento.dataloader";
+import { ID } from "type-graphql";
 
 /**
  * Resolves GraphQL mutations and queries related to Mementos.
@@ -23,7 +31,12 @@ export class MementoResolver {
 
   constructor(
     private readonly mementoService: MementoService,
-    private readonly familyService: FamilyService,
+    @Inject(MEMENTO_LOADER_BY_ID)
+    private readonly mementoLoaderById: MementoDataLoaderById,
+    @Inject(FAMILY_LOADER_BY_ID)
+    private readonly familyLoaderById: FamilyDataLoaderById,
+    @Inject(USER_LOADER_BY_ID)
+    private readonly userLoaderById: UserDataLoaderById,
   ) {}
 
   @Mutation(returns => Memento)
@@ -35,24 +48,41 @@ export class MementoResolver {
     return this.mementoService.createMemento(user, input);
   }
 
-  @Query(returns => [Memento], { name: "memento" })
+  @Query(returns => [Memento], { name: "mementos" })
   @UseGuards(JwtAuthGuard, FamilyMemberGuard)
-  async getMementos(@Args("familyId") familyId: string): Promise<Memento[]> {
-    const res = await this.mementoService.getAllFamilyMementos(familyId);
-    this.logger.debug(res);
-    return res;
+  async getMementos(
+    @Args({ name: "familyId", type: () => ID }) familyId: string,
+  ): Promise<Memento[]> {
+    // TODO: pagination
+    const mementos: MementoDocument[] = await this.mementoService.getAllFamilyMementos(
+      familyId,
+    );
+    this.logger.log(
+      `Retrieved ${mementos.length} mementos for family ${familyId}`,
+    );
+    // cache mementos in the memento dataloader for use in:
+    // - resolveFamily
+    // - resolveUploader
+    mementos.forEach(m => this.mementoLoaderById.prime(m.mementoId, m));
+    return mementos.map(m => m.toDTO());
   }
 
   @ResolveProperty("family", returns => Family)
   async resolveFamily(@Parent() { mementoId }: Memento): Promise<Family> {
     // TODO: use dataloader pattern as re-fetching is inefficient
-    const doc: MementoDocument = await this.mementoService.findById(mementoId);
-    this.logger.debug(doc);
-
-    return mapDocumentToFamilyDTO(
-      await this.familyService.getFamily(
-        (doc.inFamily as Types.ObjectId).toHexString(),
-      ),
+    const memento = await this.mementoLoaderById.load(mementoId);
+    const family = await this.familyLoaderById.load(
+      memento.inFamily.toHexString(),
     );
+    return family.toDTO();
+  }
+
+  @ResolveProperty("uploader", returns => User)
+  async resolveUploader(@Parent() { mementoId }: Memento): Promise<User> {
+    const memento = await this.mementoLoaderById.load(mementoId);
+    const user = await this.userLoaderById.load(
+      memento.uploadedBy.toHexString(),
+    );
+    return user.toDTO();
   }
 }

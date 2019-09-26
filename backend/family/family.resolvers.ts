@@ -7,7 +7,7 @@ import {
   Query,
 } from "@nestjs/graphql";
 import { FamilyService } from "./family.service";
-import { UseGuards, Inject, forwardRef } from "@nestjs/common";
+import { UseGuards, Inject } from "@nestjs/common";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { CurrentUser } from "../auth/decorators/current-user.decorator";
 import { Family } from "./dto/family.dto";
@@ -17,8 +17,6 @@ import {
   UpdateFamilyInput,
 } from "./inputs/family.inputs";
 import { User } from "../user/dto/user.dto";
-import { UserService } from "../user/user.service";
-import { mapDocumentToFamilyDTO } from "./schema/family.mapper";
 import { FamilyDocument } from "./schema/family.schema";
 import { ID } from "type-graphql";
 import { FamilyAdminGuard } from "../auth/guards/family-admin.guard";
@@ -33,8 +31,6 @@ import { UserDocument } from "../user/schema/user.schema";
 export class FamilyResolver {
   constructor(
     private readonly familyService: FamilyService,
-    @Inject(forwardRef(() => UserService))
-    private readonly userService: UserService,
     @Inject(USER_LOADER_BY_ID)
     private readonly userLoaderById: UserDataLoaderById,
     @Inject(FAMILY_LOADER_BY_ID)
@@ -48,8 +44,8 @@ export class FamilyResolver {
   async getFamily(
     @Args({ name: "familyId", type: () => ID }) familyId: string,
   ) {
-    const doc: FamilyDocument = await this.familyService.getFamily(familyId);
-    return mapDocumentToFamilyDTO(doc);
+    const doc: FamilyDocument = await this.familyLoaderById.load(familyId);
+    return doc.toDTO();
   }
 
   /**
@@ -79,7 +75,9 @@ export class FamilyResolver {
     @CurrentUser() user: User,
     @Args("input") input: UpdateFamilyInput,
   ) {
-    return this.familyService.updateFamily(user, input);
+    const family: Family = await this.familyService.updateFamily(user, input);
+    this.familyLoaderById.clear(family.familyId);
+    return family;
   }
 
   /**
