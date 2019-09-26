@@ -1,5 +1,6 @@
-import styled from "styled-components";
+import { Settings } from "styled-icons/material/Settings";
 import { lighten } from "polished";
+import styled from "styled-components";
 
 export const FamilyImg = styled.div`
   width: 100%;
@@ -9,7 +10,7 @@ export const FamilyImg = styled.div`
   margin-top: 50px;
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLandscape}) {
+  props.theme.breakpoints.tabletLandscape}) {
     margin-top: 0;
   }
 `;
@@ -17,8 +18,23 @@ export const FamilyImg = styled.div`
 export const FamilyHeader = styled.div`
   width: 100%;
   border-bottom: 1px solid ${props => lighten(0.6, props.theme.palette.text)};
+  display: grid;
+  grid-template-columns: 1fr 80% 1fr;
+  justify-items: center;
+  align-items: center;
 
   h1 {
     text-align: center;
   }
 `;
+
+export const SettingsButton = styled(Settings)`
+  color: ${props => lighten(0.6, props.theme.palette.text)};
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+
+  &:hover {
+    color: ${props => lighten(0.2, props.theme.palette.text)};
+  }
+`

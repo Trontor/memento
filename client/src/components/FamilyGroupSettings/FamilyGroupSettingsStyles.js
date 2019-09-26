@@ -34,5 +34,4 @@ export const Member = styled.ul`
 export const AdminTag = styled.span`
   cursor: pointer;
   color: ${props => props.theme.palette.main};
-  display: 
 `

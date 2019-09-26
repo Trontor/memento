@@ -1,21 +1,22 @@
-import React from "react";
 import { CenterText, Container } from "ui/Helpers";
-import { Header } from "ui/Typography";
-import { /*UserAvatar,*/ InputLabel } from "ui/Forms";
-import { useQuery } from "@apollo/react-hooks";
-import GET_CURRENT_USER from "queries/GetCurrentUser";
 import {
-  ProfileField,
-  Title,
-  ProfileWrapper,
-  UserImg,
-  UserEmail,
-  UserBday,
-  UserLocation,
   PlaceWrapper,
+  ProfileField,
+  ProfileWrapper,
   Span,
+  Title,
+  UserBday,
+  UserEmail,
+  UserImg,
+  UserLocation,
 } from "./UserProfileStyles";
+
+import GET_CURRENT_USER from "queries/GetCurrentUser";
+import { Header } from "ui/Typography";
+import { InputLabel } from "ui/Forms";
 import JollyLoader from "components/JollyLoader/JollyLoader";
+import React from "react";
+import { useQuery } from "@apollo/react-hooks";
 
 export default function UserProfile() {
   let ProfilePicture = (
@@ -25,7 +26,7 @@ export default function UserProfile() {
     />
   );
   //<UserAvatar size="125px" />;
-  const { data, error, loading } = useQuery(GET_CURRENT_USER);
+  const { data, error, loading} = useQuery(GET_CURRENT_USER);
 
   let user = {};
 
