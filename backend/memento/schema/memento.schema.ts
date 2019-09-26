@@ -1,6 +1,7 @@
-import { Schema, Model, model, Types, Document } from "mongoose";
-import { Memento } from "../dto/memento.dto";
-import { MediaType } from "../dto/media.dto";
+import { Schema, Model, Types, Document } from "mongoose";
+import { Memento, MementoDate } from "../dto/memento.dto";
+import { MediaType, Media } from "../dto/media.dto";
+import { DateSchema } from "@hapi/joi";
 
 /**
  * Use GraphQL `Memento` type as a single source of truth by extending the Mongoose
@@ -10,6 +11,8 @@ export interface MementoDocument extends Memento, Document {
   // Declaring everything that is not in the GraphQL Schema for a User
   inFamily: Types.ObjectId;
   uploadedBy: Types.ObjectId;
+  _dates: any;
+  _media: any;
 
   /**
    * Converts `MementoDocument` to `Memento` DTO
@@ -34,6 +37,26 @@ const MediaSchema: Schema = new Schema({
   },
 });
 
+export interface MediaDocument extends Media, Document {
+  /**
+   * Converts `MediaDocument` to `Media` DTO
+   */
+  toDTO(): Media;
+}
+
+/**
+ * Converts `MediaDocument` to `Media` DTO
+ */
+MediaSchema.methods.toDTO = function(): Media {
+  // include document id in DTO
+  return {
+    mediaId: this.id,
+    type: this.type,
+    url: this.url,
+    caption: this.caption,
+  };
+};
+
 const DateSchema: Schema = new Schema({
   day: {
     type: Number,
@@ -46,10 +69,30 @@ const DateSchema: Schema = new Schema({
   },
 });
 
+export interface DateDocument extends MementoDate, Document {
+  /**
+   * Converts `DateDocument` to `MementoDate` DTO
+   */
+  toDTO(): MementoDate;
+}
+
+/**
+ * Converts `DateDocument` to `MementoDate` DTO
+ */
+DateSchema.methods.toDTO = function(): MementoDate {
+  // include document id in DTO
+  return {
+    dateId: this.id,
+    day: this.day,
+    month: this.month,
+    year: this.year,
+  };
+};
+
 /**
  * The actual structure of the Memento collection.
  */
-export const MementoSchema: Schema = new Schema(
+export const MementoSchema: Schema<MementoDocument> = new Schema(
   {
     type: {
       type: String,
@@ -74,11 +117,11 @@ export const MementoSchema: Schema = new Schema(
     location: {
       type: String,
     },
-    media: {
+    _media: {
       type: [MediaSchema],
       default: [],
     },
-    dates: {
+    _dates: {
       type: [DateSchema],
       default: [],
     },
@@ -96,17 +139,19 @@ export const MementoSchema: Schema = new Schema(
  * Maps Mongoose `MementoDocument` to GraphQL `Memento` type.
  */
 MementoSchema.methods.toDTO = function(): Memento {
+  console.log(this._dates);
+  console.log(this._media);
   return {
     // mongodb id
     mementoId: this.id,
     location: this.location,
     type: this.type,
-    dates: this.dates,
+    dates: this._dates.map((date: any) => date.toDTO()),
+    media: this._media.map((m: any) => m.toDTO()),
     // dummy: resolved if requested
     family: this.family,
     // dummy: resolved if requested
     uploader: this.uploader,
-    media: this.media,
     description: this.description,
     tags: this.tags,
     // timestamps
@@ -127,8 +172,3 @@ export interface IFindMementoConditions {
     $in: string[];
   };
 }
-
-export const MementoModel: IMementoModel = model<
-  MementoDocument,
-  IMementoModel
->("Memento", MementoSchema);

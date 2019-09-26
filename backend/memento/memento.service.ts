@@ -75,7 +75,7 @@ export class MementoService {
     uploader: User,
     input: CreateMementoInput,
   ): Promise<Memento> {
-    const { media, familyId, ...data } = input;
+    const { media, dates, familyId, ...data } = input;
 
     // validate date
     validateMementoInput(input);
@@ -83,7 +83,7 @@ export class MementoService {
     const uploadedBy: Types.ObjectId = fromHexStringToObjectId(uploader.userId);
     const inFamily: Types.ObjectId = fromHexStringToObjectId(input.familyId);
 
-    let mediaForDoc: Media[] | undefined = undefined;
+    let mediaForDoc = undefined;
     if (media) {
       mediaForDoc = await this.convertMediaInputForDocument(media);
     }
@@ -98,8 +98,9 @@ export class MementoService {
     doc.uploadedBy = uploadedBy;
     doc.inFamily = inFamily;
     if (mediaForDoc) {
-      doc.media = mediaForDoc;
+      doc._media = mediaForDoc;
     }
+    if (dates) doc._dates = dates;
 
     // insert document
     try {
@@ -119,9 +120,7 @@ export class MementoService {
    *
    * @param media array of input media
    */
-  private async convertMediaInputForDocument(
-    media: CreateMediaInput[],
-  ): Promise<Media[]> {
+  private async convertMediaInputForDocument(media: CreateMediaInput[]) {
     let mediaUrls: any[];
     // upload media separately
     try {
@@ -131,14 +130,14 @@ export class MementoService {
       throw err;
     }
     // create media document objects with the uploaded URLs
-    const mediaForDocument: Media[] = mediaUrls.map((url, index) => {
+    const mediaForDocument: Partial<Media>[] = mediaUrls.map((url, index) => {
       // get original media item
       const item: CreateMediaInput = media[index];
-      const data: Media = {
+      const data = {
         url,
         type: item.type,
+        caption: item.caption,
       };
-      if (item.caption) data.caption = item.caption;
       return data;
     });
     return mediaForDocument;

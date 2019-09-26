@@ -1,7 +1,7 @@
 import { Resolver, Query, ResolveProperty, Parent } from "@nestjs/graphql";
 import { MementoService } from "./memento.service";
 import { Mutation, Args } from "@nestjs/graphql";
-import { UseGuards, Logger, Inject } from "@nestjs/common";
+import { UseGuards, Logger, Inject, ForbiddenException } from "@nestjs/common";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { CurrentUser } from "../auth/decorators/current-user.decorator";
 import { Memento } from "./dto/memento.dto";
@@ -21,6 +21,7 @@ import {
   MementoDataLoaderById,
 } from "./memento.dataloader";
 import { ID } from "type-graphql";
+import { isUserInFamily } from "../user/user.util";
 
 /**
  * Resolves GraphQL mutations and queries related to Mementos.
@@ -46,6 +47,19 @@ export class MementoResolver {
     @Args("input") input: CreateMementoInput,
   ) {
     return this.mementoService.createMemento(user, input);
+  }
+
+  @Query(returns => Memento, { name: "memento" })
+  @UseGuards(JwtAuthGuard)
+  async getMemento(
+    @CurrentUser() user: User,
+    @Args({ name: "mementoId", type: () => ID }) mementoId: string,
+  ) {
+    const memento = await this.mementoLoaderById.load(mementoId);
+    this.logger.debug(memento);
+    if (!isUserInFamily(user, memento.inFamily.toHexString()))
+      throw new ForbiddenException("Must be in family to view memento");
+    return memento.toDTO();
   }
 
   @Query(returns => [Memento], { name: "mementos" })

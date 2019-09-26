@@ -91,6 +91,7 @@ input LoginInput {
 }
 
 type Media {
+  mediaId: ID!
   type: MediaType!
   url: String!
   caption: String
@@ -116,6 +117,7 @@ type Memento {
 }
 
 type MementoDate {
+  dateId: ID!
   day: Int
   month: Int
   year: Int
@@ -140,6 +142,7 @@ type Query {
   refreshToken: String!
   family(familyId: ID!): Family!
   invite(inviteId: ID!): Invite!
+  memento(mementoId: ID!): Memento!
   mementos(tags: [String!], lastId: ID, familyId: ID!): [Memento!]!
 }
 
