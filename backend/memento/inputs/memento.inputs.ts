@@ -35,4 +35,7 @@ export class CreateMementoInput {
 
   @Field(type => [CreateMementoDateInput], { nullable: true })
   dates?: CreateMementoDateInput[];
+
+  @Field(type => [String], { nullable: true })
+  tags?: string[];
 }
