@@ -1,12 +1,18 @@
 import {
+  FamilyContainer,
   FamilyHeader,
   FamilyImg,
-  SettingsButton
+  FamilyLayout,
+  Menu,
+  ProfilePhotoContainer,
+  SettingsButton,
+  SideMenu,
+  UploadButton
 } from "./FamilyGroupStyles";
 import { MenuContainer, MenuTabs } from "ui/Navigation";
 import React, {useState} from "react";
 
-import { Container } from "ui/Helpers";
+import { FamilyProfileContainer } from "./FamilyGroupStyles";
 import JollyLoader from "components/JollyLoader/JollyLoader";
 import { LOAD_FAMILY } from "mutations/Family";
 import MembersViewer from "./MembersViewer";
@@ -50,20 +56,38 @@ export default function FamilyGroup(props) {
   }
 
   return (
-    <>
-      <FamilyImg />
-      <FamilyHeader>
-        <div></div>
-        <h1>{familyName}</h1>
-        <SettingsButton onClick={() => props.history.push(familyId + "/settings")}/>
-      </FamilyHeader>
-      <MenuContainer>
-        {menuTabs.map((tab, idx) => (
-          <MenuTabs active={currentTabIndex === idx} onClick={()=> setTabIndex(idx)}>{tab}</MenuTabs>
-        ))}
-      </MenuContainer>
-      {tabComponent}
-      <Container noNav></Container>
-    </>
+    <FamilyContainer>
+    <FamilyLayout>
+      <div>
+        <SideMenu>
+          <FamilyProfileContainer>
+            <FamilyImg />
+            <ProfilePhotoContainer>
+              <img
+                alt="Family Group Photo"
+                src="https://images.unsplash.com/photo-1506827155776-53ce0b5d56b4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
+              />
+            </ProfilePhotoContainer>
+            <FamilyHeader>
+              <div></div>
+              <h1>{familyName}</h1>
+              <SettingsButton onClick={() => props.history.push(familyId + "/settings")}/>
+            <UploadButton>Add a Memento</UploadButton>
+            </FamilyHeader>
+          </FamilyProfileContainer>
+        </SideMenu>
+        <Menu>
+          <MenuContainer>
+            {menuTabs.map((tab, idx) => (
+              <MenuTabs active={currentTabIndex === idx} onClick={()=> setTabIndex(idx)}>{tab}</MenuTabs>
+            ))}
+          </MenuContainer>
+        </Menu>
+        </div>
+        <div>
+          {tabComponent}
+        </div>
+    </FamilyLayout>
+    </FamilyContainer>
   );
 }

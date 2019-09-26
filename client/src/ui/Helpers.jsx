@@ -20,7 +20,7 @@ export const Container = styled.div`
   }
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLandscape}) {
+  props.theme.breakpoints.tabletLandscape}) {
     top: 0;
     margin: 30px auto;
     width: 70%;
