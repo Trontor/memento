@@ -10,7 +10,8 @@
     "incremental": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "noUnusedLocals": true
   },
   "compileOnSave": true,
   "exclude": ["node_modules", "dist"]

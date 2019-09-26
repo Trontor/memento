@@ -6,6 +6,10 @@ export default gql`
       userId
       firstName
       lastName
+      dateOfBirth
+      imageUrl
+      location
+      gender
       email
     }
   }

@@ -1,6 +1,5 @@
 import { Injectable, Logger } from "@nestjs/common";
 import * as AWS from "aws-sdk";
-import { ManagedUpload } from "aws-sdk/clients/s3";
 import { PassThrough } from "stream";
 
 /**
@@ -19,8 +18,9 @@ export class S3Client {
    * Returns a stream which can be written to for upload to S3.
    * Also returns a promise to obtain data when upload has finished.
    * @param key path for new file in S3 bucket
+   * @param contentType standard MIME type of the file
    */
-  public uploadStream(key: string) {
+  public uploadStream(key: string, contentType: string) {
     // create a new PassThrough stream that can be written to
     const pass = new PassThrough();
 
@@ -28,7 +28,8 @@ export class S3Client {
     const manager = this.connection.upload({
       Bucket: this.bucketName,
       Key: key,
-      Body: pass
+      Body: pass,
+      ContentType: contentType,
     });
 
     // debug logging of upload progress
@@ -39,7 +40,7 @@ export class S3Client {
 
     return {
       uploadPromise: manager.promise(),
-      writeStream: pass
+      writeStream: pass,
     };
   }
 }

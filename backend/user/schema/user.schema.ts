@@ -1,4 +1,4 @@
-import { Schema, model, Model, Document, Query, Types } from "mongoose";
+import { Schema, model, Model, Document, Query } from "mongoose";
 import * as bcrypt from "bcrypt";
 import { User } from "../dto/user.dto";
 import { FamilyRole, Role } from "../dto/role.dto";
@@ -6,13 +6,17 @@ import { FamilyRole, Role } from "../dto/role.dto";
 /**
  * Use GraphQL `User` type as a single source of truth by extending the Mongoose
  * `UserDocument` from the `User` class.
- * Issue: This can lead to messy bloated `UserDocument`.
  */
 export interface UserDocument extends User, Document {
   // Declaring everything that is not in the GraphQL Schema for a User
   password: string;
   lowercaseEmail: string;
   roles: Role[];
+
+  /**
+   * Converts `UserDocument` to `User` to return to the client
+   */
+  toDTO(): User;
 }
 
 export interface IUserModel extends Model<UserDocument> {
@@ -33,17 +37,17 @@ const RoleSchema: Schema = new Schema(
   {
     familyId: {
       type: String,
-      required: true
+      required: true,
     },
     familyRole: {
       type: String,
       enum: [FamilyRole.Normal, FamilyRole.Admin],
-      required: true
-    }
+      required: true,
+    },
   },
   {
-    _id: false
-  }
+    _id: false,
+  },
 );
 
 /**
@@ -53,54 +57,77 @@ export const UserSchema: Schema = new Schema(
   {
     firstName: {
       type: String,
-      required: true
+      required: true,
     },
     lastName: {
       type: String,
-      required: true
+      required: true,
     },
     email: {
       type: String,
       unique: true,
-      required: true
+      required: true,
     },
     password: {
       type: String,
-      required: true
+      required: true,
     },
     lowercaseEmail: {
       type: String,
-      unique: true
+      unique: true,
     },
     roles: {
       type: [RoleSchema],
-      default: []
+      default: [],
     },
     gender: {
-      type: String
+      type: String,
     },
     dateOfBirth: {
-      type: String
+      type: String,
     },
     location: {
-      type: String
+      type: String,
     },
     imageUrl: {
-      type: String
+      type: String,
     },
     lastSeenAt: {
       type: Date,
-      default: Date.now
-    }
+      default: Date.now,
+    },
   },
   {
-    timestamps: true
-  }
+    timestamps: true,
+  },
 );
+
+UserSchema.methods.toDTO = function(): User {
+  return {
+    // mongodb id
+    userId: this.id,
+    // user details
+    email: this.email,
+    firstName: this.firstName,
+    lastName: this.lastName,
+    gender: this.gender,
+    imageUrl: this.imageUrl,
+    dateOfBirth: this.dateOfBirth,
+    location: this.location,
+    // family roles
+    familyRoles: this.roles,
+    // dummy array - resolver will deal with this
+    families: [],
+    // timestamps
+    createdAt: this.createdAt,
+    updatedAt: this.updatedAt,
+    lastSeenAt: this.lastSeenAt,
+  };
+};
 
 function validateEmail(email: string) {
   // tslint:disable-next-line:max-line-length
-  const expression = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+  // const expression = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
   return true;
 }
 
@@ -137,7 +164,7 @@ UserSchema.pre<Query<UserDocument>>("findOneAndUpdate", function(next) {
   if (updateFields.email) {
     this.update(
       {},
-      { $set: { lowercaseEmail: updateFields.email.toLowerCase() } }
+      { $set: { lowercaseEmail: updateFields.email.toLowerCase() } },
     );
   }
   next();
@@ -150,5 +177,5 @@ UserSchema.statics.validateEmail = function(email: string): boolean {
 
 export const UserModel: IUserModel = model<UserDocument, IUserModel>(
   "User",
-  UserSchema
+  UserSchema,
 );

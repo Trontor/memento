@@ -18,7 +18,7 @@ export class FileService {
   private readonly logger = new Logger(FileService.name);
   constructor(
     private readonly s3Client: S3Client,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
   ) {}
 
   /**
@@ -32,7 +32,7 @@ export class FileService {
       this.logger.error(`"${mimetype}" not an accepted image format`);
       throw new Error("not an accepted image format");
     }
-    return await this.uploadFile(createReadStream, filename);
+    return await this.uploadFile(createReadStream, filename, mimetype);
   }
 
   /**
@@ -44,9 +44,9 @@ export class FileService {
     const { createReadStream: createReadStreamFile, filename, mimetype } = file;
     if (!isVideo(mimetype)) {
       this.logger.error(`"${mimetype}" not an accepted video format`);
-      throw new Error("not an accepted image format");
+      throw new Error("not an accepted video format");
     }
-    return await this.uploadFile(createReadStreamFile, filename);
+    return await this.uploadFile(createReadStreamFile, filename, mimetype);
   }
 
   /**
@@ -55,7 +55,8 @@ export class FileService {
    */
   private async uploadFile(
     createReadStreamFile: () => Readable,
-    filename: string
+    filename: string,
+    mimetype: string,
   ): Promise<string> {
     // create a random file id to store file
     const fileId: string = uuidv4();
@@ -67,7 +68,10 @@ export class FileService {
     this.logger.log(filepath);
 
     // create a stream for uploading to AWS S3 bucket
-    const { writeStream, uploadPromise } = this.s3Client.uploadStream(filepath);
+    const { writeStream, uploadPromise } = this.s3Client.uploadStream(
+      filepath,
+      mimetype,
+    );
 
     // temporary path to store the file locally
     // to ensure file size is within limit before uploading to S3
@@ -77,13 +81,19 @@ export class FileService {
     const readStream: Readable = createReadStreamFile();
 
     let res: ManagedUpload.SendData;
+    const tmpStream: Writable = createWriteStream(tmpPath);
     try {
       // wait for the upload to finish and resolve with S3 file metadata
-      await this.handleUploadWithStreams(tmpPath, readStream, writeStream);
+      await this.handleUploadWithStreams(
+        tmpPath,
+        readStream,
+        tmpStream,
+        writeStream,
+      );
       // get the response from S3
       res = await uploadPromise;
       this.logger.debug(res);
-      const url: string = `${this.configService.cdnHostName}/${res.Key}`;
+      const url: string = `https://${this.configService.cdnHostName}/${res.Key}`;
       return url;
     } catch (err) {
       this.logger.error(err);
@@ -93,6 +103,10 @@ export class FileService {
       unlink(tmpPath, () => {
         this.logger.log(`deleted ${tmpPath}`);
       });
+      // destroy streams
+      readStream.destroy();
+      writeStream.destroy();
+      tmpStream.destroy();
     }
   }
 
@@ -100,41 +114,39 @@ export class FileService {
    * Handles streams with logging.
    * @param tmpPath temporary path to save read stream to
    * @param readStream readable stream of data
+   * @param tmpStream writeable stream of data for storing file temporarily on server
    * @param writeSteam passthrough stream
    */
   private handleUploadWithStreams(
     tmpPath: string,
     readStream: Readable,
-    writeStream: Writable
+    tmpStream: Writable,
+    writeStream: Writable,
   ) {
     return new Promise<ManagedUpload.SendData>(async (resolve, reject) => {
       let totalBytes: number = 0;
 
-      const tmpStream = createWriteStream(tmpPath);
       // setup event listeners for the read stream
       readStream
         .on("data", chunk => {
           totalBytes += chunk.length;
           this.logger.debug(
-            `Received ${chunk.length} bytes of data. Total = ${totalBytes} bytes`
+            `Received ${chunk.length} bytes of data. Total = ${totalBytes} bytes`,
           );
         })
         .on("error", err => {
           // catches the excess file size limit errors
           this.logger.error(err);
-          readStream.destroy(err);
           reject(err);
         })
         .on("end", () => {
           this.logger.debug("Finished reading stream");
-          readStream.destroy();
         })
         // now save the incoming file to a temporary location
         .pipe(
           tmpStream.on("error", err => {
-            tmpStream.destroy(err);
             reject(err);
-          })
+          }),
         )
         .on("error", err => {
           this.logger.error(err);
@@ -156,7 +168,6 @@ export class FileService {
               resolve();
             })
             .on("error", err => {
-              this.logger.error("Upload S3 stream");
               this.logger.error(err);
               reject(err);
             });

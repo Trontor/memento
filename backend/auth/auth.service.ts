@@ -4,7 +4,6 @@ import {
   forwardRef,
   UnauthorizedException,
   InternalServerErrorException,
-  Logger
 } from "@nestjs/common";
 import { UserService } from "../user/user.service";
 import { AuthOutput } from "./dto/auth.dto";
@@ -12,7 +11,6 @@ import { JwtPayload } from "./interfaces/jwt-payload.interface";
 import { User } from "../user/dto/user.dto";
 import { ConfigService } from "../config/config.service";
 import { JwtService } from "@nestjs/jwt";
-import { mapDocumentToUserDTO } from "../user/schema/user.mapper";
 import { checkPassword } from "./auth.util";
 import { UserDocument } from "../user/schema/user.schema";
 
@@ -22,12 +20,11 @@ import { UserDocument } from "../user/schema/user.schema";
  */
 @Injectable()
 export class AuthService {
-  private readonly logger = new Logger(AuthService.name);
   constructor(
     @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,
     private readonly configService: ConfigService,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
   ) {}
 
   /**
@@ -35,7 +32,7 @@ export class AuthService {
    */
   async loginWithEmailAndPassword(
     email: string,
-    passwordAttempt: string
+    passwordAttempt: string,
   ): Promise<AuthOutput> {
     const userDoc = await this.userService.findOneByEmail(email);
 
@@ -52,8 +49,8 @@ export class AuthService {
     const { token } = this.createJwt(userDoc);
 
     const result: AuthOutput = {
-      user: mapDocumentToUserDTO(userDoc),
-      token
+      user: userDoc.toDTO(),
+      token,
     };
     userDoc.lastSeenAt = new Date();
     userDoc.save();
@@ -78,14 +75,14 @@ export class AuthService {
     }
     const data: JwtPayload = {
       email: user.email,
-      expiration
+      expiration,
     };
 
     const jwt = this.jwtService.sign(data);
 
     return {
       data,
-      token: jwt
+      token: jwt,
     };
   }
 
@@ -108,7 +105,7 @@ export class AuthService {
     } catch (err) {
       // catch UserNotFoundException and throw UnauthorizedException
       throw new UnauthorizedException(
-        "Could not log-in with the provided credentials"
+        "Could not log-in with the provided credentials",
       );
     }
   }

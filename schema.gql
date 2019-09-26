@@ -19,6 +19,28 @@ input CreateInviteInput {
   familyId: ID!
 }
 
+input CreateMediaInput {
+  type: MediaType!
+  file: Upload!
+  caption: String
+}
+
+input CreateMementoDateInput {
+  day: Int
+  month: Int
+  year: Int
+}
+
+input CreateMementoInput {
+  familyId: ID!
+  type: String!
+  description: String!
+  location: String
+  media: [CreateMediaInput!]
+  dates: [CreateMementoDateInput!]
+  tags: [String!]
+}
+
 """
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
@@ -48,6 +70,7 @@ enum FamilyRole {
 enum Gender {
   Male
   Female
+  Other
 }
 
 type Invite {
@@ -67,6 +90,37 @@ input LoginInput {
   password: String!
 }
 
+type Media {
+  type: MediaType!
+  url: String!
+  caption: String
+}
+
+enum MediaType {
+  Image
+  Video
+}
+
+type Memento {
+  mementoId: ID!
+  family: Family!
+  uploader: User!
+  type: String!
+  description: String!
+  location: String
+  media: [Media!]!
+  dates: [MementoDate!]!
+  tags: [String!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type MementoDate {
+  day: Int
+  month: Int
+  year: Int
+}
+
 type Mutation {
   signup(input: UserSignupInput!): AuthOutput!
   updateUser(input: UpdateUserInput!): User!
@@ -77,6 +131,7 @@ type Mutation {
   joinFamily(input: JoinFamilyInput!): Family!
   createInvite(input: CreateInviteInput!): Invite!
   inviteByEmail(input: SendInvitesInput!): SendInvitesOutput!
+  createMemento(input: CreateMementoInput!): Memento!
 }
 
 type Query {
@@ -85,6 +140,7 @@ type Query {
   refreshToken: String!
   family(familyId: ID!): Family!
   invite(inviteId: ID!): Invite!
+  mementos(tags: [String!], lastId: ID, familyId: ID!): [Memento!]!
 }
 
 type Role {
@@ -122,6 +178,8 @@ type UpdateRoleOutput {
 
 input UpdateUserInput {
   userId: ID!
+  firstName: String!
+  lastName: String
   location: String
   dateOfBirth: String
   gender: Gender

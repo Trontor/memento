@@ -27,10 +27,10 @@ export default function Settings(props) {
   let tabComponent = null;
   switch (menuTabs[currentTabIndex]) {
     case "Profile":
-      tabComponent = <ProfileSettingsView/>;
+      tabComponent = <ProfileSettingsView />;
       break;
     case "Account":
-      tabComponent = <AccountSettingsView/>;
+      tabComponent = <AccountSettingsView />;
       break;
     default:
       break;
@@ -48,6 +48,7 @@ export default function Settings(props) {
       <MenuContainer>
         {menuTabs.map((tab, idx) => (
           <MenuTabs
+            key={tab}
             active={currentTabIndex === idx}
             onClick={() => setTabIndex(idx)}
           >

@@ -64,7 +64,7 @@ export const CountryPicker = styled(CountryDropdown)`
   ${PickerStyle}
 `;
 
-export const CityPicker = styled(RegionDropdown)`
+export const RegionPicket = styled(RegionDropdown)`
   ${PickerStyle}
 `;
 
