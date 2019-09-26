@@ -86,7 +86,7 @@ const Sidebar = props => {
       <MenuContainer>
         <TextList>
           <NewArtefact size={iconSize} />
-          <a href={`/new-memento`}>New Memento</a>
+          <a href={`/memento/new`}>New Memento</a>
         </TextList>
         <TextList>
           <View size={iconSize} />
