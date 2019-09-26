@@ -1,22 +1,24 @@
-import React from "react";
-import { Header } from "ui/Typography";
-import { Container, AlignRight } from "ui/Helpers";
+import * as yup from "yup";
+
+import { AlignRight, Container } from "ui/Helpers";
 import {
-  InstructionLabel,
-  InputField,
+  Error,
   FormHelpText,
   FormSection,
-  Error,
+  InputField,
+  InstructionLabel,
 } from "ui/Forms";
-import { CirclePicker } from "react-color";
-import { PickerWrapper } from "./CreateFamilyStyles";
-import { StyledDropzone } from "components/FileDropzone/FileDropzone";
+
 import { ButtonPrimary } from "ui/Buttons";
-import { Formik } from "formik";
-import * as yup from "yup";
-import { useMutation } from "@apollo/react-hooks";
 import { CREATE_NEW_FAMILY } from "mutations/Family";
+import { CirclePicker } from "react-color";
+import { Formik } from "formik";
+import { Header } from "ui/Typography";
 import JollyLoader from "components/JollyLoader/JollyLoader";
+import { PickerWrapper } from "./CreateFamilyStyles";
+import React from "react";
+import { StyledDropzone } from "components/FileDropzone/FileDropzone";
+import { useMutation } from "@apollo/react-hooks";
 
 const CreateFamilyValidationSchema = yup.object().shape({
   familyName: yup.string().required("Please enter a family name"),
@@ -31,20 +33,18 @@ const loadingFamilyQuotes = [
   "OwO",
 ];
 export default function CreateFamily(props) {
-  const [createNewFamily, { data, error, loading }] = useMutation(
+  const [createNewFamily, { data, loading /* error */ }] = useMutation(
     CREATE_NEW_FAMILY,
   );
 
   const defaultValues = {
     familyName: "",
     color: "",
+    file: null,
   };
   if (data && data.createFamily) {
     const { familyId } = data.createFamily;
     props.history.push("/family/" + familyId);
-  }
-  if (error) {
-    // handle error
   }
   if (loading) {
     return <JollyLoader quotes={loadingFamilyQuotes} />;
@@ -56,9 +56,12 @@ export default function CreateFamily(props) {
       <Formik
         initialValues={defaultValues}
         onSubmit={(values, actions) => {
+          console.log(values);
+
           const payload = {
             name: values.familyName,
             colour: values.color,
+            image: values.file,
           };
           createNewFamily({ variables: { input: payload } });
         }}
@@ -94,7 +97,18 @@ export default function CreateFamily(props) {
               <InstructionLabel>
                 Select a display photo for your Family.
               </InstructionLabel>
-              <StyledDropzone />
+              {props.values.file ? (
+                <div>
+                  {props.values.file.name}{" "}
+                  <button onClick={() => props.setFieldValue("file", null)}>
+                    Remove
+                  </button>
+                </div>
+              ) : (
+                <StyledDropzone
+                  onFilesAdded={files => props.setFieldValue("file", files[0])}
+                />
+              )}
               <FormHelpText>You can upload a photo later.</FormHelpText>
             </FormSection>
 

@@ -92,7 +92,10 @@ import { MementoModule } from "./memento/memento.module";
         },
         template: {
           // templates are not found in `dist` dir as they are static, not TS
-          dir: configService.handlebarsTemplatesDir,
+          dir:
+            process.env.NODE_ENV === "production"
+              ? join(__dirname + "../../backend/templates")
+              : __dirname + "/templates",
           adapter: new HandlebarsAdapter(),
           options: {
             strict: true,

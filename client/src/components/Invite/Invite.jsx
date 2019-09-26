@@ -1,17 +1,17 @@
 import { ButtonPrimary, ButtonSecondary } from "ui/Buttons";
+import { INVITE_BY_EMAIL, INVITE_LIST } from "mutations/Invite";
 import React, { useState } from "react";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 
 import { AlignRight } from "ui/Helpers";
 import { Container } from "ui/Helpers";
 import { FormNav } from "ui/Forms";
 import { Formik } from "formik";
 import { Header } from "ui/Typography";
-import { INVITE_LIST, INVITE_BY_EMAIL } from "mutations/Invite";
 import InviteStep1 from "./InviteStep1";
 import InviteStep2 from "./InviteStep2";
-import JollyLoader from "components/JollyLoader/JollyLoader";
-import { useQuery, useMutation } from "@apollo/react-hooks";
 import InviteSuccess from "./InviteSuccess";
+import JollyLoader from "components/JollyLoader/JollyLoader";
 
 const ADMIN_ROLE = "Admin";
 // Checks if an email is of a valid format

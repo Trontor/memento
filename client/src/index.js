@@ -7,7 +7,7 @@ import { ApolloProvider } from "@apollo/react-hooks";
 import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { setContext } from "apollo-link-context";
-import { HttpLink } from "apollo-link-http";
+import { createUploadLink } from "apollo-upload-client";
 import { onError } from "apollo-link-error";
 
 const cache = new InMemoryCache();
@@ -17,7 +17,7 @@ const gqlEndpoint =
   process.env.NODE_ENV === "development" ? DEV_ENDPOINT : PROD_ENDPOINT;
 console.log("Linking GraphQL to Apollo Client at: " + gqlEndpoint);
 
-const link = new HttpLink({
+const link = new createUploadLink({
   uri: gqlEndpoint,
 });
 

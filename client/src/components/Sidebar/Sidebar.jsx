@@ -9,47 +9,49 @@ import {
   SidebarContainer,
   SidebarHeader,
   SignOutButton,
-  TextList
+  TextList,
 } from "./SidebarStyles";
-import {
-  EditProfile,
-  Invite,
-  NewArtefact,
-  View
-} from "ui/Buttons";
+import { EditProfile, Invite, NewArtefact, View, Bookmarks } from "ui/Buttons";
 
 import { GET_USER_FAMILIES } from "queries/UserQueries";
 import { Logo } from "ui/Logos";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Spinner } from "ui/Loaders";
 import { useQuery } from "@apollo/react-hooks";
-import { withRouter } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 const Sidebar = props => {
-  // Check for a authentication token, if not - redirect to the login page
-  if (!localStorage.getItem("AUTH-TOKEN")) {
-    props.history.push("/login");
-  }
-  let families = [];
-  const { loading, data } = useQuery(GET_USER_FAMILIES);
+  const history = useHistory();
+  const location = useLocation();
+  const [families, setFamilies] = useState(null);
+
   const signOut = () => {
     localStorage.removeItem("AUTH-TOKEN");
-    props.history.push("/login");
+    history.push("/login");
   };
-  if (data && data.currentUser) {
-    families = data.currentUser.families;
+  // Check for a authentication token, if not - redirect to the login page
+  if (!localStorage.getItem("AUTH-TOKEN")) {
+    signOut();
   }
 
+  const { refetch } = useQuery(GET_USER_FAMILIES, {
+    fetchPolicy: "cache-and-network",
+    onCompleted: data => {
+      setFamilies(data.currentUser.families);
+    },
+  });
+
   const iconSize = "20px";
+
+  useEffect(() => {
+    console.log("Refreshing sidebar...");
+    refetch();
+  }, [refetch, location]);
 
   return (
     <SidebarContainer isOpen={props.sidebarOpen}>
       <SidebarHeader>
-        <Logo
-          pointer
-          size="small"
-          onClick={() => props.history.push("/dashboard")}
-        />
+        <Logo pointer size="small" onClick={() => history.push("/dashboard")} />
         <CloseMenu
           size={iconSize}
           title="close menu"
@@ -61,20 +63,20 @@ const Sidebar = props => {
         <SearchInput type="text" placeholder="Search all artefacts" />
       </SearchBar>
       <FamilyListContainer>
-        {families.length > 0 && <h3>My Families</h3>}
-        {loading ? (
+        {families && <h3>My Families</h3>}
+        {!families ? (
           <Spinner />
         ) : (
           families.map(family => (
-            <TextList>
+            <TextList key={family.familyId}>
               <a href={`/family/${family.familyId}`}>{family.name}</a>
             </TextList>
           ))
         )}
       </FamilyListContainer>
-        <NewFamilyGroup onClick={() => props.history.push("/create-family")}>
-          New Family group
-        </NewFamilyGroup>
+      <NewFamilyGroup onClick={() => props.history.push("/create-family")}>
+        New Family group
+      </NewFamilyGroup>
       <MenuContainer>
         <TextList>
           <Invite size={iconSize} />
@@ -90,6 +92,10 @@ const Sidebar = props => {
           <View size={iconSize} />
           View my Mementos
         </TextList>
+        <TextList>
+          <Bookmarks size={iconSize} />
+          <a href={`/bookmarks`}>Bookmarks</a>
+        </TextList>
       </MenuContainer>
       <MenuContainer>
         <TextList>
@@ -101,4 +107,4 @@ const Sidebar = props => {
     </SidebarContainer>
   );
 };
-export default withRouter(Sidebar);
+export default Sidebar;

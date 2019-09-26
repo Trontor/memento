@@ -30,6 +30,7 @@ export default function Settings() {
       <MenuContainer>
         {menuTabs.map((tab, idx) => (
           <MenuTabs
+            key={tab}
             active={currentTabIndex === idx}
             onClick={() => setTabIndex(idx)}
           >

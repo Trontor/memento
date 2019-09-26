@@ -26,3 +26,11 @@ export const INVITE_BY_EMAIL = gql`
     }
   }
 `;
+
+export const ACCEPT_INVITE = gql`
+  mutation acceptInvite($input: JoinFamilyInput!) {
+    joinFamily(input: $input) {
+      familyId
+    }
+  }
+`;

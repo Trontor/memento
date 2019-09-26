@@ -32,7 +32,7 @@ export class FileService {
       this.logger.error(`"${mimetype}" not an accepted image format`);
       throw new Error("not an accepted image format");
     }
-    return await this.uploadFile(createReadStream, filename);
+    return await this.uploadFile(createReadStream, filename, mimetype);
   }
 
   /**
@@ -46,7 +46,7 @@ export class FileService {
       this.logger.error(`"${mimetype}" not an accepted video format`);
       throw new Error("not an accepted video format");
     }
-    return await this.uploadFile(createReadStreamFile, filename);
+    return await this.uploadFile(createReadStreamFile, filename, mimetype);
   }
 
   /**
@@ -56,6 +56,7 @@ export class FileService {
   private async uploadFile(
     createReadStreamFile: () => Readable,
     filename: string,
+    mimetype: string,
   ): Promise<string> {
     // create a random file id to store file
     const fileId: string = uuidv4();
@@ -67,7 +68,10 @@ export class FileService {
     this.logger.log(filepath);
 
     // create a stream for uploading to AWS S3 bucket
-    const { writeStream, uploadPromise } = this.s3Client.uploadStream(filepath);
+    const { writeStream, uploadPromise } = this.s3Client.uploadStream(
+      filepath,
+      mimetype,
+    );
 
     // temporary path to store the file locally
     // to ensure file size is within limit before uploading to S3
@@ -89,7 +93,7 @@ export class FileService {
       // get the response from S3
       res = await uploadPromise;
       this.logger.debug(res);
-      const url: string = `${this.configService.cdnHostName}/${res.Key}`;
+      const url: string = `https://${this.configService.cdnHostName}/${res.Key}`;
       return url;
     } catch (err) {
       this.logger.error(err);

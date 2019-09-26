@@ -10,6 +10,12 @@ export class UpdateUserInput {
   @Field(type => ID)
   userId!: string;
 
+  @Field()
+  firstName?: string;
+
+  @Field({ nullable: true })
+  lastName?: string;
+
   @Field({ nullable: true })
   location?: string;
 

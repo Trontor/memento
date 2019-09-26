@@ -1,19 +1,30 @@
+import { LeftColumn, Main, SiteGrid } from "ui/Layout";
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import {
+  Redirect,
+  Route,
+  BrowserRouter as Router,
+  Switch,
+} from "react-router-dom";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
-import { theme } from "./theme";
+
+import Bookmarks from "./components/Bookmarks/Bookmarks";
+import CreateFamily from "./components/CreateFamily/CreateFamily";
+import Dashboard from "./components/Dashboard/Dashboard";
+import FamilyGroup from "./components/FamilyGroup/FamilyGroup";
+import FamilyGroupSettings from "./components/FamilyGroupSettings/FamilyGroupSettings";
+import Hamburger from "./components/Sidebar/Hamburger";
+import Invite from "./components/Invite/Invite";
 import Landing from "./components/Landing/Landing";
 import Login from "./components/Login/Login";
-import Signup from "./components/Signup/Signup";
-import Dashboard from "./components/Dashboard/Dashboard";
-import CreateFamily from "./components/CreateFamily/CreateFamily";
-import Invite from "./components/Invite/Invite";
 import Settings from "./components/Settings/Settings";
-import UploadMemento from "./components/UploadMemento/UploadMemento";
-import FamilyGroup from "./components/FamilyGroup/FamilyGroup";
+import InviteCode from "./components/AcceptInvite/InviteCode";
 import Sidebar from "./components/Sidebar/Sidebar";
-import Hamburger from "./components/Sidebar/Hamburger";
-import { SiteGrid, LeftColumn, Main } from "ui/Layout";
+import Signup from "./components/Signup/Signup";
+import UploadMemento from "./components/UploadMemento/UploadMemento";
+import UserProfile from "./components/UserProfile/UserProfile";
+import { theme } from "./theme";
+import AcceptInvite from "components/AcceptInvite/AcceptInvite";
 
 const GlobalStyle = createGlobalStyle`
   /* Reset styles */
@@ -102,8 +113,18 @@ const authenticatedRoutes = [
     component: CreateFamily,
   },
   {
-    name: "invite",
+    name: "invite/",
     component: Invite,
+    exact: true,
+  },
+  {
+    name: "invite/accept/",
+    component: InviteCode,
+    exact: true,
+  },
+  {
+    name: "invite/accept/:inviteId",
+    component: AcceptInvite,
   },
   {
     name: "new-memento",
@@ -116,6 +137,18 @@ const authenticatedRoutes = [
   {
     name: "family/:id",
     component: FamilyGroup,
+  },
+  {
+    name: "familysettings/:id",
+    component: FamilyGroupSettings,
+  },
+  {
+    name: "bookmarks",
+    component: Bookmarks,
+  },
+  {
+    name: "profile",
+    component: UserProfile,
   },
 ];
 
@@ -130,12 +163,11 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <GlobalStyle />
-        <Route path="/" exact component={Landing} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        <Route
-          path={authenticatedPaths}
-          render={() => (
+        <Switch>
+          <Route path="/" exact component={Landing} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route paths={authenticatedPaths}>
             <SiteGrid>
               <LeftColumn>
                 <Sidebar
@@ -150,14 +182,16 @@ function App() {
                 />
                 {authenticatedRoutes.map(route => (
                   <PrivateRoute
+                    key={route.name}
                     path={`/${route.name}`}
+                    exact={route.exact}
                     component={route.component}
                   />
                 ))}
               </Main>
             </SiteGrid>
-          )}
-        />
+          </Route>
+        </Switch>
       </Router>
     </ThemeProvider>
   );

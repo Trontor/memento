@@ -117,22 +117,22 @@ export class UserService implements IUserService {
     }
 
     // upload image if provided
-    let imageUrl: string | undefined = undefined;
+    let newImageUrl: string | undefined = undefined;
     if (data.image) {
-      imageUrl = await this.fileService.uploadImage(data.image);
+      newImageUrl = await this.fileService.uploadImage(data.image);
     }
 
     // extract image stream from `data` and replace with imageUrl
     const { image, ...updatableData } = data;
     const updateData: IUpdateUserData = { ...updatableData };
-    if (imageUrl) {
-      updateData.imageUrl = imageUrl;
+    if (image && newImageUrl) {
+      updateData.imageUrl = newImageUrl;
     }
 
     // do update operation
     const updatedUser = await this.UserModel.findOneAndUpdate(
       { lowercaseEmail: currentUser.email.toLowerCase() }, // find by email
-      { ...updateData, imageUrl },
+      { ...updateData },
       { new: true, runValidators: true },
     );
     if (!updatedUser)

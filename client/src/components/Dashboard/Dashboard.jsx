@@ -1,16 +1,17 @@
-import React from "react";
 import {
-  TextWrapper,
-  DashboardButtons,
   ButtonHeading,
+  CreateFamily,
+  DashboardButtons,
   GoToButton,
   InviteFamily,
-  CreateFamily,
+  TextWrapper,
 } from "./DashboardStyles";
-import { useQuery } from "@apollo/react-hooks";
-import GET_CURRENT_USER from "queries/GetCurrentUser";
+
 import { Container } from "ui/Helpers";
+import GET_CURRENT_USER from "queries/GetCurrentUser";
 import JollyLoader from "components/JollyLoader/JollyLoader";
+import React from "react";
+import { useQuery } from "@apollo/react-hooks";
 
 export default function Dashboard(props) {
   const { data, error, loading } = useQuery(GET_CURRENT_USER);
