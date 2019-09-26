@@ -51,6 +51,9 @@ export class Memento {
   @Field(type => [MementoDate])
   dates!: MementoDate[];
 
+  @Field(type => [String], { nullable: true })
+  tags?: string[];
+
   @Field()
   createdAt!: Date;
 

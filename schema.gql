@@ -38,6 +38,7 @@ input CreateMementoInput {
   location: String
   media: [CreateMediaInput!]
   dates: [CreateMementoDateInput!]
+  tags: [String!]
 }
 
 """
@@ -109,6 +110,7 @@ type Memento {
   location: String
   media: [Media!]!
   dates: [MementoDate!]!
+  tags: [String!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -138,7 +140,7 @@ type Query {
   refreshToken: String!
   family(familyId: ID!): Family!
   invite(inviteId: ID!): Invite!
-  mementos(familyId: ID!): [Memento!]!
+  mementos(tags: [String!], lastId: ID, familyId: ID!): [Memento!]!
 }
 
 type Role {

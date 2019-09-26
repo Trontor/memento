@@ -52,10 +52,15 @@ export class MementoResolver {
   @UseGuards(JwtAuthGuard, FamilyMemberGuard)
   async getMementos(
     @Args({ name: "familyId", type: () => ID }) familyId: string,
+    @Args({ name: "lastId", type: () => ID, nullable: true }) lastId?: string,
+    @Args({ name: "tags", type: () => [String], nullable: true })
+    tags?: string[],
   ): Promise<Memento[]> {
     // TODO: pagination
     const mementos: MementoDocument[] = await this.mementoService.getAllFamilyMementos(
       familyId,
+      tags,
+      lastId,
     );
     this.logger.log(
       `Retrieved ${mementos.length} mementos for family ${familyId}`,

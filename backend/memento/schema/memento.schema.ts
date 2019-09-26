@@ -108,11 +108,25 @@ MementoSchema.methods.toDTO = function(): Memento {
     uploader: this.uploader,
     media: this.media,
     description: this.description,
+    tags: this.tags,
     // timestamps
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
   };
 };
+
+/**
+ * Interface for filtering Mementos
+ */
+export interface IFindMementoConditions {
+  _id?: {
+    $gt: Types.ObjectId;
+  };
+  inFamily: Types.ObjectId;
+  tags?: {
+    $in: string[];
+  };
+}
 
 export const MementoModel: IMementoModel = model<
   MementoDocument,

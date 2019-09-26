@@ -7,7 +7,10 @@ import { User } from "../user/dto/user.dto";
 import { CreateMementoInput } from "./inputs/memento.inputs";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, Types } from "mongoose";
-import { MementoDocument } from "./schema/memento.schema";
+import {
+  MementoDocument,
+  IFindMementoConditions,
+} from "./schema/memento.schema";
 import { fromHexStringToObjectId } from "../common/mongo.util";
 import { FileService } from "../file/file.service";
 import { MediaType, Media } from "./dto/media.dto";
@@ -41,10 +44,24 @@ export class MementoService {
   /**
    * Fetches all Mementos belonging to a family.
    * @param familyId id of family
+   * @param tags array of tags to filter by
+   * @param lastId id of last Memento (for use in pagination)
+   * @param pageSize maximum number of resolts to return in a single page
    */
-  async getAllFamilyMementos(familyId: string): Promise<MementoDocument[]> {
-    const id: Types.ObjectId = fromHexStringToObjectId(familyId);
-    const docs = await this.MementoModel.find({ inFamily: id });
+  async getAllFamilyMementos(
+    familyId: string,
+    tags?: string[],
+    lastId?: string,
+    pageSize: number = 10,
+  ): Promise<MementoDocument[]> {
+    const conditions: IFindMementoConditions = {
+      inFamily: fromHexStringToObjectId(familyId),
+    };
+    // return mementos after previous page of results
+    if (lastId) conditions._id = { $gt: fromHexStringToObjectId(lastId) };
+    // filter Mementos by tags
+    if (tags) conditions.tags = { $in: tags };
+    const docs = await this.MementoModel.find(conditions).limit(pageSize);
     return docs;
   }
 
