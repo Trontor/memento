@@ -6,7 +6,7 @@ export const isImage = (mimetype: string) => {
   if (!mimetype.startsWith("image/")) return false;
   const split = mimetype.split("/");
   if (split.length !== 2) return false;
-  const [_, imageType] = split;
+  const imageType: string = split[1];
   switch (imageType) {
     // Allowed image formats
     case "jpg":
@@ -26,7 +26,7 @@ export const isVideo = (mimetype: string) => {
   if (!mimetype.startsWith("video/")) return false;
   const split = mimetype.split("/");
   if (split.length !== 2) return false;
-  const [_, videoType] = split;
+  const videoType: string = split[1];
   switch (videoType) {
     // Allowed video formats
     case "mp4":

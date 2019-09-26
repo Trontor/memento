@@ -1,6 +1,5 @@
 import { Injectable, Logger } from "@nestjs/common";
 import * as AWS from "aws-sdk";
-import { ManagedUpload } from "aws-sdk/clients/s3";
 import { PassThrough } from "stream";
 
 /**

@@ -1,4 +1,4 @@
-import { Injectable, Logger, Scope } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import * as dotenv from "dotenv";
 import * as fs from "fs";
 import path from "path";
