@@ -2,7 +2,6 @@ import {
   Injectable,
   BadRequestException,
   InternalServerErrorException,
-  UnauthorizedException,
   Logger,
   ForbiddenException,
 } from "@nestjs/common";
@@ -14,7 +13,6 @@ import { MongoError } from "mongodb";
 import { IUserService } from "./interfaces/IUserService";
 import { UserNotFoundException, CreateRoleException } from "./user.exceptions";
 import { User } from "./dto/user.dto";
-import { mapDocumentToUserDTO } from "./schema/user.mapper";
 import { RoleInput } from "./input/role.input";
 import { fromHexStringToObjectId } from "../common/mongo.util";
 import { FileService } from "../file/file.service";
@@ -58,7 +56,7 @@ export class UserService implements IUserService {
       this.logger.error(err);
       throw this.evaluateMongoError(err, input);
     }
-    return mapDocumentToUserDTO(userDoc);
+    return userDoc.toDTO();
   }
 
   /**
@@ -72,7 +70,7 @@ export class UserService implements IUserService {
       Logger.error(`user ${id} not found`);
       throw new UserNotFoundException();
     }
-    return mapDocumentToUserDTO(user);
+    return user.toDTO();
   }
 
   /**
@@ -87,7 +85,7 @@ export class UserService implements IUserService {
         $in: userIds.map(id => fromHexStringToObjectId(id)),
       },
     });
-    return docs.map(doc => mapDocumentToUserDTO(doc));
+    return docs.map(doc => doc.toDTO());
   }
 
   /**
@@ -139,7 +137,7 @@ export class UserService implements IUserService {
     );
     if (!updatedUser)
       throw new InternalServerErrorException("Could not update user");
-    const userDTO: User = mapDocumentToUserDTO(updatedUser);
+    const userDTO: User = updatedUser.toDTO();
     this.logger.debug(userDTO);
     return userDTO;
   }
@@ -169,7 +167,7 @@ export class UserService implements IUserService {
       this.logger.error("User not in family");
       throw new BadRequestException("Updatee not in family");
     }
-    return mapDocumentToUserDTO(user);
+    return user.toDTO();
   }
 
   /**

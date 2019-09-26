@@ -4,7 +4,6 @@ import { AuthService } from "../auth.service";
 import { PassportStrategy } from "@nestjs/passport";
 import { JwtPayload } from "../interfaces/jwt-payload.interface";
 import { ConfigService } from "../../config/config.service";
-import { mapDocumentToUserDTO } from "../../user/schema/user.mapper";
 
 /**
  * Validates a JWT token provided in the request header as a
@@ -16,7 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, "jwt") {
     // additional construction using custom config
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: configService.jwtSecret
+      secretOrKey: configService.jwtSecret,
     });
   }
 
@@ -24,6 +23,6 @@ export class JwtStrategy extends PassportStrategy(Strategy, "jwt") {
   async validate(payload: JwtPayload) {
     // This is called to validate the user in the token exists
     const user = await this.authService.validateJwtPayload(payload);
-    return mapDocumentToUserDTO(user);
+    return user.toDTO();
   }
 }
