@@ -1,8 +1,4 @@
 import { CenterText, Container } from "ui/Helpers";
-import { Header } from "ui/Typography";
-import { /*UserAvatar,*/ InputLabel } from "ui/Forms";
-import { useQuery } from "@apollo/react-hooks";
-import GET_CURRENT_USER from "queries/GetCurrentUser";
 import {
   PlaceWrapper,
   ProfileField,
@@ -14,11 +10,11 @@ import {
   UserImg,
   UserLocation,
 } from "./UserProfileStyles";
-import JollyLoader from "components/JollyLoader/JollyLoader";
 
 import GET_CURRENT_USER from "queries/GetCurrentUser";
 import { Header } from "ui/Typography";
 import { InputLabel } from "ui/Forms";
+import JollyLoader from "components/JollyLoader/JollyLoader";
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 
@@ -30,7 +26,7 @@ export default function UserProfile() {
     />
   );
   //<UserAvatar size="125px" />;
-  const { data, error } = useQuery(GET_CURRENT_USER);
+  const { data, error, loading} = useQuery(GET_CURRENT_USER);
 
   let user = {};
 
