@@ -74,7 +74,7 @@ const Sidebar = props => {
           ))
         )}
       </FamilyListContainer>
-      <NewFamilyGroup onClick={() => props.history.push("/create-family")}>
+      <NewFamilyGroup onClick={() => history.push("/create-family")}>
         New Family group
       </NewFamilyGroup>
       <MenuContainer>
