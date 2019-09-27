@@ -31,6 +31,11 @@ export const SidebarContainer = styled.div`
     props.theme.breakpoints.tabletLandscape}) {
     transform: translateX(${props => props.theme.size.sidebar}px);
   }
+
+  &::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+  }
 `;
 
 export const SidebarHeader = styled.div`
