@@ -28,7 +28,7 @@ export const FamilyLayout = styled.div`
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
     grid-template-columns:
-      minmax(240px, 320px)
+      minmax(280px, 320px)
       minmax(600px, 968px);
     grid-column-gap: 24px;
     padding: 0 24px;
@@ -52,6 +52,8 @@ export const FamilyProfileContainer = styled.div`
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
     margin-top: 24px;
+    background-color: ${props => props.theme.palette.foreground};
+    border: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
   }
 `
 
@@ -63,7 +65,7 @@ export const TagsContainer = styled.div`
   margin-top: 24px;
   border-radius: 4px;
   overflow: hidden;
-  background: white;
+  background-color: ${props => props.theme.palette.foreground};
   border: 1px solid ${props => lighten(0.6, props.theme.palette.text)};
 `
 
@@ -82,23 +84,23 @@ export const FamilyImg = styled.div`
 
 export const FamilyHeader = styled.div`
   max-width: 100%;
-  border-top: 1px solid ${props => lighten(0.6, props.theme.palette.text)};
   border-bottom: 1px solid ${props => lighten(0.6, props.theme.palette.text)};
   display: grid;
   grid-template-columns: 1fr 80% 1fr;
   justify-items: center;
   align-items: center;
 
-  h1 {
-    text-align: center;
-  }
-
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
     border: none;
     grid-template-columns: 1fr;
-    /* justify-items: left;
-    padding: 12px; */
+    /* justify-items: left; */
+    padding: 16px;
+
+    h1 {
+      display: inline-block;
+      margin: 0 auto;
+    }
   }
 `;
 
@@ -108,9 +110,9 @@ export const ProfilePhotoContainer = styled.div`
   height: 136px;
   position: relative;
   top: -72px;
-  background-color: white;
+  background-color: ${props => props.theme.palette.foreground};
   border-radius: 5px;
-  margin-bottom: -48px;
+  margin-bottom: -64px;
 
   img {
     ${center};
@@ -126,7 +128,7 @@ export const ProfilePhotoContainer = styled.div`
   }
 `
 
-export const MembersListContainer = styled.section`
+export const SideMenuSectionContainer = styled.section`
   display: none;
 
   @media screen and (min-width: ${props =>
@@ -150,14 +152,39 @@ export const SideMenuSectionHeader = styled.div`
     padding: 16px;
 
     h2 {
-      font-size: 15px;
+      font-size: 16px;
       margin: 0;
     }
   }
 `
 
+export const DetailsWrapper = styled.div`
+  display: none;
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
+    display: block;
+    margin-top: 16px;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+`
+
+export const GroupDetails = styled.div`
+  display: grid;
+  grid-template-columns: 16px auto;
+  grid-column-gap: 8px;
+  padding-bottom: 8px;
+  align-items: center;
+
+  i {
+    font-size: 12px;
+  }
+`
+
 export const MemberRow = styled.div`
-  font-size: 14px;
   margin: 0;
   padding: 12px 16px;
   border-bottom: 1px solid ${props => lighten(0.67, props.theme.palette.text)};

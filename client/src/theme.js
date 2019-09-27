@@ -18,6 +18,7 @@ const theme = {
 
     border: "#D3D0DD",
     sidebar: "#F7FAFE",
+    foreground: "#FBFCFD"
   },
   mixins: {
     hoverFade: "transition: ease-in 0.1s",

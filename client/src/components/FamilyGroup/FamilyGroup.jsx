@@ -1,14 +1,16 @@
 import {
+  DetailsWrapper,
   FamilyContainer,
   FamilyHeader,
   FamilyImg,
   FamilyLayout,
+  GroupDetails,
   MemberRow,
-  MembersListContainer,
   Menu,
   ProfilePhotoContainer,
   SettingsButton,
   SideMenu,
+  SideMenuSectionContainer,
   SideMenuSectionHeader,
   TabComponent,
   UploadButton
@@ -77,12 +79,22 @@ export default function FamilyGroup(props) {
               <div></div>
               <h1>{familyName}</h1>
               <SettingsButton onClick={() => props.history.push(familyId + "/settings")}/>
-            <UploadButton onClick={() => props.history.push(familyId + "/memento/new")}>
-              Add a Memento
-            </UploadButton>
+              {/* <UploadButton onClick={() => props.history.push(familyId + "/memento/new")}>
+                Add a Memento
+              </UploadButton> */}
+              <DetailsWrapper>
+                <GroupDetails>
+                  <i class="far fa-paper-plane"></i>
+                  3 mementos
+                </GroupDetails>
+                <GroupDetails>
+                  <i class="fas fa-users"></i>
+                  4 members
+                </GroupDetails>
+              </DetailsWrapper>
             </FamilyHeader>
           </FamilyProfileContainer>
-          <MembersListContainer>
+          <SideMenuSectionContainer>
             <SideMenuSectionHeader>
               <h2>
                 Members
@@ -99,7 +111,7 @@ export default function FamilyGroup(props) {
                 </div>
               </MemberRow>
             ))}
-          </MembersListContainer>
+          </SideMenuSectionContainer>
         </SideMenu>
         <Menu>
           <MenuContainer>
