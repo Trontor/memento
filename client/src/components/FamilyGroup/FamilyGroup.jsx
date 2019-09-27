@@ -85,14 +85,17 @@ export default function FamilyGroup(props) {
           <MembersListContainer>
             <SideMenuSectionHeader>
               <h2>
-                Family Members
+                Members
               </h2>
             </SideMenuSectionHeader>
             {members.map(member => (
-              <MemberRow>
+              <MemberRow admin>
                 <i class="fas fa-user-circle"></i>
-                <div onClick={() => props.history.push("/profile/" + member.userId)}>
-                  {member.firstName} {member.lastName}
+                <div>
+                  <span onClick={() => props.history.push("/profile/" + member.userId)}>
+                    {member.firstName} {member.lastName}
+                  </span>
+                  <span>Admin</span>
                 </div>
               </MemberRow>
             ))}

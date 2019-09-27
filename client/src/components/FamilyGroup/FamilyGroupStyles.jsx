@@ -165,6 +165,7 @@ export const MemberRow = styled.div`
   grid-template-columns: min-content 1fr auto;
   grid-column-gap: 12px;
   align-items: center;
+  cursor: pointer;
 
   &:last-child {
     border-bottom: none;
@@ -172,15 +173,36 @@ export const MemberRow = styled.div`
 
   img {
     border-radius: 50%;
-    width: 48px;
-    height: 48px;
+    width: 32px;
+    height: 32px;
     object-fit: cover;
   }
 
   i {
-    font-size: 48px;
+    font-size: 32px;
+  }
+
+  &:hover {
+    background-color: ${props => lighten(0.71, props.theme.palette.text)};
+  }
+
+  span {
+    display: block;
+
+    &:first-child {
+      font-weight: bold;
+      letter-spacing: 0.02em;
+    }
+
+    &:last-child {
+      opacity: 0.8;
+    }
   }
 `;
+
+export const MemberName = styled.div`
+  font-weight: bold;
+`
 
 export const SettingsButton = styled(Settings)`
   color: ${props => lighten(0.6, props.theme.palette.text)};
