@@ -127,7 +127,7 @@ const authenticatedRoutes = [
     component: AcceptInvite,
   },
   {
-    name: "family/:id/new",
+    name: "family/:id/memento/new",
     component: UploadMemento,
     exact: true,
   },

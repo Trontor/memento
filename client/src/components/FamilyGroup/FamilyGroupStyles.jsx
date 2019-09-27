@@ -40,6 +40,7 @@ export const SideMenu = styled.section`
   props.theme.breakpoints.tabletLandscape}) {
     height: 100vh;
     position: sticky;
+    overflow: auto;
   }
 `
 export const FamilyProfileContainer = styled.div`
@@ -125,24 +126,59 @@ export const ProfilePhotoContainer = styled.div`
   }
 `
 
-export const MembersList = styled.li`
-  border: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
-  list-style: none;
-  border-radius: 8px;
+export const MembersListContainer = styled.section`
+  display: none;
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
+    display: block;
+    background-color: white;
+    border: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
+    list-style: none;
+    border-radius: 4px;
+    margin-top: 24px;
+  }
 `
 
-export const MemberRow = styled.ul`
-  font-family: "Livvic", sans-serif;
-  font-weight: bold;
-  font-size: 15px;
+export const SideMenuSectionHeader = styled.div`
+  display: none;
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
+    display: block;
+    border-bottom: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
+    padding: 16px;
+
+    h2 {
+      font-size: 15px;
+      margin: 0;
+    }
+  }
+`
+
+export const MemberRow = styled.div`
+  font-size: 14px;
   margin: 0;
-  padding: 20px 15px;
+  padding: 12px 16px;
   border-bottom: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
   display: grid;
-  grid-template-columns: 1fr 50px;
+  grid-template-columns: min-content 1fr auto;
+  grid-column-gap: 12px;
+  align-items: center;
 
   &:last-child {
     border-bottom: none;
+  }
+
+  img {
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+  }
+
+  i {
+    font-size: 48px;
   }
 `;
 
@@ -176,5 +212,12 @@ export const UploadButton = styled(ButtonPrimary)`
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
     display: block;
+  }
+`
+
+export const TabComponent = styled.div`
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
+    display: none;
   }
 `

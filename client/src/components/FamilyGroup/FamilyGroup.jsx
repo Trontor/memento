@@ -3,10 +3,14 @@ import {
   FamilyHeader,
   FamilyImg,
   FamilyLayout,
+  MemberRow,
+  MembersListContainer,
   Menu,
   ProfilePhotoContainer,
   SettingsButton,
   SideMenu,
+  SideMenuSectionHeader,
+  TabComponent,
   UploadButton
 } from "./FamilyGroupStyles";
 import { MenuContainer, MenuTabs } from "ui/Navigation";
@@ -55,6 +59,7 @@ export default function FamilyGroup(props) {
       break;
   }
 
+  console.log(members)
   return (
     <FamilyContainer>
     <FamilyLayout>
@@ -72,9 +77,26 @@ export default function FamilyGroup(props) {
               <div></div>
               <h1>{familyName}</h1>
               <SettingsButton onClick={() => props.history.push(familyId + "/settings")}/>
-            <UploadButton onClick={() => props.history.push(familyId + "/new")}>Add a Memento</UploadButton>
+            <UploadButton onClick={() => props.history.push(familyId + "/memento/new")}>
+              Add a Memento
+            </UploadButton>
             </FamilyHeader>
           </FamilyProfileContainer>
+          <MembersListContainer>
+            <SideMenuSectionHeader>
+              <h2>
+                Family Members
+              </h2>
+            </SideMenuSectionHeader>
+            {members.map(member => (
+              <MemberRow>
+                <i class="fas fa-user-circle"></i>
+                <div onClick={() => props.history.push("/profile/" + member.userId)}>
+                  {member.firstName} {member.lastName}
+                </div>
+              </MemberRow>
+            ))}
+          </MembersListContainer>
         </SideMenu>
         <Menu>
           <MenuContainer>
@@ -84,9 +106,9 @@ export default function FamilyGroup(props) {
           </MenuContainer>
         </Menu>
         </div>
-        <div>
+        <TabComponent>
           {tabComponent}
-        </div>
+        </TabComponent>
     </FamilyLayout>
     </FamilyContainer>
   );

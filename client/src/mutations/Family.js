@@ -13,6 +13,7 @@ export const LOAD_FAMILY = gql`
     family(familyId: $id) {
       name
       members {
+        userId
         firstName
         lastName
       }
