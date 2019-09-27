@@ -24,6 +24,7 @@ import { LOAD_FAMILY } from "mutations/Family";
 import MembersViewer from "./MembersViewer";
 import MementosViewer from "./MementosViewer";
 import TagsViewer from "./TagsViewer";
+import moment from 'moment';
 import { useQuery } from "@apollo/react-hooks";
 
 export default function FamilyGroup(props) {
@@ -83,6 +84,10 @@ export default function FamilyGroup(props) {
                 Add a Memento
               </UploadButton> */}
               <DetailsWrapper>
+                <GroupDetails>
+                  <i class="fas fa-clock"></i>
+                  Created on {moment(data.family.createdAt).format('Do MMM YYYY')}
+                </GroupDetails>
                 <GroupDetails>
                   <i class="far fa-paper-plane"></i>
                   3 mementos
