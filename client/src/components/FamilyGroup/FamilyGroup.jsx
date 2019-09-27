@@ -72,7 +72,7 @@ export default function FamilyGroup(props) {
               <div></div>
               <h1>{familyName}</h1>
               <SettingsButton onClick={() => props.history.push(familyId + "/settings")}/>
-            <UploadButton>Add a Memento</UploadButton>
+            <UploadButton onClick={() => props.history.push(familyId + "/new")}>Add a Memento</UploadButton>
             </FamilyHeader>
           </FamilyProfileContainer>
         </SideMenu>

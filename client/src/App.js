@@ -127,8 +127,9 @@ const authenticatedRoutes = [
     component: AcceptInvite,
   },
   {
-    name: "new-memento",
+    name: "family/:id/new",
     component: UploadMemento,
+    exact: true,
   },
   {
     name: "settings",

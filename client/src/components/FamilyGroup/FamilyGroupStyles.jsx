@@ -6,8 +6,16 @@ import { lighten } from "polished";
 import styled from "styled-components";
 
 export const FamilyContainer = styled(Container)`
-  max-width: 100%;
-  width: 100%;
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.mobile}) {
+    margin: 0;
+  }
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
+    max-width: 100%;
+    min-width: 100%;
+  }
 `;
 
 export const FamilyLayout = styled.div`
@@ -16,7 +24,6 @@ export const FamilyLayout = styled.div`
   grid-template-columns: 1fr;
   width: 100%;
   justify-content: center;
-  padding: 0 24px;
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
@@ -24,6 +31,7 @@ export const FamilyLayout = styled.div`
       minmax(240px, 320px)
       minmax(600px, 968px);
     grid-column-gap: 24px;
+    padding: 0 24px;
   }
 `;
 
@@ -37,9 +45,13 @@ export const SideMenu = styled.section`
 export const FamilyProfileContainer = styled.div`
   position: relative;
   width: 100%;
-  margin-top: 24px;
   border-radius: 4px;
   overflow: hidden;
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
+    margin-top: 24px;
+  }
 `
 
 export const TagsContainer = styled.div`
@@ -56,19 +68,20 @@ export const TagsContainer = styled.div`
 
 export const FamilyImg = styled.div`
   width: 100%;
-  height: 200px;
+  height: 240px;
   background-color: ${props => props.theme.palette.main};
   border-bottom: 8px solid ${props => lighten(0.1, props.theme.palette.main)};
-  margin-top: 50px;
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
     margin-top: 0;
+    height: 128px;
   }
 `;
 
 export const FamilyHeader = styled.div`
-  width: 100%;
+  max-width: 100%;
+  border-top: 1px solid ${props => lighten(0.6, props.theme.palette.text)};
   border-bottom: 1px solid ${props => lighten(0.6, props.theme.palette.text)};
   display: grid;
   grid-template-columns: 1fr 80% 1fr;
@@ -96,6 +109,7 @@ export const ProfilePhotoContainer = styled.div`
   top: -72px;
   background-color: white;
   border-radius: 5px;
+  margin-bottom: -48px;
 
   img {
     ${center};
@@ -103,6 +117,11 @@ export const ProfilePhotoContainer = styled.div`
     height: 128px;
     object-fit: cover;
     border-radius: 5px;
+  }
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
+    margin-bottom: -72px;
   }
 `
 
@@ -152,4 +171,10 @@ export const Menu = styled.div`
 
 export const UploadButton = styled(ButtonPrimary)`
   width: 100%;
+  display: none;
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
+    display: block;
+  }
 `

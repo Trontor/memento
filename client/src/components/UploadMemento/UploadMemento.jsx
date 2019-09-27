@@ -1,19 +1,31 @@
+import { ButtonPrimary, ButtonSecondary } from "ui/Buttons";
 import React, { useState } from "react";
-import { Header } from "ui/Typography";
+
+import { AlignRight } from "ui/Helpers";
 import { Container } from "ui/Helpers";
+import { FormNav } from "ui/Forms";
+import { Header } from "ui/Typography";
+import JollyLoader from "components/JollyLoader/JollyLoader";
+import { LOAD_FAMILY } from "mutations/Family";
 import UploadStep1 from "./UploadStep1";
 import UploadStep2 from "./UploadStep2";
-import { ButtonPrimary, ButtonSecondary } from "ui/Buttons";
-import { AlignRight } from "ui/Helpers";
-import { FormNav } from "ui/Forms";
+import { useQuery } from "@apollo/react-hooks";
 
-export default function UploadMemento() {
+export default function UploadMemento(props) {
   //Define react hooks
   const [selectMementoType, setSelectMementoType] = useState("");
   const [selectEventType, setSelectEventType] = useState("");
   const [mementoTags, setMementoTags] = useState([]);
   const [currentStep, setCurrentStep] = useState(2);
   const [mementoFiles, setMementoFiles] = useState([]);
+  const familyId = props.match.params.id;
+  const { loading } = useQuery(LOAD_FAMILY, {
+    variables: { id: familyId },
+  });
+
+  if (loading) {
+    return <JollyLoader />;
+  }
 
   //Handle Radio value
   const handleRadioChange = option => {
