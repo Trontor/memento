@@ -41,6 +41,7 @@ export const SideMenu = styled.section`
     height: 100vh;
     position: sticky;
     overflow: auto;
+
     &::-webkit-scrollbar {
     width: 0px;
     background: transparent; /* make scrollbar transparent */
