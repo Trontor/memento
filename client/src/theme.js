@@ -9,6 +9,7 @@ const theme = {
   palette: {
     text: "#44404B",
     main: "#FF7F5F",
+    mainLight: "#FFF2EF",
     secondary: "#FFA217",
     background: "#FAFBFD",
     highlight: "#F6F9FF",

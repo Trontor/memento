@@ -1,9 +1,9 @@
 import { Container, center } from "ui/Helpers";
+import { adjustHue, lighten } from "polished";
+import styled, { css } from "styled-components";
 
 import { ButtonPrimary } from "ui/Buttons";
 import { Settings } from "styled-icons/material/Settings";
-import { lighten } from "polished";
-import styled from "styled-components";
 
 export const FamilyContainer = styled(Container)`
   @media screen and (min-width: ${props =>
@@ -28,7 +28,7 @@ export const FamilyLayout = styled.div`
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
     grid-template-columns:
-      minmax(280px, 320px)
+      minmax(280px, 300px)
       minmax(600px, 968px);
     grid-column-gap: 24px;
     padding: 0 24px;
@@ -41,11 +41,12 @@ export const SideMenu = styled.section`
     height: 100vh;
     position: sticky;
     overflow: auto;
+    padding-bottom: 24px;
 
     &::-webkit-scrollbar {
-    width: 0px;
-    background: transparent; /* make scrollbar transparent */
-  }
+      width: 0px;
+      background: transparent;
+    }
   }
 `
 export const FamilyProfileContainer = styled.div`
@@ -99,8 +100,8 @@ export const FamilyHeader = styled.div`
   props.theme.breakpoints.tabletLandscape}) {
     border: none;
     grid-template-columns: 1fr;
-    /* justify-items: left; */
-    padding: 16px;
+    justify-items: left;
+    padding: 17px;
 
     h1 {
       display: inline-block;
@@ -179,7 +180,7 @@ export const DetailsWrapper = styled.div`
 
 export const GroupDetails = styled.div`
   display: grid;
-  grid-template-columns: 16px auto;
+  grid-template-columns: 14px auto;
   grid-column-gap: 8px;
   padding-bottom: 8px;
   align-items: center;
@@ -232,8 +233,26 @@ export const MemberRow = styled.div`
   }
 `;
 
-export const MemberName = styled.div`
-  font-weight: bold;
+export const TagRow = styled.div`
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 12px 16px;
+  border-bottom: 1px solid ${props => lighten(0.7, props.theme.palette.text)};
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${props => lighten(0.71, props.theme.palette.text)};
+  }
+
+  ${({ selected }) =>
+    selected &&
+    css`
+      box-shadow: inset 3px 0 0 ${props => props.theme.palette.main};
+      background-color: ${props =>
+        adjustHue(-10,
+        lighten(0.301, props.theme.palette.main))};
+    `};
 `
 
 export const SettingsButton = styled(Settings)`

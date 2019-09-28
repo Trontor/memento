@@ -13,6 +13,7 @@ import {
   SideMenuSectionContainer,
   SideMenuSectionHeader,
   TabComponent,
+  TagRow,
   UploadButton
 } from "./FamilyGroupStyles";
 import { MenuContainer, MenuTabs } from "ui/Navigation";
@@ -31,7 +32,8 @@ export default function FamilyGroup(props) {
   const menuTabs = ["Mementos", "Members", "Tags"];
   const [currentTabIndex, setTabIndex] = useState(0)
   const familyId = props.match.params.id;
-  const { data, loading, /* error */ } = useQuery(LOAD_FAMILY, {
+  const [mementoTags, setMementoTags] = useState([]);
+  const { data, loading, error } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
   });
 
@@ -46,6 +48,36 @@ export default function FamilyGroup(props) {
     members = data.family.members;
     console.log(members);
   }
+
+  if (error) {
+    console.log("Error loading data");
+  }
+
+  const tags = [
+    "recipes",
+    "painting",
+    "stuffed toys",
+    "cars",
+    "jewellery",
+    "photographs",
+    "clothing",
+    "family",
+    "blanket",
+    "food",
+  ];
+
+  const selectTag = tag => {
+    if (mementoTags.includes(tag)) {
+      const tags = [...mementoTags];
+      const tagIndex = tags.indexOf(tag);
+      if (tagIndex !== -1) {
+        tags.splice(tagIndex, 1);
+        setMementoTags(tags);
+      }
+    } else {
+      setMementoTags([...mementoTags, tag]);
+    }
+  };
 
   let tabComponent = null;
   switch(menuTabs[currentTabIndex]){
@@ -78,7 +110,7 @@ export default function FamilyGroup(props) {
                 />
               </ProfilePhotoContainer>
               <FamilyHeader>
-                <div></div>
+                <div></div> {/* Empty div to center title */}
                 <h1>{familyName}</h1>
                 <SettingsButton onClick={() => props.history.push(familyId + "/settings")}/>
                 {/* <UploadButton onClick={() => props.history.push(familyId + "/memento/new")}>
@@ -86,8 +118,8 @@ export default function FamilyGroup(props) {
                 </UploadButton> */}
                 <DetailsWrapper>
                   <GroupDetails>
-                    <i class="fas fa-clock"></i>
-                    Created on {moment(data.family.createdAt).format('Do MMM YYYY')}
+                    <i class="far fa-clock"></i>
+                    Created on {moment(data.family.createdAt).format('Do MMM, YYYY')}
                   </GroupDetails>
                   <GroupDetails>
                     <i class="far fa-paper-plane"></i>
@@ -126,16 +158,14 @@ export default function FamilyGroup(props) {
                     Tags
                   </h2>
                 </SideMenuSectionHeader>
-                {members.map(member => (
-                  <MemberRow admin>
-                    <i class="fas fa-user-circle"></i>
-                    <div>
-                      <span onClick={() => props.history.push("/profile/" + member.userId)}>
-                        {member.firstName} {member.lastName}
-                      </span>
-                      <span>Admin</span>
-                    </div>
-                  </MemberRow>
+                {tags.sort().map(tag => (
+                  <TagRow
+                    onClick={() => selectTag(tag)}
+                    selected={mementoTags.includes(tag)}>
+                    <span>
+                      {tag}
+                    </span>
+                  </TagRow>
                 ))}
               </SideMenuSectionContainer>
             </SideMenu>
