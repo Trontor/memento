@@ -1,5 +1,5 @@
-import React from "react";
 import MementoCard from "components/MementoCard/MementoCard";
+import React from "react";
 
 export default function MementosViewer() {
   const mementos = [
@@ -22,6 +22,16 @@ export default function MementosViewer() {
       dateUploaded: "3 days ago",
       dateCreated: "1999",
     },
+    {
+      title: "My Stuffed Hippo",
+      author: "Gigi",
+      description:
+        "This is my favourite stuffed animal. I've had it since I was 5.",
+      coverImage: "",
+      tags: ["stuffed animals"],
+      dateUploaded: "3 days ago",
+      dateCreated: "1999",
+    }
   ];
 
   return (

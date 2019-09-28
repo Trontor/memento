@@ -1,10 +1,11 @@
-import styled from "styled-components";
 import { lighten } from "polished";
+import styled from "styled-components";
 
 export const Card = styled.div`
   width: 100%;
   padding: 20px;
-  border-bottom: 1px solid ${props => lighten(0.6, props.theme.palette.text)};
+  border-bottom: 1px solid ${props => lighten(0.65, props.theme.palette.text)};
+  background-color: ${props => props.theme.palette.foreground};
 `;
 
 export const MementoTitle = styled.div``;

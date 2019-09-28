@@ -9,12 +9,14 @@ export const FamilyContainer = styled(Container)`
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.mobile}) {
     margin: 0;
+    position: relative;
   }
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
     max-width: 100%;
-    min-width: 100%;
+    width: 100%;
+    margin: 0 auto;
   }
 `;
 
@@ -22,26 +24,28 @@ export const FamilyLayout = styled.div`
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
-  width: 100%;
   justify-content: center;
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
     grid-template-columns:
-      minmax(280px, 300px)
+      minmax(260px, 300px)
       minmax(600px, 968px);
+    grid-template-rows: 100%;
     grid-column-gap: 24px;
-    padding: 0 24px;
+    margin: 0 24px;
   }
 `;
 
 export const SideMenu = styled.section`
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
+    width: 100%;
     height: 100vh;
     position: sticky;
-    overflow: auto;
+    overflow: hidden auto;
     padding-bottom: 24px;
+    top: 0;
 
     &::-webkit-scrollbar {
       width: 0px;
@@ -49,6 +53,12 @@ export const SideMenu = styled.section`
     }
   }
 `
+export const MainViewer = styled.section`
+  border-left: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
+  border-right: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
+  height: 100%;
+`
+
 export const FamilyProfileContainer = styled.div`
   position: relative;
   width: 100%;
@@ -140,7 +150,7 @@ export const SideMenuSectionContainer = styled.section`
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
     display: block;
-    background-color: white;
+    background-color: ${props => props.theme.palette.foreground};
     border: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
     list-style: none;
     border-radius: 4px;
@@ -251,7 +261,7 @@ export const TagRow = styled.div`
       box-shadow: inset 3px 0 0 ${props => props.theme.palette.main};
       background-color: ${props =>
         adjustHue(-10,
-        lighten(0.301, props.theme.palette.main))};
+        lighten(0.295, props.theme.palette.main))};
     `};
 `
 
@@ -292,5 +302,24 @@ export const TabComponent = styled.div`
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
     display: none;
+  }
+`
+
+export const MementoSearch = styled.div`
+  padding: 8px 16px;
+  background-color: ${props => props.theme.palette.background};
+  border-bottom: 1px solid ${props => lighten(0.65, props.theme.palette.text)};
+`
+
+export const SearchInput = styled.input`
+  width: 100%;
+  border: 1px solid ${props => lighten(0.65, props.theme.palette.text)};
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 15px;
+
+  &:focus,
+  &:active {
+    outline: none;
   }
 `

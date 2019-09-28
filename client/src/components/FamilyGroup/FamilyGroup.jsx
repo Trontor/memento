@@ -5,9 +5,12 @@ import {
   FamilyImg,
   FamilyLayout,
   GroupDetails,
+  MainViewer,
   MemberRow,
+  MementoSearch,
   Menu,
   ProfilePhotoContainer,
+  SearchInput,
   SettingsButton,
   SideMenu,
   SideMenuSectionContainer,
@@ -178,9 +181,19 @@ export default function FamilyGroup(props) {
               </MenuContainer>
             </Menu>
           </div>
-          <TabComponent>
-            {tabComponent}
-          </TabComponent>
+          <div>
+            {/* Mobile */}
+            <TabComponent>
+              {tabComponent}
+            </TabComponent>
+            {/* Desktop */}
+            <MainViewer>
+              <MementoSearch>
+                <SearchInput placeholder="Search"/>
+              </MementoSearch>
+              <MementosViewer/>
+            </MainViewer>
+          </div>
     </FamilyLayout>
     </FamilyContainer>
   );
