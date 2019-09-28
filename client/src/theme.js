@@ -11,7 +11,7 @@ const theme = {
     main: "#FF7F5F",
     mainLight: "#FFF2EF",
     secondary: "#FFA217",
-    background: "#FAFBFD",
+    background: "#F9FAFC",
     highlight: "#F6F9FF",
 
     error: "#F73953",

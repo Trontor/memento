@@ -1,4 +1,5 @@
 import {
+  AuthorAvatar,
   Card,
   MementoAuthor,
   MementoCoverImg,
@@ -6,7 +7,7 @@ import {
   MementoDescription,
   MementoTags,
   MementoTitle,
-  UploadDate,
+  UploadDate
 } from "./MementoCardStyles";
 
 import React from "react";

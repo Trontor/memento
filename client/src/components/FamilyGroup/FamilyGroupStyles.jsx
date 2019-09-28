@@ -315,7 +315,7 @@ export const SearchInput = styled.input`
   width: 100%;
   border: 1px solid ${props => lighten(0.65, props.theme.palette.text)};
   border-radius: 4px;
-  padding: 10px;
+  padding: 8px 16px;
   font-size: 15px;
 
   &:focus,
