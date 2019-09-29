@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 
+import AcceptInvite from "components/AcceptInvite/AcceptInvite";
 import Bookmarks from "./components/Bookmarks/Bookmarks";
 import CreateFamily from "./components/CreateFamily/CreateFamily";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -15,16 +16,15 @@ import FamilyGroup from "./components/FamilyGroup/FamilyGroup";
 import FamilyGroupSettings from "./components/FamilyGroupSettings/FamilyGroupSettings";
 import Hamburger from "./components/Sidebar/Hamburger";
 import Invite from "./components/Invite/Invite";
+import InviteCode from "./components/AcceptInvite/InviteCode";
 import Landing from "./components/Landing/Landing";
 import Login from "./components/Login/Login";
 import Settings from "./components/Settings/Settings";
-import InviteCode from "./components/AcceptInvite/InviteCode";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Signup from "./components/Signup/Signup";
 import UploadMemento from "./components/UploadMemento/UploadMemento";
 import UserProfile from "./components/UserProfile/UserProfile";
 import { theme } from "./theme";
-import AcceptInvite from "components/AcceptInvite/AcceptInvite";
 
 const GlobalStyle = createGlobalStyle`
   /* Reset styles */
@@ -67,7 +67,7 @@ const GlobalStyle = createGlobalStyle`
     letter-spacing: 0.03em;
     cursor: pointer;
     color: ${props => props.theme.palette.text};
-    background-color: white;
+    background-color: ${props => props.theme.palette.background};
 
     &:focus {
       outline: none;
@@ -135,11 +135,12 @@ const authenticatedRoutes = [
     component: Settings,
   },
   {
-    name: "family/:id",
+    name: "family/:id/",
     component: FamilyGroup,
+    exact: true,
   },
   {
-    name: "familysettings/:id",
+    name: "family/:id/settings",
     component: FamilyGroupSettings,
   },
   {

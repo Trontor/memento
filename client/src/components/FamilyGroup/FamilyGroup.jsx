@@ -1,6 +1,7 @@
 import {
   FamilyHeader,
-  FamilyImg
+  FamilyImg,
+  SettingsButton
 } from "./FamilyGroupStyles";
 import { MenuContainer, MenuTabs } from "ui/Navigation";
 import React, {useState} from "react";
@@ -52,7 +53,9 @@ export default function FamilyGroup(props) {
     <>
       <FamilyImg />
       <FamilyHeader>
+        <div></div>
         <h1>{familyName}</h1>
+        <SettingsButton onClick={() => props.history.push(familyId + "/settings")}/>
       </FamilyHeader>
       <MenuContainer>
         {menuTabs.map((tab, idx) => (

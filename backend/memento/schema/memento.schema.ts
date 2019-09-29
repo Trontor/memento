@@ -139,8 +139,6 @@ export const MementoSchema: Schema<MementoDocument> = new Schema(
  * Maps Mongoose `MementoDocument` to GraphQL `Memento` type.
  */
 MementoSchema.methods.toDTO = function(): Memento {
-  console.log(this._dates);
-  console.log(this._media);
   return {
     // mongodb id
     mementoId: this.id,
