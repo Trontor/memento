@@ -172,3 +172,26 @@ export interface IFindMementoConditions {
     $in: string[];
   };
 }
+
+export interface IUpdateMementoPayload {
+  $pull?: {
+    _media?: {
+      _id: {
+        $in: Types.ObjectId[];
+      };
+    };
+  };
+  $push?: {
+    _media?: {
+      $each: any[];
+    };
+  };
+  $set: {
+    [key: string]: any;
+  };
+}
+
+export interface IUpdateMementoOptions {
+  new?: boolean;
+  arrayFilters?: any[];
+}

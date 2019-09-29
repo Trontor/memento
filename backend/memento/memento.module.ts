@@ -30,5 +30,6 @@ export const MementoDataLoaderProvider: Provider<MementoDataLoaderById> = {
     UserModule,
   ],
   providers: [MementoService, MementoResolver, MementoDataLoaderProvider],
+  exports: [MEMENTO_LOADER_BY_ID],
 })
 export class MementoModule {}

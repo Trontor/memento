@@ -7,7 +7,10 @@ import { CurrentUser } from "../auth/decorators/current-user.decorator";
 import { Memento } from "./dto/memento.dto";
 import { User } from "../user/dto/user.dto";
 import { FamilyMemberGuard } from "../auth/guards/family-member.guard";
-import { CreateMementoInput } from "./inputs/memento.inputs";
+import {
+  CreateMementoInput,
+  UpdateMementoInput,
+} from "./inputs/memento.inputs";
 import { Family } from "../family/dto/family.dto";
 import { MementoDocument } from "./schema/memento.schema";
 
@@ -22,6 +25,7 @@ import {
 } from "./memento.dataloader";
 import { ID } from "type-graphql";
 import { isUserInFamily } from "../user/user.util";
+import { UpdateMementoGuard } from "./guards/update-memento.guard";
 
 /**
  * Resolves GraphQL mutations and queries related to Mementos.
@@ -40,6 +44,12 @@ export class MementoResolver {
     private readonly userLoaderById: UserDataLoaderById,
   ) {}
 
+  /**
+   * Creates a new Memento.
+   *
+   * @param user current logged in user
+   * @param input fields to create memento
+   */
   @Mutation(returns => Memento)
   @UseGuards(JwtAuthGuard, FamilyMemberGuard)
   async createMemento(
@@ -49,6 +59,30 @@ export class MementoResolver {
     return this.mementoService.createMemento(user, input);
   }
 
+  /**
+   * Updates a Memento.
+   *
+   * @param user current logged in user
+   * @param input input to update an existing memento
+   */
+  @Mutation(returns => Memento)
+  @UseGuards(JwtAuthGuard, UpdateMementoGuard)
+  async updateMemento(
+    @CurrentUser() user: User,
+    @Args("input") input: UpdateMementoInput,
+  ) {
+    const memento = await this.mementoService.updateMemento(input);
+    this.mementoLoaderById.clear(memento.mementoId);
+    this.logger.debug(memento);
+    return memento;
+  }
+
+  /**
+   * Fetches an existing Memento by its `id`.
+   *
+   * @param user current logged in user
+   * @param mementoId id of memento
+   */
   @Query(returns => Memento, { name: "memento" })
   @UseGuards(JwtAuthGuard)
   async getMemento(
@@ -62,6 +96,14 @@ export class MementoResolver {
     return memento.toDTO();
   }
 
+  /**
+   * Fetches and optionally filters a family's Mementos.
+   * The responses are paginated using `ObjectId`.
+   *
+   * @param familyId the id of the family whose Mementos need to be fetched
+   * @param lastId (optional) id the last Memento in the previous page of results
+   * @param tags (optional) filter by array of strings
+   */
   @Query(returns => [Memento], { name: "mementos" })
   @UseGuards(JwtAuthGuard, FamilyMemberGuard)
   async getMementos(
@@ -70,7 +112,6 @@ export class MementoResolver {
     @Args({ name: "tags", type: () => [String], nullable: true })
     tags?: string[],
   ): Promise<Memento[]> {
-    // TODO: pagination
     const mementos: MementoDocument[] = await this.mementoService.getAllFamilyMementos(
       familyId,
       tags,
@@ -86,6 +127,9 @@ export class MementoResolver {
     return mementos.map(m => m.toDTO());
   }
 
+  /**
+   * Resolves a nested query on the `family` property.
+   */
   @ResolveProperty("family", returns => Family)
   async resolveFamily(@Parent() { mementoId }: Memento): Promise<Family> {
     // TODO: use dataloader pattern as re-fetching is inefficient
@@ -96,6 +140,9 @@ export class MementoResolver {
     return family.toDTO();
   }
 
+  /**
+   * Resolves a nested query on the `uploader` property.
+   */
   @ResolveProperty("uploader", returns => User)
   async resolveUploader(@Parent() { mementoId }: Memento): Promise<User> {
     const memento = await this.mementoLoaderById.load(mementoId);

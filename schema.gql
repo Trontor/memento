@@ -19,12 +19,6 @@ input CreateInviteInput {
   familyId: ID!
 }
 
-input CreateMediaInput {
-  type: MediaType!
-  file: Upload!
-  caption: String
-}
-
 input CreateMementoDateInput {
   day: Int
   month: Int
@@ -36,15 +30,25 @@ input CreateMementoInput {
   type: String!
   description: String!
   location: String
-  media: [CreateMediaInput!]
+  media: [CreateMementoMediaInput!]
   dates: [CreateMementoDateInput!]
   tags: [String!]
+}
+
+input CreateMementoMediaInput {
+  type: MediaType!
+  file: Upload!
+  caption: String
 }
 
 """
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
 scalar DateTime
+
+input DeleteMementoMediaInput {
+  mediaId: ID!
+}
 
 type FailedInviteOutput {
   email: String!
@@ -134,6 +138,7 @@ type Mutation {
   createInvite(input: CreateInviteInput!): Invite!
   inviteByEmail(input: SendInvitesInput!): SendInvitesOutput!
   createMemento(input: CreateMementoInput!): Memento!
+  updateMemento(input: UpdateMementoInput!): Memento!
 }
 
 type Query {
@@ -172,6 +177,21 @@ input UpdateFamilyInput {
   image: Upload
   description: String
   colour: String
+}
+
+input UpdateMementoInput {
+  mementoId: ID!
+  description: String
+  location: String
+  tags: [String!]
+  updateMedia: [UpdateMementoMediaInput!]
+  appendMedia: [CreateMementoMediaInput!]
+  deleteMedia: [DeleteMementoMediaInput!]
+}
+
+input UpdateMementoMediaInput {
+  mediaId: ID!
+  caption: String!
 }
 
 type UpdateRoleOutput {
