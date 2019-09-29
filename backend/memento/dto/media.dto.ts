@@ -1,4 +1,4 @@
-import { ObjectType, Field, registerEnumType } from "type-graphql";
+import { ObjectType, Field, registerEnumType, ID } from "type-graphql";
 
 export enum MediaType {
   Image = "IMAGE",
@@ -16,6 +16,9 @@ registerEnumType(MediaType, {
  */
 @ObjectType()
 export class Media {
+  @Field(type => ID)
+  mediaId!: string;
+
   @Field(type => MediaType)
   type!: MediaType;
 

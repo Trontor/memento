@@ -11,6 +11,9 @@ import { Media } from "./media.dto";
  */
 @ObjectType()
 export class MementoDate {
+  @Field(type => ID)
+  dateId!: string;
+
   @Field(type => Int, { nullable: true })
   day?: number;
 

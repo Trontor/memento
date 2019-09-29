@@ -1,5 +1,9 @@
 import { InputType, Field, ID, Int } from "type-graphql";
-import { CreateMediaInput } from "./media.inputs";
+import {
+  CreateMementoMediaInput,
+  DeleteMementoMediaInput,
+  UpdateMementoMediaInput,
+} from "./media.inputs";
 
 @InputType()
 export class CreateMementoDateInput {
@@ -30,12 +34,39 @@ export class CreateMementoInput {
   @Field({ nullable: true })
   location?: string;
 
-  @Field(type => [CreateMediaInput], { nullable: true })
-  media?: CreateMediaInput[];
+  @Field(type => [CreateMementoMediaInput], { nullable: true })
+  media?: CreateMementoMediaInput[];
 
   @Field(type => [CreateMementoDateInput], { nullable: true })
   dates?: CreateMementoDateInput[];
 
   @Field(type => [String], { nullable: true })
   tags?: string[];
+}
+
+/**
+ * GraphQL input for updating a Memento
+ */
+@InputType()
+export class UpdateMementoInput {
+  @Field(type => ID)
+  mementoId!: string;
+
+  @Field({ nullable: true })
+  description?: string;
+
+  @Field({ nullable: true })
+  location?: string;
+
+  @Field(type => [String], { nullable: true })
+  tags?: string[];
+
+  @Field(type => [UpdateMementoMediaInput], { nullable: true })
+  updateMedia?: UpdateMementoMediaInput[];
+
+  @Field(type => [CreateMementoMediaInput], { nullable: true })
+  appendMedia?: CreateMementoMediaInput[];
+
+  @Field(type => [DeleteMementoMediaInput], { nullable: true })
+  deleteMedia?: DeleteMementoMediaInput[];
 }

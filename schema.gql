@@ -19,12 +19,6 @@ input CreateInviteInput {
   familyId: ID!
 }
 
-input CreateMediaInput {
-  type: MediaType!
-  file: Upload!
-  caption: String
-}
-
 input CreateMementoDateInput {
   day: Int
   month: Int
@@ -36,15 +30,25 @@ input CreateMementoInput {
   type: String!
   description: String!
   location: String
-  media: [CreateMediaInput!]
+  media: [CreateMementoMediaInput!]
   dates: [CreateMementoDateInput!]
   tags: [String!]
+}
+
+input CreateMementoMediaInput {
+  type: MediaType!
+  file: Upload!
+  caption: String
 }
 
 """
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
 scalar DateTime
+
+input DeleteMementoMediaInput {
+  mediaId: ID!
+}
 
 type FailedInviteOutput {
   email: String!
@@ -91,6 +95,7 @@ input LoginInput {
 }
 
 type Media {
+  mediaId: ID!
   type: MediaType!
   url: String!
   caption: String
@@ -116,6 +121,7 @@ type Memento {
 }
 
 type MementoDate {
+  dateId: ID!
   day: Int
   month: Int
   year: Int
@@ -132,6 +138,7 @@ type Mutation {
   createInvite(input: CreateInviteInput!): Invite!
   inviteByEmail(input: SendInvitesInput!): SendInvitesOutput!
   createMemento(input: CreateMementoInput!): Memento!
+  updateMemento(input: UpdateMementoInput!): Memento!
 }
 
 type Query {
@@ -140,6 +147,7 @@ type Query {
   refreshToken: String!
   family(familyId: ID!): Family!
   invite(inviteId: ID!): Invite!
+  memento(mementoId: ID!): Memento!
   mementos(tags: [String!], lastId: ID, familyId: ID!): [Memento!]!
 }
 
@@ -171,6 +179,21 @@ input UpdateFamilyInput {
   colour: String
 }
 
+input UpdateMementoInput {
+  mementoId: ID!
+  description: String
+  location: String
+  tags: [String!]
+  updateMedia: [UpdateMementoMediaInput!]
+  appendMedia: [CreateMementoMediaInput!]
+  deleteMedia: [DeleteMementoMediaInput!]
+}
+
+input UpdateMementoMediaInput {
+  mediaId: ID!
+  caption: String!
+}
+
 type UpdateRoleOutput {
   userId: ID!
   role: Role!
@@ -186,7 +209,9 @@ input UpdateUserInput {
   image: Upload
 }
 
-"""The `Upload` scalar type represents a file upload."""
+"""
+The `Upload` scalar type represents a file upload.
+"""
 scalar Upload
 
 type User {
