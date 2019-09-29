@@ -29,10 +29,10 @@ export const FamilyLayout = styled.div`
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
     grid-template-columns:
-      minmax(260px, 300px)
-      minmax(600px, 968px);
+      minmax(240px, 300px)
+      minmax(400px, 768px);
     grid-template-rows: 100%;
-    grid-column-gap: 24px;
+    grid-column-gap: 12px;
     margin: 0 24px;
   }
 `;
@@ -54,9 +54,14 @@ export const SideMenu = styled.section`
   }
 `
 export const MainViewer = styled.section`
-  border-left: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
-  border-right: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
-  height: 100%;
+  display: none;
+  /* border-left: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
+  border-right: 1px solid ${props => lighten(0.67, props.theme.palette.text)}; */
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
+    height: 100%;
+    display: block;
+  }
 `
 
 export const FamilyProfileContainer = styled.div`
@@ -154,7 +159,7 @@ export const SideMenuSectionContainer = styled.section`
     border: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
     list-style: none;
     border-radius: 4px;
-    margin-top: 24px;
+    margin-top: 12px;
   }
 `
 
@@ -216,13 +221,13 @@ export const MemberRow = styled.div`
 
   img {
     border-radius: 50%;
-    width: 32px;
-    height: 32px;
+    width: 38px;
+    height: 38px;
     object-fit: cover;
   }
 
   i {
-    font-size: 32px;
+    font-size: 38px;
   }
 
   &:hover {
