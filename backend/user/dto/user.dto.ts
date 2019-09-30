@@ -4,6 +4,7 @@ import { Gender } from "./gender.dto";
 import { Role } from "./role.dto";
 
 import { Family } from "../../family/dto/family.dto";
+import { Memento } from "../../memento/dto/memento.dto";
 
 /**
  * GraphQL class for returning User objects.
@@ -40,6 +41,9 @@ export class User {
 
   @Field(type => [Family!])
   families!: Family[];
+
+  @Field(type => [Memento!])
+  bookmarks!: Memento[];
 
   @Field()
   createdAt!: Date;

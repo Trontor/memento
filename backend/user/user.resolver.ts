@@ -22,6 +22,12 @@ import {
   FAMILY_LOADER_BY_ID,
   FamilyDataLoaderById,
 } from "../family/family.dataloader";
+import { Memento } from "../memento/dto/memento.dto";
+import {
+  MEMENTO_LOADER_BY_ID,
+  MementoDataLoaderById,
+} from "../memento/memento.dataloader";
+import { MementoDocument } from "../memento/schema/memento.schema";
 
 /**
  * Resolves GraphQL mutations and queries related to users.
@@ -38,6 +44,8 @@ export class UserResolver {
     private readonly usersDataLoaderById: UserDataLoaderById,
     @Inject(FAMILY_LOADER_BY_ID)
     private readonly familyDataLoaderById: FamilyDataLoaderById,
+    @Inject(MEMENTO_LOADER_BY_ID)
+    private readonly mementoDataLoaderById: MementoDataLoaderById,
   ) {}
 
   /**
@@ -118,5 +126,18 @@ export class UserResolver {
       user.roles.map(({ familyId }) => familyId),
     );
     return families.map(doc => doc.toDTO());
+  }
+
+  /**
+   * Resolves the `bookmarks` property on `User` GraphQL type.
+   */
+  @ResolveProperty("bookmarks", returns => [Memento])
+  async resolveBookmarks(@Parent() { userId }: User) {
+    const userDoc = await this.usersDataLoaderById.load(userId);
+    this.logger.debug(userDoc);
+    const bookmarks: MementoDocument[] = await this.mementoDataLoaderById.loadMany(
+      userDoc._bookmarks.map(id => id.toHexString()),
+    );
+    return bookmarks.map(b => b.toDTO());
   }
 }

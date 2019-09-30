@@ -1,4 +1,4 @@
-import { Module, Provider, Scope } from "@nestjs/common";
+import { Module, Provider, Scope, forwardRef } from "@nestjs/common";
 import { MementoService } from "./memento.service";
 import { MongooseModule, getModelToken } from "@nestjs/mongoose";
 import { MementoSchema } from "./schema/memento.schema";
@@ -26,8 +26,8 @@ export const MementoDataLoaderProvider: Provider<MementoDataLoaderById> = {
   imports: [
     MongooseModule.forFeature([{ name: "Memento", schema: MementoSchema }]),
     FileModule,
-    FamilyModule,
-    UserModule,
+    forwardRef(() => FamilyModule),
+    forwardRef(() => UserModule),
   ],
   providers: [MementoService, MementoResolver, MementoDataLoaderProvider],
   exports: [MEMENTO_LOADER_BY_ID],

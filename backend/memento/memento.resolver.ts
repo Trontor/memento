@@ -145,4 +145,34 @@ export class MementoResolver {
     );
     return user.toDTO();
   }
+
+  @Mutation(returns => Memento, { name: "bookmark" })
+  @UseGuards(JwtAuthGuard, ReadMementoGuard)
+  async createBookmark(
+    @CurrentUser() user: User,
+    @Args({ name: "mementoId", type: () => ID }) mementoId: string,
+  ) {
+    const { memento, user: userDoc } = await this.mementoService.createBookmark(
+      user,
+      mementoId,
+    );
+    this.logger.debug(memento);
+    this.logger.debug(userDoc);
+    this.mementoLoaderById.clear(mementoId).prime(mementoId, memento);
+    this.userLoaderById.clear(user.userId).prime(user.userId, userDoc);
+    return memento.toDTO();
+  }
+
+  /**
+   * Resolves the `bookmarkedBy` property on a `Memento`.
+   */
+  @ResolveProperty("bookmarkedBy", returns => [User])
+  async resolveBookmarkedBy(@Parent() { mementoId }: Memento) {
+    const memento = await this.mementoLoaderById.load(mementoId);
+    this.logger.debug(memento);
+    const users = await this.userLoaderById.loadMany(
+      memento._bookmarkedBy.map(id => id.toHexString()),
+    );
+    return users.map(doc => doc.toDTO());
+  }
 }

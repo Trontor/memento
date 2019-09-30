@@ -11,6 +11,7 @@ export interface MementoDocument extends Memento, Document {
   // Declaring everything that is not in the GraphQL Schema for a User
   inFamily: Types.ObjectId;
   uploadedBy: Types.ObjectId;
+  _bookmarkedBy: Types.ObjectId[];
   _dates: any;
   _media: any;
 
@@ -125,6 +126,15 @@ export const MementoSchema: Schema<MementoDocument> = new Schema(
       type: [DateSchema],
       default: [],
     },
+    _bookmarkedBy: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+      default: [],
+    },
     tags: {
       type: [String],
       default: [],
@@ -150,6 +160,8 @@ MementoSchema.methods.toDTO = function(): Memento {
     family: this.family,
     // dummy: resolved if requested
     uploader: this.uploader,
+    // dummy: resolved if requested
+    bookmarkedBy: [],
     description: this.description,
     tags: this.tags,
     // timestamps

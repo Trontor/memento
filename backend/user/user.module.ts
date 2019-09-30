@@ -11,6 +11,7 @@ import {
   USER_LOADER_BY_ID,
   UserDataLoaderById,
 } from "./user.dataloader";
+import { MementoModule } from "../memento/memento.module";
 
 /**
  * Nestjs request-scoped provider for a Dataloader<UserId, UserDocument>
@@ -28,6 +29,7 @@ export const UsersDataLoaderProvider: Provider<UserDataLoaderById> = {
     forwardRef(() => FamilyModule),
     MongooseModule.forFeature([{ name: "User", schema: UserSchema }]),
     FileModule,
+    forwardRef(() => MementoModule),
   ],
   providers: [UserResolver, UserService, UsersDataLoaderProvider],
   exports: [UserService, USER_LOADER_BY_ID],
