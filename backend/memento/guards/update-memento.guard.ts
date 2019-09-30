@@ -1,12 +1,5 @@
-import {
-  Injectable,
-  CanActivate,
-  ExecutionContext,
-  Logger,
-  BadRequestException,
-  Inject,
-} from "@nestjs/common";
-import { GqlExecutionContext } from "@nestjs/graphql";
+import { Injectable, ExecutionContext, Logger, Inject } from "@nestjs/common";
+import { GqlExecutionContext, GraphQLExecutionContext } from "@nestjs/graphql";
 import { User } from "../../user/dto/user.dto";
 import { isFamilyAdmin } from "../../user/user.util";
 import {
@@ -14,52 +7,41 @@ import {
   MementoDataLoaderById,
 } from "../memento.dataloader";
 import { UpdateMementoInput } from "../inputs/memento.inputs";
+import { MementoGuard } from "./abstract-memento.guard";
 
 /**
  * Authorizes family admins and original uploaders to update
  * an existing Memento.
  */
 @Injectable()
-export class UpdateMementoGuard implements CanActivate {
-  private readonly logger = new Logger(UpdateMementoInput.name);
-
+export class UpdateMementoGuard extends MementoGuard {
   constructor(
     @Inject(MEMENTO_LOADER_BY_ID)
-    private readonly mementoLoaderById: MementoDataLoaderById,
-  ) {}
+    mementoLoaderById: MementoDataLoaderById,
+  ) {
+    super(mementoLoaderById, new Logger(UpdateMementoInput.name));
+  }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const ctx = GqlExecutionContext.create(context);
-    const req = ctx.getContext().req;
-    const user: User = req.user;
-    if (!user) {
-      // cannot activate guard if user is not authenticated
-      return false;
-    }
-    let mementoId: string;
-    try {
-      mementoId = ctx.getArgs().input.mementoId;
-    } catch (err) {
-      this.logger.error(`Format required: { input: { mementoId: "..."} }`);
-      throw new BadRequestException();
-    }
-    const { uploadedBy, inFamily } = await this.mementoLoaderById.load(
-      mementoId,
-    );
+    const ctx: GraphQLExecutionContext = GqlExecutionContext.create(context);
+    const { uploadedBy, inFamily } = await this.loadMementoFromContext(ctx);
+    const authenticatedUser: User = this.extractUserFromContext(ctx);
 
     // Check if user is family admin
-    if (isFamilyAdmin(user, inFamily.toHexString())) {
-      this.logger.log(`Can update: user ${user.userId} is an admin of family`);
+    if (isFamilyAdmin(authenticatedUser, inFamily.toHexString())) {
+      this.logger.log(
+        `Can update: user ${authenticatedUser.userId} is an admin of family`,
+      );
       return true;
-    } else if (user.userId === uploadedBy.toHexString()) {
+    } else if (authenticatedUser.userId === uploadedBy.toHexString()) {
       // Check if user was uploader
       this.logger.log(
-        `Can update: user ${user.userId} is original uploader of memento`,
+        `Can update: user ${authenticatedUser.userId} is original uploader of memento`,
       );
       return true;
     } else {
       this.logger.log(
-        `Cannot update: user ${user.userId} is NOT family admin or uploader`,
+        `Cannot update: user ${authenticatedUser.userId} is NOT family admin or uploader`,
       );
       return false;
     }
