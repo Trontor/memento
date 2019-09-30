@@ -2,6 +2,8 @@ import {
   Injectable,
   Logger,
   InternalServerErrorException,
+  Inject,
+  forwardRef,
 } from "@nestjs/common";
 import { User } from "../user/dto/user.dto";
 import {
@@ -33,6 +35,8 @@ import {
   validateMementoInput,
   validateUpdateMementoInput,
 } from "./memento.util";
+import { UserService } from "../user/user.service";
+import { UserDocument } from "../user/schema/user.schema";
 
 /**
  * Manages CRUD for Mementos.
@@ -45,12 +49,77 @@ export class MementoService {
     @InjectModel("Memento")
     private readonly MementoModel: Model<MementoDocument>,
     private readonly fileService: FileService,
+    @Inject(forwardRef(() => UserService))
+    private readonly userService: UserService,
   ) {}
 
   async findById(mementoId: string): Promise<MementoDocument> {
     const doc = await this.MementoModel.findById(mementoId);
     if (!doc) throw new MementoNotFoundException();
     return doc;
+  }
+
+  /**
+   * Creates a bookmark by storing a reference to the bookmarker (User)
+   * on the Memento, and a reference to the Memento on the bookmarker (User).
+   *
+   * @param user user who is bookmarking the Memento
+   * @param mementoId id of the Memento being bookmarked
+   */
+  async createBookmark(user: User, mementoId: string) {
+    // TODO: use mongodb sessions for causal consistency
+    // add Memento ref to user
+    const userDoc: UserDocument = await this.userService.addBookmarkToUser(
+      user.userId,
+      mementoId,
+    );
+
+    // add user ref to Memento
+    const memento = await this.MementoModel.findByIdAndUpdate(
+      fromHexStringToObjectId(mementoId),
+      {
+        $addToSet: {
+          _bookmarkedBy: fromHexStringToObjectId(user.userId),
+        },
+      },
+      { new: true },
+    );
+    if (!memento)
+      throw new InternalServerErrorException(
+        "Could not add bookmark to memento",
+      );
+    return { memento, user: userDoc };
+  }
+
+  /**
+   * Deletes a bookmark removing the references on the user and memento.
+   *
+   * @param user user who is bookmarking the Memento
+   * @param mementoId id of the Memento being bookmarked
+   */
+  async deleteBookmark(user: User, mementoId: string) {
+    // TODO: use mongodb sessions for causal consistency
+    // delete Memento ref from user
+    const userDoc: UserDocument = await this.userService.deleteBookmarkFromUser(
+      user.userId,
+      mementoId,
+    );
+
+    // delete user ref from Memento
+    const memento = await this.MementoModel.findByIdAndUpdate(
+      fromHexStringToObjectId(mementoId),
+      {
+        $pull: {
+          _bookmarkedBy: fromHexStringToObjectId(user.userId),
+        },
+      },
+      { new: true },
+    );
+    if (!memento)
+      throw new InternalServerErrorException(
+        "Could not add bookmark to memento",
+      );
+    return { memento, user: userDoc };
   }
 
   async updateMemento(input: UpdateMementoInput): Promise<Memento> {

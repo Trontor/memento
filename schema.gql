@@ -116,6 +116,7 @@ type Memento {
   media: [Media!]!
   dates: [MementoDate!]!
   tags: [String!]
+  bookmarkedBy: [User!]!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -139,6 +140,8 @@ type Mutation {
   inviteByEmail(input: SendInvitesInput!): SendInvitesOutput!
   createMemento(input: CreateMementoInput!): Memento!
   updateMemento(input: UpdateMementoInput!): Memento!
+  bookmark(mementoId: ID!): Memento!
+  deleteBookmark(mementoId: ID!): Memento!
 }
 
 type Query {
@@ -209,9 +212,7 @@ input UpdateUserInput {
   image: Upload
 }
 
-"""
-The `Upload` scalar type represents a file upload.
-"""
+"""The `Upload` scalar type represents a file upload."""
 scalar Upload
 
 type User {
@@ -225,6 +226,7 @@ type User {
   gender: String
   familyRoles: [Role!]!
   families: [Family!]!
+  bookmarks: [Memento!]!
   createdAt: DateTime!
   updatedAt: DateTime!
   lastSeenAt: DateTime!
