@@ -141,6 +141,7 @@ type Mutation {
   createMemento(input: CreateMementoInput!): Memento!
   updateMemento(input: UpdateMementoInput!): Memento!
   bookmark(mementoId: ID!): Memento!
+  deleteBookmark(mementoId: ID!): Memento!
 }
 
 type Query {

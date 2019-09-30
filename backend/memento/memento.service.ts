@@ -91,6 +91,37 @@ export class MementoService {
     return { memento, user: userDoc };
   }
 
+  /**
+   * Deletes a bookmark removing the references on the user and memento.
+   *
+   * @param user user who is bookmarking the Memento
+   * @param mementoId id of the Memento being bookmarked
+   */
+  async deleteBookmark(user: User, mementoId: string) {
+    // TODO: use mongodb sessions for causal consistency
+    // delete Memento ref from user
+    const userDoc: UserDocument = await this.userService.deleteBookmarkFromUser(
+      user.userId,
+      mementoId,
+    );
+
+    // delete user ref from Memento
+    const memento = await this.MementoModel.findByIdAndUpdate(
+      fromHexStringToObjectId(mementoId),
+      {
+        $pull: {
+          _bookmarkedBy: fromHexStringToObjectId(user.userId),
+        },
+      },
+      { new: true },
+    );
+    if (!memento)
+      throw new InternalServerErrorException(
+        "Could not add bookmark to memento",
+      );
+    return { memento, user: userDoc };
+  }
+
   async updateMemento(input: UpdateMementoInput): Promise<Memento> {
     // validate fields
     validateUpdateMementoInput(input);

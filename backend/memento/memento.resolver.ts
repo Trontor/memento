@@ -146,6 +146,12 @@ export class MementoResolver {
     return user.toDTO();
   }
 
+  /**
+   * Creates a new user bookmark on a Memento.
+   *
+   * @param user user creating the new bookmark
+   * @param mementoId id of memento being bookmarked
+   */
   @Mutation(returns => Memento, { name: "bookmark" })
   @UseGuards(JwtAuthGuard, ReadMementoGuard)
   async createBookmark(
@@ -158,6 +164,21 @@ export class MementoResolver {
     );
     this.logger.debug(memento);
     this.logger.debug(userDoc);
+    this.mementoLoaderById.clear(mementoId).prime(mementoId, memento);
+    this.userLoaderById.clear(user.userId).prime(user.userId, userDoc);
+    return memento.toDTO();
+  }
+
+  @Mutation(returns => Memento, { name: "deleteBookmark" })
+  @UseGuards(JwtAuthGuard, ReadMementoGuard)
+  async deleteBookmark(
+    @CurrentUser() user: User,
+    @Args({ name: "mementoId", type: () => ID }) mementoId: string,
+  ) {
+    const { memento, user: userDoc } = await this.mementoService.deleteBookmark(
+      user,
+      mementoId,
+    );
     this.mementoLoaderById.clear(mementoId).prime(mementoId, memento);
     this.userLoaderById.clear(user.userId).prime(user.userId, userDoc);
     return memento.toDTO();

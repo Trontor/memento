@@ -225,6 +225,26 @@ export class UserService implements IUserService {
     return doc;
   }
 
+  async deleteBookmarkFromUser(
+    userId: string,
+    mementoId: string,
+  ): Promise<UserDocument> {
+    const doc = await this.UserModel.findByIdAndUpdate(
+      fromHexStringToObjectId(userId),
+      {
+        $pull: {
+          _bookmarks: fromHexStringToObjectId(mementoId),
+        },
+      },
+      { new: true },
+    );
+    if (!doc) {
+      this.logger.error("Could not update user model with new bookmark");
+      throw new InternalServerErrorException();
+    }
+    return doc;
+  }
+
   /**
    * Reads a mongo database error and attempts to provide a better error message. If
    * it is unable to produce a better error message, returns the original error message.
