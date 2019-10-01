@@ -1,6 +1,5 @@
-import styled , {css} from "styled-components";
-
 import { lighten } from "polished";
+import styled from "styled-components";
 
 export const Card = styled.div`
   width: 100%;
@@ -65,6 +64,7 @@ export const MementoOverview = styled.div`
 
 export const MementoTitle = styled.div`
   font-family: "Livvic", sans-serif;
+  font-size: 18px;
   font-weight: bold;
   letter-spacing: 0.03em;
   margin-bottom: 8px;
@@ -106,7 +106,7 @@ export const MementoTagsWrapper = styled.ul`
 
   i {
     color: ${props => props.theme.palette.main};
-    margin-right: 12px;
+    margin-right: 8px;
   }
 `;
 
@@ -123,8 +123,9 @@ export const MementoTags = styled.li`
   ${props => props.theme.mixins.hoverFade};
 
   &:hover {
-    border-color: ${props => lighten(0.1, props.theme.palette.main)};
-    box-shadow: inset 0 0 0 1px ${props => lighten(0.1, props.theme.palette.main)};
+    color: ${props => props.theme.palette.main};
+    border-color: ${props => lighten(0.2, props.theme.palette.main)};
+    box-shadow: inset 0 0 0 1px ${props => lighten(0.2, props.theme.palette.main)};
     /* color: ${props => props.theme.palette.main} */
   }
 `;
