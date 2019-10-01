@@ -9,43 +9,51 @@ export default function MementosViewer() {
       description: "Bachelor of Design",
       mementoType: "event",
       eventType: "graduation",
-      coverImage: "",
+      media: [
+        {
+          type: "",
+          url: "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80",
+          caption: ""
+        }
+      ],
       tags: ["photographs","graduation"],
       dateUploaded: "2 months in the future",
-      dateCreated: "2019",
-      location: "Melbourne"
+      dateCreated: {day: 8, month: 12, year: 2019},
+      location: "Melbourne",
+      people: ["Giselle Leung", "Hans Leung", "Regina Siu", "Keith Leung"]
     },
     {
       title: "My Painting",
       author: "Gigi",
       description: "Lorem ipsum I love painting",
-      coverImage: "",
+      media: [{type: "", url: "", caption: ""}],
       tags: ["painting", "artwork"],
       dateUploaded: "2 days ago",
-      dateCreated: "2018",
-      location: "Melbourne"
+      dateCreated: {day: 8, month: 12, year: 2019},
+      location: "Melbourne",
+      people: []
     },
     {
       title: "My Stuffed Hippo",
       author: "Gigi",
-      description:
-        "This is my favourite stuffed animal. I've had it since I was 5.",
-      coverImage: "",
-      tags: ["stuffed animals"],
+      description: "This is my favourite stuffed animal. I've had it since I was 5.",
+      media: [{type: "", url: "", caption: ""}],
+      tags: ["stuffed toys"],
       dateUploaded: "3 days ago",
-      dateCreated: "1999",
-      location: "Melbourne"
+      dateCreated: {day: 8, month: 12, year: 1999},
+      location: "Melbourne",
+      people: []
     },
     {
       title: "My Stuffed Hippo",
       author: "Gigi",
-      description:
-        "This is my favourite stuffed animal. I've had it since I was 5.",
-      coverImage: "",
-      tags: ["stuffed animals"],
+      description: "This is my favourite stuffed animal. I've had it since I was 5.",
+      media: [{type: "", url: "", caption: ""}],
+      tags: ["stuffed toys"],
       dateUploaded: "3 days ago",
-      dateCreated: "1999",
-      location: null
+      dateCreated: {day: 8, month: 12, year: 1999},
+      location: null,
+      people: []
     }
   ];
 

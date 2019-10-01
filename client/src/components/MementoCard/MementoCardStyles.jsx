@@ -1,5 +1,6 @@
+import styled , {css} from "styled-components";
+
 import { lighten } from "polished";
-import styled from "styled-components";
 
 export const Card = styled.div`
   width: 100%;
@@ -37,26 +38,36 @@ export const AuthorAvatar = styled.div`
   }
 `;
 
-// export const NameDateWrapper= styled.div`
-
-// `
-
 export const MementoAuthor = styled.div`
   font-weight: bold;
   letter-spacing: 0.02em;
 `;
 
 export const CardContent = styled.div`
+`;
+
+export const MementoOverview = styled.div`
   i {
-    margin-right: 6px;
     color: ${props => props.theme.palette.main};
+    justify-content: left;
   }
+
+  > div {
+    text-transform: capitalize;
+    display: grid;
+    grid-template-columns: 24px auto;
+    align-items: baseline;
+  }
+
+  line-height: 1.5em;
+  margin-bottom: 12px;
 `;
 
 export const MementoTitle = styled.div`
+  font-family: "Livvic", sans-serif;
   font-weight: bold;
   letter-spacing: 0.03em;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 `;
 
 export const MementoCoverImg = styled.div``;
@@ -76,12 +87,43 @@ export const UploadDate = styled.span`
   margin-top: 2px;
 `;
 
-export const MementoLocation = styled.div`
-  
+export const MementoTagsWrapper = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  width: 100%;
+  margin-bottom: 0;
 `;
 
-export const MementoDate = styled.span`
-  display: block;
+export const MementoTags = styled.li`
+  font-family: "Livvic", sans-serif;
+  font-size: 11px;
+  color: ${props => props.theme.palette.text};
+  border: 1px solid ${props => lighten(0.65, props.theme.palette.text)};
+  display: inline-block;
+  padding: 6px 10px;
+  margin-right: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  ${props => props.theme.mixins.hoverFade};
+
+  &:hover {
+    border-color: ${props => lighten(0.1, props.theme.palette.main)};
+    box-shadow: inset 0 0 0 1px ${props => lighten(0.1, props.theme.palette.main)};
+    /* color: ${props => props.theme.palette.main} */
+  }
 `;
 
-export const MementoTags = styled.a``;
+export const PeopleTags = styled.span`
+
+  &::after {
+    display: inline;
+    content: ', ';
+  }
+
+  &:last-child {
+    &::after {
+      content: none;
+    }
+  }
+`;

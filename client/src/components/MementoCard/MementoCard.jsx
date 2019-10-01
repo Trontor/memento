@@ -7,9 +7,14 @@ import {
   MementoCoverImg,
   MementoDate,
   MementoDescription,
+  MementoEvent,
   MementoLocation,
+  MementoOverview,
   MementoTags,
+  MementoTagsWrapper,
   MementoTitle,
+  PeopleTags,
+  PeopleTagsWrapper,
   UploadDate
 } from "./MementoCardStyles";
 
@@ -29,19 +34,46 @@ export default function MementoCard(props) {
       </AuthorWrapper>
       <CardContent>
         <MementoTitle>{props.title}</MementoTitle>
-        <MementoDate>
-          <i class="far fa-clock"></i>
-          {props.dateCreated}
-        </MementoDate>
-        <MementoLocation>
-          <i class="far fa-compass"></i>
-          {props.location}
-        </MementoLocation>
+
+        <MementoOverview>
+          {props.mementoType === "event" && (
+            <div>
+              <i class="far fa-calendar-alt"></i>
+              {props.eventType}
+            </div>
+          )}
+          <div>
+            <i class="far fa-clock"></i>
+            {props.dateCreated.year}
+          </div>
+          {props.location && (
+            <div>
+            <i class="far fa-compass"></i>
+            {props.location}
+          </div>
+          )}
+
+          {props.people.length > 0 && (
+            <div>
+              <i class="fas fa-user-tag"></i>
+              <div>
+              {props.people.map(person => (
+                <PeopleTags>
+                  {person}
+                </PeopleTags>
+              ))}
+              </div>
+            </div>
+          )}
+        </MementoOverview>
         <MementoDescription>{props.description}</MementoDescription>
         <MementoCoverImg></MementoCoverImg>
-        {props.tags.map(tag => (
-          <MementoTags>{tag}</MementoTags>
-        ))}
+        <MementoTagsWrapper>
+          {props.tags.map(tag => (
+            <MementoTags>{tag}</MementoTags>
+          ))}
+        </MementoTagsWrapper>
+        <i class="far fa-bookmark"></i>
       </CardContent>
     </Card>
   );
