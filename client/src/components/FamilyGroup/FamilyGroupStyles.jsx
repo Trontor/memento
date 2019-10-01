@@ -55,6 +55,7 @@ export const SideMenu = styled.section`
 `
 export const MainViewer = styled.section`
   display: none;
+  margin-bottom: 24px;
   /* border-left: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
   border-right: 1px solid ${props => lighten(0.67, props.theme.palette.text)}; */
   @media screen and (min-width: ${props =>

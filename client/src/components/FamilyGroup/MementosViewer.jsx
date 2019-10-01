@@ -24,9 +24,15 @@ export default function MementosViewer() {
     },
     {
       title: "My Painting",
-      author: "Gigi",
-      description: "Lorem ipsum I love painting",
-      media: [{type: "", url: "", caption: ""}],
+      author: "Regina",
+      description: "My watercolour painting",
+      media: [
+        {
+          type: "",
+          url: "https://images.unsplash.com/photo-1491245338813-c6832976196e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
+          caption: ""
+        }
+      ],
       tags: ["painting", "artwork"],
       dateUploaded: "2 days ago",
       dateCreated: {day: 8, month: 12, year: 2019},
@@ -37,7 +43,8 @@ export default function MementosViewer() {
       title: "My Stuffed Hippo",
       author: "Gigi",
       description: "This is my favourite stuffed animal. I've had it since I was 5.",
-      media: [{type: "", url: "", caption: ""}],
+      media: [
+      ],
       tags: ["stuffed toys"],
       dateUploaded: "3 days ago",
       dateCreated: {day: 8, month: 12, year: 1999},
@@ -48,7 +55,7 @@ export default function MementosViewer() {
       title: "My Stuffed Hippo",
       author: "Gigi",
       description: "This is my favourite stuffed animal. I've had it since I was 5.",
-      media: [{type: "", url: "", caption: ""}],
+      media: [],
       tags: ["stuffed toys"],
       dateUploaded: "3 days ago",
       dateCreated: {day: 8, month: 12, year: 1999},

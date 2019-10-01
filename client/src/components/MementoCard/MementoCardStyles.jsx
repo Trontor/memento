@@ -20,7 +20,7 @@ export const AuthorWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 `;
 
 export const AuthorAvatar = styled.div`
@@ -60,7 +60,7 @@ export const MementoOverview = styled.div`
   }
 
   line-height: 1.5em;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 `;
 
 export const MementoTitle = styled.div`
@@ -70,9 +70,18 @@ export const MementoTitle = styled.div`
   margin-bottom: 8px;
 `;
 
-export const MementoCoverImg = styled.div``;
+export const MementoCoverImg = styled.div`
+  margin-bottom: 10px;
 
-export const MementoDescription = styled.div``;
+  img {
+    width: 100%;
+    border-radius: 3px;
+  }
+`;
+
+export const MementoDescription = styled.div`
+  margin-bottom: 10px;
+`;
 
 export const Divider = styled.span`
   display: inline-block;
@@ -93,6 +102,12 @@ export const MementoTagsWrapper = styled.ul`
   padding: 0;
   width: 100%;
   margin-bottom: 0;
+  align-items: center;
+
+  i {
+    color: ${props => props.theme.palette.main};
+    margin-right: 12px;
+  }
 `;
 
 export const MementoTags = styled.li`
@@ -127,3 +142,15 @@ export const PeopleTags = styled.span`
     }
   }
 `;
+
+export const BookmarkButton = styled.span`
+  margin-left: auto;
+  color: ${props => lighten(0.6, props.theme.palette.text)};
+  cursor: pointer;
+  align-self: flex-start;
+  font-size: 18px;
+
+  &:hover {
+    color: ${props => props.theme.palette.main};
+  }
+`
