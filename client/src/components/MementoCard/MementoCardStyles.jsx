@@ -10,8 +10,13 @@ export const Card = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
     border-radius: 4px;
+  }
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.desktop}) {
   }
 `;
 
@@ -43,44 +48,69 @@ export const MementoAuthor = styled.div`
 `;
 
 export const CardContent = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.desktop}) {
+    flex-direction: row;
+  }
+`;
+
+export const MementoInfo = styled.div`
+  flex: 1 0 55%;
 `;
 
 export const MementoOverview = styled.div`
+  line-height: 1.5em;
+  margin-bottom: 16px;
+  margin-right: 16px;
+
   i {
     color: ${props => props.theme.palette.main};
     justify-content: left;
   }
 
-  > div {
+  > span {
     text-transform: capitalize;
     display: grid;
     grid-template-columns: 24px auto;
     align-items: baseline;
   }
-
-  line-height: 1.5em;
-  margin-bottom: 16px;
 `;
 
 export const MementoTitle = styled.div`
   font-family: "Livvic", sans-serif;
   font-size: 18px;
   font-weight: bold;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   margin-bottom: 8px;
 `;
 
 export const MementoCoverImg = styled.div`
   margin-bottom: 10px;
+  width: 100%;
+  min-height: 75%;
+  overflow: hidden;
 
   img {
+    border-radius: 4px;
     width: 100%;
-    border-radius: 3px;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.desktop}) {
+    order: -1;
+    flex: 1 0 45%;
+    margin-right: 16px;
   }
 `;
 
 export const MementoDescription = styled.div`
   margin-bottom: 10px;
+  opacity: 0.8;
 `;
 
 export const Divider = styled.span`
@@ -101,7 +131,7 @@ export const MementoTagsWrapper = styled.ul`
   flex-wrap: wrap;
   padding: 0;
   width: 100%;
-  margin-bottom: 0;
+  margin: 0;
   align-items: center;
 
   i {

@@ -1,4 +1,5 @@
 import MementoCard from "components/MementoCard/MementoCard";
+import { MementoCardColumns } from "./MementosViewerStyles";
 import React from "react";
 
 export default function MementosViewer() {
@@ -43,8 +44,7 @@ export default function MementosViewer() {
       title: "My Stuffed Hippo",
       author: "Gigi",
       description: "This is my favourite stuffed animal. I've had it since I was 5.",
-      media: [
-      ],
+      media: [],
       tags: ["stuffed toys"],
       dateUploaded: "3 days ago",
       dateCreated: {day: 8, month: 12, year: 1999},
@@ -52,23 +52,23 @@ export default function MementosViewer() {
       people: []
     },
     {
-      title: "My Stuffed Hippo",
-      author: "Gigi",
-      description: "This is my favourite stuffed animal. I've had it since I was 5.",
+      title: "Cheesecake Recipe",
+      author: "Keith",
+      description: "This is a description of the cheesecake recipe. This is a description of the cheesecake recipe. This is a description of the cheesecake recipe.",
       media: [],
-      tags: ["stuffed toys"],
+      tags: ["recipes", "food"],
       dateUploaded: "3 days ago",
-      dateCreated: {day: 8, month: 12, year: 1999},
+      dateCreated: {day: 8, month: 12, year: 2018},
       location: null,
       people: []
     }
   ];
 
   return (
-    <>
+    <MementoCardColumns>
       {mementos.map(memento => (
         <MementoCard {...memento} />
       ))}
-    </>
+    </MementoCardColumns>
   );
 }

@@ -18,14 +18,14 @@ const theme = {
     disabled: "#ddd",
 
     border: "#D3D0DD",
-    sidebar: "#F7FAFE",
+    sidebar: "#FCFDFE",
     foreground: "#FCFDFE"
   },
   mixins: {
     hoverFade: "transition: ease-in 0.1s",
   },
   size: {
-    sidebar: 220 /*px */,
+    sidebar: 250 /*px */,
   },
 };
 

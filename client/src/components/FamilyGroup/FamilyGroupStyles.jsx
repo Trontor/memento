@@ -29,11 +29,11 @@ export const FamilyLayout = styled.div`
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
     grid-template-columns:
-      minmax(248px, 312px)
-      minmax(480px, 624px);
+      minmax(260px, 312px)
+      minmax(480px, 640px);
     grid-template-rows: 100%;
     grid-column-gap: 12px;
-    margin: 0 24px;
+    margin: 0 12px;
   }
 `;
 

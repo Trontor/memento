@@ -7,6 +7,7 @@ import {
   MementoAuthor,
   MementoCoverImg,
   MementoDescription,
+  MementoInfo,
   MementoOverview,
   MementoTags,
   MementoTagsWrapper,
@@ -30,54 +31,51 @@ export default function MementoCard(props) {
         </div>
         {/* Bookmark */}
         <BookmarkButton>
-          <i class="fas fa-thumbtack"></i>
+          <i class="far fa-bookmark"></i>
         </BookmarkButton>
       </AuthorWrapper>
       <CardContent>
-        {/* Title */}
-        <MementoTitle>{props.title}</MementoTitle>
-        {/* Overview */}
-        <MementoOverview>
-          {/* {props.mementoType === "event" && (
-            <div>
-              <i class="far fa-calendar-alt"></i>
-              {props.eventType}
-            </div>
-          )} */}
-        {/* Date */}
-          <div>
-            <i class="far fa-clock"></i>
-            {props.dateCreated.year}
-          </div>
-        {/* Location */}
-          {props.location && (
-            <div>
-            <i class="fas fa-map-marker-alt"></i>
-            {props.location}
-          </div>
+        <MementoInfo>
+          {/* Title */}
+          <MementoTitle>{props.title}</MementoTitle>
+          <MementoOverview>
+          {/* Date */}
+            <span>
+              <i class="far fa-clock"></i>
+              {props.dateCreated.year}
+            </span>
+            {/* Location */}
+            {props.location && (
+              <span>
+              <i class="fas fa-map-marker-alt"></i>
+              {props.location}
+            </span>
+            )}
+            {/* People Tags */}
+            {props.people.length > 0 && (
+              <span>
+                <i class="fas fa-user-tag"></i>
+                <div>
+                {props.people.map(person => (
+                  <PeopleTags>
+                    {person}
+                  </PeopleTags>
+                ))}
+                </div>
+              </span>
+            )}
+            </MementoOverview>
+
+            {/* Description */}
+             <MementoDescription>{props.description}</MementoDescription>
+          </MementoInfo>
+          {/* Cover Image */}
+          {props.media.length > 0 && (
+            <MementoCoverImg>
+              <img src={props.media[0].url}/>
+            </MementoCoverImg>
           )}
-        {/* People Tags */}
-          {props.people.length > 0 && (
-            <div>
-              <i class="fas fa-user-tag"></i>
-              <div>
-              {props.people.map(person => (
-                <PeopleTags>
-                  {person}
-                </PeopleTags>
-              ))}
-              </div>
-            </div>
-          )}
-        </MementoOverview>
-        {/* Description */}
-        <MementoDescription>{props.description}</MementoDescription>
-        {/* Cover Image */}
-        {props.media.length > 0 && (
-          <MementoCoverImg>
-            <img src={props.media[0].url}/>
-          </MementoCoverImg>
-        )}
+        </CardContent>
         {/* Tags */}
         <MementoTagsWrapper>
         <i class="fas fa-tags"></i>
@@ -85,7 +83,6 @@ export default function MementoCard(props) {
             <MementoTags>{tag}</MementoTags>
           ))}
         </MementoTagsWrapper>
-      </CardContent>
     </Card>
   );
 }
