@@ -72,7 +72,7 @@ export default function MementoCard(props) {
           {/* Cover Image */}
           {props.media.length > 0 && (
             <MementoCoverImg>
-              <img src={props.media[0].url}/>
+              <img alt={props.caption} src={props.media[0].url}/>
             </MementoCoverImg>
           )}
         </CardContent>

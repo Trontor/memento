@@ -26,6 +26,7 @@ const theme = {
   },
   size: {
     sidebar: 250 /*px */,
+    gutterWidth: "16px"
   },
 };
 

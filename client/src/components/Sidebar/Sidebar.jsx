@@ -1,4 +1,4 @@
-import { Bookmarks, EditProfile, Invite, NewArtefact, View } from "ui/Buttons";
+import { Bookmarks, EditProfile, Invite, View } from "ui/Buttons";
 import {
   CloseMenu,
   FamilyListContainer,

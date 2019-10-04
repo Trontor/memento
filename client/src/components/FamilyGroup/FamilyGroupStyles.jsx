@@ -32,8 +32,8 @@ export const FamilyLayout = styled.div`
       minmax(260px, 312px)
       minmax(480px, 640px);
     grid-template-rows: 100%;
-    grid-column-gap: 12px;
-    margin: 0 12px;
+    grid-column-gap: ${props => props.theme.size.gutterWidth};
+    margin: 0 ${props => props.theme.size.gutterWidth};
   }
 `;
 
@@ -44,7 +44,7 @@ export const SideMenu = styled.section`
     height: 100vh;
     position: sticky;
     overflow: hidden auto;
-    padding-bottom: 24px;
+    padding: ${props => props.theme.size.gutterWidth} 0;
     top: 0;
 
     &::-webkit-scrollbar {
@@ -55,9 +55,8 @@ export const SideMenu = styled.section`
 `
 export const MainViewer = styled.section`
   display: none;
-  margin-bottom: 24px;
-  /* border-left: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
-  border-right: 1px solid ${props => lighten(0.67, props.theme.palette.text)}; */
+  padding: ${props => props.theme.size.gutterWidth} 0;
+
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
     height: 100%;
@@ -73,7 +72,6 @@ export const FamilyProfileContainer = styled.div`
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
-    margin-top: 24px;
     background-color: ${props => props.theme.palette.foreground};
     border: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
   }
@@ -160,7 +158,7 @@ export const SideMenuSectionContainer = styled.section`
     border: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
     list-style: none;
     border-radius: 4px;
-    margin-top: 12px;
+    margin-top: ${props => props.theme.size.gutterWidth};
   }
 `
 

@@ -7,17 +7,14 @@ import {
   GroupDetails,
   MainViewer,
   MemberRow,
-  MementoSearch,
   Menu,
   ProfilePhotoContainer,
-  SearchInput,
   SettingsButton,
   SideMenu,
   SideMenuSectionContainer,
   SideMenuSectionHeader,
   TabComponent,
-  TagRow,
-  UploadButton
+  TagRow
 } from "./FamilyGroupStyles";
 import { MenuContainer, MenuTabs } from "ui/Navigation";
 import React, {useState} from "react";
@@ -108,7 +105,7 @@ export default function FamilyGroup(props) {
               <FamilyImg />
               <ProfilePhotoContainer>
                 <img
-                  alt="Family Group Photo"
+                  alt="family"
                   src="https://images.unsplash.com/photo-1506827155776-53ce0b5d56b4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
                 />
               </ProfilePhotoContainer>
@@ -116,9 +113,6 @@ export default function FamilyGroup(props) {
                 <div></div> {/* Empty div to center title */}
                 <h1>{familyName}</h1>
                 <SettingsButton onClick={() => props.history.push(familyId + "/settings")}/>
-                {/* <UploadButton onClick={() => props.history.push(familyId + "/memento/new")}>
-                  Add a Memento
-                </UploadButton> */}
                 <DetailsWrapper>
                   <GroupDetails>
                     <i class="far fa-clock"></i>
@@ -188,9 +182,6 @@ export default function FamilyGroup(props) {
             </TabComponent>
             {/* Desktop */}
             <MainViewer>
-              <MementoSearch>
-                <SearchInput placeholder="Search"/>
-              </MementoSearch>
               <MementosViewer/>
             </MainViewer>
           </div>
