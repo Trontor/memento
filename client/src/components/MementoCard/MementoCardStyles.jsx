@@ -59,11 +59,6 @@ export const MementoAuthor = styled.div`
 export const CardContent = styled.div`
   display: flex;
   flex-direction: column;
-
-  @media screen and (min-width: ${props =>
-  props.theme.breakpoints.desktop}) {
-    flex-direction: row;
-  }
 `;
 
 export const MementoInfo = styled.div`
@@ -98,22 +93,16 @@ export const MementoTitle = styled.div`
 
 export const MementoCoverImg = styled.div`
   margin-bottom: 10px;
-  width: 100%;
-  min-height: 75%;
+  max-width: 100%;
+  max-height: 334px;
+  height: auto;
   overflow: hidden;
+  border-radius: 4px;
 
   img {
-    border-radius: 4px;
     width: 100%;
-    height: 100%;
     object-fit: cover;
-  }
-
-  @media screen and (min-width: ${props =>
-  props.theme.breakpoints.desktop}) {
-    order: -1;
-    flex: 1 0 45%;
-    margin-right: 16px;
+    object-position: center center;
   }
 `;
 

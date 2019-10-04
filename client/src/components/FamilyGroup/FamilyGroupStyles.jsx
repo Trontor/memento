@@ -30,7 +30,7 @@ export const FamilyLayout = styled.div`
   props.theme.breakpoints.tabletLandscape}) {
     grid-template-columns:
       minmax(260px, 312px)
-      minmax(480px, 640px);
+      minmax(480px, 600px);
     grid-template-rows: 100%;
     grid-column-gap: ${props => props.theme.size.gutterWidth};
     margin: 0 ${props => props.theme.size.gutterWidth};
@@ -75,18 +75,6 @@ export const FamilyProfileContainer = styled.div`
     background-color: ${props => props.theme.palette.foreground};
     border: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
   }
-`
-
-export const TagsContainer = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-top: 24px;
-  border-radius: 4px;
-  overflow: hidden;
-  background-color: ${props => props.theme.palette.foreground};
-  border: 1px solid ${props => lighten(0.6, props.theme.palette.text)};
 `
 
 export const FamilyImg = styled.div`
@@ -248,25 +236,30 @@ export const MemberRow = styled.div`
 `;
 
 export const TagRow = styled.div`
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.02em;
   padding: 12px 16px;
-  border-bottom: 1px solid ${props => lighten(0.7, props.theme.palette.text)};
+  border-bottom: 1px solid ${props => lighten(0.68, props.theme.palette.text)};
   cursor: pointer;
 
   &:hover {
-    background-color: ${props => lighten(0.71, props.theme.palette.text)};
+    background-color: ${props =>
+        adjustHue(-10,
+        lighten(0.295, props.theme.palette.main))};
   }
 
   ${({ selected }) =>
     selected &&
     css`
       box-shadow: inset 3px 0 0 ${props => props.theme.palette.main};
-      background-color: ${props =>
-        adjustHue(-10,
-        lighten(0.295, props.theme.palette.main))};
-    `};
+      background-color: ${props => lighten(0.3, props.theme.palette.main)};
+  `};
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
+    font-size: 13px;
+  }
 `
 
 export const SettingsButton = styled(Settings)`

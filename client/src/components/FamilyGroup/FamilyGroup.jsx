@@ -88,7 +88,10 @@ export default function FamilyGroup(props) {
       tabComponent = <MembersViewer members={members}/>
       break;
     case "Tags":
-      tabComponent = <TagsViewer/>
+      tabComponent = <TagsViewer tags={tags}
+        selectTag={selectTag}
+        mementoTags={mementoTags}
+        setMementoTags={setMementoTags}/>
       break;
     default:
       break;
@@ -130,23 +133,23 @@ export default function FamilyGroup(props) {
               </FamilyHeader>
             </FamilyProfileContainer>
 
-              <SideMenuSectionContainer>
-                <SideMenuSectionHeader>
-                  <h2>
-                    Members
-                  </h2>
-                </SideMenuSectionHeader>
-                {members.map(member => (
-                  <MemberRow admin>
-                    <i class="fas fa-user-circle"></i>
-                    <div>
-                      <span onClick={() => props.history.push("/profile/" + member.userId)}>
-                        {member.firstName} {member.lastName}
-                      </span>
-                      <span>Admin</span>
-                    </div>
-                  </MemberRow>
-                ))}
+            <SideMenuSectionContainer>
+              <SideMenuSectionHeader>
+                <h2>
+                  Members
+                </h2>
+              </SideMenuSectionHeader>
+              {members.map(member => (
+                <MemberRow admin>
+                  <i class="fas fa-user-circle"></i>
+                  <div>
+                    <span onClick={() => props.history.push("/profile/" + member.userId)}>
+                      {member.firstName} {member.lastName}
+                    </span>
+                    <span>Admin</span>
+                  </div>
+                </MemberRow>
+              ))}
               </SideMenuSectionContainer>
 
               <SideMenuSectionContainer>
