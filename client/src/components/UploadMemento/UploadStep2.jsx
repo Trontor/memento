@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { InstructionLabel, InputField, FormSection, TextArea } from "ui/Forms";
-import { AlignRight } from "ui/Helpers";
 import { ButtonPrimary, ButtonSecondary } from "ui/Buttons";
-import { TagsContainer, Tag, NewTag } from "./UploadMementoStyles";
+import { FormSection, InputField, InstructionLabel, TextArea } from "ui/Forms";
+import { NewTag, Tag, TagsContainer } from "./UploadMementoStyles";
+import React, { useState } from "react";
+
+import { AlignRight } from "ui/Helpers";
+import DateSelector from "components/DateSelector/DateSelector";
 import { MediaDropzone } from "./MediaDropzone";
 import Textarea from "react-textarea-autosize";
-import DateSelector from "components/DateSelector/DateSelector";
 
 export default function UploadStep1({
   selectTag,
@@ -37,22 +38,29 @@ export default function UploadStep1({
   return (
     <>
       <FormSection>
-        <InstructionLabel>Add a title:</InstructionLabel>
+        <InstructionLabel>Title:</InstructionLabel>
         <InputField placeholder="Enter a cool title..." />
       </FormSection>
 
       <FormSection>
-        <InstructionLabel>Describe your memento:</InstructionLabel>
+        <InstructionLabel>Description:</InstructionLabel>
         <TextArea>
-          <Textarea placeholder="Enter a cool description..." />
+          <Textarea placeholder="" />
         </TextArea>
       </FormSection>
 
       <FormSection>
         <InstructionLabel>
-          Enter a date of significance for this memento.
+          Date:
         </InstructionLabel>
         <DateSelector customDropdown={customDropdown} />
+      </FormSection>
+
+      <FormSection>
+        <InstructionLabel>
+          Add Location:
+        </InstructionLabel>
+        <InputField placeholder="Enter the name of a location..." />
       </FormSection>
 
       <FormSection>

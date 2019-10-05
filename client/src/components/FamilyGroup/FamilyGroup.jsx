@@ -141,7 +141,7 @@ export default function FamilyGroup(props) {
               </FamilyHeader>
               <Options>
                 {/* Upload Button */}
-                <UploadButton>
+                <UploadButton onClick={() => props.history.push(familyId + "/memento/new")}>
                   <i class="fas fa-feather-alt"></i>
                   <span>Add a Memento</span>
                 </UploadButton>
