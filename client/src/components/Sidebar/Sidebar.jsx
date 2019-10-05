@@ -1,3 +1,4 @@
+import { Bookmarks, EditProfile, Invite, View } from "ui/Buttons";
 import {
   CloseMenu,
   FamilyListContainer,
@@ -11,14 +12,13 @@ import {
   SignOutButton,
   TextList,
 } from "./SidebarStyles";
-import { EditProfile, Invite, NewArtefact, View, Bookmarks } from "ui/Buttons";
+import React, { useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 
 import { GET_USER_FAMILIES } from "queries/UserQueries";
 import { Logo } from "ui/Logos";
-import React, { useEffect, useState } from "react";
 import { Spinner } from "ui/Loaders";
 import { useQuery } from "@apollo/react-hooks";
-import { useHistory, useLocation } from "react-router-dom";
 
 const Sidebar = props => {
   const history = useHistory();
@@ -84,10 +84,6 @@ const Sidebar = props => {
         </TextList>
       </MenuContainer>
       <MenuContainer>
-        <TextList>
-          <NewArtefact size={iconSize} />
-          <a href={`/new-memento`}>New Memento</a>
-        </TextList>
         <TextList>
           <View size={iconSize} />
           View my Mementos

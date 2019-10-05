@@ -31,6 +31,11 @@ export const SidebarContainer = styled.div`
     props.theme.breakpoints.tabletLandscape}) {
     transform: translateX(${props => props.theme.size.sidebar}px);
   }
+
+  &::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+  }
 `;
 
 export const SidebarHeader = styled.div`
@@ -107,8 +112,6 @@ export const MenuContainer = styled.div`
 export const SignOutButton = styled(ButtonSecondary)`
   margin-top: 60px;
   width: 100%;
-  height: 32px;
-  padding: 0;
 `;
 
 export const CloseMenu = styled(Close)`

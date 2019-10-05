@@ -1,15 +1,22 @@
+import {
+  MemberRow
+} from "./FamilyGroupStyles";
 import React from "react";
-import { Wrapper } from "ui/Helpers";
 
 export default function MembersViewer(props) {
-
   return (
-    <Wrapper>
+    <>
       {props.members.map(member => (
-        <h1>
-          {member.firstName} {member.lastName}
-        </h1>
+        <MemberRow admin>
+          <i class="fas fa-user-circle"></i>
+          <div>
+            <span onClick={() => props.history.push("/profile/" + member.userId)}>
+              {member.firstName} {member.lastName}
+            </span>
+            <span>Admin</span>
+          </div>
+        </MemberRow>
       ))}
-    </Wrapper>
+    </>
   );
 }

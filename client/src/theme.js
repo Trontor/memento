@@ -9,21 +9,24 @@ const theme = {
   palette: {
     text: "#44404B",
     main: "#FF7F5F",
+    mainLight: "#FFF2EF",
     secondary: "#FFA217",
-    background: "#FAFBFD",
+    background: "#F9FAFC",
     highlight: "#F6F9FF",
 
     error: "#F73953",
     disabled: "#ddd",
 
     border: "#D3D0DD",
-    sidebar: "#F7FAFE",
+    sidebar: "#FCFDFE",
+    foreground: "#FCFDFE"
   },
   mixins: {
     hoverFade: "transition: ease-in 0.1s",
   },
   size: {
-    sidebar: 260 /*px */,
+    sidebar: 250 /*px */,
+    gutterWidth: "16px"
   },
 };
 

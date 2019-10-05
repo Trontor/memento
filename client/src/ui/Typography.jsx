@@ -2,12 +2,17 @@ import styled, { css } from "styled-components";
 
 // Page heading
 export const Header = styled.h1`
-  font-size: 24px;
+  font-size: 20px;
   letter-spacing: 0.01em;
   display: inline-block;
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletPortrait}) {
+  props.theme.breakpoints.mobile}) {
+    font-size: 24px;
+  }
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletPortrait}) {
     font-size: 32px;
   }
 
