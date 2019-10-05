@@ -4,14 +4,16 @@ import { NewTag, Tag, TagsContainer } from "./UploadMementoStyles";
 import React, { useState } from "react";
 
 import { AlignRight } from "ui/Helpers";
+import CreatableSelect from "react-select/creatable";
 import DateSelector from "components/DateSelector/DateSelector";
 import { MediaDropzone } from "./MediaDropzone";
 import Textarea from "react-textarea-autosize";
 
-export default function UploadStep1({
+export default function UploadStep2({
   selectTag,
   mementoTags,
   customDropdown,
+  members
 }) {
   const tags = [
     "recipes",
@@ -25,6 +27,10 @@ export default function UploadStep1({
     "blanket",
     "food",
   ];
+
+  let familyMembers = members.map(member =>
+    member.firstName + " " + member.lastName );
+
 
   const [defaultTags, setDefaultTags] = useState(tags);
 
@@ -58,6 +64,19 @@ export default function UploadStep1({
 
       <FormSection>
         <InstructionLabel>
+          Tag People:
+        </InstructionLabel>
+        <CreatableSelect
+            isClearable
+            placeholder="Select a Family Member..."
+            styles={customDropdown}
+            isMulti
+            options={familyMembers}
+          />
+      </FormSection>
+
+      <FormSection>
+        <InstructionLabel>
           Add Location:
         </InstructionLabel>
         <InputField placeholder="Enter the name of a location..." />
@@ -69,7 +88,7 @@ export default function UploadStep1({
       </FormSection>
 
       <FormSection>
-        <InstructionLabel>What does your memento contain?</InstructionLabel>
+        <InstructionLabel>Tags:</InstructionLabel>
         <TagsContainer>
           {tags.sort().map(tag => (
             <Tag

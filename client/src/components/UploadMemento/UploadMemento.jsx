@@ -19,12 +19,18 @@ export default function UploadMemento(props) {
   const [currentStep, setCurrentStep] = useState(2);
   const [mementoFiles, setMementoFiles] = useState([]);
   const familyId = props.match.params.id;
-  const { loading } = useQuery(LOAD_FAMILY, {
+  const { data, loading } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
   });
 
   if (loading) {
     return <JollyLoader />;
+  }
+
+  let members;
+
+  if (data) {
+    members = data.family.members;
   }
 
   //Handle Radio value
@@ -146,6 +152,7 @@ export default function UploadMemento(props) {
           mementoFiles={mementoFiles}
           setMementoFiles={setMementoFiles}
           customDropdown={customDropdown}
+          members={members}
         />
       )}
 
