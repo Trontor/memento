@@ -6,26 +6,18 @@ export const Card = styled.div`
   padding: 18px 20px;
   border: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
   background-color: ${props => props.theme.palette.foreground};
-  margin-bottom: ${props => props.theme.size.gutterWidth};
-  display: flex;
-  flex-direction: column;
-
-  &:first-child {
-    margin-top: ${props => props.theme.size.gutterWidth};
-  }
-
-  &:last-child {
-    margin-bottom: 0;
-  }
+  position: relative;
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
+    width: 100%;
     border-radius: 4px;
     margin-top: 0;
+    margin-bottom: ${props => props.theme.size.gutterWidth};
 
-    &:first-child {
-    margin-top: 0;
-  }
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 `;
 

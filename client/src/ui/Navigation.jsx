@@ -25,22 +25,23 @@ export const MenuTabs = styled.div`
   ${({ active }) =>
     active &&
     css`
-      box-shadow: inset 0 -3px 0 ${props => props.theme.palette.main};
+      box-shadow: inset 0 -2.5px 0 ${props => props.theme.palette.main};
       border-color: ${props => props.theme.palette.main};
       color: ${props => props.theme.palette.text};
     `};
 
-  @media screen and (min-width: ${props =>
-  props.theme.breakpoints.desktopLarge}) {
-    max-width: 380px;
-  }
+  ${({ active }) =>
+  !active &&
+  css`
+    &:hover {
+      box-shadow: inset 0 -2.5px 0 ${props => lighten(0.6, props.theme.palette.text)};
+      border-color: ${props => lighten(0.6, props.theme.palette.text)};
+      color: ${props => lighten(0.1, props.theme.palette.text)};
+    }
+  `};
 `;
 
 export const SettingsHeader = styled.div`
-  /* display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center; */
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   margin-bottom: 50px;

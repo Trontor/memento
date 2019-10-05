@@ -166,6 +166,18 @@ export const SideMenuSectionHeader = styled.div`
   }
 `
 
+export const GroupDetails = styled.div`
+  display: grid;
+  grid-template-columns: 14px auto;
+  grid-column-gap: 8px;
+  padding-bottom: 8px;
+  align-items: center;
+
+  i {
+    font-size: 12px;
+  }
+`
+
 export const DetailsWrapper = styled.div`
   display: none;
 
@@ -177,18 +189,6 @@ export const DetailsWrapper = styled.div`
     &:last-child {
       padding-bottom: 0;
     }
-  }
-`
-
-export const GroupDetails = styled.div`
-  display: grid;
-  grid-template-columns: 14px auto;
-  grid-column-gap: 8px;
-  padding-bottom: 8px;
-  align-items: center;
-
-  i {
-    font-size: 12px;
   }
 `
 
