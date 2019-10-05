@@ -1,14 +1,9 @@
 import { adjustHue, lighten } from "polished";
 import styled, { css } from "styled-components";
 
-import { AddToQueue } from "styled-icons/boxicons-regular/AddToQueue";
-import { Bookmark } from "styled-icons/boxicons-regular/Bookmark";
 import { Cancel } from "styled-icons/material/Cancel";
 import { Check } from "styled-icons/material/Check";
 import { Edit } from "styled-icons/material/Edit";
-import { GroupAdd } from "styled-icons/material/GroupAdd";
-import { PaperPlane } from "styled-icons/boxicons-regular/PaperPlane";
-import { Settings } from "styled-icons/material/Settings";
 
 // Primary Button Style
 export const ButtonPrimary = styled.button.attrs(() => ({ type: "button" }))`
@@ -68,8 +63,8 @@ export const ButtonPrimaryLight = styled(ButtonPrimary)`
   border: 1px solid ${props => lighten(0.25, props.theme.palette.main)};
 
   &:hover {
-    background: ${props => lighten(0.22, props.theme.palette.main)};
-    border: 1px solid ${props => lighten(0.22, props.theme.palette.main)};
+    background: ${props => lighten(0.27, props.theme.palette.main)};
+    border: 1px solid ${props => lighten(0.27, props.theme.palette.main)};
   }
 `;
 
@@ -79,27 +74,7 @@ export const IconStyle = css`
   margin-right: 10px;
 `;
 
-export const NewArtefact = styled(AddToQueue)`
-  ${IconStyle}
-`;
-
 export const EditProfile = styled(Edit)`
-  ${IconStyle}
-`;
-
-export const Setting = styled(Settings)`
-  ${IconStyle}
-`;
-
-export const Invite = styled(GroupAdd)`
-  ${IconStyle}
-`;
-
-export const View = styled(PaperPlane)`
-  ${IconStyle}
-`;
-
-export const Bookmarks = styled(Bookmark)`
   ${IconStyle}
 `;
 

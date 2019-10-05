@@ -1,8 +1,9 @@
 import styled, { css } from "styled-components";
-import { lighten } from "polished";
+
 import { Group } from "styled-icons/material/Group";
 import { NavigateNext } from "styled-icons/material/NavigateNext";
 import { UserPlus } from "styled-icons/boxicons-regular/UserPlus";
+import { lighten } from "polished";
 
 export const TextWrapper = styled.div`
   position: relative;
@@ -12,8 +13,9 @@ export const TextWrapper = styled.div`
   text-align: center;
   color: ${props => props.theme.palette.text};
   border: 1px solid ${props => lighten(0.68, props.theme.palette.text)};
-  background-color: white;
+  background-color: ${props => props.theme.palette.foreground};
   border-radius: 8px;
+  box-shadow: 1px 1px 16px ${props => lighten(0.7, props.theme.palette.text)};
 
   @media screen and (min-width: ${props =>
       props.theme.breakpoints.tabletLandscape}) {

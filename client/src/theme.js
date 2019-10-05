@@ -18,7 +18,7 @@ const theme = {
     disabled: "#ddd",
 
     border: "#D3D0DD",
-    sidebar: "#FCFDFE",
+    sidebar: "#F6F9FF",
     foreground: "#FCFDFE"
   },
   mixins: {
