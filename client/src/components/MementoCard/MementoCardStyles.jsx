@@ -4,14 +4,14 @@ import styled from "styled-components";
 export const Card = styled.div`
   width: 100%;
   padding: 18px 20px;
-  border: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
+  border: 1px solid ${props => lighten(0.68, props.theme.palette.text)};
   background-color: ${props => props.theme.palette.foreground};
   position: relative;
+  border-radius: 4px;
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
     width: 100%;
-    border-radius: 4px;
     margin-top: 0;
     margin-bottom: ${props => props.theme.size.gutterWidth};
 
