@@ -72,7 +72,7 @@ const Sidebar = props => {
           {user.imageUrl === null ? (
             <i class="fas fa-user-circle"></i>
           ) : (
-            <img src={user.imageUrl}></img>
+            <img src={user.imageUrl} alt="profile_image"></img>
           )
           }
         </UserAvatar>
