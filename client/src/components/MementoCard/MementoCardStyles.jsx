@@ -164,14 +164,20 @@ export const PeopleTags = styled.span`
   }
 `;
 
-export const BookmarkButton = styled.span`
+export const CardOptions = styled.span`
   margin-left: auto;
   color: ${props => lighten(0.6, props.theme.palette.text)};
   cursor: pointer;
   align-self: flex-start;
   font-size: 18px;
 
-  &:hover {
-    color: ${props => props.theme.palette.main};
+  i {
+    &:not(:last-child) {
+      margin-right: 12px;
+    }
+
+    &:hover {
+      color: ${props => props.theme.palette.main};
+    }
   }
 `

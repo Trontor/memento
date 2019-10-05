@@ -1,9 +1,9 @@
 import {
   AuthorAvatar,
   AuthorWrapper,
-  BookmarkButton,
   Card,
   CardContent,
+  CardOptions,
   MementoAuthor,
   MementoCoverImg,
   MementoDescription,
@@ -29,10 +29,11 @@ export default function MementoCard(props) {
           <MementoAuthor>{props.author}</MementoAuthor>
           <UploadDate>{props.dateUploaded}</UploadDate>
         </div>
-        {/* Bookmark */}
-        <BookmarkButton>
+        {/* Edit & Bookmark */}
+        <CardOptions>
+          <i class="fas fa-pencil-alt"></i>
           <i class="far fa-bookmark"></i>
-        </BookmarkButton>
+        </CardOptions>
       </AuthorWrapper>
       <CardContent>
         <MementoInfo>

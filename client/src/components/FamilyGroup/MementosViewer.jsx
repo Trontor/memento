@@ -125,7 +125,7 @@ export default function MementosViewer() {
   return (
     <MementoCardColumns>
       {mementos.map(memento => (
-        <MementoCard {...memento} />
+        <MementoCard {...memento}/>
       ))}
     </MementoCardColumns>
   );

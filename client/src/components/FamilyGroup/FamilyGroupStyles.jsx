@@ -2,7 +2,7 @@ import { Container, center } from "ui/Helpers";
 import { adjustHue, lighten } from "polished";
 import styled, { css } from "styled-components";
 
-import { ButtonPrimary } from "ui/Buttons";
+import { ButtonSecondary } from "ui/Buttons";
 import { Settings } from "styled-icons/material/Settings";
 
 export const FamilyContainer = styled(Container)`
@@ -108,6 +108,7 @@ export const FamilyHeader = styled.div`
     h1 {
       display: inline-block;
       margin: 0 auto;
+      font-size: 18px;
     }
   }
 `;
@@ -274,7 +275,19 @@ export const SettingsButton = styled(Settings)`
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
-    display: none;
+    margin: 0 auto;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    color: white;
+    opacity: 0.6;
+
+    &:hover {
+      color: white;
+      opacity: 1;
+    }
   }
 `
 
@@ -285,13 +298,22 @@ export const Menu = styled.div`
   }
 `
 
-export const UploadButton = styled(ButtonPrimary)`
-  width: 100%;
+export const UploadButton = styled(ButtonSecondary)`
   display: none;
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
     display: block;
+    padding: 8px 20px 9px 20px;
+    width: auto;
+    margin: 0 auto 16px auto;
+    align-items: center;
+    border-radius: 5px;
+
+    i {
+      margin-right: 8px;
+      display: inline-block;
+    }
   }
 `
 

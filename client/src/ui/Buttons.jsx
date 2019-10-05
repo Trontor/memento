@@ -1,14 +1,14 @@
+import { adjustHue, lighten } from "polished";
 import styled, { css } from "styled-components";
 
 import { AddToQueue } from "styled-icons/boxicons-regular/AddToQueue";
+import { Bookmark } from "styled-icons/boxicons-regular/Bookmark";
 import { Cancel } from "styled-icons/material/Cancel";
-import { Edit } from "styled-icons/material/Edit";
 import { Check } from "styled-icons/material/Check";
+import { Edit } from "styled-icons/material/Edit";
 import { GroupAdd } from "styled-icons/material/GroupAdd";
 import { PaperPlane } from "styled-icons/boxicons-regular/PaperPlane";
 import { Settings } from "styled-icons/material/Settings";
-import { Bookmark } from "styled-icons/boxicons-regular/Bookmark";
-import { lighten } from "polished";
 
 // Primary Button Style
 export const ButtonPrimary = styled.button.attrs(() => ({ type: "button" }))`
@@ -28,10 +28,6 @@ export const ButtonPrimary = styled.button.attrs(() => ({ type: "button" }))`
     ${props => props.theme.mixins.hoverFade};
   }
 
-  &:focus {
-    outline: none;
-  }
-
   &:disabled,
   &[disabled] {
     background-color: ${props => props.theme.palette.disabled};
@@ -42,7 +38,7 @@ export const ButtonPrimary = styled.button.attrs(() => ({ type: "button" }))`
 
 // Secondary Button Style
 export const ButtonSecondary = styled.button.attrs(() => ({ type: "button" }))`
-  border: 1px solid ${props => props.theme.palette.main};
+  border: 1px solid ${props => lighten(0.15, props.theme.palette.main)};
   color: ${props => props.theme.palette.main};
   background-color: transparent;
   padding: 10px 20px;
@@ -50,6 +46,19 @@ export const ButtonSecondary = styled.button.attrs(() => ({ type: "button" }))`
   display: inline-block;
   font-size: 15px;
   ${props => props.theme.mixins.hoverFade};
+
+  &:hover {
+    background: ${props => adjustHue(-10, lighten(0.301, props.theme.palette.main))};
+    ${props => props.theme.mixins.hoverFade};
+    border: 1px solid ${props => lighten(0.1, props.theme.palette.main)};
+  }
+
+  &:disabled,
+  &[disabled] {
+    background-color: ${props => props.theme.palette.disabled};
+    border-color: ${props => props.theme.palette.disabled};
+    cursor: default;
+  }
 `;
 
 // Styling for styled-icons in sidebar

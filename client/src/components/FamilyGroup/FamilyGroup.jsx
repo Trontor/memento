@@ -14,7 +14,8 @@ import {
   SideMenuSectionContainer,
   SideMenuSectionHeader,
   TabComponent,
-  TagRow
+  TagRow,
+  UploadButton
 } from "./FamilyGroupStyles";
 import { MenuContainer, MenuTabs } from "ui/Navigation";
 import React, {useState} from "react";
@@ -41,12 +42,14 @@ export default function FamilyGroup(props) {
     return <JollyLoader />;
   }
 
-  let familyName, members;
+  let familyName, members, colour;
 
   if (data) {
     familyName = data.family.name;
     members = data.family.members;
+    colour = data.family.colour;
     console.log(members);
+    console.log(colour);
   }
 
   if (error) {
@@ -82,7 +85,7 @@ export default function FamilyGroup(props) {
   let tabComponent = null;
   switch(menuTabs[currentTabIndex]){
     case "Mementos":
-      tabComponent = <MementosViewer/>
+      tabComponent = <MementosViewer themeColour={colour}/>
       break;
     case "Members":
       tabComponent = <MembersViewer members={members}/>
@@ -131,6 +134,10 @@ export default function FamilyGroup(props) {
                   </GroupDetails>
                 </DetailsWrapper>
               </FamilyHeader>
+              <UploadButton>
+                <i class="fas fa-feather-alt"></i>
+                Add a Memento
+              </UploadButton>
             </FamilyProfileContainer>
 
             <SideMenuSectionContainer>
