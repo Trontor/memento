@@ -8,6 +8,7 @@ import {
   MainViewer,
   MemberRow,
   Menu,
+  Options,
   ProfilePhotoContainer,
   SettingsButton,
   SideMenu,
@@ -106,7 +107,6 @@ export default function FamilyGroup(props) {
       <FamilyLayout>
         <div>
           <SideMenu>
-
             <FamilyProfileContainer>
               <FamilyImg />
               <ProfilePhotoContainer>
@@ -117,30 +117,43 @@ export default function FamilyGroup(props) {
               </ProfilePhotoContainer>
               <FamilyHeader>
                 <div></div> {/* Empty div to center title */}
+                <div></div> {/* Empty div to center title */}
+                {/* Family Name */}
                 <h1>{familyName}</h1>
-                <SettingsButton onClick={() => props.history.push(familyId + "/settings")}/>
+                <div></div>
                 <DetailsWrapper>
                   <GroupDetails>
+                    {/* Date of Group Creation */}
                     <i class="far fa-clock"></i>
                     Created on {moment(data.family.createdAt).format('Do MMM, YYYY')}
                   </GroupDetails>
                   <GroupDetails>
+                    {/* Number of Mementos */}
                     <i class="far fa-paper-plane"></i>
                     3 mementos
                   </GroupDetails>
                   <GroupDetails>
+                    {/* Number of Members */}
                     <i class="fas fa-users"></i>
                     4 members
                   </GroupDetails>
                 </DetailsWrapper>
               </FamilyHeader>
-              <UploadButton>
-                <i class="fas fa-feather-alt"></i>
-                Add a Memento
-              </UploadButton>
+              <Options>
+                {/* Upload Button */}
+                <UploadButton>
+                  <i class="fas fa-feather-alt"></i>
+                  <span>Add a Memento</span>
+                </UploadButton>
+                {/* Settings Button */}
+                <SettingsButton onClick={() => props.history.push(familyId + "/settings")}>
+                  <i class="fas fa-cog"></i>
+                </SettingsButton>
+              </Options>
             </FamilyProfileContainer>
 
             <SideMenuSectionContainer>
+              {/* Members */}
               <SideMenuSectionHeader>
                 <h2>
                   Members
@@ -160,6 +173,7 @@ export default function FamilyGroup(props) {
               </SideMenuSectionContainer>
 
               <SideMenuSectionContainer>
+                {/* Tags */}
                 <SideMenuSectionHeader>
                   <h2>
                     Tags
@@ -195,7 +209,7 @@ export default function FamilyGroup(props) {
               <MementosViewer/>
             </MainViewer>
           </div>
-    </FamilyLayout>
+      </FamilyLayout>
     </FamilyContainer>
   );
 }

@@ -10,7 +10,7 @@ export const center = css`
 
 // Used across the site as a container for the main column
 export const Container = styled.div`
-  margin: 30px auto;
+  margin: 20px;
   position: relative;
   top: ${props => (props.noNav ? "0px" : "40px")};
 

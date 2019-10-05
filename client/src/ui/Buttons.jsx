@@ -61,6 +61,18 @@ export const ButtonSecondary = styled.button.attrs(() => ({ type: "button" }))`
   }
 `;
 
+// Light Primary Button Style
+export const ButtonPrimaryLight = styled(ButtonPrimary)`
+  color: ${props => props.theme.palette.main};
+  background: ${props => lighten(0.25, props.theme.palette.main)};
+  border: 1px solid ${props => lighten(0.25, props.theme.palette.main)};
+
+  &:hover {
+    background: ${props => lighten(0.2, props.theme.palette.main)};
+    border: 1px solid ${props => lighten(0.2, props.theme.palette.main)};
+  }
+`;
+
 // Styling for styled-icons in sidebar
 export const IconStyle = css`
   color: ${props => lighten(0.35, props.theme.palette.text)};

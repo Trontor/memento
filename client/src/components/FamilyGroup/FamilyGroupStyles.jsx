@@ -1,11 +1,12 @@
+import { ButtonPrimaryLight, ButtonSecondary } from "ui/Buttons";
 import { Container, center } from "ui/Helpers";
 import { adjustHue, lighten } from "polished";
 import styled, { css } from "styled-components";
 
-import { ButtonSecondary } from "ui/Buttons";
-import { Settings } from "styled-icons/material/Settings";
-
 export const FamilyContainer = styled(Container)`
+  margin: 0;
+  position: relative;
+
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.mobile}) {
     margin: 0;
@@ -69,6 +70,7 @@ export const FamilyProfileContainer = styled.div`
   width: 100%;
   border-radius: 4px;
   overflow: hidden;
+  border-bottom: 1px solid ${props => lighten(0.6, props.theme.palette.text)};
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
@@ -92,9 +94,9 @@ export const FamilyImg = styled.div`
 
 export const FamilyHeader = styled.div`
   max-width: 100%;
-  border-bottom: 1px solid ${props => lighten(0.6, props.theme.palette.text)};
   display: grid;
-  grid-template-columns: 1fr 80% 1fr;
+  grid-template-columns: 40px 40px auto 40px 40px;
+  padding: 0 20px;
   justify-items: center;
   align-items: center;
 
@@ -263,31 +265,118 @@ export const TagRow = styled.div`
   }
 `
 
-export const SettingsButton = styled(Settings)`
-  color: ${props => lighten(0.6, props.theme.palette.text)};
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
+export const Options = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
+    margin-bottom: 0;
+  }
+`
+
+export const SettingsButton = styled(ButtonSecondary)`
+  color: ${props => props.theme.palette.main};
+  border-radius: 5px;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
 
   &:hover {
-    color: ${props => lighten(0.2, props.theme.palette.text)};
+    color: ${props => props.theme.palette.main};
   }
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
     margin: 0 auto;
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
     position: absolute;
     right: 16px;
     top: 16px;
     color: white;
     opacity: 0.6;
+    border: none;
 
     &:hover {
       color: white;
       opacity: 1;
+      background-color: transparent;
+      border: none;
     }
+
+    i {
+      font-size: 20px;
+      margin-right: 0;
+    }
+
+    span {
+      display: none;
+    }
+  }
+`
+
+export const UploadButton = styled(ButtonPrimaryLight)`
+  align-items: center;
+  border-radius: 5px;
+  height: 40px;
+  margin-right: 8px;
+  font-size: 14px;
+  padding: 9px 16px;
+
+  i {
+    display: inline-block;
+    margin-right: 8px;
+  }
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
+    display: block;
+    width: auto;
+    height: auto;
+    margin: 0 auto 16px auto;
+
+    span {
+      display: inline-block;
+    }
+
+    i {
+      margin-right: 8px;
+    }
+  }
+`
+
+export const FeatherButton = styled.button`
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px solid ${props => lighten(0.6, props.theme.palette.text)};
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+
+  &:hover {
+    border-color: ${props => lighten(0.2, props.theme.palette.main)};
+  }
+
+  &:hover > i {
+    color: ${props => props.theme.palette.main};
+  }
+
+
+  i {
+    display: block;
+    color: ${props => props.theme.palette.main};
+    font-size: 20px;
+    margin: 0 auto;
+  }
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
+    display: none;
   }
 `
 
@@ -295,25 +384,6 @@ export const Menu = styled.div`
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
     display: none;
-  }
-`
-
-export const UploadButton = styled(ButtonSecondary)`
-  display: none;
-
-  @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
-    display: block;
-    padding: 8px 20px 9px 20px;
-    width: auto;
-    margin: 0 auto 16px auto;
-    align-items: center;
-    border-radius: 5px;
-
-    i {
-      margin-right: 8px;
-      display: inline-block;
-    }
   }
 `
 

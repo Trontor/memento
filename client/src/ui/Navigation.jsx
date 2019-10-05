@@ -44,7 +44,9 @@ export const MenuTabs = styled.div`
 export const SettingsHeader = styled.div`
   display: grid;
   grid-template-columns: 1fr auto 1fr;
+  grid-column-gap: 8px;
   margin-bottom: 50px;
+  align-items: center;
 `;
 
 export const BackToView = styled.button`
@@ -54,7 +56,6 @@ export const BackToView = styled.button`
   display: flex;
   align-items: center;
   justify-items: left;
-  transform: translateY(2px);
 
   &:hover {
     opacity: 1;
