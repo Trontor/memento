@@ -281,8 +281,8 @@ export const SettingsButton = styled(ButtonSecondary)`
   color: ${props => props.theme.palette.main};
   border-radius: 5px;
   padding: 0;
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   font-size: 18px;
 
   &:hover {
@@ -298,7 +298,7 @@ export const SettingsButton = styled(ButtonSecondary)`
     right: 16px;
     top: 16px;
     color: white;
-    opacity: 0.6;
+    opacity: 0.7;
     border: none;
 
     &:hover {
@@ -322,7 +322,7 @@ export const SettingsButton = styled(ButtonSecondary)`
 export const UploadButton = styled(ButtonPrimaryLight)`
   align-items: center;
   border-radius: 5px;
-  height: 40px;
+  height: 38px;
   margin-right: 8px;
   font-size: 14px;
   padding: 9px 16px;

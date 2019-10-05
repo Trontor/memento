@@ -112,8 +112,6 @@ export const MenuContainer = styled.div`
 export const SignOutButton = styled(ButtonSecondary)`
   margin-top: 60px;
   width: 100%;
-  height: 32px;
-  padding: 0;
 `;
 
 export const CloseMenu = styled(Close)`
