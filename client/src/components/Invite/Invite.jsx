@@ -48,11 +48,16 @@ export default function InviteFamily() {
       failed: [{emailA, errorA}, ...]
     }
    */
-  if (inviteMutationInfo.data) {
-    console.log(inviteMutationInfo.data);
+  // if (inviteMutationInfo.data) {
+  //   console.log(inviteMutationInfo.data);
 
-    return <InviteSuccess results={inviteMutationInfo.data.inviteByEmail} />;
-  }
+  //   return <InviteSuccess results={inviteMutationInfo.data.inviteByEmail} />;
+  // }
+
+
+  if (true || inviteMutationInfo.data) {
+        return <InviteSuccess results={{sent: ["testemail1@gmail.com", "testemail2@gmail.com"], failed: [{email : "failed@gmail.com", error: "duplicate email"}]}} />;
+      }
 
   // Stores all the families the user has permission to invite
   let inviteFamilies = [];
