@@ -10,10 +10,12 @@ const StyledLogo = styled.div`
   padding: 10px 0;
   cursor: ${props => (props.pointer ? "pointer" : "default")};
   font-family: "Livvic", sans-serif;
+  text-align: ${props => (props.center ? "center" : "default")};
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLandscape}) {
+  props.theme.breakpoints.tabletLandscape}) {
     margin: ${props => (props.size === "small" ? "0 auto" : null)};
+    text-align: left;
   }
 `;
 

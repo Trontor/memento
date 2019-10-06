@@ -20,7 +20,7 @@ export const SidebarContainer = styled.div`
   z-index: 999;
   margin-left: ${props => -props.theme.size.sidebar}px;
   box-shadow: 2px 2px 3px -2px ${props => lighten(0.67, props.theme.palette.text)};
-  transition: transform 0.4s ease-in-out;
+  transition: transform .4s ease-in-out;
   ${props =>
     props.isOpen &&
     css`
@@ -106,8 +106,8 @@ export const TextList = styled.li`
   ${props => props.theme.mixins.hoverFade};
 
   &:hover {
-    transition: .4s ease-in-out;
-    transform: translateX(10px);
+    transition: .25s ease-in-out;
+    transform: translateX(12px);
   }
 
   &:hover > i {
@@ -176,7 +176,7 @@ export const NewFamilyGroup = styled.div`
 
   &:hover {
     color: ${props => props.theme.palette.main};
-    transition: .4s ease-in-out;
+    transition: .2s ease-in-out;
     transform: translateX(10px);
   }
 `;
