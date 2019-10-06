@@ -59,7 +59,8 @@ export const EmailsList = styled.div`
   p {
     text-align: left;
     margin: 0;
-    font-size: 15px;
+    font-size: 14px;
+    color: ${props => props.theme.palette.error};
   }
 `
 
