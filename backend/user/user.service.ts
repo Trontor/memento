@@ -17,6 +17,7 @@ import { RoleInput } from "./input/role.input";
 import { fromHexStringToObjectId } from "../common/mongo.util";
 import { FileService } from "../file/file.service";
 import { IUpdateUserData } from "./interfaces/user.update.interface";
+import { IUploadedFile } from "../file/file.interface";
 
 /**
  * Manages CRUD for users
@@ -117,16 +118,16 @@ export class UserService implements IUserService {
     }
 
     // upload image if provided
-    let newImageUrl: string | undefined = undefined;
+    let newImageFile: IUploadedFile | undefined = undefined;
     if (data.image) {
-      newImageUrl = await this.fileService.uploadImage(data.image);
+      newImageFile = await this.fileService.uploadImage(data.image);
     }
 
-    // extract image stream from `data` and replace with imageUrl
+    // extract image stream from `data` and replace with imageFile
     const { image, ...updatableData } = data;
     const updateData: IUpdateUserData = { ...updatableData };
-    if (image && newImageUrl) {
-      updateData.imageUrl = newImageUrl;
+    if (image && newImageFile) {
+      updateData.imageUrl = newImageFile.url;
     }
 
     // do update operation

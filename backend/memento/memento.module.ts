@@ -11,6 +11,7 @@ import {
   MEMENTO_LOADER_BY_ID,
 } from "./memento.dataloader";
 import { UserModule } from "../user/user.module";
+import { VisionModule } from "../vision/vision.module";
 
 /**
  * Nestjs request-scoped provider for a Dataloader<UserId, UserDocument>
@@ -28,6 +29,7 @@ export const MementoDataLoaderProvider: Provider<MementoDataLoaderById> = {
     FileModule,
     FamilyModule,
     UserModule,
+    VisionModule,
   ],
   providers: [MementoService, MementoResolver, MementoDataLoaderProvider],
   exports: [MEMENTO_LOADER_BY_ID],

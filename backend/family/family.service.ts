@@ -25,6 +25,7 @@ import { isValidInvite } from "../invite/invite.util";
 import { InviteExpiredException } from "../invite/invite.exception";
 import { isUserInFamily } from "../user/user.util";
 import { FileService } from "../file/file.service";
+import { IUploadedFile } from "../file/file.interface";
 
 /**
  * Manages CRUD for families, and joining families.
@@ -81,11 +82,11 @@ export class FamilyService {
   ): Promise<Family> {
     // TODO: use mongo sessions to ensure causal consistency
     const { image, ...fields } = input;
-    let imageUrl: string | undefined = undefined;
+    let imageFile: IUploadedFile | undefined = undefined;
 
     // upload family image if provided
     if (image) {
-      imageUrl = await this.fileService.uploadImage(image);
+      imageFile = await this.fileService.uploadImage(image);
     }
 
     // insert family
@@ -96,7 +97,7 @@ export class FamilyService {
       ...fields,
       memberIds: [currentUser.userId],
     });
-    if (imageUrl) doc.imageUrl = imageUrl;
+    if (imageFile) doc.imageUrl = imageFile.url;
     this.logger.debug(doc);
 
     try {
@@ -159,14 +160,14 @@ export class FamilyService {
     this.logger.log(`User ${user.userId} updating ${JSON.stringify(input)}`);
 
     // upload image if provided
-    let imageUrl: string | undefined = undefined;
+    let imageFile: IUploadedFile | undefined = undefined;
     if (image) {
       this.logger.log("Image was provided: uploading...");
-      imageUrl = await this.fileService.uploadImage(image);
+      imageFile = await this.fileService.uploadImage(image);
     }
 
     const updateData: IUpdateFamilyData = data;
-    if (imageUrl) updateData.imageUrl = imageUrl;
+    if (imageFile) updateData.imageUrl = imageFile.url;
 
     // do update operation
     const updatedFamily = await this.FamilyModel.findOneAndUpdate(
@@ -205,5 +206,10 @@ export class FamilyService {
     );
     if (!doc) throw new FamilyNotFoundException();
     return doc;
+  }
+
+  async getVisionCollection(familyId: string): Promise<string> {
+    const doc = await this.getFamily(familyId);
+    return doc.collectionArn;
   }
 }

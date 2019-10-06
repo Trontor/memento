@@ -33,6 +33,9 @@ import {
   validateMementoInput,
   validateUpdateMementoInput,
 } from "./memento.util";
+import { VisionService } from "../vision/vision.service";
+import { IUploadedFile } from "../file/file.interface";
+import { IMediaForInsert } from "./memento.interface";
 
 /**
  * Manages CRUD for Mementos.
@@ -45,6 +48,7 @@ export class MementoService {
     @InjectModel("Memento")
     private readonly MementoModel: Model<MementoDocument>,
     private readonly fileService: FileService,
+    private readonly visionService: VisionService,
   ) {}
 
   async findById(mementoId: string): Promise<MementoDocument> {
@@ -171,7 +175,7 @@ export class MementoService {
     uploader: User,
     input: CreateMementoInput,
   ): Promise<Memento> {
-    const { media, dates, familyId, ...data } = input;
+    const { media, dates, familyId, detectObjects, ...data } = input;
 
     // validate date
     validateMementoInput(input);
@@ -179,9 +183,16 @@ export class MementoService {
     const uploadedBy: Types.ObjectId = fromHexStringToObjectId(uploader.userId);
     const inFamily: Types.ObjectId = fromHexStringToObjectId(input.familyId);
 
-    let mediaForDoc = undefined;
+    let mediaForDoc: IMediaForInsert[] | undefined = undefined;
     if (media) {
       mediaForDoc = await this.convertMediaInputForDocument(media);
+    }
+
+    let detectedObjects: Set<string>;
+    if (detectObjects && mediaForDoc) {
+      detectedObjects = await this.detectObjectsInMedia(mediaForDoc);
+
+      this.logger.debug(detectedObjects);
     }
 
     this.logger.log(
@@ -208,6 +219,28 @@ export class MementoService {
     return doc.toDTO();
   }
 
+  private async detectObjectsInMedia(
+    mediaForDoc: IMediaForInsert[],
+    minConfidence: number = 90,
+  ) {
+    this.logger.debug(mediaForDoc);
+    const allObjects = new Set<string>();
+    for (let m of mediaForDoc) {
+      // can only detect objects in image
+      if (m.type !== MediaType.Image) {
+        continue;
+      }
+      const objects:
+        | Set<string>
+        | undefined = await this.visionService.detectObjects(
+        m.key,
+        minConfidence,
+      );
+      if (objects) objects.forEach(obj => allObjects.add(obj));
+    }
+    return allObjects;
+  }
+
   /**
    * Converts user input of media into database document,
    * by extracting file, uploading it, and making a `Media[]`,
@@ -217,20 +250,21 @@ export class MementoService {
    * @param media array of input media
    */
   private async convertMediaInputForDocument(media: CreateMementoMediaInput[]) {
-    let mediaUrls: any[];
+    let mediaFiles: IUploadedFile[];
     // upload media separately
     try {
-      mediaUrls = await this.uploadMedia(media);
+      mediaFiles = await this.uploadMedia(media);
     } catch (err) {
       this.logger.error(err);
       throw err;
     }
     // create media document objects with the uploaded URLs
-    const mediaForDocument = mediaUrls.map((url, index) => {
+    const mediaForDocument = mediaFiles.map(({ url, key }, index) => {
       // get original media item
       const item: CreateMementoMediaInput = media[index];
       const data = {
         url,
+        key,
         type: item.type,
         caption: item.caption,
       };
@@ -244,9 +278,11 @@ export class MementoService {
    *
    * @param media array of input for uploading memento media
    */
-  private async uploadMedia(media: CreateMementoMediaInput[]) {
-    const urlPromises: Promise<any>[] = media.map(m => {
-      let promise: Promise<string>;
+  private async uploadMedia(
+    media: CreateMementoMediaInput[],
+  ): Promise<IUploadedFile[]> {
+    const urlPromises: Promise<IUploadedFile>[] = media.map(m => {
+      let promise: Promise<IUploadedFile>;
       if (m.type === MediaType.Image) {
         promise = this.fileService.uploadImage(m.file);
       } else if (m.type === MediaType.Video) {

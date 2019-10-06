@@ -42,6 +42,9 @@ export class CreateMementoInput {
 
   @Field(type => [String], { nullable: true })
   tags?: string[];
+
+  @Field(type => Boolean, { defaultValue: true })
+  detectObjects!: boolean;
 }
 
 /**
