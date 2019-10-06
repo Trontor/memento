@@ -15,7 +15,7 @@ const theme = {
     background: "#F9FAFC",
     highlight: "#F6F9FF",
 
-    error: "#F73953",
+    error: "#FE3862",
     disabled: "#ddd",
 
     border: "#D3D0DD",

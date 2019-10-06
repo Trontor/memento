@@ -266,7 +266,7 @@ export class UserService implements IUserService {
           .includes(createUserInput.email.toLowerCase())
       ) {
         throw new BadRequestException(
-          `email ${createUserInput.email} is already registered`,
+          `${createUserInput.email} is already registered :o`,
         );
       }
     }
