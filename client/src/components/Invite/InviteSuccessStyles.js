@@ -64,7 +64,7 @@ export const EmailsList = styled.div`
 `
 
 export const ButtonMenu = styled.div`
-  max-width: 600px;
+  max-width: 500px;
   margin: 0 auto;
 
   button:last-child {
