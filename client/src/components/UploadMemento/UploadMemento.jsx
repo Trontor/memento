@@ -19,12 +19,18 @@ export default function UploadMemento(props) {
   const [currentStep, setCurrentStep] = useState(2);
   const [mementoFiles, setMementoFiles] = useState([]);
   const familyId = props.match.params.id;
-  const { loading } = useQuery(LOAD_FAMILY, {
+  const { data, loading } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
   });
 
   if (loading) {
     return <JollyLoader />;
+  }
+
+  let members;
+
+  if (data) {
+    members = data.family.members;
   }
 
   //Handle Radio value
@@ -45,23 +51,48 @@ export default function UploadMemento(props) {
 
   //Style react select dropdown with styles api
   const customDropdown = {
-    control: provided => ({
+    control: (provided, state) => ({
       ...provided,
       cursor: "pointer",
       fontSize: 13,
       width: "100%",
+      backgroundColor: "transparent",
+      borderColor:
+        state.isSelected
+        ? "rgba(255, 127, 95, 0.8)"
+        : state.isFocused
+        ? "rgba(255, 127, 95, 0.8)"
+        : "#ddd",
+      boxShadow:
+        state.isSelected
+        ? "0 0 1px rgba(255, 127, 95, 0.8)"
+        : null,
+      ':hover': {
+        borderColor: "rgba(255, 127, 95, 0.7)"
+      },
+      ':active': {
+        boxShadow: "0 0 1px rgba(255, 127, 95)"
+      },
+      ':focus': {
+        borderColor: "rgba(255, 127, 95)",
+        boxShadow: "0 0 1px rgba(255, 127, 95)"
+      }
     }),
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isFocused
-        ? "rgba(90, 150, 255, 0.15)"
-        : state.isActive
-        ? "rgba(76, 212, 255, 0.3)"
+      backgroundColor:
+          state.isFocused
+        ? "rgba(255, 127, 95, 0.15)"
+        : state.isSelected
+        ? "rgba(255, 127, 95, 0.3)"
         : null,
-      color: state.isSelected ? "rgba(90, 150, 255)" : "#44404B",
+      color: state.isSelected ? "rgba(255, 127, 95)" : "#44404B",
       padding: 10,
       fontSize: 13,
       cursor: "pointer",
+      ':active': {
+        backgroundColor: "rgba(255, 127, 95, 0.5)"
+      }
     }),
     menu: base => ({
       ...base,
@@ -121,6 +152,7 @@ export default function UploadMemento(props) {
           mementoFiles={mementoFiles}
           setMementoFiles={setMementoFiles}
           customDropdown={customDropdown}
+          members={members}
         />
       )}
 

@@ -128,7 +128,7 @@ export const TextList = styled.li`
   i {
     color: ${props => lighten(0.5, props.theme.palette.text)};
     margin-right: 10px;
-    flex-basis: 12px;
+    flex-basis: 28px;
   }
 `;
 

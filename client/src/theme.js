@@ -8,6 +8,7 @@ const theme = {
   },
   palette: {
     text: "#44404B",
+    lightText: "white",
     main: "#FF7F5F",
     mainLight: "#FFF2EF",
     secondary: "#FFA217",
@@ -18,7 +19,7 @@ const theme = {
     disabled: "#ddd",
 
     border: "#D3D0DD",
-    sidebar: "#F6F9FF",
+    sidebar: "#F9F9FB",
     foreground: "#FCFDFE"
   },
   mixins: {
