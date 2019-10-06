@@ -4,8 +4,8 @@ import styled from "styled-components";
 export const TextWrapper = styled.div`
   position: relative;
   width: 100%;
-  padding: 30px;
-  margin: 100px auto;
+  padding: 30px 40px 40px;
+  margin: auto;
   text-align: center;
   color: ${props => props.theme.palette.text};
   border: 1px solid ${props => lighten(0.65, props.theme.palette.text)};
