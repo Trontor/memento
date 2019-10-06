@@ -1,6 +1,7 @@
-import { darken, lighten } from "polished";
 import styled, { css } from "styled-components";
+
 import { User } from "styled-icons/fa-regular/User";
+import { lighten } from "polished";
 
 // Single-line text input field
 export const InputField = styled.input`
@@ -77,11 +78,13 @@ export const InstructionLabel = styled.label`
   }
 `;
 
-// Error cases
+// Error Message
 export const Error = styled.div`
+  font-family: "Livvic", sans-serif;
+  letter-spacing: 0.01em;
   color: ${props => props.theme.palette.error};
-  font-size: 10px;
-  margin-bottom: 10px;
+  font-size: 13px;
+  padding-top: 1px;
 `;
 
 // Text beneath input to provide guidance for users
@@ -93,7 +96,10 @@ export const FormHelpText = styled.span`
 
 // Text to guide users on login and signup pages
 export const HelpText = styled.span`
-  font-size: 11px;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  font-family: "Livvic", sans-serif;
+  color: ${props => lighten(0.1, props.theme.palette.text)};
 
   a {
     text-decoration: none;
@@ -101,7 +107,7 @@ export const HelpText = styled.span`
     font-weight: bold;
 
     &:hover {
-      color: ${props => darken(0.1, props.theme.palette.main)};
+      color: ${props => lighten(0.05, props.theme.palette.main)};
     }
   }
 `;

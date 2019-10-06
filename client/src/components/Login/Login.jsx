@@ -1,28 +1,33 @@
-import React from "react";
-import { Header } from "ui/Typography";
+import * as yup from "yup";
+
 import {
   Error,
+  HelpText,
   InputField,
   InputLabel,
-  HelpText,
   InputSection,
 } from "ui/Forms";
-import { MsgLink } from "./LoginStyles";
+
 import { ButtonPrimary } from "ui/Buttons";
-import { LoginContainer } from "./LoginStyles";
-import * as yup from "yup";
 import { Formik } from "formik";
+import { Header } from "ui/Typography";
 import { LOGIN } from "mutations/Authentication";
-import { useMutation } from "@apollo/react-hooks";
+import { LoginWrapper } from "./LoginStyles";
 import { Logo } from "ui/Logos";
+import { MsgLink } from "./LoginStyles";
+import {
+  PageContainer
+} from "ui/Helpers";
+import React from "react";
 import { Spinner } from "ui/Loaders";
+import { useMutation } from "@apollo/react-hooks";
 
 const LoginValidationSchema = yup.object().shape({
   email: yup
     .string()
     .email("Please enter a valid email")
     .required("Please enter your email"),
-  password: yup.string().required("Password is required"),
+  password: yup.string().required("Please enter your password"),
 });
 
 /**
@@ -67,10 +72,9 @@ export default function Login(props) {
   }
 
   return (
-    <>
-      <Logo></Logo>
-
-      <LoginContainer>
+    <PageContainer>
+      <Logo center/>
+      <LoginWrapper>
         <Header underline>Welcome back!</Header>
         <Formik
           initialValues={defaultValues}
@@ -123,7 +127,7 @@ export default function Login(props) {
             </form>
           )}
         />
-      </LoginContainer>
-    </>
+      </LoginWrapper>
+    </PageContainer>
   );
 }

@@ -1,15 +1,21 @@
-import React from "react";
-import { Formik } from "formik";
-import { InputSection, InputField, InputLabel, Error } from "ui/Forms";
-import { ButtonPrimary } from "ui/Buttons";
-import { Header } from "ui/Typography";
-import { Link } from "react-router-dom";
 import * as yup from "yup";
-import { NameInputContainer, SignupContainer } from "./SignupStyles";
+
+import { Error, InputField, InputLabel, InputSection } from "ui/Forms";
+import {
+  ErrorBanner,
+  NameInputContainer,
+  SignupContainer
+} from "./SignupStyles";
+
+import { ButtonPrimary } from "ui/Buttons";
+import { Formik } from "formik";
+import { Header } from "ui/Typography";
 import { HelpText } from "ui/Forms";
+import { Link } from "react-router-dom";
+import React from "react";
+import { SIGNUP } from "mutations/Authentication";
 import { useMutation } from "@apollo/react-hooks";
 import { withRouter } from "react-router-dom";
-import { SIGNUP } from "mutations/Authentication";
 
 const defaultValues = {
   firstName: "Jane",
@@ -28,20 +34,20 @@ const SignupValidationSchema = yup.object().shape({
   firstName: yup
     .string()
     .required("Please enter your first name")
-    .min(2, "First name too short"),
+    .min(2, "First name is too short ;("),
   lastName: yup
     .string()
     .required("Please enter your last name")
-    .min(2, "Last name is too short"),
+    .min(2, "Last name is too short :("),
   email: yup
     .string()
     .email("Please enter a valid email")
     .required("Please enter your email"),
-  password: yup.string().required("Password is required"),
+  password: yup.string().required("Please enter a password"),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref("password"), null], "Passwords must match")
-    .required("Password confirm is required"),
+    .oneOf([yup.ref("password"), null], "Your passwords do not match")
+    .required("Please confirm your password"),
 });
 
 const Signup = props => {
@@ -125,6 +131,15 @@ const Signup = props => {
         render={props => (
           <SignupContainer onSubmit={props.handleSubmit}>
             <Header underline>Sign up today!</Header>
+
+            {signUpErrors.length > 0 && (
+              <ErrorBanner>
+              {signUpErrors.map(error => (
+                <div>{error}</div>
+              ))}
+              </ErrorBanner>
+            )}
+
             <NameInputContainer>
               <InputSection>
                 <InputLabel>First Name</InputLabel>
@@ -197,9 +212,6 @@ const Signup = props => {
                 <Error>{props.errors.confirmPassword}</Error>
               )}
             </InputSection>
-            {signUpErrors.map(error => (
-              <div>{error}</div>
-            ))}
             <ButtonPrimary type="submit" spacing="true">
               Sign Up
             </ButtonPrimary>
