@@ -65,7 +65,7 @@ const PreviewContainer = styled.div`
   }
 `;
 
-export function MediaDropzone() {
+export function MediaDropzone({ onChange }) {
   const [mementoFiles, setMementoFiles] = useState([]);
 
   const {
@@ -99,6 +99,10 @@ export function MediaDropzone() {
     [mementoFiles],
   );
 
+  useEffect(() => {
+    if (onChange) onChange(mementoFiles);
+  }, [mementoFiles]);
+
   return (
     <>
       <DropzoneContainer
@@ -110,7 +114,22 @@ export function MediaDropzone() {
           Drag & drop or browse files to upload.
         </DropzoneContent>
       </DropzoneContainer>
-      <PreviewContainer>{imagePreview}</PreviewContainer>
+      {mementoFiles.map(file => {
+        console.log(file);
+        return (
+          <div>
+            <span>{file.name}</span>
+            <span
+              onClick={() =>
+                setMementoFiles(mementoFiles.filter(f => f != file))
+              }
+            >
+              Remove
+            </span>
+          </div>
+        );
+      })}
+      {/* <PreviewContainer>{imagePreview}</PreviewContainer> */}
     </>
   );
 }

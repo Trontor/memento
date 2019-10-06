@@ -9,7 +9,8 @@ import JollyLoader from "components/JollyLoader/JollyLoader";
 import { LOAD_FAMILY } from "mutations/Family";
 import UploadStep1 from "./UploadStep1";
 import UploadStep2 from "./UploadStep2";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import { CREATE_NEW_MEMENTO } from "mutations/Memento";
 
 export default function UploadMemento(props) {
   //Define react hooks
@@ -22,6 +23,7 @@ export default function UploadMemento(props) {
   const { data, loading } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
   });
+  const [uploadMemento, uploadMementoResults] = useMutation(CREATE_NEW_MEMENTO);
 
   if (loading) {
     return <JollyLoader />;
@@ -57,31 +59,26 @@ export default function UploadMemento(props) {
       fontSize: 13,
       width: "100%",
       backgroundColor: "transparent",
-      borderColor:
-        state.isSelected
+      borderColor: state.isSelected
         ? "rgba(255, 127, 95, 0.8)"
         : state.isFocused
         ? "rgba(255, 127, 95, 0.8)"
         : "#ddd",
-      boxShadow:
-        state.isSelected
-        ? "0 0 1px rgba(255, 127, 95, 0.8)"
-        : null,
-      ':hover': {
-        borderColor: "rgba(255, 127, 95, 0.7)"
+      boxShadow: state.isSelected ? "0 0 1px rgba(255, 127, 95, 0.8)" : null,
+      ":hover": {
+        borderColor: "rgba(255, 127, 95, 0.7)",
       },
-      ':active': {
-        boxShadow: "0 0 1px rgba(255, 127, 95)"
+      ":active": {
+        boxShadow: "0 0 1px rgba(255, 127, 95)",
       },
-      ':focus': {
+      ":focus": {
         borderColor: "rgba(255, 127, 95)",
-        boxShadow: "0 0 1px rgba(255, 127, 95)"
-      }
+        boxShadow: "0 0 1px rgba(255, 127, 95)",
+      },
     }),
     option: (provided, state) => ({
       ...provided,
-      backgroundColor:
-          state.isFocused
+      backgroundColor: state.isFocused
         ? "rgba(255, 127, 95, 0.15)"
         : state.isSelected
         ? "rgba(255, 127, 95, 0.3)"
@@ -90,9 +87,9 @@ export default function UploadMemento(props) {
       padding: 10,
       fontSize: 13,
       cursor: "pointer",
-      ':active': {
-        backgroundColor: "rgba(255, 127, 95, 0.5)"
-      }
+      ":active": {
+        backgroundColor: "rgba(255, 127, 95, 0.5)",
+      },
     }),
     menu: base => ({
       ...base,
@@ -128,7 +125,23 @@ export default function UploadMemento(props) {
       setMementoFiles(files);
     }
   };
-
+  const onSubmit = values => {
+    const mediaType = values.file.type.includes("image") ? "Image" : "Video";
+    const mutationValues = {
+      familyId: familyId,
+      type: "Test",
+      description: values.description,
+      location: values.location,
+      media: {
+        type: mediaType,
+        file: values.file,
+        caption: "Test Caption",
+      },
+      tags: values.tags,
+    };
+    uploadMemento({ variables: { input: mutationValues } });
+    console.log(mutationValues);
+  };
   return (
     <Container>
       <Header underline>Create a Memento</Header>
@@ -153,6 +166,7 @@ export default function UploadMemento(props) {
           setMementoFiles={setMementoFiles}
           customDropdown={customDropdown}
           members={members}
+          onSubmit={onSubmit}
         />
       )}
 
@@ -164,9 +178,7 @@ export default function UploadMemento(props) {
         <AlignRight>
           {currentStep !== 2 ? (
             <ButtonPrimary onClick={nextStep}>Next</ButtonPrimary>
-          ) : (
-            <ButtonPrimary type="submit">Next</ButtonPrimary>
-          )}
+          ) : null}
         </AlignRight>
       </FormNav>
     </Container>
