@@ -1,8 +1,14 @@
 import * as yup from "yup";
 
-import { Error, InputField, InputLabel, InputSection } from "ui/Forms";
 import {
+  Error,
   ErrorBanner,
+  HelpText,
+  InputField,
+  InputLabel,
+  InputSection
+} from "ui/Forms";
+import {
   NameInputContainer,
   SignupContainer
 } from "./SignupStyles";
@@ -10,7 +16,6 @@ import {
 import { ButtonPrimary } from "ui/Buttons";
 import { Formik } from "formik";
 import { Header } from "ui/Typography";
-import { HelpText } from "ui/Forms";
 import { Link } from "react-router-dom";
 import React from "react";
 import { SIGNUP } from "mutations/Authentication";
@@ -117,6 +122,7 @@ const Signup = props => {
       gqlError => gqlError.message.message,
     );
   }
+
   return (
     <>
       <Formik

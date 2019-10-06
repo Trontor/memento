@@ -17,6 +17,12 @@ export const InputField = styled.input`
   ${props => props.theme.mixins.hoverFade};
   background-color: inherit;
 
+  :-webkit-autofill {
+    box-shadow: 0 0 0 30px ${props => props.theme.palette.background} inset;
+    font-size: 19px;
+    color: ${props => props.theme.palette.text};
+  }
+
   ::placeholder {
     opacity: 0.4;
     font-weight: 300;
@@ -187,3 +193,15 @@ export const InputEdit = styled.div`
   grid-template-columns: 1fr 25px;
   grid-column-gap: 10px;
 `;
+
+export const ErrorBanner = styled.div`
+  font-family: "Livvic", sans-serif;
+  width: 100%;
+  font-size: 16px;
+  border: 1px solid ${props => lighten(0.1, props.theme.palette.error)};
+  background-color: ${props => lighten(0.35, props.theme.palette.error)};
+  color: ${props => props.theme.palette.error};
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  border-radius: 4px;
+`

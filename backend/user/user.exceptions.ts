@@ -1,11 +1,11 @@
 import {
-  NotFoundException,
-  InternalServerErrorException
+  InternalServerErrorException,
+  NotFoundException
 } from "@nestjs/common";
 
 export class UserNotFoundException extends NotFoundException {
   constructor() {
-    super("User not found");
+    super("Account does not exist D:");
   }
 }
 

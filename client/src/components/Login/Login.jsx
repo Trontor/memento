@@ -2,10 +2,11 @@ import * as yup from "yup";
 
 import {
   Error,
+  ErrorBanner,
   HelpText,
   InputField,
   InputLabel,
-  InputSection,
+  InputSection
 } from "ui/Forms";
 
 import { ButtonPrimary } from "ui/Buttons";
@@ -20,6 +21,7 @@ import {
 } from "ui/Helpers";
 import React from "react";
 import { Spinner } from "ui/Loaders";
+import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 
 const LoginValidationSchema = yup.object().shape({
@@ -41,6 +43,7 @@ const defaultValues = {
 };
 
 export default function Login(props) {
+  const history = useHistory();
   const processAuthentication = data => {
     // Extract JWT token from response using ES6 destructuring
     const { token } = data.login;
@@ -65,7 +68,9 @@ export default function Login(props) {
   }
 
   if (error) {
-    loginErrors = error.graphQLErrors.map(gqlError => gqlError.message.message);
+    loginErrors = error.graphQLErrors.map(
+      gqlError => gqlError.message.message
+    );
   }
   if (data) {
     return <div>{JSON.stringify(data)}</div>;
@@ -73,9 +78,16 @@ export default function Login(props) {
 
   return (
     <PageContainer>
-      <Logo center/>
+      <Logo pointer center onClick={() => history.push("/")}/>
       <LoginWrapper>
         <Header underline>Welcome back!</Header>
+        {loginErrors.length > 0 && (
+              <ErrorBanner>
+              {loginErrors.map(error => (
+                <div>{error}</div>
+              ))}
+              </ErrorBanner>
+            )}
         <Formik
           initialValues={defaultValues}
           onSubmit={(values, actions) => {
@@ -114,9 +126,6 @@ export default function Login(props) {
                   <Error>{props.errors.password}</Error>
                 )}
               </InputSection>
-              {loginErrors.map((error, i) => (
-                <div key={i}>{error}</div>
-              ))}
               <ButtonPrimary type="submit" spacing>
                 Login
               </ButtonPrimary>

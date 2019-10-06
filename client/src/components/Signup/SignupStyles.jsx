@@ -1,4 +1,3 @@
-import { lighten } from "polished";
 import styled from "styled-components";
 
 export const SignupContainer = styled.form`
@@ -21,16 +20,3 @@ export const NameInputContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 30px;
 `;
-
-
-export const ErrorBanner = styled.div`
-  font-family: "Livvic", sans-serif;
-  width: 100%;
-  font-size: 18px;
-  border: 1px solid ${props => lighten(0.1, props.theme.palette.error)};
-  background-color: ${props => lighten(0.35, props.theme.palette.error)};
-  color: ${props => props.theme.palette.error};
-  padding: 16px;
-  margin-bottom: 16px;
-  border-radius: 4px;
-`
