@@ -23,9 +23,17 @@ export default function UploadMemento(props) {
   const { data, loading } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
   });
-  const [uploadMemento, uploadMementoResults] = useMutation(CREATE_NEW_MEMENTO);
-
-  if (loading) {
+  const [uploadMemento, uploadMementoResults] = useMutation(
+    CREATE_NEW_MEMENTO,
+    {
+      onCompleted: data => {
+        if (data && data.createMemento) {
+          props.history.push("/family/" + familyId);
+        }
+      },
+    },
+  );
+  if (loading || uploadMementoResults.loading) {
     return <JollyLoader />;
   }
 

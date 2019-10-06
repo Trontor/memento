@@ -13,12 +13,26 @@ import {
   MementoTagsWrapper,
   MementoTitle,
   PeopleTags,
-  UploadDate
+  UploadDate,
 } from "./MementoCardStyles";
 
 import React from "react";
 
 export default function MementoCard(props) {
+  const {
+    mementoId,
+    createdAt,
+    dates,
+    description,
+    location,
+    media,
+    tags,
+    type,
+    updatedAt,
+    uploader,
+    people,
+  } = props;
+  const createdDate = new Date(createdAt);
   return (
     <Card>
       <AuthorWrapper>
@@ -26,8 +40,10 @@ export default function MementoCard(props) {
           <i class="fas fa-user-circle"></i>
         </AuthorAvatar>
         <div>
-          <MementoAuthor>{props.author}</MementoAuthor>
-          <UploadDate>{props.dateUploaded}</UploadDate>
+          <MementoAuthor>
+            {uploader.firstName + " " + uploader.lastName}
+          </MementoAuthor>
+          <UploadDate>{createdDate.toLocaleDateString()}</UploadDate>
         </div>
         {/* Edit & Bookmark */}
         <CardOptions>
@@ -38,52 +54,50 @@ export default function MementoCard(props) {
       <CardContent>
         <MementoInfo>
           {/* Title */}
-          <MementoTitle>{props.title}</MementoTitle>
+          <MementoTitle>Titel</MementoTitle>
           <MementoOverview>
-          {/* Date */}
+            {/* Date */}
             <span>
               <i class="far fa-clock"></i>
-              {props.dateCreated.year}
+              {createdDate.getFullYear()}
             </span>
             {/* Location */}
-            {props.location && (
+            {location && (
               <span>
-              <i class="fas fa-map-marker-alt"></i>
-              {props.location}
-            </span>
+                <i class="fas fa-map-marker-alt"></i>
+                {location}
+              </span>
             )}
             {/* People Tags */}
-            {props.people.length > 0 && (
+            {people && people.length > 0 && (
               <span>
                 <i class="fas fa-user-tag"></i>
                 <div>
-                {props.people.map(person => (
-                  <PeopleTags>
-                    {person}
-                  </PeopleTags>
-                ))}
+                  {props.people.map(person => (
+                    <PeopleTags>{person}</PeopleTags>
+                  ))}
                 </div>
               </span>
             )}
-            </MementoOverview>
+          </MementoOverview>
 
-            {/* Description */}
-             <MementoDescription>{props.description}</MementoDescription>
-          </MementoInfo>
-          {/* Cover Image */}
-          {props.media.length > 0 && (
-            <MementoCoverImg>
-              <img alt={props.caption} src={props.media[0].url}/>
-            </MementoCoverImg>
-          )}
-        </CardContent>
-        {/* Tags */}
-        <MementoTagsWrapper>
+          {/* Description */}
+          <MementoDescription>{props.description}</MementoDescription>
+        </MementoInfo>
+        {/* Cover Image */}
+        {props.media.length > 0 && (
+          <MementoCoverImg>
+            <img alt={props.caption} src={props.media[0].url} />
+          </MementoCoverImg>
+        )}
+      </CardContent>
+      {/* Tags */}
+      <MementoTagsWrapper>
         <i class="fas fa-tags"></i>
-          {props.tags.map(tag => (
-            <MementoTags>{tag}</MementoTags>
-          ))}
-        </MementoTagsWrapper>
+        {props.tags.map(tag => (
+          <MementoTags>{tag}</MementoTags>
+        ))}
+      </MementoTagsWrapper>
     </Card>
   );
 }

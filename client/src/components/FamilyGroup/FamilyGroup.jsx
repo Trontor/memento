@@ -36,6 +36,7 @@ export default function FamilyGroup(props) {
   const familyId = props.match.params.id;
   const [mementoTags, setMementoTags] = useState([]);
   const [family, setFamily] = useState(null);
+
   const { data, loading, error } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
     onCompleted: data => {
@@ -92,7 +93,7 @@ export default function FamilyGroup(props) {
   let tabComponent = null;
   switch (menuTabs[currentTabIndex]) {
     case "Mementos":
-      tabComponent = <MementosViewer themeColour={family.colour} />;
+      tabComponent = <MementosViewer familyId={familyId} themeColour={family.colour} />;
       break;
     case "Members":
       tabComponent = <MembersViewer members={family.members} />;
@@ -219,7 +220,7 @@ export default function FamilyGroup(props) {
           <TabComponent>{tabComponent}</TabComponent>
           {/* Desktop */}
           <MainViewer>
-            <MementosViewer />
+            <MementosViewer familyId={familyId} />
           </MainViewer>
         </div>
       </FamilyLayout>
