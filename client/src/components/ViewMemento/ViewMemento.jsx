@@ -1,38 +1,28 @@
 import React, { useState } from "react";
+import { Container } from "ui/Helpers";
 import { useQuery } from "@apollo/react-hooks";
-import JollyLoader from "components/JollyLoader/JollyLoader";
 import { GET_MEMENTOS } from "queries/Memento";
-import { GET_USER_FAMILIES } from "queries/UserQueries";
-import { TextList } from "../Sidebar/SidebarStyles";
+import ViewMementoCard from "./ViewMementoCard";
 
-export default function MementosViewer() {
-  const [families, setFamilies] = useState([]);
+export default function ViewMemento() {
   const [mementos, setMementos] = useState([]);
 
-  const { familyList } = useQuery(GET_USER_FAMILIES, {
-    onCompleted: familyList => {
-      setFamilies(familyList.currentUser.families);
-    },
-  });
-  console.log(families);
-
-  /*const loadMemento = useQuery(GET_MEMENTOS, {
+  const loadMemento = useQuery(GET_MEMENTOS, {
     variables: {
-      id: //insert familyId here
+      id: "5d849da7a450cc02c84e7629",
     },
     onCompleted: data => {
       if (data && data.mementos) setMementos(data.mementos);
       console.log(data);
     },
-  });*/
+  });
 
   return (
-    <div>
-      {!families ? (
-        <JollyLoader />
-      ) : (
-        families.map(family => <div>{family.familyId}</div>)
-      )}
-    </div>
+    <Container>
+      {mementos.map(memento => {
+        console.log(memento);
+        return <ViewMementoCard {...memento} />;
+      })}
+    </Container>
   );
 }
