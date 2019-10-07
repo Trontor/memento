@@ -6,7 +6,6 @@ import React, { useState } from "react";
 import { AlignRight } from "ui/Helpers";
 import CreatableSelect from "react-select/creatable";
 import DateSelector from "components/DateSelector/DateSelector";
-import { MediaDropzone } from "./MediaDropzone";
 import { StyledDropzone } from "components/FileDropzone/FileDropzone";
 import Textarea from "react-textarea-autosize";
 import { Formik } from "formik";
@@ -156,7 +155,7 @@ export default function UploadStep2({ customDropdown, onSubmit, members }) {
                 </Tag>
               ))}
               <NewTag type="button" onClick={() => setNewTag("")}>
-                <i class="fas fa-plus"></i> edit/new
+                <i class="fas fa-plus"></i> new tag
               </NewTag>
             </TagsContainer>
 
@@ -171,7 +170,11 @@ export default function UploadStep2({ customDropdown, onSubmit, members }) {
 
                 <ButtonPrimary
                   type="button"
-                  onClick={() => setTags([...new Set([...tags, newTag])])}
+                  onClick={() => {
+                    setTags([...new Set([...tags, newTag])]);
+                    props.setFieldValue("tags", [...props.values.tags, newTag]);
+                    setNewTag(null);
+                  }}
                 >
                   Create new tag
                 </ButtonPrimary>

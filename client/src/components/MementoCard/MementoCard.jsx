@@ -15,20 +15,21 @@ import {
   PeopleTags,
   UploadDate,
 } from "./MementoCardStyles";
-
+import { useHistory } from "react-router";
 import React from "react";
 
 export default function MementoCard(props) {
+  const history = useHistory();
   const {
     mementoId,
     createdAt,
-    dates,
-    description,
+    // dates,
+    // description,
     location,
-    media,
-    tags,
-    type,
-    updatedAt,
+    // media,
+    // tags,
+    // type,
+    // updatedAt,
     uploader,
     people,
   } = props;
@@ -47,7 +48,12 @@ export default function MementoCard(props) {
         </div>
         {/* Edit & Bookmark */}
         <CardOptions>
-          <i class="fas fa-pencil-alt"></i>
+          <i
+            class="fas fa-pencil-alt"
+            onClick={() =>
+              history.push(history.location.pathname + "/memento/" + mementoId)
+            }
+          ></i>
           <i class="far fa-bookmark"></i>
         </CardOptions>
       </AuthorWrapper>

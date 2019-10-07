@@ -3,10 +3,13 @@ import Select from "react-select";
 import { DateInput, DateField } from "./DateSelectorStyles";
 
 export default function DateSelector({ value, customDropdown, onChange }) {
+  const defaultDay = value ? value.getDate() : 1;
+  const defaultMonth = value ? value.getMonth() : 1;
+  const defaultYear = value ? value.getFullYear() : 2000;
   // Date values
-  const [day, setDay] = useState("");
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("");
+  const [day, setDay] = useState(defaultDay);
+  const [month, setMonth] = useState(defaultMonth);
+  const [year, setYear] = useState(defaultYear);
 
   // Join the day, month and year values intoa string to be used for validation
   // const joinDate = () => {
@@ -14,13 +17,10 @@ export default function DateSelector({ value, customDropdown, onChange }) {
   // };
 
   useEffect(() => {
-    if (value) {
-      setDay(value.getDate());
-      setMonth(value.getMonth());
-      setYear(value.getFullYear());
-      console.log(value.prototype);
-    }
-  }, []);
+    console.log("Onchange");
+
+    if (onChange) onChange(new Date(year, month, day));
+  }, [day, month, year]);
   // const months = [
   //   { label: "January", value: 1 },
   //   { label: "February", value: "02" },
@@ -53,10 +53,6 @@ export default function DateSelector({ value, customDropdown, onChange }) {
     label: month,
     value: idx,
   }));
-
-  useEffect(() => {
-    if (onChange) onChange(new Date(year, month, day));
-  }, [day, month, year]);
 
   // Run joinDate whenever a change in the values are detected
   // useEffect(() => {

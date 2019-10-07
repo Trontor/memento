@@ -108,31 +108,31 @@ export default function UploadMemento(props) {
     }),
   };
 
-  const selectTag = tag => {
-    if (mementoTags.includes(tag)) {
-      const tags = [...mementoTags];
-      const tagIndex = tags.indexOf(tag);
-      if (tagIndex !== -1) {
-        tags.splice(tagIndex, 1);
-        setMementoTags(tags);
-      }
-    } else {
-      setMementoTags([...mementoTags, tag]);
-    }
-  };
+  // const selectTag = tag => {
+  //   if (mementoTags.includes(tag)) {
+  //     const tags = [...mementoTags];
+  //     const tagIndex = tags.indexOf(tag);
+  //     if (tagIndex !== -1) {
+  //       tags.splice(tagIndex, 1);
+  //       setMementoTags(tags);
+  //     }
+  //   } else {
+  //     setMementoTags([...mementoTags, tag]);
+  //   }
+  // };
 
-  const addFile = file => {
-    setMementoFiles([...mementoFiles, file]);
-  };
+  // const addFile = file => {
+  //   setMementoFiles([...mementoFiles, file]);
+  // };
 
-  const deleteFile = file => {
-    const files = [...mementoFiles];
-    const fileIndex = files.indexOf(file);
-    if (fileIndex !== -1) {
-      files.splice(fileIndex, 1);
-      setMementoFiles(files);
-    }
-  };
+  // const deleteFile = file => {
+  //   const files = [...mementoFiles];
+  //   const fileIndex = files.indexOf(file);
+  //   if (fileIndex !== -1) {
+  //     files.splice(fileIndex, 1);
+  //     setMementoFiles(files);
+  //   }
+  // };
   const onSubmit = values => {
     const mediaType = values.file.type.includes("image") ? "Image" : "Video";
     const mutationValues = {
@@ -148,7 +148,6 @@ export default function UploadMemento(props) {
       tags: values.tags,
     };
     uploadMemento({ variables: { input: mutationValues } });
-    console.log(mutationValues);
   };
   return (
     <Container>
@@ -166,12 +165,12 @@ export default function UploadMemento(props) {
 
       {currentStep === 2 && (
         <UploadStep2
-          mementoTags={mementoTags}
-          selectTag={selectTag}
-          addFile={addFile}
-          deleteFile={deleteFile}
-          mementoFiles={mementoFiles}
-          setMementoFiles={setMementoFiles}
+          // mementoTags={mementoTags}
+          // selectTag={selectTag}
+          // addFile={addFile}
+          // deleteFile={deleteFile}
+          // mementoFiles={mementoFiles}
+          // setMementoFiles={setMementoFiles}
           customDropdown={customDropdown}
           members={members}
           onSubmit={onSubmit}
