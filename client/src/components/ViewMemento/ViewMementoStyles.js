@@ -15,6 +15,10 @@ export const List = styled(Circle)`
   margin-right: 10px;
 `;
 
+export const ListText = styled.div`
+  margin-bottom: 10px;
+`;
+
 export const InfoWrapper = styled.div`
   margin-top: 10px;
   margin-bottom: 30px;
@@ -22,6 +26,12 @@ export const InfoWrapper = styled.div`
 
 export const CardInfo = styled.div`
   margin: 20px;
+`;
+
+export const CardContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
 `;
 export const BookmarksIcon = styled(CardOptions)`
   margin: auto;

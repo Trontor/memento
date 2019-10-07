@@ -1,7 +1,6 @@
 import {
   AuthorAvatar,
   AuthorWrapper,
-  CardContent,
   CardOptions,
   MementoAuthor,
   MementoCoverImg,
@@ -16,7 +15,14 @@ import {
 } from "../MementoCard/MementoCardStyles";
 import { useHistory } from "react-router";
 import React from "react";
-import { Card, CardInfo, List, InfoWrapper } from "./ViewMementoStyles";
+import {
+  Card,
+  CardInfo,
+  List,
+  InfoWrapper,
+  ListText,
+  CardContent,
+} from "./ViewMementoStyles";
 
 export default function MementoCard(props) {
   const history = useHistory();
@@ -56,36 +62,42 @@ export default function MementoCard(props) {
         {/* Title */}
         <MementoTitle>Title</MementoTitle>
         <InfoWrapper>
-          <List size="20px" />
-          {dates[0].year}
-          <br />
-          <List size="20px" />
-          {location}
-          <List size="20px" />
-          FirstName
+          <ListText>
+            <List size="20px" />
+            {dates[0].year}
+          </ListText>
+          <ListText>
+            <List size="20px" />
+            {location}
+          </ListText>
+          <ListText>
+            <List size="20px" />
+            FirstName
+          </ListText>
         </InfoWrapper>
         {/* Description */}
         <MementoDescription>{props.description}</MementoDescription>
+
+        <MementoTagsWrapper>
+          <ListText>
+            <List size="20px" />
+            Tags
+          </ListText>
+        </MementoTagsWrapper>
       </CardInfo>
       <CardContent>
-        <MementoInfo>
-          {/* Description */}
-          <MementoDescription>{props.description}</MementoDescription>
-        </MementoInfo>
         {/* Cover Image */}
         {props.media.length > 0 && (
           <MementoCoverImg>
             <img alt={props.caption} src={props.media[0].url} />
           </MementoCoverImg>
         )}
+        <MementoDescription>
+          This is a caption of the image. Some images will have captions. Some
+          may not
+        </MementoDescription>
+        <span> Uploaded to Valerie's Family </span>
       </CardContent>
-      {/* Tags */}
-      <MementoTagsWrapper>
-        <i class="fas fa-tags"></i>
-        {props.tags.map(tag => (
-          <MementoTags>{tag}</MementoTags>
-        ))}
-      </MementoTagsWrapper>
     </Card>
   );
 }
