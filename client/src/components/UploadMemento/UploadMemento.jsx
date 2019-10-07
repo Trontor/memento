@@ -9,21 +9,31 @@ import JollyLoader from "components/JollyLoader/JollyLoader";
 import { LOAD_FAMILY } from "mutations/Family";
 import UploadStep1 from "./UploadStep1";
 import UploadStep2 from "./UploadStep2";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import { CREATE_NEW_MEMENTO } from "mutations/Memento";
 
 export default function UploadMemento(props) {
   //Define react hooks
   const [selectMementoType, setSelectMementoType] = useState("");
   const [selectEventType, setSelectEventType] = useState("");
-  const [mementoTags, setMementoTags] = useState([]);
+  // const [mementoTags, setMementoTags] = useState([]);
   const [currentStep, setCurrentStep] = useState(2);
-  const [mementoFiles, setMementoFiles] = useState([]);
+  // const [mementoFiles, setMementoFiles] = useState([]);
   const familyId = props.match.params.id;
   const { data, loading } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
   });
-
-  if (loading) {
+  const [uploadMemento, uploadMementoResults] = useMutation(
+    CREATE_NEW_MEMENTO,
+    {
+      onCompleted: data => {
+        if (data && data.createMemento) {
+          props.history.push("/family/" + familyId);
+        }
+      },
+    },
+  );
+  if (loading || uploadMementoResults.loading) {
     return <JollyLoader />;
   }
 
@@ -57,31 +67,26 @@ export default function UploadMemento(props) {
       fontSize: 13,
       width: "100%",
       backgroundColor: "transparent",
-      borderColor:
-        state.isSelected
+      borderColor: state.isSelected
         ? "rgba(255, 127, 95, 0.8)"
         : state.isFocused
         ? "rgba(255, 127, 95, 0.8)"
         : "#ddd",
-      boxShadow:
-        state.isSelected
-        ? "0 0 1px rgba(255, 127, 95, 0.8)"
-        : null,
-      ':hover': {
-        borderColor: "rgba(255, 127, 95, 0.7)"
+      boxShadow: state.isSelected ? "0 0 1px rgba(255, 127, 95, 0.8)" : null,
+      ":hover": {
+        borderColor: "rgba(255, 127, 95, 0.7)",
       },
-      ':active': {
-        boxShadow: "0 0 1px rgba(255, 127, 95)"
+      ":active": {
+        boxShadow: "0 0 1px rgba(255, 127, 95)",
       },
-      ':focus': {
+      ":focus": {
         borderColor: "rgba(255, 127, 95)",
-        boxShadow: "0 0 1px rgba(255, 127, 95)"
-      }
+        boxShadow: "0 0 1px rgba(255, 127, 95)",
+      },
     }),
     option: (provided, state) => ({
       ...provided,
-      backgroundColor:
-          state.isFocused
+      backgroundColor: state.isFocused
         ? "rgba(255, 127, 95, 0.15)"
         : state.isSelected
         ? "rgba(255, 127, 95, 0.3)"
@@ -90,9 +95,9 @@ export default function UploadMemento(props) {
       padding: 10,
       fontSize: 13,
       cursor: "pointer",
-      ':active': {
-        backgroundColor: "rgba(255, 127, 95, 0.5)"
-      }
+      ":active": {
+        backgroundColor: "rgba(255, 127, 95, 0.5)",
+      },
     }),
     menu: base => ({
       ...base,
@@ -103,32 +108,56 @@ export default function UploadMemento(props) {
     }),
   };
 
-  const selectTag = tag => {
-    if (mementoTags.includes(tag)) {
-      const tags = [...mementoTags];
-      const tagIndex = tags.indexOf(tag);
-      if (tagIndex !== -1) {
-        tags.splice(tagIndex, 1);
-        setMementoTags(tags);
-      }
-    } else {
-      setMementoTags([...mementoTags, tag]);
-    }
-  };
+  // const selectTag = tag => {
+  //   if (mementoTags.includes(tag)) {
+  //     const tags = [...mementoTags];
+  //     const tagIndex = tags.indexOf(tag);
+  //     if (tagIndex !== -1) {
+  //       tags.splice(tagIndex, 1);
+  //       setMementoTags(tags);
+  //     }
+  //   } else {
+  //     setMementoTags([...mementoTags, tag]);
+  //   }
+  // };
 
-  const addFile = file => {
-    setMementoFiles([...mementoFiles, file]);
-  };
+  // const addFile = file => {
+  //   setMementoFiles([...mementoFiles, file]);
+  // };
 
-  const deleteFile = file => {
-    const files = [...mementoFiles];
-    const fileIndex = files.indexOf(file);
-    if (fileIndex !== -1) {
-      files.splice(fileIndex, 1);
-      setMementoFiles(files);
-    }
-  };
+  // const deleteFile = file => {
+  //   const files = [...mementoFiles];
+  //   const fileIndex = files.indexOf(file);
+  //   if (fileIndex !== -1) {
+  //     files.splice(fileIndex, 1);
+  //     setMementoFiles(files);
+  //   }
+  // };
+  const onSubmit = values => {
+    const mediaType = values.file.type.includes("image") ? "Image" : "Video";
+    const mutationValues = {
+      familyId: familyId,
+      type: "Test",
+      description: values.description,
+      location: values.location,
+      dates: [
+        {
+          day: values.date.getDate(),
+          month: values.date.getMonth() + 1,
+          year: values.date.getFullYear(),
+        },
+      ],
+      media: {
+        type: mediaType,
+        file: values.file,
+        caption: "Test Caption",
+      },
+      tags: values.tags,
+    };
+    console.log(mutationValues);
 
+    uploadMemento({ variables: { input: mutationValues } });
+  };
   return (
     <Container>
       <Header underline>Create a Memento</Header>
@@ -145,14 +174,15 @@ export default function UploadMemento(props) {
 
       {currentStep === 2 && (
         <UploadStep2
-          mementoTags={mementoTags}
-          selectTag={selectTag}
-          addFile={addFile}
-          deleteFile={deleteFile}
-          mementoFiles={mementoFiles}
-          setMementoFiles={setMementoFiles}
+          // mementoTags={mementoTags}
+          // selectTag={selectTag}
+          // addFile={addFile}
+          // deleteFile={deleteFile}
+          // mementoFiles={mementoFiles}
+          // setMementoFiles={setMementoFiles}
           customDropdown={customDropdown}
           members={members}
+          onSubmit={onSubmit}
         />
       )}
 
@@ -164,9 +194,7 @@ export default function UploadMemento(props) {
         <AlignRight>
           {currentStep !== 2 ? (
             <ButtonPrimary onClick={nextStep}>Next</ButtonPrimary>
-          ) : (
-            <ButtonPrimary type="submit">Next</ButtonPrimary>
-          )}
+          ) : null}
         </AlignRight>
       </FormNav>
     </Container>
