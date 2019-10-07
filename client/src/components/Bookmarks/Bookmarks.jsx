@@ -1,45 +1,50 @@
 import React from "react";
-import { CenterText, Container } from "ui/Helpers";
+import { Container } from "ui/Helpers";
 import { Header } from "ui/Typography";
+import { FormHelpText, UserAvatar } from "ui/Forms";
+import MementoCard from "../MementoCard/MementoCard";
 import {
-  BookmarksSearchBar,
-  BookmarksSearchIcon,
-  BookmarksSearchInput,
   BookmarksWrapper,
   Item,
   Description,
   BookmarksIcon,
+  Tags,
+  UploaderBox,
+  UploaderText,
 } from "./BookmarksStyles";
 
-export default function Bookmarks() {
+export default function Bookmarks(props) {
   const imageSrc = [
     "https://images.unsplash.com/photo-1516668557604-c8e814fdb184?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2089&q=80",
-    "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
-    "https://images.unsplash.com/photo-1525921429624-479b6a26d84d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
-    "https://images.unsplash.com/photo-1511948374796-056e8f289f34?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
-    "https://images.unsplash.com/photo-1564428658805-8001c05e05c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80",
-    "https://images.unsplash.com/photo-1557246565-8a3d3ab5d7f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
-    "https://images.unsplash.com/photo-1455906876003-298dd8c44ec8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2127&q=80",
-    "https://images.unsplash.com/photo-1549767742-ccfdeb07b71d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
-    "https://images.unsplash.com/photo-1513899337336-48b3db5df46e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
   ];
+
+  //const tags = ["Date", "Location"];
+  let UploaderPic = (
+    <UserAvatar size="25px" style={{ margin: "3px 0 0 5px" }} />
+  );
 
   return (
     <Container>
-      <CenterText>
-        <Header underline>My Bookmarks</Header>
-      </CenterText>
-      <BookmarksSearchBar>
-        <BookmarksSearchIcon />
-        <BookmarksSearchInput type="text" placeholder="Search all bookmarks" />
-      </BookmarksSearchBar>
+      <Header underline>Saved Mementos</Header>
       <BookmarksWrapper>
         {imageSrc.map(image => (
           <Item>
             <img src={image} alt="blah" />
             <Description>
-              <BookmarksIcon />
-              <h2>Bookmarks</h2>
+              <h3>Bookmarks</h3>
+              <div>
+                <Tags>
+                  <label>test</label>
+                </Tags>
+              </div>
+              <UploaderBox>
+                {UploaderPic}
+                <UploaderText>
+                  Uploader
+                  <FormHelpText>Uploader's Family</FormHelpText>
+                </UploaderText>
+                <BookmarksIcon />
+              </UploaderBox>
             </Description>
           </Item>
         ))}
