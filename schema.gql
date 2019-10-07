@@ -32,6 +32,8 @@ input CreateMementoInput {
   location: String
   media: [CreateMementoMediaInput!]
   dates: [CreateMementoDateInput!]
+  people: [ID!]
+  beneficiaries: [ID!]
   tags: [String!]
 }
 
@@ -117,6 +119,8 @@ type Memento {
   dates: [MementoDate!]!
   tags: [String!]
   bookmarkedBy: [User!]!
+  people: [User!]!
+  beneficiaries: [User!]!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -186,6 +190,8 @@ input UpdateMementoInput {
   mementoId: ID!
   description: String
   location: String
+  people: [ID!]
+  beneficiaries: [ID!]
   tags: [String!]
   updateMedia: [UpdateMementoMediaInput!]
   appendMedia: [CreateMementoMediaInput!]

@@ -60,6 +60,12 @@ export class Memento {
   @Field(type => [User])
   bookmarkedBy!: User[];
 
+  @Field(type => [User])
+  people!: User[];
+
+  @Field(type => [User])
+  beneficiaries!: User[];
+
   @Field()
   createdAt!: Date;
 
