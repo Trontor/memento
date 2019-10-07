@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { DateInput, DateField } from "./DateSelectorStyles";
 
-export default function DateSelector({ value, customDropdown, onChange }) {
+export default function DateSelector({
+  setFieldValue,
+  value,
+  customDropdown,
+  onChange,
+}) {
   const defaultDay = value ? value.getDate() : 1;
   const defaultMonth = value ? value.getMonth() : 1;
   const defaultYear = value ? value.getFullYear() : 2000;
@@ -19,8 +24,9 @@ export default function DateSelector({ value, customDropdown, onChange }) {
   useEffect(() => {
     console.log("Onchange");
 
-    if (onChange) onChange(new Date(year, month, day));
-  }, [day, month, year]);
+    // if (onChange) onChange(new Date(year, month, day));
+    setFieldValue("date", new Date(year, month, day));
+  }, [day, month, year, setFieldValue]);
   // const months = [
   //   { label: "January", value: 1 },
   //   { label: "February", value: "02" },

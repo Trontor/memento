@@ -81,7 +81,8 @@ export default function UploadStep2({ customDropdown, onSubmit, members }) {
           <FormSection>
             <InstructionLabel>Date:</InstructionLabel>
             <DateSelector
-              onChange={newDate => props.setFieldValue("date", newDate)}
+              setFieldValue={props.setFieldValue}
+              // onChange={props.handleChange}
               value={props.values.date}
               customDropdown={customDropdown}
             />

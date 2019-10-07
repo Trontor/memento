@@ -23,7 +23,7 @@ export default function MementoCard(props) {
   const {
     mementoId,
     createdAt,
-    // dates,
+    dates,
     // description,
     location,
     // media,
@@ -65,7 +65,7 @@ export default function MementoCard(props) {
             {/* Date */}
             <span>
               <i class="far fa-clock"></i>
-              {createdDate.getFullYear()}
+              {dates[0].year}
             </span>
             {/* Location */}
             {location && (

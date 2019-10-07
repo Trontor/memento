@@ -140,6 +140,13 @@ export default function UploadMemento(props) {
       type: "Test",
       description: values.description,
       location: values.location,
+      dates: [
+        {
+          day: values.date.getDate(),
+          month: values.date.getMonth() + 1,
+          year: values.date.getFullYear(),
+        },
+      ],
       media: {
         type: mediaType,
         file: values.file,
@@ -147,6 +154,8 @@ export default function UploadMemento(props) {
       },
       tags: values.tags,
     };
+    console.log(mutationValues);
+
     uploadMemento({ variables: { input: mutationValues } });
   };
   return (
