@@ -11,11 +11,11 @@ import {
   UploadDate,
 } from "../MementoCard/MementoCardStyles";
 import { useHistory } from "react-router";
+import { List } from "ui/Radio";
 import React from "react";
 import {
   Card,
   CardInfo,
-  List,
   InfoWrapper,
   ListText,
   CardContent,

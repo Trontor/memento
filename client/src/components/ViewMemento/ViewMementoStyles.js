@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import { CardOptions } from "components/MementoCard/MementoCardStyles";
-import MementoCard from "../MementoCard/MementoCard";
 import { Circle } from "styled-icons/boxicons-solid/Circle";
 
 export const Card = styled.div`
@@ -9,11 +7,11 @@ export const Card = styled.div`
   background-color: ${props => props.theme.palette.foreground};
   margin-bottom: 20px;
   height: auto;
-`;
 
-export const List = styled(Circle)`
-  color: ${props => props.theme.palette.main};
-  margin-right: 10px;
+  @media screen and (max-width: ${props =>
+      props.theme.breakpoints.tabletPortrait}) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const ListText = styled.div`

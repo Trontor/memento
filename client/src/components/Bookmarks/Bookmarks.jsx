@@ -2,7 +2,7 @@ import React from "react";
 import { Container } from "ui/Helpers";
 import { Header } from "ui/Typography";
 import { FormHelpText, UserAvatar } from "ui/Forms";
-import MementoCard from "../MementoCard/MementoCard";
+import { List } from "ui/Radio";
 import {
   BookmarksWrapper,
   Item,
@@ -33,10 +33,10 @@ export default function Bookmarks(props) {
             <Description>
               <h3>Bookmarks</h3>
               <div>
-                <Tags>
-                  <label>test</label>
-                </Tags>
+                <List size="20px" />
+                test
               </div>
+
               <UploaderBox>
                 {UploaderPic}
                 <UploaderText>
