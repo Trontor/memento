@@ -16,9 +16,9 @@ export default function UploadMemento(props) {
   //Define react hooks
   const [selectMementoType, setSelectMementoType] = useState("");
   const [selectEventType, setSelectEventType] = useState("");
-  const [mementoTags, setMementoTags] = useState([]);
+  // const [mementoTags, setMementoTags] = useState([]);
   const [currentStep, setCurrentStep] = useState(2);
-  const [mementoFiles, setMementoFiles] = useState([]);
+  // const [mementoFiles, setMementoFiles] = useState([]);
   const familyId = props.match.params.id;
   const { data, loading } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
