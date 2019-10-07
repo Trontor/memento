@@ -67,10 +67,7 @@ export class MementoResolver {
    */
   @Mutation(returns => Memento)
   @UseGuards(JwtAuthGuard, UpdateMementoGuard)
-  async updateMemento(
-    @CurrentUser() user: User,
-    @Args("input") input: UpdateMementoInput,
-  ) {
+  async updateMemento(@Args("input") input: UpdateMementoInput) {
     const memento = await this.mementoService.updateMemento(input);
     this.mementoLoaderById.clear(memento.mementoId);
     this.logger.debug(memento);
