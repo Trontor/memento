@@ -9,18 +9,18 @@ import {
   Description,
   UploaderBox,
   UploaderText,
+  UploaderAvatar,
 } from "./BookmarksStyles";
 import { CardOptions } from "../MementoCard/MementoCardStyles";
 
 export default function Bookmarks(props) {
   const imageSrc = [
     "https://images.unsplash.com/photo-1516668557604-c8e814fdb184?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2089&q=80",
+    "https://images.unsplash.com/photo-1564428658805-8001c05e05c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+    "https://images.unsplash.com/photo-1564595063998-fc31c376d0df?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
   ];
 
   //const tags = ["Date", "Location"];
-  let UploaderPic = (
-    <UserAvatar size="25px" style={{ margin: "3px 0 0 5px" }} />
-  );
 
   return (
     <Container>
@@ -37,7 +37,9 @@ export default function Bookmarks(props) {
               </div>
 
               <UploaderBox>
-                {UploaderPic}
+                <UploaderAvatar>
+                  <i class="fas fa-user-circle"></i>
+                </UploaderAvatar>
                 <UploaderText>
                   Uploader
                   <FormHelpText>Uploader's Family</FormHelpText>

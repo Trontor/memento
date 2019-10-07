@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Bookmark } from "styled-icons/boxicons-solid/Bookmark";
+import { AuthorAvatar } from "../MementoCard/MementoCardStyles";
 
 export const BookmarksWrapper = styled.div`
   display: grid;
@@ -32,22 +32,6 @@ export const Description = styled.div`
   }
 `;
 
-export const Tags = styled.li`
-  list-style: none;
-  font-size: 16px;
-  color: ${props => props.theme.palette.main};
-  margin-bottom: 5px;
-  &::before {
-    content: "·";
-    font-size: 80px;
-    vertical-align: middle;
-    line-height: 20px;
-  }
-  label {
-    color: ${props => props.theme.palette.text};
-  }
-`;
-
 export const UploaderBox = styled.div`
   display: grid;
   grid-template-columns: 20% 65% 15%;
@@ -65,9 +49,10 @@ export const UploaderText = styled.span`
   grid-template-rows: 40% 50%;
 `;
 
-export const BookmarksIcon = styled(Bookmark)`
-  color: ${props => props.theme.palette.border};
-  width: 30px;
-  cursor: pointer;
-  margin-left: 10px;
+export const UploaderAvatar = styled(AuthorAvatar)`
+  margin-right: 5px;
+
+  i {
+    font-size: 32px;
+  }
 `;
