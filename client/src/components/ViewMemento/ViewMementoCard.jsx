@@ -5,9 +5,6 @@ import {
   MementoAuthor,
   MementoCoverImg,
   MementoDescription,
-  MementoInfo,
-  MementoOverview,
-  MementoTags,
   MementoTagsWrapper,
   MementoTitle,
   PeopleTags,
@@ -22,6 +19,7 @@ import {
   InfoWrapper,
   ListText,
   CardContent,
+  FamilyGroup,
 } from "./ViewMementoStyles";
 
 export default function MementoCard(props) {
@@ -53,6 +51,7 @@ export default function MementoCard(props) {
               {uploader.firstName + " " + uploader.lastName}
             </MementoAuthor>
             <UploadDate>{createdDate.toLocaleDateString()}</UploadDate>
+            <FamilyGroup>Valerie's Family</FamilyGroup>
           </div>
           {/* Edit & Bookmark */}
           <CardOptions>
@@ -96,7 +95,6 @@ export default function MementoCard(props) {
           This is a caption of the image. Some images will have captions. Some
           may not
         </MementoDescription>
-        <span> Uploaded to Valerie's Family </span>
       </CardContent>
     </Card>
   );

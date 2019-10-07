@@ -8,6 +8,7 @@ export const Card = styled.div`
   grid-template-columns: 45% 55%;
   background-color: ${props => props.theme.palette.foreground};
   margin-bottom: 20px;
+  height: auto;
 `;
 
 export const List = styled(Circle)`
@@ -31,8 +32,12 @@ export const CardInfo = styled.div`
 export const CardContent = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 20px auto;
-`;
-export const BookmarksIcon = styled(CardOptions)`
   margin: auto;
+`;
+
+export const FamilyGroup = styled.span`
+  opacity: 0.7;
+  font-size: 13px;
+  display: block;
+  margin-top: 2px;
 `;
