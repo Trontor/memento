@@ -40,6 +40,12 @@ export class CreateMementoInput {
   @Field(type => [CreateMementoDateInput], { nullable: true })
   dates?: CreateMementoDateInput[];
 
+  @Field(type => [ID], { nullable: true })
+  people?: string[];
+
+  @Field(type => [ID], { nullable: true })
+  beneficiaries?: string[];
+
   @Field(type => [String], { nullable: true })
   tags?: string[];
 }
@@ -57,6 +63,12 @@ export class UpdateMementoInput {
 
   @Field({ nullable: true })
   location?: string;
+
+  @Field(type => [ID], { nullable: true })
+  people?: string[];
+
+  @Field(type => [ID], { nullable: true })
+  beneficiaries?: string[];
 
   @Field(type => [String], { nullable: true })
   tags?: string[];
