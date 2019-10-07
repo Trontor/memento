@@ -7,11 +7,10 @@ import {
   BookmarksWrapper,
   Item,
   Description,
-  BookmarksIcon,
-  Tags,
   UploaderBox,
   UploaderText,
 } from "./BookmarksStyles";
+import { CardOptions } from "../MementoCard/MementoCardStyles";
 
 export default function Bookmarks(props) {
   const imageSrc = [
@@ -43,7 +42,9 @@ export default function Bookmarks(props) {
                   Uploader
                   <FormHelpText>Uploader's Family</FormHelpText>
                 </UploaderText>
-                <BookmarksIcon />
+                <CardOptions>
+                  <i class="far fa-bookmark"></i>
+                </CardOptions>
               </UploaderBox>
             </Description>
           </Item>
