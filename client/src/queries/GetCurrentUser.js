@@ -10,7 +10,6 @@ export default gql`
       imageUrl
       location
       gender
-      email
     }
   }
 `;

@@ -5,26 +5,33 @@ import { GET_MEMENTOS } from "queries/Memento";
 import { GET_USER_FAMILIES } from "queries/UserQueries";
 import { TextList } from "../Sidebar/SidebarStyles";
 
-export default function MementosViewer(props) {
-  const [families, setFamilies] = useState(null);
+export default function MementosViewer() {
+  const [families, setFamilies] = useState([]);
+  const [mementos, setMementos] = useState([]);
 
-  const { data } = useQuery(GET_USER_FAMILIES, {
-    fetchPolicy: "cache-and-network",
-    onCompleted: data => {
-      setFamilies(data.currentUser.families);
+  const { familyList } = useQuery(GET_USER_FAMILIES, {
+    onCompleted: familyList => {
+      setFamilies(familyList.currentUser.families);
     },
   });
+  console.log(families);
+
+  /*const loadMemento = useQuery(GET_MEMENTOS, {
+    variables: {
+      id: //insert familyId here
+    },
+    onCompleted: data => {
+      if (data && data.mementos) setMementos(data.mementos);
+      console.log(data);
+    },
+  });*/
 
   return (
     <div>
       {!families ? (
         <JollyLoader />
       ) : (
-        families.map(family => (
-          <TextList key={family.familyId}>
-            <a href={`/family/${family.familyId}`}>{family.name}</a>
-          </TextList>
-        ))
+        families.map(family => <div>{family.familyId}</div>)
       )}
     </div>
   );
