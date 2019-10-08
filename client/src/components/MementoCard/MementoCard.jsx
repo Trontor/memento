@@ -30,10 +30,13 @@ export default function MementoCard(props) {
     // tags,
     // type,
     // updatedAt,
+    beneficiaries,
     uploader,
     people,
   } = props;
   const createdDate = new Date(createdAt);
+  console.log("Rendering Memento:", props);
+
   return (
     <Card>
       <AuthorWrapper>
@@ -80,7 +83,22 @@ export default function MementoCard(props) {
                 <i class="fas fa-user-tag"></i>
                 <div>
                   {props.people.map(person => (
-                    <PeopleTags>{person}</PeopleTags>
+                    <PeopleTags>
+                      {person.firstName} {person.lastName}
+                    </PeopleTags>
+                  ))}
+                </div>
+              </span>
+            )}
+            {/* Beneficiary Tags */}
+            {beneficiaries && beneficiaries.length > 0 && (
+              <span>
+                <i class="fas fa-user-tag"></i>
+                <div>
+                  {props.beneficiaries.map(beneficiary => (
+                    <PeopleTags>
+                      {beneficiary.firstName} {beneficiary.lastName}
+                    </PeopleTags>
                   ))}
                 </div>
               </span>
