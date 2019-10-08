@@ -2,12 +2,10 @@ import { ButtonPrimary, ButtonSecondary } from "ui/Buttons";
 import { FormSection, InputField, InstructionLabel, TextArea } from "ui/Forms";
 import { NewTag, Tag, TagsContainer } from "./UploadMementoStyles";
 import React, { useState } from "react";
-
 import { AlignRight } from "ui/Helpers";
 import CreatableSelect from "react-select/creatable";
 import DateSelector from "components/DateSelector/DateSelector";
 import { StyledDropzone } from "components/FileDropzone/FileDropzone";
-import Textarea from "react-textarea-autosize";
 import { Formik } from "formik";
 
 const initialFormValues = {
@@ -67,15 +65,13 @@ export default function UploadStep2({ customDropdown, onSubmit, members }) {
 
           <FormSection>
             <InstructionLabel>Description:</InstructionLabel>
-            <TextArea>
-              <Textarea
-                type="text"
-                name="description"
-                onChange={props.handleChange}
-                value={props.values.description}
-                placeholder=""
-              />
-            </TextArea>
+            <TextArea
+              type="text"
+              name="description"
+              onChange={props.handleChange}
+              value={props.values.description}
+              placeholder=""
+            />
           </FormSection>
 
           <FormSection>
