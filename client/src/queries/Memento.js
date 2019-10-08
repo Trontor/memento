@@ -9,6 +9,14 @@ export const GET_MEMENTOS = gql`
         firstName
         lastName
       }
+      people {
+        firstName
+        lastName
+      }
+      beneficiaries {
+        firstName
+        lastName
+      }
       type
       description
       location

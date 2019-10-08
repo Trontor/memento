@@ -35,6 +35,7 @@ export default function FamilyGroup(props) {
   const [currentTabIndex, setTabIndex] = useState(0);
   const familyId = props.match.params.id;
   const [mementoTags, setMementoTags] = useState([]);
+  const [mementos, setMementos] = useState(null);
   const [family, setFamily] = useState(null);
 
   const { loading, error } = useQuery(LOAD_FAMILY, {
@@ -77,7 +78,7 @@ export default function FamilyGroup(props) {
     "blanket",
     "food",
   ];
-
+  const onLoadedMementos = loadedMementos => setMementos(loadedMementos);
   const selectTag = tag => {
     if (mementoTags.includes(tag)) {
       const tags = [...mementoTags];
@@ -95,7 +96,11 @@ export default function FamilyGroup(props) {
   switch (menuTabs[currentTabIndex]) {
     case "Mementos":
       tabComponent = (
-        <MementosViewer familyId={familyId} themeColour={family.colour} />
+        <MementosViewer
+          onLoadedMementos={onLoadedMementos}
+          familyId={familyId}
+          themeColour={family.colour}
+        />
       );
       break;
     case "Members":
@@ -123,10 +128,7 @@ export default function FamilyGroup(props) {
             <FamilyProfileContainer>
               <FamilyImg />
               <ProfilePhotoContainer>
-                <img
-                  alt="family"
-                  src="https://images.unsplash.com/photo-1506827155776-53ce0b5d56b4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
-                />
+                <img alt="family" src={family.imageUrl} />
               </ProfilePhotoContainer>
               <FamilyHeader>
                 <div></div> {/* Empty div to center title */}
@@ -138,15 +140,18 @@ export default function FamilyGroup(props) {
                   <GroupDetails>
                     {/* Date of Group Creation */}
                     <i class="far fa-clock"></i>
-                    Created on {moment(family.createdAt).format("Do MMM, YYYY")}
+                    Created on the{" "}
+                    {moment(family.createdAt).format("Do MMM, YYYY")}
                   </GroupDetails>
                   <GroupDetails>
                     {/* Number of Mementos */}
-                    <i class="far fa-paper-plane"></i>3 mementos
+                    <i class="far fa-paper-plane"></i>
+                    {mementos ? mementos.length : "~"} mementos
                   </GroupDetails>
                   <GroupDetails>
                     {/* Number of Members */}
-                    <i class="fas fa-users"></i>4 members
+                    <i class="fas fa-users"></i>
+                    {family ? family.members.length : "~"} members
                   </GroupDetails>
                 </DetailsWrapper>
               </FamilyHeader>
@@ -223,7 +228,10 @@ export default function FamilyGroup(props) {
           <TabComponent>{tabComponent}</TabComponent>
           {/* Desktop */}
           <MainViewer>
-            <MementosViewer familyId={familyId} />
+            <MementosViewer
+              onLoadedMementos={onLoadedMementos}
+              familyId={familyId}
+            />
           </MainViewer>
         </div>
       </FamilyLayout>

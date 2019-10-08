@@ -138,8 +138,12 @@ export default function MementosViewer(props) {
       id: props.familyId,
     },
     onCompleted: data => {
-      if (data && data.mementos) setMementos(data.mementos);
-      console.log(data);
+      if (data && data.mementos) {
+        console.log(props);
+
+        props.onLoadedMementos(data.mementos);
+        setMementos(data.mementos);
+      }
     },
   });
   console.log("FAMILY ID: ", props.familyId);
@@ -150,7 +154,6 @@ export default function MementosViewer(props) {
   return (
     <MementoCardColumns>
       {mementos.map(memento => {
-        console.log(memento);
         return <MementoCard {...memento} />;
       })}
     </MementoCardColumns>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { DateInput, DateField } from "./DateSelectorStyles";
+import moment from "moment";
 
 export default function DateSelector({
   setFieldValue,
@@ -22,10 +23,20 @@ export default function DateSelector({
   // };
 
   useEffect(() => {
-    console.log("Onchange");
-
-    // if (onChange) onChange(new Date(year, month, day));
-    setFieldValue("date", new Date(year, month, day));
+    const proposedDate = `${day}/${month}/${year}`;
+    const validDate = moment(proposedDate).isValid();
+    if (!day || !month || !year) {
+      setFieldValue("date", null);
+      return;
+    }
+    if (!validDate) {
+      console.log("Invalid date: " + proposedDate);
+      setDay(1);
+      setMonth(1);
+      setYear(2000);
+    } else {
+      setFieldValue("date", new Date(year, month, day));
+    }
   }, [day, month, year, setFieldValue]);
   // const months = [
   //   { label: "January", value: 1 },

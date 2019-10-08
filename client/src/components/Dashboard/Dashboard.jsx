@@ -22,7 +22,7 @@ export default function Dashboard(props) {
   //Handle the states of displaying data, error and loading
   if (error) {
     console.log("Error loading user data:", error);
-    return <JollyError/>;
+    return <JollyError />;
   }
 
   if (data && data.currentUser) {
@@ -31,7 +31,7 @@ export default function Dashboard(props) {
   }
 
   if (loading) {
-    return <JollyLoader/>;
+    return <JollyLoader />;
   }
 
   return (
@@ -49,7 +49,7 @@ export default function Dashboard(props) {
           <GoToButton />
         </DashboardButtons>
 
-        <DashboardButtons>
+        <DashboardButtons onClick={() => props.history.push("/invite/accept")}>
           <InviteFamily />
           <ButtonHeading>
             Join an existing Family

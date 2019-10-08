@@ -152,9 +152,11 @@ export default function UploadMemento(props) {
         file: values.file,
         caption: "Test Caption",
       },
+      people: values.memberTags,
+      beneficiaries: values.beneficiaries,
       tags: values.tags,
     };
-    console.log(mutationValues);
+    console.log("Submitting memento:", mutationValues);
 
     uploadMemento({ variables: { input: mutationValues } });
   };
@@ -180,6 +182,7 @@ export default function UploadMemento(props) {
           // deleteFile={deleteFile}
           // mementoFiles={mementoFiles}
           // setMementoFiles={setMementoFiles}
+          currentUserId={data.currentUser.userId}
           customDropdown={customDropdown}
           members={members}
           onSubmit={onSubmit}
