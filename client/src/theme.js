@@ -11,7 +11,7 @@ const theme = {
     lightText: "white",
     main: "#FF7F5F",
     mainLight: "#FFF2EF",
-    secondary: "#FFA217",
+    secondary: "#56D7E8",
     background: "#F9FAFC",
     highlight: "#F6F9FF",
 

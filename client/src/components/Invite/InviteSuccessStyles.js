@@ -4,8 +4,8 @@ import styled from "styled-components";
 export const TextWrapper = styled.div`
   position: relative;
   width: 100%;
-  padding: 30px;
-  margin: 100px auto;
+  padding: 30px 40px 40px;
+  margin: auto;
   text-align: center;
   color: ${props => props.theme.palette.text};
   border: 1px solid ${props => lighten(0.65, props.theme.palette.text)};
@@ -59,12 +59,13 @@ export const EmailsList = styled.div`
   p {
     text-align: left;
     margin: 0;
-    font-size: 15px;
+    font-size: 14px;
+    color: ${props => props.theme.palette.error};
   }
 `
 
 export const ButtonMenu = styled.div`
-  max-width: 600px;
+  max-width: 500px;
   margin: 0 auto;
 
   button:last-child {

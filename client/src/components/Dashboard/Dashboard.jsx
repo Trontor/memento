@@ -9,6 +9,7 @@ import {
 
 import { Container } from "ui/Helpers";
 import GET_CURRENT_USER from "queries/GetCurrentUser";
+import JollyError from "components/JollyError/JollyError";
 import JollyLoader from "components/JollyLoader/JollyLoader";
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
@@ -21,6 +22,7 @@ export default function Dashboard(props) {
   //Handle the states of displaying data, error and loading
   if (error) {
     console.log("Error loading user data:", error);
+    return <JollyError/>;
   }
 
   if (data && data.currentUser) {
@@ -29,7 +31,7 @@ export default function Dashboard(props) {
   }
 
   if (loading) {
-    return <JollyLoader />;
+    return <JollyLoader/>;
   }
 
   return (
