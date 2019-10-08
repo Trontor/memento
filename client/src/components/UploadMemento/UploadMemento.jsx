@@ -134,6 +134,7 @@ export default function UploadMemento(props) {
   //   }
   // };
   const onSubmit = values => {
+    console.log("Submitting memento:", mutationValues);
     const mediaType = values.file.type.includes("image") ? "Image" : "Video";
     const mutationValues = {
       familyId: familyId,
@@ -154,7 +155,6 @@ export default function UploadMemento(props) {
       },
       tags: values.tags,
     };
-    console.log(mutationValues);
 
     uploadMemento({ variables: { input: mutationValues } });
   };
@@ -180,6 +180,7 @@ export default function UploadMemento(props) {
           // deleteFile={deleteFile}
           // mementoFiles={mementoFiles}
           // setMementoFiles={setMementoFiles}
+          currentUserId={data.currentUser.userId}
           customDropdown={customDropdown}
           members={members}
           onSubmit={onSubmit}
