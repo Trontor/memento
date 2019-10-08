@@ -22,6 +22,7 @@ export default function Dashboard(props) {
   //Handle the states of displaying data, error and loading
   if (error) {
     console.log("Error loading user data:", error);
+    return <JollyError/>;
   }
 
   if (data && data.currentUser) {
@@ -34,30 +35,29 @@ export default function Dashboard(props) {
   }
 
   return (
-    <JollyError/>
-    // <Container>
-    //   <TextWrapper>
-    //     <h2>Hello {user.firstName}!</h2>
-    //     <p>Get started with one of the following actions: </p>
+    <Container>
+      <TextWrapper>
+        <h2>Hello {user.firstName}!</h2>
+        <p>Get started with one of the following actions: </p>
 
-    //     <DashboardButtons onClick={() => props.history.push("/create-family")}>
-    //       <CreateFamily />
-    //       <ButtonHeading>
-    //         Create a Family
-    //         <span>And get the rest of your family on board.</span>
-    //       </ButtonHeading>
-    //       <GoToButton />
-    //     </DashboardButtons>
+        <DashboardButtons onClick={() => props.history.push("/create-family")}>
+          <CreateFamily />
+          <ButtonHeading>
+            Create a Family
+            <span>And get the rest of your family on board.</span>
+          </ButtonHeading>
+          <GoToButton />
+        </DashboardButtons>
 
-    //     <DashboardButtons>
-    //       <InviteFamily />
-    //       <ButtonHeading>
-    //         Join an existing Family
-    //         <span>Got an invite code? Join your family.</span>
-    //       </ButtonHeading>
-    //       <GoToButton />
-    //     </DashboardButtons>
-    //   </TextWrapper>
-    // </Container>
+        <DashboardButtons>
+          <InviteFamily />
+          <ButtonHeading>
+            Join an existing Family
+            <span>Got an invite code? Join your family.</span>
+          </ButtonHeading>
+          <GoToButton />
+        </DashboardButtons>
+      </TextWrapper>
+    </Container>
   );
 }

@@ -49,9 +49,9 @@ const small = css`
 `;
 
 const large = css`
-  width: 8em;
-  height: 8em;
-  border-width: 16px;
+  width: 6em;
+  height: 6em;
+  border-width: 5px;
 `;
 
 const handleSpinnerSize = size => {
