@@ -30,6 +30,7 @@ export default function MementoCard(props) {
     // tags,
     // type,
     // updatedAt,
+    detectedLabels,
     beneficiaries,
     uploader,
     people,
@@ -85,6 +86,19 @@ export default function MementoCard(props) {
                   {props.people.map(person => (
                     <PeopleTags>
                       {person.firstName} {person.lastName}
+                    </PeopleTags>
+                  ))}
+                </div>
+              </span>
+            )}
+            {/* Beneficiary Tags */}
+            {beneficiaries && beneficiaries.length > 0 && (
+              <span>
+                <i class="fas fa-user-tag"></i>
+                <div>
+                  {props.beneficiaries.map(beneficiary => (
+                    <PeopleTags>
+                      {beneficiary.firstName} {beneficiary.lastName}
                     </PeopleTags>
                   ))}
                 </div>

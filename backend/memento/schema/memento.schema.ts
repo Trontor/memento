@@ -97,6 +97,10 @@ const LabelSchema: Schema = new Schema({
     type: String,
     required: true,
   },
+  confidence: {
+    type: Number,
+    required: true,
+  },
 });
 
 /**
@@ -122,7 +126,7 @@ export const MementoSchema: Schema<MementoDocument> = new Schema(
     },
     description: {
       type: String,
-      required: true,
+      required: false,
     },
     location: {
       type: String,
