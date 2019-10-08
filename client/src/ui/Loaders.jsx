@@ -10,9 +10,10 @@ export const PageSpinnerWrapper = styled.div`
 
 //Pure css spinner for loading state
 export const Spinner = styled.span`
+  margin: 20px auto;
   border-radius: 50%;
   border-style: solid;
-  display: inline-block;
+  display: block;
   width: 1em;
   height: 1em;
   animation: spinner 1.2s cubic-bezier(0.5, 0.7, 0.8, 0.5) infinite;
@@ -48,9 +49,9 @@ const small = css`
 `;
 
 const large = css`
-  width: 8em;
-  height: 8em;
-  border-width: 16px;
+  width: 6em;
+  height: 6em;
+  border-width: 5px;
 `;
 
 const handleSpinnerSize = size => {

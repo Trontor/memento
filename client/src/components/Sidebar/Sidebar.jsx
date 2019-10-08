@@ -1,29 +1,30 @@
 import {
   CloseMenu,
-  FamilyListContainer,
-  MenuContainer,
+  FamilyListSection,
+  MenuSection,
   NewFamilyGroup,
-  SearchBar,
-  SearchIcon,
-  SearchInput,
   SidebarContainer,
   SidebarHeader,
   SignOutButton,
   TextList,
+  UserAvatar,
+  UserDisplay,
+  UserName
 } from "./SidebarStyles";
-import { EditProfile, Invite, NewArtefact, View, Bookmarks } from "ui/Buttons";
+import React, { useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 
+import GET_CURRENT_USER from "queries/GetCurrentUser";
 import { GET_USER_FAMILIES } from "queries/UserQueries";
 import { Logo } from "ui/Logos";
-import React, { useEffect, useState } from "react";
 import { Spinner } from "ui/Loaders";
 import { useQuery } from "@apollo/react-hooks";
-import { useHistory, useLocation } from "react-router-dom";
 
 const Sidebar = props => {
   const history = useHistory();
   const location = useLocation();
   const [families, setFamilies] = useState(null);
+  const { data } = useQuery(GET_CURRENT_USER);
 
   const signOut = () => {
     localStorage.removeItem("AUTH-TOKEN");
@@ -43,6 +44,14 @@ const Sidebar = props => {
 
   const iconSize = "20px";
 
+  let user = {};
+
+  if (data && data.currentUser) {
+    user = data.currentUser;
+    console.log("Success:", user);
+  }
+
+
   useEffect(() => {
     console.log("Refreshing sidebar...");
     refetch();
@@ -58,11 +67,22 @@ const Sidebar = props => {
           onClick={props.toggleSidebar}
         />
       </SidebarHeader>
-      <SearchBar>
-        <SearchIcon />
-        <SearchInput type="text" placeholder="Search all artefacts" />
-      </SearchBar>
-      <FamilyListContainer>
+      <UserDisplay onClick={() => history.push("/profile/" + user.userId)}>
+        <UserAvatar>
+          {user.imageUrl === null ? (
+            <i class="fas fa-user-circle"></i>
+          ) : (
+            <img src={user.imageUrl} alt="profile_image"></img>
+          )
+          }
+        </UserAvatar>
+        <div>
+          <UserName>
+            {user.firstName}
+          </UserName>
+        </div>
+      </UserDisplay>
+      <FamilyListSection>
         {families && <h3>My Families</h3>}
         {!families ? (
           <Spinner />
@@ -73,36 +93,32 @@ const Sidebar = props => {
             </TextList>
           ))
         )}
-      </FamilyListContainer>
-      <NewFamilyGroup onClick={() => history.push("/create-family")}>
-        New Family group
-      </NewFamilyGroup>
-      <MenuContainer>
+        <NewFamilyGroup onClick={() => history.push("/create-family")}>
+          New Family group
+        </NewFamilyGroup>
+      </FamilyListSection>
+      <MenuSection>
         <TextList>
-          <Invite size={iconSize} />
+          <i class="fas fa-user-plus"></i>
           <a href={`/invite`}>Invite</a>
         </TextList>
-      </MenuContainer>
-      <MenuContainer>
+      </MenuSection>
+      <MenuSection>
         <TextList>
-          <NewArtefact size={iconSize} />
-          <a href={`/new-memento`}>New Memento</a>
+          <i class="far fa-paper-plane"></i>
+          <a href={`/mementos`}>View my Mementos</a>
         </TextList>
         <TextList>
-          <View size={iconSize} />
-          View my Mementos
-        </TextList>
-        <TextList>
-          <Bookmarks size={iconSize} />
+          <i class="far fa-bookmark"></i>
           <a href={`/bookmarks`}>Bookmarks</a>
         </TextList>
-      </MenuContainer>
-      <MenuContainer>
+      </MenuSection>
+      <MenuSection>
         <TextList>
-          <EditProfile size={iconSize} />
+          <i class="fas fa-pencil-alt"></i>
           <a href={`/settings`}>Edit profile & account</a>
         </TextList>
-      </MenuContainer>
+      </MenuSection>
       <SignOutButton onClick={signOut}>Sign Out</SignOutButton>
     </SidebarContainer>
   );

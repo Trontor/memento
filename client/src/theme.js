@@ -8,22 +8,26 @@ const theme = {
   },
   palette: {
     text: "#44404B",
+    lightText: "white",
     main: "#FF7F5F",
-    secondary: "#FFA217",
-    background: "#FAFBFD",
+    mainLight: "#FFF2EF",
+    secondary: "#56D7E8",
+    background: "#F9FAFC",
     highlight: "#F6F9FF",
 
-    error: "#F73953",
+    error: "#FE3862",
     disabled: "#ddd",
 
     border: "#D3D0DD",
-    sidebar: "#F7FAFE",
+    sidebar: "#F9F9FB",
+    foreground: "#FCFDFE"
   },
   mixins: {
     hoverFade: "transition: ease-in 0.1s",
   },
   size: {
-    sidebar: 260 /*px */,
+    sidebar: 250 /*px */,
+    gutterWidth: "16px"
   },
 };
 

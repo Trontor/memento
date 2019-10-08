@@ -1,5 +1,11 @@
 import styled, { css } from "styled-components";
 
+export const PageContainer = styled.div`
+  width: 100%;
+  padding: 40px;
+  height: 100vh;
+`
+
 // Used for centering elements within its parent
 export const center = css`
   position: absolute;
@@ -10,7 +16,7 @@ export const center = css`
 
 // Used across the site as a container for the main column
 export const Container = styled.div`
-  margin: 30px auto;
+  margin: 20px;
   position: relative;
   top: ${props => (props.noNav ? "0px" : "40px")};
 
@@ -20,7 +26,7 @@ export const Container = styled.div`
   }
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLandscape}) {
+  props.theme.breakpoints.tabletLandscape}) {
     top: 0;
     margin: 30px auto;
     width: 70%;

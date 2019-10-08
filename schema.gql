@@ -32,6 +32,8 @@ input CreateMementoInput {
   location: String
   media: [CreateMementoMediaInput!]
   dates: [CreateMementoDateInput!]
+  people: [ID!]
+  beneficiaries: [ID!]
   tags: [String!]
   detectObjects: Boolean = true
 }
@@ -117,6 +119,9 @@ type Memento {
   media: [Media!]!
   dates: [MementoDate!]!
   tags: [String!]
+  bookmarkedBy: [User!]!
+  people: [User!]!
+  beneficiaries: [User!]!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -140,6 +145,8 @@ type Mutation {
   inviteByEmail(input: SendInvitesInput!): SendInvitesOutput!
   createMemento(input: CreateMementoInput!): Memento!
   updateMemento(input: UpdateMementoInput!): Memento!
+  bookmark(mementoId: ID!): Memento!
+  deleteBookmark(mementoId: ID!): Memento!
 }
 
 type Query {
@@ -184,6 +191,8 @@ input UpdateMementoInput {
   mementoId: ID!
   description: String
   location: String
+  people: [ID!]
+  beneficiaries: [ID!]
   tags: [String!]
   updateMedia: [UpdateMementoMediaInput!]
   appendMedia: [CreateMementoMediaInput!]
@@ -224,6 +233,7 @@ type User {
   gender: String
   familyRoles: [Role!]!
   families: [Family!]!
+  bookmarks: [Memento!]!
   createdAt: DateTime!
   updatedAt: DateTime!
   lastSeenAt: DateTime!

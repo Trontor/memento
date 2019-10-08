@@ -41,7 +41,7 @@ const GlobalStyle = createGlobalStyle`
     min-height: 100%;
     padding: 0;
     margin: 0;
-    font-size: 14px;
+    font-size: 15px;
     font-family: "Rubik", Arial, Helvetica, sans-serif;
     color: ${props => props.theme.palette.text};
     background-color: ${props => props.theme.palette.background};
@@ -127,8 +127,9 @@ const authenticatedRoutes = [
     component: AcceptInvite,
   },
   {
-    name: "new-memento",
+    name: "family/:id/memento/new",
     component: UploadMemento,
+    exact: true,
   },
   {
     name: "settings",

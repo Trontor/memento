@@ -1,10 +1,20 @@
 import React from 'react'
-import { Wrapper } from "ui/Helpers";
+import {
+  TagRow
+} from "./FamilyGroupStyles";
 
-export default function TagsViewer() {
+export default function TagsViewer(props) {
   return (
-    <Wrapper>
-      Tags Viewer
-    </Wrapper>
+    <>
+      {props.tags.sort().map(tag => (
+        <TagRow
+          onClick={() => props.selectTag(tag)}
+          selected={props.mementoTags.includes(tag)}>
+          <span>
+            {tag}
+          </span>
+        </TagRow>
+      ))}
+    </>
   )
 }

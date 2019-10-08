@@ -57,6 +57,15 @@ export class Memento {
   @Field(type => [String], { nullable: true })
   tags?: string[];
 
+  @Field(type => [User])
+  bookmarkedBy!: User[];
+
+  @Field(type => [User])
+  people!: User[];
+
+  @Field(type => [User])
+  beneficiaries!: User[];
+
   @Field()
   createdAt!: Date;
 

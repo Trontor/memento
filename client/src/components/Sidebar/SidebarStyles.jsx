@@ -7,7 +7,7 @@ import { lighten } from "polished";
 
 export const SidebarContainer = styled.div`
   min-width: ${props => props.theme.size.sidebar}px;
-  border-right: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
+  border-right: 1px solid ${props => lighten(0.66, props.theme.palette.text)};
   min-height: 100%;
   background: ${props => props.theme.palette.sidebar};
   position: fixed;
@@ -15,11 +15,12 @@ export const SidebarContainer = styled.div`
   bottom: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 20px;
+  padding: 18px;
   font-size: 14px;
   z-index: 999;
   margin-left: ${props => -props.theme.size.sidebar}px;
-  transition: transform 0.4s ease-in-out;
+  box-shadow: 2px 2px 3px -2px ${props => lighten(0.67, props.theme.palette.text)};
+  transition: transform .4s ease-in-out;
   ${props =>
     props.isOpen &&
     css`
@@ -30,6 +31,11 @@ export const SidebarContainer = styled.div`
   @media screen and (min-width: ${props =>
     props.theme.breakpoints.tabletLandscape}) {
     transform: translateX(${props => props.theme.size.sidebar}px);
+  }
+
+  &::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
   }
 `;
 
@@ -78,37 +84,62 @@ export const SearchInput = styled.input`
   }
 `;
 
-export const FamilyListContainer = styled.div`
+export const FamilyListSection = styled.div`
+  border-top: 1px solid ${props => lighten(0.65, props.theme.palette.text)};
+  margin: 12px 0;
+
   h3 {
-    margin: 5px 0;
-    font-size: 13px;
+    margin-bottom: 2px;
+    font-size: 12.5px;
+    font-weight: bold;
+    opacity: 0.9;
   }
 `;
 
 export const TextList = styled.li`
   list-style-type: none;
   line-height: 30px;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: baseline;
+  font-family: "Livvic";
+  ${props => props.theme.mixins.hoverFade};
+
+  &:hover {
+    transition: .25s ease-in-out;
+    transform: translateX(12px);
+  }
+
+  &:hover > i {
+    ${props => props.theme.mixins.hoverFade};
+    color: ${props => lighten(0.05, props.theme.palette.text)};
+  }
 
   a {
-    color: ${props => props.theme.palette.text};
+    ${props => props.theme.mixins.hoverFade};
+    color: ${props => lighten(0.2, props.theme.palette.text)};
+
     &:hover {
-      border-bottom: 3px solid ${props => props.theme.palette.main};
-      font-weight: bold;
-      letter-spacing: 0.5px;
+      ${props => props.theme.mixins.hoverFade};
+      color: ${props => lighten(0.05, props.theme.palette.text)};
     }
+  }
+
+  i {
+    color: ${props => lighten(0.5, props.theme.palette.text)};
+    margin-right: 10px;
+    flex-basis: 28px;
   }
 `;
 
-export const MenuContainer = styled.div`
+export const MenuSection = styled.div`
   border-top: 1px solid ${props => lighten(0.65, props.theme.palette.text)};
-  padding: 10px 0;
+  padding: 12px 0;
 `;
 
 export const SignOutButton = styled(ButtonSecondary)`
   margin-top: 60px;
   width: 100%;
-  height: 32px;
-  padding: 0;
 `;
 
 export const CloseMenu = styled(Close)`
@@ -131,9 +162,10 @@ export const NewFamilyGroup = styled.div`
   cursor: pointer;
   font-family: 'Livvic';
   font-size: 12px;
-  color: ${props => lighten(0.35, props.theme.palette.text)};
-  margin-bottom: 10px;
+  color: ${props => lighten(0, props.theme.palette.main)};
   ${props => props.theme.mixins.hoverFade};
+  border-bottom: 1px solid transparent;
+  display: inline-block;
 
   &:before {
     content: '+';
@@ -144,6 +176,40 @@ export const NewFamilyGroup = styled.div`
 
   &:hover {
     color: ${props => props.theme.palette.main};
-    ${props => props.theme.mixins.hoverFade};
+    transition: .2s ease-in-out;
+    transform: translateX(10px);
   }
+`;
+
+export const UserDisplay = styled.div`
+  display: flex;
+  align-items: center;
+  padding-bottom: 12px;
+  margin-top: 24px;
+  cursor: pointer;
+`
+
+export const UserAvatar = styled.div`
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+
+  img {
+    border: 1px solid ${props => lighten(0.5, props.theme.palette.text)};
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+  }
+
+  i {
+    font-size: 40px;
+  }
+`;
+
+export const UserName = styled.div`
+  font-size: 15px;
+  font-family: "Livvic", sans-serif;
+  font-weight: bold;
+  letter-spacing: 0.03em;
 `;

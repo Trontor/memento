@@ -1,4 +1,4 @@
-import { Schema, Document, Query } from "mongoose";
+import { Schema, Document, Query, Types } from "mongoose";
 import * as bcrypt from "bcrypt";
 import { User } from "../dto/user.dto";
 import { FamilyRole, Role } from "../dto/role.dto";
@@ -12,6 +12,7 @@ export interface UserDocument extends User, Document {
   password: string;
   lowercaseEmail: string;
   roles: Role[];
+  _bookmarks: Types.ObjectId[];
 
   /**
    * Converts `UserDocument` to `User` to return to the client
@@ -85,6 +86,15 @@ export const UserSchema: Schema = new Schema(
       type: Date,
       default: Date.now,
     },
+    _bookmarks: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "Memento",
+        },
+      ],
+      default: [],
+    },
   },
   {
     timestamps: true,
@@ -107,6 +117,8 @@ UserSchema.methods.toDTO = function(): User {
     familyRoles: this.roles,
     // dummy array - resolver will deal with this
     families: [],
+    // dummy array - resolver will deal with this
+    bookmarks: [],
     // timestamps
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,

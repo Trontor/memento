@@ -1,28 +1,35 @@
-import React from "react";
-import { Header } from "ui/Typography";
+import * as yup from "yup";
+
 import {
   Error,
+  ErrorBanner,
+  HelpText,
   InputField,
   InputLabel,
-  HelpText,
-  InputSection,
+  InputSection
 } from "ui/Forms";
-import { MsgLink } from "./LoginStyles";
+
 import { ButtonPrimary } from "ui/Buttons";
-import { LoginContainer } from "./LoginStyles";
-import * as yup from "yup";
 import { Formik } from "formik";
+import { Header } from "ui/Typography";
 import { LOGIN } from "mutations/Authentication";
-import { useMutation } from "@apollo/react-hooks";
+import { LoginWrapper } from "./LoginStyles";
 import { Logo } from "ui/Logos";
+import { MsgLink } from "./LoginStyles";
+import {
+  PageContainer
+} from "ui/Helpers";
+import React from "react";
 import { Spinner } from "ui/Loaders";
+import { useHistory } from "react-router-dom";
+import { useMutation } from "@apollo/react-hooks";
 
 const LoginValidationSchema = yup.object().shape({
   email: yup
     .string()
     .email("Please enter a valid email")
     .required("Please enter your email"),
-  password: yup.string().required("Password is required"),
+  password: yup.string().required("Please enter your password"),
 });
 
 /**
@@ -36,6 +43,7 @@ const defaultValues = {
 };
 
 export default function Login(props) {
+  const history = useHistory();
   const processAuthentication = data => {
     // Extract JWT token from response using ES6 destructuring
     const { token } = data.login;
@@ -60,18 +68,26 @@ export default function Login(props) {
   }
 
   if (error) {
-    loginErrors = error.graphQLErrors.map(gqlError => gqlError.message.message);
+    loginErrors = error.graphQLErrors.map(
+      gqlError => gqlError.message.message
+    );
   }
   if (data) {
     return <div>{JSON.stringify(data)}</div>;
   }
 
   return (
-    <>
-      <Logo></Logo>
-
-      <LoginContainer>
+    <PageContainer>
+      <Logo pointer center onClick={() => history.push("/")}/>
+      <LoginWrapper>
         <Header underline>Welcome back!</Header>
+        {loginErrors.length > 0 && (
+              <ErrorBanner>
+              {loginErrors.map(error => (
+                <div>{error}</div>
+              ))}
+              </ErrorBanner>
+            )}
         <Formik
           initialValues={defaultValues}
           onSubmit={(values, actions) => {
@@ -110,9 +126,6 @@ export default function Login(props) {
                   <Error>{props.errors.password}</Error>
                 )}
               </InputSection>
-              {loginErrors.map((error, i) => (
-                <div key={i}>{error}</div>
-              ))}
               <ButtonPrimary type="submit" spacing>
                 Login
               </ButtonPrimary>
@@ -123,7 +136,7 @@ export default function Login(props) {
             </form>
           )}
         />
-      </LoginContainer>
-    </>
+      </LoginWrapper>
+    </PageContainer>
   );
 }

@@ -4,21 +4,29 @@ const theme = {
     tabletPortrait: "768px",
     tabletLandscape: "1024px",
     desktop: "1280px",
+    desktopLarge: "1440px"
   },
   palette: {
     text: "#44404B",
     main: "#FF7F5F",
+    mainLight: "#FFF2EF",
     secondary: "#FFA217",
-    grayscale: "black",
+    background: "#F9FAFC",
+    highlight: "#F6F9FF",
 
-    loading: "#F4B219",
     error: "#F73953",
-    success: "19D6F4",
+    disabled: "#ddd",
+
     border: "#D3D0DD",
-    sidebar: "#E8E8E8",
+    sidebar: "#FDF8F8",
+    foreground: "#FCFDFE"
   },
   mixins: {
-    hoverFade: "transition: ease-in-out 0.2s",
+    hoverFade: "transition: ease-in 0.1s",
+  },
+  size: {
+    sidebar: 250 /*px */,
+    gutterWidth: "16px"
   },
 };
 
