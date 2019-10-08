@@ -152,6 +152,8 @@ export default function UploadMemento(props) {
         file: values.file,
         caption: "Test Caption",
       },
+      people: values.memberTags,
+      beneficiaries: values.beneficiaries,
       tags: values.tags,
     };
     console.log("Submitting memento:", mutationValues);
