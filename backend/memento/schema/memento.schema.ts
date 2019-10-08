@@ -12,6 +12,8 @@ export interface MementoDocument extends Memento, Document {
   inFamily: Types.ObjectId;
   uploadedBy: Types.ObjectId;
   _bookmarkedBy: Types.ObjectId[];
+  _people: Types.ObjectId[];
+  _beneficiaries: Types.ObjectId[];
   _dates: any;
   _media: any;
 
@@ -135,6 +137,24 @@ export const MementoSchema: Schema<MementoDocument> = new Schema(
       ],
       default: [],
     },
+    _people: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+      default: [],
+    },
+    _beneficiaries: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+      default: [],
+    },
     tags: {
       type: [String],
       default: [],
@@ -162,6 +182,10 @@ MementoSchema.methods.toDTO = function(): Memento {
     uploader: this.uploader,
     // dummy: resolved if requested
     bookmarkedBy: [],
+    // dummy: resolved if requested
+    beneficiaries: [],
+    // dummy: resolved if requested
+    people: [],
     description: this.description,
     tags: this.tags,
     // timestamps

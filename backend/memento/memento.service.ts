@@ -4,6 +4,7 @@ import {
   InternalServerErrorException,
   Inject,
   forwardRef,
+  BadRequestException,
 } from "@nestjs/common";
 import { User } from "../user/dto/user.dto";
 import {
@@ -34,9 +35,11 @@ import { Memento } from "./dto/memento.dto";
 import {
   validateMementoInput,
   validateUpdateMementoInput,
+  uniqueValues,
 } from "./memento.util";
 import { UserService } from "../user/user.service";
 import { UserDocument } from "../user/schema/user.schema";
+import { isUserInFamily } from "../user/user.util";
 
 /**
  * Manages CRUD for Mementos.
@@ -126,7 +129,24 @@ export class MementoService {
     // validate fields
     validateUpdateMementoInput(input);
 
-    const { mementoId, updateMedia, appendMedia, deleteMedia, ...rest } = input;
+    const {
+      mementoId,
+      updateMedia,
+      appendMedia,
+      deleteMedia,
+      beneficiaries,
+      people,
+      ...rest
+    } = input;
+
+    // retrieve existing memento to get the familyId
+    const memento = await this.MementoModel.findById(mementoId);
+    if (!memento) throw new MementoNotFoundException();
+    const { _beneficiaries, _people } = await this.processUserIdArrays(
+      beneficiaries,
+      people,
+      memento.inFamily.toHexString(),
+    );
 
     const updateObj: IUpdateMementoPayload = { $set: {} };
     const updateOptions: IUpdateMementoOptions = { new: true };
@@ -135,6 +155,8 @@ export class MementoService {
     if (rest.location) updateObj.$set.location = input.location;
     if (rest.description) updateObj.$set.description = input.description;
     if (rest.tags) updateObj.$set.tags = input.tags;
+    if (_beneficiaries) updateObj.$set._beneficiaries = _beneficiaries;
+    if (_people) updateObj.$set._people = _people;
 
     // update nested _media property
     await this.addMediaUpdatesToPayload(
@@ -240,7 +262,7 @@ export class MementoService {
     uploader: User,
     input: CreateMementoInput,
   ): Promise<Memento> {
-    const { media, dates, familyId, ...data } = input;
+    const { media, dates, familyId, beneficiaries, people, ...data } = input;
 
     // validate date
     validateMementoInput(input);
@@ -248,6 +270,13 @@ export class MementoService {
     const uploadedBy: Types.ObjectId = fromHexStringToObjectId(uploader.userId);
     const inFamily: Types.ObjectId = fromHexStringToObjectId(input.familyId);
 
+    const { _beneficiaries, _people } = await this.processUserIdArrays(
+      beneficiaries,
+      people,
+      familyId,
+    );
+
+    // upload and prepare url for Memento media objects
     let mediaForDoc = undefined;
     if (media) {
       mediaForDoc = await this.convertMediaInputForDocument(media);
@@ -266,6 +295,8 @@ export class MementoService {
       doc._media = mediaForDoc;
     }
     if (dates) doc._dates = dates;
+    if (_beneficiaries) doc._beneficiaries = _beneficiaries;
+    if (_people) doc._people = _people;
 
     // insert document
     try {
@@ -275,6 +306,46 @@ export class MementoService {
       throw new InternalServerErrorException("Could not save Memento");
     }
     return doc.toDTO();
+  }
+
+  private async processUserIdArrays(
+    beneficiaries: string[] | undefined,
+    people: string[] | undefined,
+    familyId: string,
+  ) {
+    const uniqueBeneficiaries = uniqueValues(beneficiaries);
+    const uniquePeople = uniqueValues(people);
+
+    // validate all users in `people` and `beneficiaries` exist and are in the family
+    const allUserIds = uniqueValues(uniqueBeneficiaries.concat(uniquePeople));
+    this.logger.debug(allUserIds);
+    await this.validateUsersAreFamilyMembers(allUserIds, familyId);
+
+    // convert hex strings to MongoDB ObjectId
+    const _beneficiaries: Types.ObjectId[] | undefined = beneficiaries
+      ? uniqueBeneficiaries.map(b => fromHexStringToObjectId(b))
+      : undefined;
+    const _people: Types.ObjectId[] | undefined = people
+      ? uniquePeople.map(p => fromHexStringToObjectId(p))
+      : undefined;
+    return {
+      _beneficiaries,
+      _people,
+    };
+  }
+
+  private async validateUsersAreFamilyMembers(
+    userIds: string[],
+    familyId: string,
+  ) {
+    const users: User[] = await this.userService.getUsers(userIds);
+    for (let user of users) {
+      if (!isUserInFamily(user, familyId)) {
+        throw new BadRequestException(
+          `User ${user.userId} must be in the family ${familyId} to be added to a Memento.`,
+        );
+      }
+    }
   }
 
   /**
