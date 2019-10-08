@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 
 import { User } from "styled-icons/fa-regular/User";
 import { lighten } from "polished";
+import Textarea from "react-textarea-autosize";
 
 // Single-line text input field
 export const InputField = styled.input`
@@ -135,27 +136,26 @@ export const FormInputList = styled.div`
 `;
 
 // Multi-line text input fields
-export const TextArea = styled.div`
-  > textarea {
-    width: 100%;
-    max-width: 100%;
-    border: none;
-    border-bottom: 1px solid ${props => lighten(0.6, props.theme.palette.text)};
-    font-size: 15px;
-    color: ${props => props.theme.palette.text};
-    resize: none;
-    line-height: 1.5em;
-    background-color: transparent;
+export const TextArea = styled(Textarea)`
+  width: 100%;
+  max-width: 100%;
+  border: none;
+  border-bottom: 1px solid ${props => lighten(0.6, props.theme.palette.text)};
+  font-size: 15px;
+  color: ${props => props.theme.palette.text};
+  resize: none;
+  line-height: 1.5em;
+  font-family: inherit;
+  background-color: transparent;
 
-    ::placeholder {
-      opacity: 0.4;
-      font-weight: 300;
-    }
+  ::placeholder {
+    opacity: 0.4;
+    font-weight: 300;
+  }
 
-    &:focus {
-      outline: none;
-      border-color: ${props => lighten(0.1, props.theme.palette.main)};
-    }
+  &:focus {
+    outline: none;
+    border-color: ${props => lighten(0.1, props.theme.palette.main)};
   }
 `;
 
@@ -204,4 +204,4 @@ export const ErrorBanner = styled.div`
   padding: 14px 16px;
   margin-bottom: 16px;
   border-radius: 4px;
-`
+`;
