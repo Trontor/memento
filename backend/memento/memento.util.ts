@@ -34,6 +34,13 @@ const validateBeneficiaries = (beneficiaries: string[]): void => {
     );
 };
 
+const validateMaxDetectedPerMedia = (maxDetected: number): void => {
+  if (maxDetected <= 0)
+    throw new BadRequestException(
+      "maxDetectedPerMedia must be a positive integer",
+    );
+};
+
 /**
  * Validates input fields for CreateMementoInput.
  * Throws error if input is not allowed.
@@ -44,6 +51,8 @@ export const validateMementoInput = (input: CreateMementoInput): void => {
   if (input.dates) validateMementoDates(input.dates);
   if (input.people) validatePeople(input.people);
   if (input.beneficiaries) validateBeneficiaries(input.beneficiaries);
+  if (input.maxDetectedPerMedia)
+    validateMaxDetectedPerMedia(input.maxDetectedPerMedia);
 };
 
 /**
@@ -66,4 +75,8 @@ export const validateUpdateMementoInput = (input: UpdateMementoInput): void => {
  */
 export const uniqueValues = (values: string[] | undefined): string[] => {
   return values ? Array.from(new Set<string>(values)) : [];
+};
+
+export const preprocessTags = (tags: string[]): string[] => {
+  return tags.map(t => t.toLowerCase());
 };

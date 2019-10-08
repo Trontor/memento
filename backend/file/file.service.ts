@@ -9,6 +9,7 @@ import { ConfigService } from "../config/config.service";
 import * as os from "os";
 import * as path from "path";
 import { createWriteStream, unlink, createReadStream } from "fs";
+import { IUploadedFile } from "./file.interface";
 
 /**
  * Manages file upload, deletion, updating.
@@ -25,7 +26,9 @@ export class FileService {
    * Uploads an image and returns the url.
    * @param filePromise promise of Upload
    */
-  public async uploadImage(filePromise: Promise<Upload>) {
+  public async uploadImage(
+    filePromise: Promise<Upload>,
+  ): Promise<IUploadedFile> {
     const file = await filePromise;
     const { createReadStream, filename, mimetype } = file;
     if (!isImage(mimetype)) {
@@ -39,7 +42,9 @@ export class FileService {
    * Uploads a video and returns the url.
    * @param filePromise promise of Upload
    */
-  public async uploadVideo(filePromise: Promise<Upload>) {
+  public async uploadVideo(
+    filePromise: Promise<Upload>,
+  ): Promise<IUploadedFile> {
     const file = await filePromise;
     const { createReadStream: createReadStreamFile, filename, mimetype } = file;
     if (!isVideo(mimetype)) {
@@ -57,7 +62,7 @@ export class FileService {
     createReadStreamFile: () => Readable,
     filename: string,
     mimetype: string,
-  ): Promise<string> {
+  ): Promise<IUploadedFile> {
     // create a random file id to store file
     const fileId: string = uuidv4();
     const ext = path.extname(filename);
@@ -94,7 +99,7 @@ export class FileService {
       res = await uploadPromise;
       this.logger.debug(res);
       const url: string = `https://${this.configService.cdnHostName}/${res.Key}`;
-      return url;
+      return { key: res.Key, url };
     } catch (err) {
       this.logger.error(err);
       throw new BadRequestException("File exceeds size limit");

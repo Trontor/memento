@@ -1,4 +1,4 @@
-import { Schema, Model, Document, Query, Types } from "mongoose";
+import { Schema, Document, Query, Types } from "mongoose";
 import * as bcrypt from "bcrypt";
 import { User } from "../dto/user.dto";
 import { FamilyRole, Role } from "../dto/role.dto";
@@ -18,17 +18,6 @@ export interface UserDocument extends User, Document {
    * Converts `UserDocument` to `User` to return to the client
    */
   toDTO(): User;
-}
-
-export interface IUserModel extends Model<UserDocument> {
-  /**
-   * Uses the same method as the schema to validate an email. Matches HTML 5.2 spec.
-   *
-   * @param {string} email address to validate
-   * @returns {boolean} if the email is valid
-   * @memberof IUserModel
-   */
-  validateEmail(email: string): boolean;
 }
 
 /**

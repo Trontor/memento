@@ -92,6 +92,13 @@ DateSchema.methods.toDTO = function(): MementoDate {
   };
 };
 
+const LabelSchema: Schema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+});
+
 /**
  * The actual structure of the Memento collection.
  */
@@ -155,6 +162,10 @@ export const MementoSchema: Schema<MementoDocument> = new Schema(
       ],
       default: [],
     },
+    detectedLabels: {
+      type: [LabelSchema],
+      default: [],
+    },
     tags: {
       type: [String],
       default: [],
@@ -186,6 +197,7 @@ MementoSchema.methods.toDTO = function(): Memento {
     beneficiaries: [],
     // dummy: resolved if requested
     people: [],
+    detectedLabels: this.detectedLabels,
     description: this.description,
     tags: this.tags,
     // timestamps
@@ -199,12 +211,10 @@ MementoSchema.methods.toDTO = function(): Memento {
  */
 export interface IFindMementoConditions {
   _id?: {
-    $gt: Types.ObjectId;
+    $lt: Types.ObjectId;
   };
   inFamily: Types.ObjectId;
-  tags?: {
-    $in: string[];
-  };
+  $or?: any[];
 }
 
 export interface IUpdateMementoPayload {

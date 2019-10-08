@@ -11,6 +11,8 @@ export const FAMILY_COLLECTION = "Family";
 export interface FamilyDocument extends Family, Document {
   // fields that are only found in the database Document
   memberIds: string[];
+  // collection name of Amazon Rekognition collection for faces
+  collectionArn: string;
 
   /**
    * Converts `FamilyDocument` to `Family` DTO
@@ -43,6 +45,9 @@ export const FamilySchema: Schema = new Schema(
       default: [],
     },
     colour: {
+      type: String,
+    },
+    collectionArn: {
       type: String,
     },
   },

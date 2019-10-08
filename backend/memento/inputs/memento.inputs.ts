@@ -48,6 +48,12 @@ export class CreateMementoInput {
 
   @Field(type => [String], { nullable: true })
   tags?: string[];
+
+  @Field(type => Boolean, { defaultValue: true })
+  detectObjects!: boolean;
+
+  @Field(type => Int, { defaultValue: 3 })
+  maxDetectedPerMedia!: number;
 }
 
 /**

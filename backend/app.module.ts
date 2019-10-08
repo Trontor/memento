@@ -9,15 +9,16 @@ import { ConfigService } from "./config/config.service";
 import { MongooseModule, MongooseModuleOptions } from "@nestjs/mongoose";
 import { FamilyModule } from "./family/family.module";
 import { InviteModule } from "./invite/invite.module";
+import { FileModule } from "./file/file.module";
+import { UploadOptions } from "graphql-upload";
+import { AwsModule } from "./aws/aws.module";
+import { MementoModule } from "./memento/memento.module";
+import { VisionModule } from "./vision/vision.module";
 import {
   MailerModule,
   HandlebarsAdapter,
   MailerOptions,
 } from "@nest-modules/mailer";
-import { FileModule } from "./file/file.module";
-import { UploadOptions } from "graphql-upload";
-import { AwsModule } from "./aws/aws.module";
-import { MementoModule } from "./memento/memento.module";
 
 /**
  * Root module of the application.
@@ -111,6 +112,7 @@ import { MementoModule } from "./memento/memento.module";
     FileModule,
     AwsModule,
     MementoModule,
+    VisionModule,
   ],
 })
 export class AppModule {}

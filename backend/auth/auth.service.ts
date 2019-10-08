@@ -43,7 +43,7 @@ export class AuthService {
     } catch (error) {
       throw new InternalServerErrorException();
     }
-    if (!isMatch) throw new UnauthorizedException();
+    if (!isMatch) throw new UnauthorizedException("Incorrect password");
 
     // If there is a successful match, generate a JWT for the user
     const { token } = this.createJwt(userDoc);
