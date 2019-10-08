@@ -43,6 +43,7 @@ import { IMediaForInsert } from "./memento.interface";
 import { UserService } from "../user/user.service";
 import { UserDocument } from "../user/schema/user.schema";
 import { isUserInFamily } from "../user/user.util";
+import { DetectionLabel } from "./dto/label.dto";
 
 /**
  * Manages CRUD for Mementos.
@@ -273,6 +274,7 @@ export class MementoService {
       beneficiaries,
       people,
       detectObjects,
+      maxDetectedPerMedia,
       ...data
     } = input;
 
@@ -294,11 +296,14 @@ export class MementoService {
       mediaForDoc = await this.convertMediaInputForDocument(media);
     }
 
-    let detectedObjects: Set<string>;
+    let labels: DetectionLabel[] | undefined = undefined;
     if (detectObjects && mediaForDoc) {
-      detectedObjects = await this.detectObjectsInMedia(mediaForDoc);
-
-      this.logger.debug(detectedObjects);
+      const _labels: Set<string> = await this.detectObjectsInMedia(
+        mediaForDoc,
+        maxDetectedPerMedia,
+      );
+      labels = Array.from(_labels).map(l => ({ name: l }));
+      this.logger.debug(labels);
     }
 
     this.logger.log(
@@ -316,6 +321,7 @@ export class MementoService {
     if (dates) doc._dates = dates;
     if (_beneficiaries) doc._beneficiaries = _beneficiaries;
     if (_people) doc._people = _people;
+    if (labels && labels.length > 0) doc.detectedLabels = labels;
 
     // insert document
     try {
@@ -329,22 +335,25 @@ export class MementoService {
 
   private async detectObjectsInMedia(
     mediaForDoc: IMediaForInsert[],
-    minConfidence: number = 90,
-  ) {
+    maxDetectedPerMedia: number,
+  ): Promise<Set<string>> {
     this.logger.debug(mediaForDoc);
+    // can only detect objects in image
+    const promises = mediaForDoc
+      .filter(m => m.type === MediaType.Image)
+      .map(m => {
+        return this.visionService.detectObjects(m.key, maxDetectedPerMedia, 90);
+      });
+    const setsOfLabels: (Set<string> | undefined)[] = await Promise.all(
+      promises,
+    );
+
+    // combine all labels of every media into a single set
     const allObjects = new Set<string>();
-    for (let m of mediaForDoc) {
-      // can only detect objects in image
-      if (m.type !== MediaType.Image) {
-        continue;
+    for (let labels of setsOfLabels) {
+      if (labels) {
+        labels.forEach(label => allObjects.add(label));
       }
-      const objects:
-        | Set<string>
-        | undefined = await this.visionService.detectObjects(
-        m.key,
-        minConfidence,
-      );
-      if (objects) objects.forEach(obj => allObjects.add(obj));
     }
     return allObjects;
   }

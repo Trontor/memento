@@ -51,6 +51,9 @@ export class CreateMementoInput {
 
   @Field(type => Boolean, { defaultValue: true })
   detectObjects!: boolean;
+
+  @Field(type => Int, { defaultValue: 3 })
+  maxDetectedPerMedia!: number;
 }
 
 /**

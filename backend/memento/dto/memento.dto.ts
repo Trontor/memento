@@ -3,6 +3,7 @@ import { ObjectType, ID, Field, Int } from "type-graphql";
 import { Family } from "../../family/dto/family.dto";
 import { User } from "../../user/dto/user.dto";
 import { Media } from "./media.dto";
+import { DetectionLabel } from "./label.dto";
 
 /**
  * GraphQL class for date(s) of a Memento.
@@ -65,6 +66,9 @@ export class Memento {
 
   @Field(type => [User])
   beneficiaries!: User[];
+
+  @Field(type => [DetectionLabel])
+  detectedLabels!: DetectionLabel[];
 
   @Field()
   createdAt!: Date;
