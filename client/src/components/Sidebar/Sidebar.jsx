@@ -9,7 +9,7 @@ import {
   TextList,
   UserAvatar,
   UserDisplay,
-  UserName
+  UserName,
 } from "./SidebarStyles";
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
@@ -51,7 +51,6 @@ const Sidebar = props => {
     console.log("Success:", user);
   }
 
-
   useEffect(() => {
     console.log("Refreshing sidebar...");
     refetch();
@@ -73,13 +72,10 @@ const Sidebar = props => {
             <i class="fas fa-user-circle"></i>
           ) : (
             <img src={user.imageUrl} alt="profile_image"></img>
-          )
-          }
+          )}
         </UserAvatar>
         <div>
-          <UserName>
-            {user.firstName}
-          </UserName>
+          <UserName>{user.firstName}</UserName>
         </div>
       </UserDisplay>
       <FamilyListSection>
