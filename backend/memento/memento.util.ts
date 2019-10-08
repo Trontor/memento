@@ -76,3 +76,7 @@ export const validateUpdateMementoInput = (input: UpdateMementoInput): void => {
 export const uniqueValues = (values: string[] | undefined): string[] => {
   return values ? Array.from(new Set<string>(values)) : [];
 };
+
+export const preprocessTags = (tags: string[]): string[] => {
+  return tags.map(t => t.toLowerCase());
+};

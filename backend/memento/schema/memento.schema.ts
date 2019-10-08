@@ -211,12 +211,10 @@ MementoSchema.methods.toDTO = function(): Memento {
  */
 export interface IFindMementoConditions {
   _id?: {
-    $gt: Types.ObjectId;
+    $lt: Types.ObjectId;
   };
   inFamily: Types.ObjectId;
-  tags?: {
-    $in: string[];
-  };
+  $or?: any[];
 }
 
 export interface IUpdateMementoPayload {

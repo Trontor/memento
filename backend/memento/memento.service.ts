@@ -36,6 +36,7 @@ import {
   validateMementoInput,
   validateUpdateMementoInput,
   uniqueValues,
+  preprocessTags,
 } from "./memento.util";
 import { VisionService } from "../vision/vision.service";
 import { IUploadedFile } from "../file/file.interface";
@@ -157,9 +158,9 @@ export class MementoService {
     const updateOptions: IUpdateMementoOptions = { new: true };
 
     // update memento top-level properties
-    if (rest.location) updateObj.$set.location = input.location;
-    if (rest.description) updateObj.$set.description = input.description;
-    if (rest.tags) updateObj.$set.tags = input.tags;
+    if (rest.location) updateObj.$set.location = rest.location;
+    if (rest.description) updateObj.$set.description = rest.description;
+    if (rest.tags) updateObj.$set.tags = preprocessTags(rest.tags);
     if (_beneficiaries) updateObj.$set._beneficiaries = _beneficiaries;
     if (_people) updateObj.$set._people = _people;
 
@@ -250,10 +251,22 @@ export class MementoService {
       inFamily: fromHexStringToObjectId(familyId),
     };
     // return mementos after previous page of results
-    if (lastId) conditions._id = { $gt: fromHexStringToObjectId(lastId) };
-    // filter Mementos by tags
-    if (tags) conditions.tags = { $in: tags };
-    const docs = await this.MementoModel.find(conditions).limit(pageSize);
+    if (lastId) conditions._id = { $lt: fromHexStringToObjectId(lastId) };
+    // filter Mementos by tags - search in user tags and detected labels
+    if (tags) {
+      const _tags: string[] = preprocessTags(tags);
+      conditions.$or = [
+        {
+          tags: { $in: _tags },
+        },
+        {
+          "detectedLabels.name": { $in: _tags },
+        },
+      ];
+    }
+    const docs = await this.MementoModel.find(conditions)
+      .sort({ $natural: -1 })
+      .limit(pageSize);
     return docs;
   }
 
@@ -275,6 +288,7 @@ export class MementoService {
       people,
       detectObjects,
       maxDetectedPerMedia,
+      tags,
       ...data
     } = input;
 
@@ -322,6 +336,7 @@ export class MementoService {
     if (_beneficiaries) doc._beneficiaries = _beneficiaries;
     if (_people) doc._people = _people;
     if (labels && labels.length > 0) doc.detectedLabels = labels;
+    if (tags) doc.tags = preprocessTags(tags);
 
     // insert document
     try {

@@ -72,9 +72,10 @@ export class VisionService implements IVisionService {
       minConfidence,
     );
     if (!labels) return undefined;
-    const labelNames: string[] = labels
+    const labelNames: string[] = (labels
       .map(l => l.Name)
-      .filter(Boolean) as string[];
+      .filter(Boolean) as string[]).map(name => name.toLowerCase());
+
     return new Set<string>(labelNames);
   }
 }
