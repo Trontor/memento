@@ -1,5 +1,11 @@
 import styled, { css } from "styled-components";
 
+export const PageContainer = styled.div`
+  width: 100%;
+  padding: 40px;
+  height: 100vh;
+`
+
 // Used for centering elements within its parent
 export const center = css`
   position: absolute;

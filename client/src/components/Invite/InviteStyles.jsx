@@ -1,6 +1,7 @@
+import { darken, lighten } from "polished";
 import styled, { css } from "styled-components";
+
 import { ButtonSecondary } from "ui/Buttons";
-import { lighten, darken } from "polished";
 
 export const FamilyGroup = styled(ButtonSecondary)`
   display: block;
@@ -11,8 +12,14 @@ export const FamilyGroup = styled(ButtonSecondary)`
     selected &&
     css`
       background-color: ${props => props.theme.palette.main};
+      border-color: ${props => props.theme.palette.main};
       color: white;
     `};
+  &:hover {
+    background-color: ${props => lighten(0.02,props.theme.palette.main)};
+    border-color: ${props => lighten(0.02,props.theme.palette.main)};
+    color: white;
+  }
 `;
 
 export const FamilyGroupName = styled.span`
