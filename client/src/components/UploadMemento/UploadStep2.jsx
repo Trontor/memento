@@ -172,7 +172,7 @@ export default function UploadStep2({
                   props.setFieldValue("beneficiaries", memberIDs);
                 }}
                 options={familyMemberOptions.filter(
-                  m => m.value != currentUserId,
+                  m => m.value !== currentUserId,
                 )}
               />
             </FormSection>
