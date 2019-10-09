@@ -179,7 +179,7 @@ export default function FamilyGroup(props) {
               </SideMenuSectionHeader>
               {family.members.map(member => (
                 <MemberRow admin>
-                  <i class="fas fa-user-circle"></i>
+                  <img src={member.imageUrl} />
                   <div>
                     <span
                       onClick={() =>

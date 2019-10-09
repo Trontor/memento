@@ -42,7 +42,8 @@ export default function MementoCard(props) {
     <Card>
       <AuthorWrapper>
         <AuthorAvatar>
-          <i class="fas fa-user-circle"></i>
+          {/* <i class="fas fa-user-circle"></i> */}
+          <img src={uploader.imageUrl} />
         </AuthorAvatar>
         <div>
           <MementoAuthor>
