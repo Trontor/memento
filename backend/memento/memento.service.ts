@@ -349,7 +349,7 @@ export class MementoService {
     return doc.toDTO();
   }
 
-  private readonly MIN_CONFIDENCE = 75;
+  private readonly MIN_CONFIDENCE = 80;
   private async detectObjectsInMedia(
     mediaForDoc: IMediaForInsert[],
     maxDetectedPerMedia: number,
