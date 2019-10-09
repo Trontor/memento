@@ -25,6 +25,7 @@ import { FamilyProfileContainer } from "./FamilyGroupStyles";
 import JollyLoader from "components/JollyLoader/JollyLoader";
 import { LOAD_FAMILY } from "mutations/Family";
 import MembersViewer from "./MembersViewer";
+import NoMementos from "./NoMementos";
 import MementosViewer from "./MementosViewer";
 import TagsViewer from "./TagsViewer";
 import moment from "moment";
@@ -90,7 +91,8 @@ export default function FamilyGroup(props) {
   if (error) {
     console.log("Error loading data");
   }
-
+  const onUploadMementoClicked = () =>
+    props.history.push(familyId + "/memento/new");
   const onLoadedMementos = loadedMementos => setMementos(loadedMementos);
   // Handles when a tag is selected on the sidebar
   const selectTag = tag => {
@@ -175,9 +177,7 @@ export default function FamilyGroup(props) {
               </FamilyHeader>
               <Options>
                 {/* Upload Button */}
-                <UploadButton
-                  onClick={() => props.history.push(familyId + "/memento/new")}
-                >
+                <UploadButton onClick={onUploadMementoClicked}>
                   <i class="fas fa-feather-alt"></i>
                   <span>Add a Memento</span>
                 </UploadButton>
@@ -257,7 +257,13 @@ export default function FamilyGroup(props) {
           {/* Mobile */}
           <TabComponent>{tabComponent}</TabComponent>
           {/* Desktop */}
-          <MainViewer>{mementoViewerComponent}</MainViewer>
+          <MainViewer>
+            {mementos && mementos.length ? (
+              mementoViewerComponent
+            ) : (
+              <NoMementos onClick={onUploadMementoClicked} />
+            )}
+          </MainViewer>
         </div>
       </FamilyLayout>
     </FamilyContainer>
