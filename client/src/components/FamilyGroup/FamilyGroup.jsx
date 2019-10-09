@@ -196,11 +196,7 @@ export default function FamilyGroup(props) {
                 <h2>Members</h2>
               </SideMenuSectionHeader>
               {family.members.map(member => (
-                <MemberRow
-                  admin={member.familyRoles.some(
-                    r => r.id === familyId && r.role.toLowerCase() === "admin",
-                  )}
-                >
+                <MemberRow admin>
                   {member.imageUrl ? (
                     <img
                       src={member.imageUrl}
@@ -217,7 +213,11 @@ export default function FamilyGroup(props) {
                     >
                       {member.firstName} {member.lastName}
                     </span>
-                    <span>Admin</span>
+                    {member.familyRoles.some(
+                      r =>
+                        r.familyId === familyId &&
+                        r.familyRole.toLowerCase() === "admin",
+                    ) && <span>Admin</span>}
                   </div>
                 </MemberRow>
               ))}
