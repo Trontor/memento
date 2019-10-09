@@ -16,9 +16,7 @@ export default function UploadMemento(props) {
   //Define react hooks
   const [selectMementoType, setSelectMementoType] = useState("");
   const [selectEventType, setSelectEventType] = useState("");
-  // const [mementoTags, setMementoTags] = useState([]);
   const [currentStep, setCurrentStep] = useState(2);
-  // const [mementoFiles, setMementoFiles] = useState([]);
   const familyId = props.match.params.id;
   const { data, loading } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
@@ -134,10 +132,12 @@ export default function UploadMemento(props) {
   //   }
   // };
   const onSubmit = values => {
-    const mediaType = values.file.type.includes("image") ? "Image" : "Video";
+    const mediaType =
+      values.file && values.file.type.includes("image") ? "Image" : "Video";
     const mutationValues = {
       familyId: familyId,
       type: "Test",
+      title: values.title,
       description: values.description,
       location: values.location,
       dates: [
@@ -147,11 +147,13 @@ export default function UploadMemento(props) {
           year: values.date.getFullYear(),
         },
       ],
-      media: {
-        type: mediaType,
-        file: values.file,
-        caption: "Test Caption",
-      },
+      media: !values.file
+        ? null
+        : {
+            type: mediaType,
+            file: values.file,
+            caption: "Test Caption",
+          },
       people: values.memberTags,
       beneficiaries: values.beneficiaries,
       tags: values.tags,

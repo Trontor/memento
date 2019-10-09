@@ -9,7 +9,7 @@ import {
   MementoDescription,
   MementoInfo,
   MementoOverview,
-  MementoTags,
+  MementoTag,
   MementoTagsWrapper,
   MementoTitle,
   PeopleTags,
@@ -24,24 +24,29 @@ export default function MementoCard(props) {
     mementoId,
     createdAt,
     dates,
-    // description,
+    title,
+    description,
     location,
     // media,
     // tags,
     // type,
     // updatedAt,
+    detectedLabels,
     beneficiaries,
     uploader,
     people,
   } = props;
   const createdDate = new Date(createdAt);
-  console.log("Rendering Memento:", props);
 
   return (
     <Card>
       <AuthorWrapper>
         <AuthorAvatar>
-          <i class="fas fa-user-circle"></i>
+          {!uploader.imageUrl ? (
+            <i class="fas fa-user-circle"></i>
+          ) : (
+            <img src={uploader.imageUrl} alt={uploader.firstName} />
+          )}
         </AuthorAvatar>
         <div>
           <MementoAuthor>
@@ -63,12 +68,12 @@ export default function MementoCard(props) {
       <CardContent>
         <MementoInfo>
           {/* Title */}
-          <MementoTitle>Titel</MementoTitle>
+          <MementoTitle>{title}</MementoTitle>
           <MementoOverview>
             {/* Date */}
             <span>
               <i class="far fa-clock"></i>
-              {dates[0].year}
+              {dates[0].month.toString().padStart(2, "0")}/{dates[0].year}
             </span>
             {/* Location */}
             {location && (
@@ -106,7 +111,7 @@ export default function MementoCard(props) {
           </MementoOverview>
 
           {/* Description */}
-          <MementoDescription>{props.description}</MementoDescription>
+          <MementoDescription>{description}</MementoDescription>
         </MementoInfo>
         {/* Cover Image */}
         {props.media.length > 0 && (
@@ -119,7 +124,17 @@ export default function MementoCard(props) {
       <MementoTagsWrapper>
         <i class="fas fa-tags"></i>
         {props.tags.map(tag => (
-          <MementoTags>{tag}</MementoTags>
+          <MementoTag>{tag}</MementoTag>
+        ))}
+      </MementoTagsWrapper>
+      {/* Rekognition Tags */}
+      <MementoTagsWrapper>
+        <i class="fas fa-camera"></i>
+        {detectedLabels.map(result => (
+          <MementoTag>
+            {result.name.toLowerCase()}{" "}
+            <span>{Math.round(result.confidence, 0)}%</span>
+          </MementoTag>
         ))}
       </MementoTagsWrapper>
     </Card>

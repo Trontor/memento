@@ -38,7 +38,7 @@ import {
   uniqueValues,
   preprocessTags,
 } from "./memento.util";
-import { VisionService } from "../vision/vision.service";
+import { VisionService, IDetectionResults } from "../vision/vision.service";
 import { IUploadedFile } from "../file/file.interface";
 import { IMediaForInsert } from "./memento.interface";
 import { UserService } from "../user/user.service";
@@ -312,12 +312,13 @@ export class MementoService {
 
     let labels: DetectionLabel[] | undefined = undefined;
     if (detectObjects && mediaForDoc) {
-      const _labels: Set<string> = await this.detectObjectsInMedia(
+      const results = await this.detectObjectsInMedia(
         mediaForDoc,
         maxDetectedPerMedia,
       );
-      labels = Array.from(_labels).map(l => ({ name: l }));
+      console.log(results);
       this.logger.debug(labels);
+      labels = Array.from(results);
     }
 
     this.logger.log(
@@ -348,29 +349,25 @@ export class MementoService {
     return doc.toDTO();
   }
 
+  private readonly MIN_CONFIDENCE = 80;
   private async detectObjectsInMedia(
     mediaForDoc: IMediaForInsert[],
     maxDetectedPerMedia: number,
-  ): Promise<Set<string>> {
+  ): Promise<Set<IDetectionResults>> {
     this.logger.debug(mediaForDoc);
     // can only detect objects in image
     const promises = mediaForDoc
       .filter(m => m.type === MediaType.Image)
-      .map(m => {
-        return this.visionService.detectObjects(m.key, maxDetectedPerMedia, 90);
-      });
-    const setsOfLabels: (Set<string> | undefined)[] = await Promise.all(
-      promises,
-    );
-
-    // combine all labels of every media into a single set
-    const allObjects = new Set<string>();
-    for (let labels of setsOfLabels) {
-      if (labels) {
-        labels.forEach(label => allObjects.add(label));
-      }
-    }
-    return allObjects;
+      .map(m =>
+        this.visionService.detectObjects(
+          m.key,
+          maxDetectedPerMedia,
+          this.MIN_CONFIDENCE,
+        ),
+      );
+    const detectionResults: Set<IDetectionResults> =
+      (await promises[0]) || new Set<IDetectionResults>();
+    return detectionResults;
   }
 
   private async processUserIdArrays(

@@ -4,8 +4,10 @@ export const GET_MEMENTOS = gql`
   query getMementos($id: ID!) {
     mementos(familyId: $id) {
       mementoId
+      title
       uploader {
         userId
+        imageUrl
         firstName
         lastName
       }
@@ -20,6 +22,10 @@ export const GET_MEMENTOS = gql`
       type
       description
       location
+      detectedLabels {
+        name
+        confidence
+      }
       media {
         type
         url

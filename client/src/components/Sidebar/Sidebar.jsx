@@ -24,7 +24,14 @@ const Sidebar = props => {
   const history = useHistory();
   const location = useLocation();
   const [families, setFamilies] = useState(null);
-  const { data } = useQuery(GET_CURRENT_USER);
+  const [user, setUser] = useState({});
+  useQuery(GET_CURRENT_USER, {
+    onCompleted: data => {
+      if (data && data.currentUser) {
+        setUser(data.currentUser);
+      }
+    },
+  });
 
   const signOut = () => {
     localStorage.removeItem("AUTH-TOKEN");
@@ -34,7 +41,6 @@ const Sidebar = props => {
   if (!localStorage.getItem("AUTH-TOKEN")) {
     signOut();
   }
-
   const { refetch } = useQuery(GET_USER_FAMILIES, {
     fetchPolicy: "cache-and-network",
     onCompleted: data => {
@@ -43,13 +49,6 @@ const Sidebar = props => {
   });
 
   const iconSize = "20px";
-
-  let user = {};
-
-  if (data && data.currentUser) {
-    user = data.currentUser;
-    console.log("Success:", user);
-  }
 
   useEffect(() => {
     console.log("Refreshing sidebar...");
@@ -68,7 +67,7 @@ const Sidebar = props => {
       </SidebarHeader>
       <UserDisplay onClick={() => history.push("/profile/" + user.userId)}>
         <UserAvatar>
-          {user.imageUrl === null ? (
+          {!user.imageUrl ? (
             <i class="fas fa-user-circle"></i>
           ) : (
             <img src={user.imageUrl} alt="profile_image"></img>
@@ -85,34 +84,44 @@ const Sidebar = props => {
         ) : (
           families.map(family => (
             <TextList key={family.familyId}>
-              <a href={`/family/${family.familyId}`}>{family.name}</a>
+              <span onClick={() => history.push(`/family/${family.familyId}`)}>
+                {family.name}
+              </span>
             </TextList>
           ))
         )}
-        <NewFamilyGroup onClick={() => history.push("/create-family")}>
+        <NewFamilyGroup onClick={() => history.push("/family/new")}>
           New Family group
         </NewFamilyGroup>
       </FamilyListSection>
       <MenuSection>
         <TextList>
           <i class="fas fa-user-plus"></i>
-          <a href={`/invite`}>Invite</a>
+          <span href="#" onClick={() => history.push("/invite")}>
+            Invite
+          </span>
         </TextList>
       </MenuSection>
       <MenuSection>
         <TextList>
           <i class="far fa-paper-plane"></i>
-          <a href={`/mementos`}>View my Mementos</a>
+          <span href="#" onClick={() => history.push("/mementos")}>
+            View my Mementos
+          </span>
         </TextList>
         <TextList>
           <i class="far fa-bookmark"></i>
-          <a href={`/bookmarks`}>Bookmarks</a>
+          <span href="#" onClick={() => history.push("/bookmarks")}>
+            Bookmarks
+          </span>
         </TextList>
       </MenuSection>
       <MenuSection>
         <TextList>
           <i class="fas fa-pencil-alt"></i>
-          <a href={`/settings`}>Edit profile & account</a>
+          <span href="#" onClick={() => history.push("/settings")}>
+            Edit profile & account
+          </span>
         </TextList>
       </MenuSection>
       <SignOutButton onClick={signOut}>Sign Out</SignOutButton>

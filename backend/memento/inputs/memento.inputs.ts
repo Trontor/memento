@@ -26,10 +26,13 @@ export class CreateMementoInput {
   familyId!: string;
 
   @Field()
+  title!: string;
+
+  @Field()
   type!: string;
 
   @Field()
-  description!: string;
+  description?: string;
 
   @Field({ nullable: true })
   location?: string;
@@ -63,6 +66,9 @@ export class CreateMementoInput {
 export class UpdateMementoInput {
   @Field(type => ID)
   mementoId!: string;
+
+  @Field({ nullable: true })
+  title?: string;
 
   @Field({ nullable: true })
   description?: string;

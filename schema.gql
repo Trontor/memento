@@ -27,6 +27,7 @@ input CreateMementoDateInput {
 
 input CreateMementoInput {
   familyId: ID!
+  title: String!
   type: String!
   description: String!
   location: String
@@ -56,6 +57,7 @@ input DeleteMementoMediaInput {
 
 type DetectionLabel {
   name: String!
+  confidence: Float!
 }
 
 type FailedInviteOutput {
@@ -116,6 +118,7 @@ enum MediaType {
 
 type Memento {
   mementoId: ID!
+  title: String!
   family: Family!
   uploader: User!
   type: String!
@@ -195,6 +198,7 @@ input UpdateFamilyInput {
 
 input UpdateMementoInput {
   mementoId: ID!
+  title: String
   description: String
   location: String
   people: [ID!]

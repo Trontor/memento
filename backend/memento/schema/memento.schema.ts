@@ -97,6 +97,10 @@ const LabelSchema: Schema = new Schema({
     type: String,
     required: true,
   },
+  confidence: {
+    type: Number,
+    required: true,
+  },
 });
 
 /**
@@ -104,6 +108,10 @@ const LabelSchema: Schema = new Schema({
  */
 export const MementoSchema: Schema<MementoDocument> = new Schema(
   {
+    title: {
+      type: String,
+      required: true,
+    },
     type: {
       type: String,
       required: true,
@@ -122,7 +130,7 @@ export const MementoSchema: Schema<MementoDocument> = new Schema(
     },
     description: {
       type: String,
-      required: true,
+      required: false,
     },
     location: {
       type: String,
@@ -183,6 +191,7 @@ MementoSchema.methods.toDTO = function(): Memento {
   return {
     // mongodb id
     mementoId: this.id,
+    title: this.title,
     location: this.location,
     type: this.type,
     dates: this._dates.map((date: any) => date.toDTO()),

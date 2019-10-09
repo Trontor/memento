@@ -11,18 +11,20 @@ let usedQuotes = [];
 export default function JollyLoader(props) {
   let quotes = props.quotes || ["Loading..."];
   const [currentQuote, setQuote] = useState(quotes[0]);
-
+  useEffect(() => {
+    if (props.quotes)
+      setQuote(props.quotes[Math.floor(Math.random() * props.quotes.length)]);
+  }, [props.quotes]);
   useEffect(() => {
     const tick = () => {
       if (usedQuotes.length === quotes.length) usedQuotes = [];
-      let randomQuote;
-      do {
-        randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-      } while (usedQuotes.includes(randomQuote));
-      usedQuotes.push(randomQuote);
-      setQuote(randomQuote);
+      const unusedQuotes = quotes.filter(q => !usedQuotes.includes(q));
+      const nextQuote =
+        unusedQuotes[Math.floor(Math.random() * unusedQuotes.length)];
+      usedQuotes.push(nextQuote);
+      setQuote(nextQuote);
     };
-    const id = setInterval(tick, 2500);
+    const id = setInterval(tick, 1000);
     return () => clearInterval(id);
   }, [currentQuote, quotes]);
 

@@ -34,6 +34,9 @@ export class Memento {
   @Field(type => ID)
   mementoId!: string;
 
+  @Field()
+  title!: string;
+
   @Field(type => Family)
   family!: Family;
 
@@ -44,7 +47,7 @@ export class Memento {
   type!: string;
 
   @Field()
-  description!: string;
+  description?: string;
 
   @Field({ nullable: true })
   location?: string;
