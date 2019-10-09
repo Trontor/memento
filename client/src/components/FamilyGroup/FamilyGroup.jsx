@@ -19,7 +19,7 @@ import {
   UploadButton,
 } from "./FamilyGroupStyles";
 import { MenuContainer, MenuTabs } from "ui/Navigation";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { FamilyProfileContainer } from "./FamilyGroupStyles";
 import JollyLoader from "components/JollyLoader/JollyLoader";
@@ -30,14 +30,39 @@ import TagsViewer from "./TagsViewer";
 import moment from "moment";
 import { useQuery } from "@apollo/react-hooks";
 
+const defaultTags = [
+  "recipes",
+  "painting",
+  "stuffed toys",
+  "cars",
+  "jewellery",
+  "photographs",
+  "clothing",
+  "family",
+  "blanket",
+  "food",
+];
+
 export default function FamilyGroup(props) {
   const menuTabs = ["Mementos", "Members", "Tags"];
   const [currentTabIndex, setTabIndex] = useState(0);
   const familyId = props.match.params.id;
-  const [mementoTags, setMementoTags] = useState([]);
+  const [tagOptions, setTagOptions] = useState(defaultTags);
+  const [filterTags, setFilterTags] = useState([]);
   const [mementos, setMementos] = useState(null);
   const [family, setFamily] = useState(null);
 
+  useEffect(() => {
+    if (!mementos) return;
+    const mementoTags = mementos.map(m => m.tags).flat();
+    const detectedTags = mementos
+      .map(m => m.detectedLabels.map(l => l.name))
+      .flat();
+    console.log("Memento Tags:", mementoTags, "Detected Tags:", detectedTags);
+    const allTags = [...mementoTags, ...detectedTags].map(t => t.toLowerCase());
+    // Convert to Set and back to array to remove duplicate tags, sneaky...
+    setTagOptions(Array.from(new Set(allTags)));
+  }, [mementos]);
   const { loading, error } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
 
@@ -66,29 +91,16 @@ export default function FamilyGroup(props) {
     console.log("Error loading data");
   }
 
-  const tags = [
-    "recipes",
-    "painting",
-    "stuffed toys",
-    "cars",
-    "jewellery",
-    "photographs",
-    "clothing",
-    "family",
-    "blanket",
-    "food",
-  ];
   const onLoadedMementos = loadedMementos => setMementos(loadedMementos);
+  // Handles when a tag is selected on the sidebar
   const selectTag = tag => {
-    if (mementoTags.includes(tag)) {
-      const tags = [...mementoTags];
-      const tagIndex = tags.indexOf(tag);
-      if (tagIndex !== -1) {
-        tags.splice(tagIndex, 1);
-        setMementoTags(tags);
-      }
+    // Check if the tag has already been selected
+    if (filterTags.includes(tag)) {
+      // If the tags has been selected,
+      setFilterTags(filterTags.filter(t => t != tag));
     } else {
-      setMementoTags([...mementoTags, tag]);
+      // Otherwise, add the tag to the list
+      setFilterTags([...filterTags, tag]);
     }
   };
 
@@ -97,7 +109,7 @@ export default function FamilyGroup(props) {
     case "Mementos":
       tabComponent = (
         <MementosViewer
-          filterTags={mementoTags}
+          filterTags={filterTags}
           onLoadedMementos={onLoadedMementos}
           familyId={familyId}
           themeColour={family.colour}
@@ -110,10 +122,10 @@ export default function FamilyGroup(props) {
     case "Tags":
       tabComponent = (
         <TagsViewer
-          tags={tags}
+          tags={tagOptions}
           selectTag={selectTag}
-          mementoTags={mementoTags}
-          setMementoTags={setMementoTags}
+          mementoTags={filterTags}
+          setMementoTags={setFilterTags}
         />
       );
       break;
@@ -203,10 +215,10 @@ export default function FamilyGroup(props) {
               <SideMenuSectionHeader>
                 <h2>Tags</h2>
               </SideMenuSectionHeader>
-              {tags.sort().map(tag => (
+              {tagOptions.sort().map(tag => (
                 <TagRow
                   onClick={() => selectTag(tag)}
-                  selected={mementoTags.includes(tag)}
+                  selected={filterTags.includes(tag)}
                 >
                   <span>{tag}</span>
                 </TagRow>
@@ -233,7 +245,7 @@ export default function FamilyGroup(props) {
           {/* Desktop */}
           <MainViewer>
             <MementosViewer
-              filterTags={mementoTags}
+              filterTags={filterTags}
               onLoadedMementos={onLoadedMementos}
               familyId={familyId}
             />
