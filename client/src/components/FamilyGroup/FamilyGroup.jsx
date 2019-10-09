@@ -20,7 +20,7 @@ import {
 } from "./FamilyGroupStyles";
 import { MenuContainer, MenuTabs } from "ui/Navigation";
 import React, { useState, useEffect } from "react";
-
+import { GET_MEMENTOS } from "queries/Memento";
 import { FamilyProfileContainer } from "./FamilyGroupStyles";
 import JollyLoader from "components/JollyLoader/JollyLoader";
 import { LOAD_FAMILY } from "mutations/Family";
@@ -29,6 +29,7 @@ import NoMementos from "./NoMementos";
 import MementosViewer from "./MementosViewer";
 import TagsViewer from "./TagsViewer";
 import moment from "moment";
+import { useLocation } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 
 const defaultTags = [];
@@ -41,7 +42,7 @@ export default function FamilyGroup(props) {
   const [filterTags, setFilterTags] = useState([]);
   const [mementos, setMementos] = useState(null);
   const [family, setFamily] = useState(null);
-
+  const location = useLocation();
   useEffect(() => {
     // If there are no mementos, forget about it
     if (!mementos) return;
@@ -58,6 +59,8 @@ export default function FamilyGroup(props) {
     // Convert to Set and then back to array to remove duplicate tags, sneaky...
     setTagOptions(Array.from(new Set(allTags)));
   }, [mementos]);
+
+  // Query to load the family
   const { loading, error } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
 
@@ -68,26 +71,33 @@ export default function FamilyGroup(props) {
     },
   });
 
-  if (loading || !family) {
+  // Separate query to load the family mementos
+  const getMementosQuery = useQuery(GET_MEMENTOS, {
+    variables: {
+      id: familyId,
+    },
+    fetchPolicy: "network-only",
+    onCompleted: data => {
+      if (data && data.mementos) {
+        console.log("Fetched mementos succesfully:", data.mementos);
+        setMementos(data.mementos);
+      }
+    },
+  });
+  useEffect(() => {
+    console.log("refetching mementos...");
+    getMementosQuery.refetch();
+  }, [getMementosQuery, location]);
+
+  if (loading || !family || getMementosQuery.loading) {
     return <JollyLoader />;
   }
-
-  // let familyName, members, colour;
-
-  // if (data) {
-  //   familyName = data.family.name;
-  //   members = data.family.members;
-  //   colour = data.family.colour;
-  //   console.log(members);
-  //   console.log(colour);
-  // }
 
   if (error) {
     console.log("Error loading data");
   }
   const onUploadMementoClicked = () =>
     props.history.push(familyId + "/memento/new");
-  const onLoadedMementos = loadedMementos => setMementos(loadedMementos);
   // Handles when a tag is selected on the sidebar
   const selectTag = tag => {
     // Check if the tag has already been selected
@@ -105,7 +115,7 @@ export default function FamilyGroup(props) {
   const mementoViewerComponent = (
     <MementosViewer
       filterTags={filterTags}
-      onLoadedMementos={onLoadedMementos}
+      mementos={mementos}
       familyId={familyId}
     />
   );
@@ -129,7 +139,6 @@ export default function FamilyGroup(props) {
     default:
       break;
   }
-  console.log("Loaded Family: ", family);
   return (
     <FamilyContainer>
       <FamilyLayout>
@@ -255,14 +264,13 @@ export default function FamilyGroup(props) {
           <TabComponent>{tabComponent}</TabComponent>
           {/* Desktop */}
           <MainViewer>
-            {mementos && mementos.length ? (
-              mementoViewerComponent
-            ) : (
+            {mementos && mementos.length === 0 && (
               <NoMementos
                 familyColour={family.colour}
                 onClick={onUploadMementoClicked}
               />
             )}
+            {mementos && mementos.length && mementoViewerComponent}
           </MainViewer>
         </div>
       </FamilyLayout>

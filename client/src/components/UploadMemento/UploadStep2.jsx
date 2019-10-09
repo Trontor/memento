@@ -94,7 +94,7 @@ export default function UploadStep2({
       validationSchema={uploadMementoValidationSchema}
       onSubmit={onSubmit}
       render={props => {
-        console.log(props);
+        // console.log(props);
         return (
           <form onSubmit={props.handleSubmit}>
             <FormSection>

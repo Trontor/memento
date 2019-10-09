@@ -37,14 +37,16 @@ export default function MementoCard(props) {
     people,
   } = props;
   const createdDate = new Date(createdAt);
-  console.log("Rendering Memento:", props);
 
   return (
     <Card>
       <AuthorWrapper>
         <AuthorAvatar>
-          {/* <i class="fas fa-user-circle"></i> */}
-          <img src={uploader.imageUrl} alt={uploader.firstName} />
+          {!uploader.imageUrl ? (
+            <i class="fas fa-user-circle"></i>
+          ) : (
+            <img src={uploader.imageUrl} alt={uploader.firstName} />
+          )}
         </AuthorAvatar>
         <div>
           <MementoAuthor>
