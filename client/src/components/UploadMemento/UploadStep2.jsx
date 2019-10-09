@@ -42,16 +42,16 @@ const uploadMementoValidationSchema = yup.object().shape({
   location: yup.string(),
   file: yup
     .mixed()
-    .required("A file is required")
+    .nullable()
     .test(
       "fileSize",
       "File too large",
-      value => value && value.size <= MAX_FILE_SIZE,
+      value => !value || value.size <= MAX_FILE_SIZE,
     )
     .test(
       "fileFormat",
       "Unsupported Format",
-      value => value && SUPPORTED_FORMATS.includes(value.type),
+      value => !value || SUPPORTED_FORMATS.includes(value.type),
     ),
 });
 
