@@ -3,17 +3,16 @@ import {
   Email,
   EmailsList,
   SentMessage,
-  TextWrapper
+  TextWrapper,
 } from "./InviteSuccessStyles.js";
-import {
-  ButtonPrimary,
-  ButtonSecondary
-} from "ui/Buttons";
+import { ButtonPrimary, ButtonSecondary } from "ui/Buttons";
 
 import { Container } from "ui/Helpers";
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 export default function InviteSuccess({ results }) {
+  const history = useHistory();
   return (
     <Container>
       <TextWrapper>
@@ -35,7 +34,7 @@ export default function InviteSuccess({ results }) {
           <SentMessage>
             <p>Invitations were not sent to the following email addresses:</p>
             <EmailsList failure>
-            {results.failed.map(({ email, error }) => (
+              {results.failed.map(({ email, error }) => (
                 <>
                   <i class="far fa-frown"></i>
                   <div>
@@ -45,11 +44,15 @@ export default function InviteSuccess({ results }) {
                 </>
               ))}
             </EmailsList>
-        </SentMessage>
+          </SentMessage>
         )}
         <ButtonMenu>
-          <ButtonPrimary>Go to Dashboard</ButtonPrimary>
-          <ButtonSecondary>Invite More People</ButtonSecondary>
+          <ButtonPrimary onClick={() => history.push("/dashboard")}>
+            Go to Dashboard
+          </ButtonPrimary>
+          <ButtonSecondary onClick={() => history.push("/invite")}>
+            Invite More People
+          </ButtonSecondary>
         </ButtonMenu>
       </TextWrapper>
     </Container>

@@ -18,14 +18,13 @@ export default function JollyLoader(props) {
   useEffect(() => {
     const tick = () => {
       if (usedQuotes.length === quotes.length) usedQuotes = [];
-      let randomQuote;
-      console.log(usedQuotes, quotes);
       const unusedQuotes = quotes.filter(q => !usedQuotes.includes(q));
-      randomQuote = unusedQuotes[Math.floor(Math.random() * quotes.length)];
-      usedQuotes.push(randomQuote);
-      setQuote(randomQuote);
+      const nextQuote =
+        unusedQuotes[Math.floor(Math.random() * unusedQuotes.length)];
+      usedQuotes.push(nextQuote);
+      setQuote(nextQuote);
     };
-    const id = setInterval(tick, 2500);
+    const id = setInterval(tick, 1000);
     return () => clearInterval(id);
   }, [currentQuote, quotes]);
 
