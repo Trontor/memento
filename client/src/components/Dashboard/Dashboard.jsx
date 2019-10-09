@@ -14,6 +14,13 @@ import JollyLoader from "components/JollyLoader/JollyLoader";
 import React, { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 
+const loadingQuotes = [
+  "Dashboarding things...",
+  "Talking to GraphQL...",
+  "UwU",
+  ">.< hold on!",
+];
+
 export default function Dashboard(props) {
   const [user, setUser] = useState({});
   const { error, loading } = useQuery(GET_CURRENT_USER, {
@@ -34,7 +41,7 @@ export default function Dashboard(props) {
   }
 
   if (loading) {
-    return <JollyLoader />;
+    return <JollyLoader quotes={loadingQuotes} />;
   }
 
   return (
@@ -43,7 +50,7 @@ export default function Dashboard(props) {
         <h2>Hello {user.firstName}!</h2>
         <p>Get started with one of the following actions: </p>
 
-        <DashboardButtons onClick={() => props.history.push("/create-family")}>
+        <DashboardButtons onClick={() => props.history.push("/family/new")}>
           <CreateFamily />
           <ButtonHeading>
             Create a Family
