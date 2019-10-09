@@ -20,9 +20,24 @@ import React from "react";
 import { StyledDropzone } from "components/FileDropzone/FileDropzone";
 import { useMutation } from "@apollo/react-hooks";
 
+const MAX_FILE_SIZE = 160 * 1024;
+const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
 const CreateFamilyValidationSchema = yup.object().shape({
   familyName: yup.string().required("Please enter a family name"),
   color: yup.string().required("Please select a color for your family."),
+  file: yup
+    .mixed()
+    .nullable()
+    .test(
+      "fileSize",
+      "File too large",
+      value => !value || value.size <= MAX_FILE_SIZE,
+    )
+    .test(
+      "fileFormat",
+      "Unsupported Format",
+      value => !value || SUPPORTED_FORMATS.includes(value.type),
+    ),
 });
 
 const loadingFamilyQuotes = [
@@ -108,6 +123,9 @@ export default function CreateFamily(props) {
                 <StyledDropzone
                   onFilesAdded={files => props.setFieldValue("file", files[0])}
                 />
+              )}
+              {props.errors.file && props.touched.file && (
+                <Error>{props.errors.file}</Error>
               )}
               <FormHelpText>You can upload a photo later.</FormHelpText>
             </FormSection>
