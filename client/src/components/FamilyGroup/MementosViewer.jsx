@@ -137,6 +137,7 @@ export default function MementosViewer(props) {
     variables: {
       id: props.familyId,
     },
+    fetchPolicy: "network-only",
     onCompleted: data => {
       if (data && data.mementos) {
         console.log(props);

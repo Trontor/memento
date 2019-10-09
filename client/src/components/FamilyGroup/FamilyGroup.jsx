@@ -54,14 +54,19 @@ export default function FamilyGroup(props) {
   const [family, setFamily] = useState(null);
 
   useEffect(() => {
+    // If there are no mementos, forget about it
     if (!mementos) return;
+    // Otherwise, loop through the memebto list and get all the regular tags
+    // then flatten the 2D array
     const mementoTags = mementos.map(m => m.tags).flat();
+    // and do the same to the detectedLabel tag names
     const detectedTags = mementos
       .map(m => m.detectedLabels.map(l => l.name))
       .flat();
-    console.log("Memento Tags:", mementoTags, "Detected Tags:", detectedTags);
+    // Combine the two arrays and make sure the tags are lowercase for
+    // consistency
     const allTags = [...mementoTags, ...detectedTags].map(t => t.toLowerCase());
-    // Convert to Set and back to array to remove duplicate tags, sneaky...
+    // Convert to Set and then back to array to remove duplicate tags, sneaky...
     setTagOptions(Array.from(new Set(allTags)));
   }, [mementos]);
   const { loading, error } = useQuery(LOAD_FAMILY, {
@@ -196,11 +201,7 @@ export default function FamilyGroup(props) {
                 <h2>Members</h2>
               </SideMenuSectionHeader>
               {family.members.map(member => (
-                <MemberRow
-                  admin={member.familyRoles.some(
-                    r => r.id === familyId && r.role.toLowerCase() === "admin",
-                  )}
-                >
+                <MemberRow admin>
                   {member.imageUrl ? (
                     <img
                       src={member.imageUrl}
@@ -217,7 +218,11 @@ export default function FamilyGroup(props) {
                     >
                       {member.firstName} {member.lastName}
                     </span>
-                    <span>Admin</span>
+                    {member.familyRoles.some(
+                      r =>
+                        r.familyId === familyId &&
+                        r.familyRole.toLowerCase() === "admin",
+                    ) && <span>Admin</span>}
                   </div>
                 </MemberRow>
               ))}
