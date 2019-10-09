@@ -108,6 +108,10 @@ const LabelSchema: Schema = new Schema({
  */
 export const MementoSchema: Schema<MementoDocument> = new Schema(
   {
+    title: {
+      type: String,
+      required: true,
+    },
     type: {
       type: String,
       required: true,
@@ -187,6 +191,7 @@ MementoSchema.methods.toDTO = function(): Memento {
   return {
     // mongodb id
     mementoId: this.id,
+    title: this.title,
     location: this.location,
     type: this.type,
     dates: this._dates.map((date: any) => date.toDTO()),
