@@ -6,6 +6,7 @@ export const GET_MEMENTOS = gql`
       mementoId
       uploader {
         userId
+        imageUrl
         firstName
         lastName
       }

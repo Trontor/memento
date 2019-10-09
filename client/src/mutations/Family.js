@@ -20,6 +20,7 @@ export const LOAD_FAMILY = gql`
       colour
       members {
         userId
+        imageUrl
         firstName
         lastName
       }
