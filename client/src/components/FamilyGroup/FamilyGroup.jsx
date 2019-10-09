@@ -105,16 +105,17 @@ export default function FamilyGroup(props) {
   };
 
   let tabComponent = null;
+  // Extract this as it is used twice within the file (reduces code duplication)
+  const mementoViewerComponent = (
+    <MementosViewer
+      filterTags={filterTags}
+      onLoadedMementos={onLoadedMementos}
+      familyId={familyId}
+    />
+  );
   switch (menuTabs[currentTabIndex]) {
     case "Mementos":
-      tabComponent = (
-        <MementosViewer
-          filterTags={filterTags}
-          onLoadedMementos={onLoadedMementos}
-          familyId={familyId}
-          themeColour={family.colour}
-        />
-      );
+      tabComponent = mementoViewerComponent;
       break;
     case "Members":
       tabComponent = <MembersViewer members={family.members} />;
@@ -139,10 +140,14 @@ export default function FamilyGroup(props) {
         <div>
           <SideMenu>
             <FamilyProfileContainer>
-              <FamilyImg />
-              <ProfilePhotoContainer>
-                <img alt="family" src={family.imageUrl} />
-              </ProfilePhotoContainer>
+              {family.imageUrl && (
+                <>
+                  <FamilyImg />
+                  <ProfilePhotoContainer>
+                    <img alt="family" src={family.imageUrl} />
+                  </ProfilePhotoContainer>
+                </>
+              )}
               <FamilyHeader>
                 <div></div> {/* Empty div to center title */}
                 <div></div> {/* Empty div to center title */}
@@ -191,11 +196,19 @@ export default function FamilyGroup(props) {
                 <h2>Members</h2>
               </SideMenuSectionHeader>
               {family.members.map(member => (
-                <MemberRow admin>
-                  <img
-                    src={member.imageUrl}
-                    alt={`${member.firstName}'s avatar`}
-                  />
+                <MemberRow
+                  admin={member.familyRoles.some(
+                    r => r.id == familyId && r.role.toLowerCase() == "admin",
+                  )}
+                >
+                  {member.imageUrl ? (
+                    <img
+                      src={member.imageUrl}
+                      alt={`${member.firstName}'s avatar`}
+                    />
+                  ) : (
+                    <i class="fas fa-user-circle"></i>
+                  )}
                   <div>
                     <span
                       onClick={() =>
@@ -215,6 +228,7 @@ export default function FamilyGroup(props) {
               <SideMenuSectionHeader>
                 <h2>Tags</h2>
               </SideMenuSectionHeader>
+              {!tagOptions.length && <TagRow>No Tags</TagRow>}
               {tagOptions.sort().map(tag => (
                 <TagRow
                   onClick={() => selectTag(tag)}
@@ -243,13 +257,7 @@ export default function FamilyGroup(props) {
           {/* Mobile */}
           <TabComponent>{tabComponent}</TabComponent>
           {/* Desktop */}
-          <MainViewer>
-            <MementosViewer
-              filterTags={filterTags}
-              onLoadedMementos={onLoadedMementos}
-              familyId={familyId}
-            />
-          </MainViewer>
+          <MainViewer>{mementoViewerComponent}</MainViewer>
         </div>
       </FamilyLayout>
     </FamilyContainer>
