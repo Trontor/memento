@@ -97,7 +97,7 @@ export default function FamilyGroup(props) {
     // Check if the tag has already been selected
     if (filterTags.includes(tag)) {
       // If the tags has been selected,
-      setFilterTags(filterTags.filter(t => t != tag));
+      setFilterTags(filterTags.filter(t => t !== tag));
     } else {
       // Otherwise, add the tag to the list
       setFilterTags([...filterTags, tag]);
