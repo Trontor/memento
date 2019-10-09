@@ -146,14 +146,22 @@ export default function MementosViewer(props) {
       }
     },
   });
-  console.log("FAMILY ID: ", props.familyId);
+  console.log("Filtering Memento Tags:", props.filterTags);
+
   if (loadMementosResult.loading) {
     return <JollyLoader></JollyLoader>;
   }
 
+  let filteredMementos = mementos;
+  if (props.filterTags && props.filterTags.length > 0) {
+    filteredMementos = mementos.filter(m =>
+      m.tags.some(tag => props.filterTags.includes(tag)),
+    );
+  }
+
   return (
     <MementoCardColumns>
-      {mementos.map(memento => {
+      {filteredMementos.map(memento => {
         return <MementoCard {...memento} />;
       })}
     </MementoCardColumns>

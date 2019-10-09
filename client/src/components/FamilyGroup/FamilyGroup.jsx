@@ -97,6 +97,7 @@ export default function FamilyGroup(props) {
     case "Mementos":
       tabComponent = (
         <MementosViewer
+          filterTags={mementoTags}
           onLoadedMementos={onLoadedMementos}
           familyId={familyId}
           themeColour={family.colour}
@@ -232,6 +233,7 @@ export default function FamilyGroup(props) {
           {/* Desktop */}
           <MainViewer>
             <MementosViewer
+              filterTags={mementoTags}
               onLoadedMementos={onLoadedMementos}
               familyId={familyId}
             />
