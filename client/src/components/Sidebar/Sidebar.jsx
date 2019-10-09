@@ -90,7 +90,7 @@ const Sidebar = props => {
             </TextList>
           ))
         )}
-        <NewFamilyGroup onClick={() => history.push("/create-family")}>
+        <NewFamilyGroup onClick={() => history.push("/family/new")}>
           New Family group
         </NewFamilyGroup>
       </FamilyListSection>

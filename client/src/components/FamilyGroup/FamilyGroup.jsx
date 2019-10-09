@@ -33,7 +33,12 @@ import { useLocation } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 
 const defaultTags = [];
-
+const loadingQuotes = [
+  "Loading...",
+  "Considering a reunion...",
+  "Loading mementos...",
+  "Analysing heirachy...",
+];
 export default function FamilyGroup(props) {
   const menuTabs = ["Mementos", "Members", "Tags"];
   const [currentTabIndex, setTabIndex] = useState(0);
@@ -90,7 +95,7 @@ export default function FamilyGroup(props) {
   }, [getMementosQuery, location]);
 
   if (loading || !family || getMementosQuery.loading) {
-    return <JollyLoader />;
+    return <JollyLoader quotes={loadingQuotes} />;
   }
 
   if (error) {
