@@ -25,7 +25,7 @@ const initialFormValues = {
   file: null,
   location: "Amsterdam",
 };
-const MAX_FILE_SIZE = 160 * 1024;
+const MAX_FILE_SIZE = 160 * 1024 * 1024;
 const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
 const uploadMementoValidationSchema = yup.object().shape({
   title: yup
