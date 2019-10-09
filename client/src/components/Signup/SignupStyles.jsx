@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SignupContainer = styled.form`
-  padding: 50px;
+  margin: 50px;
   position: relative;
   top: 50%;
   transform: translate(0, -50%);

@@ -1,10 +1,9 @@
-import { Intro, LandingLayout } from "./LandingStyles";
 import React, { Component } from "react";
-
 import Carousel from "../Carousel/Carousel";
-import { Logo } from "ui/Logos";
+import { LandingLayout, Intro } from "./LandingStyles";
 import Signup from "../Signup/Signup";
-import { SignupBackground } from "./Background";
+import { SignupBackground } from "../Background/Background";
+import { Logo } from "ui/Logos";
 
 export class Landing extends Component {
   render() {

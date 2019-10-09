@@ -13,14 +13,13 @@ export const LandingLayout = styled.div`
 
 export const Intro = styled.section`
   border-bottom: 1px solid ${props => props.theme.palette.border};
-  background-color: #F8F8FC;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   padding: 20px;
 
   @media screen and (min-width: ${props =>
       props.theme.breakpoints.tabletLandscape}) {
-    /* border-right: 1px solid ${props => props.theme.palette.border}; */
+    border-right: 1px solid ${props => props.theme.palette.border};
     border-bottom: none;
   }
 `;
