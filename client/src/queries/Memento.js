@@ -20,6 +20,10 @@ export const GET_MEMENTOS = gql`
       type
       description
       location
+      detectedLabels {
+        name
+        confidence
+      }
       media {
         type
         url

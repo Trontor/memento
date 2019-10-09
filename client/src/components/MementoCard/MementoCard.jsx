@@ -9,7 +9,7 @@ import {
   MementoDescription,
   MementoInfo,
   MementoOverview,
-  MementoTags,
+  MementoTag,
   MementoTagsWrapper,
   MementoTitle,
   PeopleTags,
@@ -104,19 +104,6 @@ export default function MementoCard(props) {
                 </div>
               </span>
             )}
-            {/* Beneficiary Tags */}
-            {beneficiaries && beneficiaries.length > 0 && (
-              <span>
-                <i class="fas fa-user-tag"></i>
-                <div>
-                  {props.beneficiaries.map(beneficiary => (
-                    <PeopleTags>
-                      {beneficiary.firstName} {beneficiary.lastName}
-                    </PeopleTags>
-                  ))}
-                </div>
-              </span>
-            )}
           </MementoOverview>
 
           {/* Description */}
@@ -133,7 +120,17 @@ export default function MementoCard(props) {
       <MementoTagsWrapper>
         <i class="fas fa-tags"></i>
         {props.tags.map(tag => (
-          <MementoTags>{tag}</MementoTags>
+          <MementoTag>{tag}</MementoTag>
+        ))}
+      </MementoTagsWrapper>
+      {/* Rekognition Tags */}
+      <MementoTagsWrapper>
+        <i class="fas fa-camera"></i>
+        {detectedLabels.map(result => (
+          <MementoTag>
+            {result.name.toLowerCase()}{" "}
+            <span>{Math.round(result.confidence, 0)}%</span>
+          </MementoTag>
         ))}
       </MementoTagsWrapper>
     </Card>

@@ -10,7 +10,7 @@ export const Card = styled.div`
   border-radius: 4px;
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     width: 100%;
     margin-top: 0;
     margin-bottom: ${props => props.theme.size.gutterWidth};
@@ -130,7 +130,7 @@ export const MementoTagsWrapper = styled.ul`
   }
 `;
 
-export const MementoTags = styled.li`
+export const MementoTag = styled.li`
   font-family: "Livvic", sans-serif;
   font-size: 11px;
   color: ${props => props.theme.palette.text};
@@ -145,16 +145,20 @@ export const MementoTags = styled.li`
   &:hover {
     color: ${props => props.theme.palette.main};
     border-color: ${props => lighten(0.2, props.theme.palette.main)};
-    box-shadow: inset 0 0 0 1px ${props => lighten(0.2, props.theme.palette.main)};
+    box-shadow: inset 0 0 0 1px ${props =>
+      lighten(0.2, props.theme.palette.main)};
     /* color: ${props => props.theme.palette.main} */
+  }
+  span {
+    color: gray;
+    font-size: 10px;
   }
 `;
 
 export const PeopleTags = styled.span`
-
   &::after {
     display: inline;
-    content: ', ';
+    content: ", ";
   }
 
   &:last-child {
@@ -180,4 +184,4 @@ export const CardOptions = styled.span`
       color: ${props => props.theme.palette.main};
     }
   }
-`
+`;
