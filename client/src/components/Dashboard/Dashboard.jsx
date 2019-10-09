@@ -11,25 +11,26 @@ import { Container } from "ui/Helpers";
 import GET_CURRENT_USER from "queries/GetCurrentUser";
 import JollyError from "components/JollyError/JollyError";
 import JollyLoader from "components/JollyLoader/JollyLoader";
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 
 export default function Dashboard(props) {
+  const [user, setUser] = useState({});
   const { data, error, loading } = useQuery(GET_CURRENT_USER, {
     fetchPolicy: "network-only",
+    onCompleted: data => {
+      if (data && data.currentUser) {
+        setUser(data.currentUser);
+      }
+    },
   });
 
-  let user = {};
+  console.log("Rendering with:", user);
 
   //Handle the states of displaying data, error and loading
   if (error) {
     console.log("Error loading user data:", error);
     return <JollyError />;
-  }
-
-  if (data && data.currentUser) {
-    user = data.currentUser;
-    console.log("Success:", user);
   }
 
   if (loading) {
