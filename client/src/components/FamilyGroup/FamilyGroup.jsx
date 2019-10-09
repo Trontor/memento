@@ -179,7 +179,10 @@ export default function FamilyGroup(props) {
               </SideMenuSectionHeader>
               {family.members.map(member => (
                 <MemberRow admin>
-                  <img src={member.imageUrl} />
+                  <img
+                    src={member.imageUrl}
+                    alt={`${member.firstName}'s avatar`}
+                  />
                   <div>
                     <span
                       onClick={() =>
