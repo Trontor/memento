@@ -154,8 +154,12 @@ export default function MementosViewer(props) {
 
   let filteredMementos = mementos;
   if (props.filterTags && props.filterTags.length > 0) {
-    filteredMementos = mementos.filter(m =>
-      m.tags.some(tag => props.filterTags.includes(tag)),
+    filteredMementos = mementos.filter(
+      m =>
+        m.tags.some(tag => props.filterTags.includes(tag)) ||
+        m.detectedLabels.some(l =>
+          props.filterTags.includes(l.name.toLowerCase()),
+        ),
     );
   }
 
