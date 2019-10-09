@@ -198,7 +198,7 @@ export default function FamilyGroup(props) {
               {family.members.map(member => (
                 <MemberRow
                   admin={member.familyRoles.some(
-                    r => r.id == familyId && r.role.toLowerCase() == "admin",
+                    r => r.id === familyId && r.role.toLowerCase() === "admin",
                   )}
                 >
                   {member.imageUrl ? (
