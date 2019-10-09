@@ -34,6 +34,9 @@ const FLUSHED_FACE_URL =
  * @author Rohyl Joshi
  */
 export default function NoMementos(props) {
+  const { onClick, familyColour } = props;
+  console.log(props);
+
   return (
     <NoMementoContainer>
       <Center>
@@ -41,7 +44,11 @@ export default function NoMementos(props) {
         <br />
         ...unless? <br />
         <img src={FLUSHED_FACE_URL} height="40px" alt="flushed emoji" />
-        <UploadButton style={{ marginTop: "10px" }} onClick={props.onClick}>
+        <UploadButton
+          familyColour={familyColour}
+          style={{ marginTop: "10px" }}
+          onClick={onClick}
+        >
           <i class="fas fa-feather-alt"></i>
           <span>Add a Memento</span>
         </UploadButton>

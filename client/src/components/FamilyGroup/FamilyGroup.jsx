@@ -31,18 +31,7 @@ import TagsViewer from "./TagsViewer";
 import moment from "moment";
 import { useQuery } from "@apollo/react-hooks";
 
-const defaultTags = [
-  "recipes",
-  "painting",
-  "stuffed toys",
-  "cars",
-  "jewellery",
-  "photographs",
-  "clothing",
-  "family",
-  "blanket",
-  "food",
-];
+const defaultTags = [];
 
 export default function FamilyGroup(props) {
   const menuTabs = ["Mementos", "Members", "Tags"];
@@ -149,7 +138,7 @@ export default function FamilyGroup(props) {
             <FamilyProfileContainer>
               {family.imageUrl && (
                 <>
-                  <FamilyImg />
+                  <FamilyImg familyColour={family.colour} />
                   <ProfilePhotoContainer>
                     <img alt="family" src={family.imageUrl} />
                   </ProfilePhotoContainer>
@@ -182,7 +171,10 @@ export default function FamilyGroup(props) {
               </FamilyHeader>
               <Options>
                 {/* Upload Button */}
-                <UploadButton onClick={onUploadMementoClicked}>
+                <UploadButton
+                  familyColour={family.colour}
+                  onClick={onUploadMementoClicked}
+                >
                   <i class="fas fa-feather-alt"></i>
                   <span>Add a Memento</span>
                 </UploadButton>
@@ -266,7 +258,10 @@ export default function FamilyGroup(props) {
             {mementos && mementos.length ? (
               mementoViewerComponent
             ) : (
-              <NoMementos onClick={onUploadMementoClicked} />
+              <NoMementos
+                familyColour={family.colour}
+                onClick={onUploadMementoClicked}
+              />
             )}
           </MainViewer>
         </div>

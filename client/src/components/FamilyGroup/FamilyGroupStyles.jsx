@@ -7,14 +7,13 @@ export const FamilyContainer = styled(Container)`
   margin: 0;
   position: relative;
 
-  @media screen and (min-width: ${props =>
-  props.theme.breakpoints.mobile}) {
+  @media screen and (min-width: ${props => props.theme.breakpoints.mobile}) {
     margin: 0;
     position: relative;
   }
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     max-width: 100%;
     width: 100%;
     margin: 0 auto;
@@ -28,7 +27,7 @@ export const FamilyLayout = styled.div`
   justify-content: center;
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     grid-template-columns:
       minmax(260px, 312px)
       minmax(480px, 600px);
@@ -40,7 +39,7 @@ export const FamilyLayout = styled.div`
 
 export const SideMenu = styled.section`
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     width: 100%;
     height: 100vh;
     position: sticky;
@@ -53,17 +52,17 @@ export const SideMenu = styled.section`
       background: transparent;
     }
   }
-`
+`;
 export const MainViewer = styled.section`
   display: none;
   padding: ${props => props.theme.size.gutterWidth} 0;
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     height: 100%;
     display: block;
   }
-`
+`;
 
 export const FamilyProfileContainer = styled.div`
   position: relative;
@@ -73,20 +72,20 @@ export const FamilyProfileContainer = styled.div`
   border-bottom: 1px solid ${props => lighten(0.6, props.theme.palette.text)};
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     background-color: ${props => props.theme.palette.foreground};
     border: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
   }
-`
+`;
 
 export const FamilyImg = styled.div`
   width: 100%;
   height: 240px;
-  background-color: ${props => props.theme.palette.main};
-  border-bottom: 8px solid ${props => lighten(0.1, props.theme.palette.main)};
+  background-color: ${props => props.familyColour};
+  border-bottom: 8px solid ${props => lighten(0.1, props.familyColour)};
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     margin-top: 0;
     height: 128px;
   }
@@ -101,7 +100,7 @@ export const FamilyHeader = styled.div`
   align-items: center;
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     border: none;
     grid-template-columns: 1fr;
     justify-items: left;
@@ -134,16 +133,16 @@ export const ProfilePhotoContainer = styled.div`
   }
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     margin-bottom: -72px;
   }
-`
+`;
 
 export const SideMenuSectionContainer = styled.section`
   display: none;
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     display: block;
     background-color: ${props => props.theme.palette.foreground};
     border: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
@@ -151,13 +150,13 @@ export const SideMenuSectionContainer = styled.section`
     border-radius: 4px;
     margin-top: ${props => props.theme.size.gutterWidth};
   }
-`
+`;
 
 export const SideMenuSectionHeader = styled.div`
   display: none;
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     display: block;
     border-bottom: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
     padding: 16px;
@@ -167,7 +166,7 @@ export const SideMenuSectionHeader = styled.div`
       margin: 0;
     }
   }
-`
+`;
 
 export const GroupDetails = styled.div`
   display: grid;
@@ -179,13 +178,13 @@ export const GroupDetails = styled.div`
   i {
     font-size: 12px;
   }
-`
+`;
 
 export const DetailsWrapper = styled.div`
   display: none;
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     display: block;
     margin-top: 16px;
 
@@ -193,7 +192,7 @@ export const DetailsWrapper = styled.div`
       padding-bottom: 0;
     }
   }
-`
+`;
 
 export const MemberRow = styled.div`
   margin: 0;
@@ -248,8 +247,7 @@ export const TagRow = styled.div`
 
   &:hover {
     background-color: ${props =>
-        adjustHue(-10,
-        lighten(0.295, props.theme.palette.main))};
+      adjustHue(-10, lighten(0.295, props.theme.palette.main))};
   }
 
   ${({ selected }) =>
@@ -257,13 +255,13 @@ export const TagRow = styled.div`
     css`
       box-shadow: inset 3px 0 0 ${props => props.theme.palette.main};
       background-color: ${props => lighten(0.3, props.theme.palette.main)};
-  `};
+    `};
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     font-size: 13px;
   }
-`
+`;
 
 export const Options = styled.div`
   display: flex;
@@ -272,10 +270,10 @@ export const Options = styled.div`
   margin-bottom: 20px;
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     margin-bottom: 0;
   }
-`
+`;
 
 export const SettingsButton = styled(ButtonSecondary)`
   color: ${props => props.theme.palette.main};
@@ -290,7 +288,7 @@ export const SettingsButton = styled(ButtonSecondary)`
   }
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     margin: 0 auto;
     width: 28px;
     height: 28px;
@@ -317,7 +315,7 @@ export const SettingsButton = styled(ButtonSecondary)`
       display: none;
     }
   }
-`
+`;
 
 export const UploadButton = styled(ButtonPrimaryLight)`
   align-items: center;
@@ -327,13 +325,26 @@ export const UploadButton = styled(ButtonPrimaryLight)`
   font-size: 14px;
   padding: 9px 16px;
 
+  color: ${props => props.familyColour || props.theme.palette.main};
+  background: ${props =>
+    lighten(0.25, props.familyColour || props.theme.palette.main)};
+  border: 1px solid
+    ${props => lighten(0.25, props.familyColour || props.theme.palette.main)};
+
+  &:hover {
+    background: ${props =>
+      lighten(0.27, props.familyColour || props.theme.palette.main)};
+    border: 1px solid
+      ${props => lighten(0.27, props.familyColour || props.theme.palette.main)};
+  }
+
   i {
     display: inline-block;
     margin-right: 8px;
   }
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     display: block;
     width: auto;
     height: auto;
@@ -347,7 +358,7 @@ export const UploadButton = styled(ButtonPrimaryLight)`
       margin-right: 8px;
     }
   }
-`
+`;
 
 export const FeatherButton = styled.button`
   width: 40px;
@@ -366,7 +377,6 @@ export const FeatherButton = styled.button`
     color: ${props => props.theme.palette.main};
   }
 
-
   i {
     display: block;
     color: ${props => props.theme.palette.main};
@@ -375,30 +385,30 @@ export const FeatherButton = styled.button`
   }
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     display: none;
   }
-`
+`;
 
 export const Menu = styled.div`
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     display: none;
   }
-`
+`;
 
 export const TabComponent = styled.div`
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     display: none;
   }
-`
+`;
 
 export const MementoSearch = styled.div`
   padding: 8px 16px;
   background-color: ${props => props.theme.palette.background};
   border-bottom: 1px solid ${props => lighten(0.65, props.theme.palette.text)};
-`
+`;
 
 export const SearchInput = styled.input`
   width: 100%;
@@ -411,4 +421,4 @@ export const SearchInput = styled.input`
   &:active {
     outline: none;
   }
-`
+`;
