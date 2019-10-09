@@ -4,6 +4,7 @@ export const GET_MEMENTOS = gql`
   query getMementos($id: ID!) {
     mementos(familyId: $id) {
       mementoId
+      title
       uploader {
         userId
         imageUrl

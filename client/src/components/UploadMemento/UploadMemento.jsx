@@ -138,6 +138,7 @@ export default function UploadMemento(props) {
     const mutationValues = {
       familyId: familyId,
       type: "Test",
+      title: values.title,
       description: values.description,
       location: values.location,
       dates: [

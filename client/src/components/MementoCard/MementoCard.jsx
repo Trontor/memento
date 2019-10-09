@@ -24,7 +24,8 @@ export default function MementoCard(props) {
     mementoId,
     createdAt,
     dates,
-    // description,
+    title,
+    description,
     location,
     // media,
     // tags,
@@ -65,12 +66,12 @@ export default function MementoCard(props) {
       <CardContent>
         <MementoInfo>
           {/* Title */}
-          <MementoTitle>Titel</MementoTitle>
+          <MementoTitle>{title}</MementoTitle>
           <MementoOverview>
             {/* Date */}
             <span>
               <i class="far fa-clock"></i>
-              {dates[0].year}
+              {dates[0].month.toString().padStart(2, "0")}/{dates[0].year}
             </span>
             {/* Location */}
             {location && (
@@ -108,7 +109,7 @@ export default function MementoCard(props) {
           </MementoOverview>
 
           {/* Description */}
-          <MementoDescription>{props.description}</MementoDescription>
+          <MementoDescription>{description}</MementoDescription>
         </MementoInfo>
         {/* Cover Image */}
         {props.media.length > 0 && (
