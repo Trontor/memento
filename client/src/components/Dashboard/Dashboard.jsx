@@ -16,7 +16,7 @@ import { useQuery } from "@apollo/react-hooks";
 
 export default function Dashboard(props) {
   const [user, setUser] = useState({});
-  const { data, error, loading } = useQuery(GET_CURRENT_USER, {
+  const { error, loading } = useQuery(GET_CURRENT_USER, {
     fetchPolicy: "network-only",
     onCompleted: data => {
       if (data && data.currentUser) {
