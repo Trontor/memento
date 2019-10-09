@@ -7,4 +7,6 @@ import { ObjectType, Field } from "type-graphql";
 export class DetectionLabel {
   @Field(type => String)
   name!: string;
+  @Field(type => Number)
+  confidence!: number;
 }

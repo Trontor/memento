@@ -12,9 +12,14 @@ export interface IVisionService {
   detectObjects(
     imageKey: string,
     minConfidence: number,
-  ): Promise<Set<string> | undefined>;
+  ): Promise<Set<IDetectionResults> | undefined>;
   initVisionForFamily(familyId: string): Promise<CollectionName>;
   identifyUserFacesInImage(imageKey: string, familyId: string): Promise<UserId>;
+}
+
+export interface IDetectionResults {
+  name: string;
+  confidence: number;
 }
 
 /**
@@ -72,10 +77,13 @@ export class VisionService implements IVisionService {
       minConfidence,
     );
     if (!labels) return undefined;
-    const labelNames: string[] = (labels
-      .map(l => l.Name)
-      .filter(Boolean) as string[]).map(name => name.toLowerCase());
-
-    return new Set<string>(labelNames);
+    // const labelNames: string[] = (labels
+    //   .map(l => l.Name)
+    //   .filter(Boolean) as string[]).map(name => name.toLowerCase());
+    const detectionResults: IDetectionResults[] = labels.map(label => ({
+      name: label.Name || "",
+      confidence: label.Confidence || 0,
+    }));
+    return new Set<IDetectionResults>(detectionResults);
   }
 }

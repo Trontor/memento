@@ -29,7 +29,7 @@ export class CreateMementoInput {
   type!: string;
 
   @Field()
-  description!: string;
+  description?: string;
 
   @Field({ nullable: true })
   location?: string;
