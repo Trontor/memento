@@ -126,11 +126,12 @@ export const ProfilePhotoContainer = styled.div`
 
   img {
     ${center};
-    width: 128px;
-    height: 128px;
+    width: ${props => (props.thick ? "118px" : "128px")};
+    height: ${props => (props.thick ? "118px" : "128px")};
     object-fit: cover;
     border-radius: 5px;
   }
+
 
   @media screen and (min-width: ${props =>
       props.theme.breakpoints.tabletLandscape}) {
