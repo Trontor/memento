@@ -25,7 +25,7 @@ export default function InviteCode(props) {
               onChange={e => setInviteId(e.target.value)}
               placeholder="Invitation Code"/>
           </AcceptFieldWrapper>
-          <ButtonPrimary onClick={handleAcceptClick}>Accept</ButtonPrimary>
+          <ButtonPrimary onClick={handleAcceptClick} disabled={!inviteId}>Accept</ButtonPrimary>
         </InvitationWrapper>
       </TextWrapper>
     </Container>
