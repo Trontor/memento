@@ -126,7 +126,6 @@ export class MementoResolver {
    */
   @ResolveProperty("family", returns => Family)
   async resolveFamily(@Parent() { mementoId }: Memento): Promise<Family> {
-    // TODO: use dataloader pattern as re-fetching is inefficient
     const memento = await this.mementoLoaderById.load(mementoId);
     const family = await this.familyLoaderById.load(
       memento.inFamily.toHexString(),
@@ -190,9 +189,32 @@ export class MementoResolver {
   @ResolveProperty("bookmarkedBy", returns => [User])
   async resolveBookmarkedBy(@Parent() { mementoId }: Memento) {
     const memento = await this.mementoLoaderById.load(mementoId);
-    this.logger.debug(memento);
     const users = await this.userLoaderById.loadMany(
       memento._bookmarkedBy.map(id => id.toHexString()),
+    );
+    return users.map(doc => doc.toDTO());
+  }
+
+  /**
+   * Resolves the `people` property on a `Memento`.
+   */
+  @ResolveProperty("people", returns => [User])
+  async resolvePeople(@Parent() { mementoId }: Memento) {
+    const memento = await this.mementoLoaderById.load(mementoId);
+    const users = await this.userLoaderById.loadMany(
+      memento._people.map(id => id.toHexString()),
+    );
+    return users.map(doc => doc.toDTO());
+  }
+
+  /**
+   * Resolves the `beneficiaries` property on a `Memento`.
+   */
+  @ResolveProperty("beneficiaries", returns => [User])
+  async resolveBeneficiaries(@Parent() { mementoId }: Memento) {
+    const memento = await this.mementoLoaderById.load(mementoId);
+    const users = await this.userLoaderById.loadMany(
+      memento._beneficiaries.map(id => id.toHexString()),
     );
     return users.map(doc => doc.toDTO());
   }

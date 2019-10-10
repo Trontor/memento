@@ -110,8 +110,9 @@ const authenticatedRoutes = [
     component: Dashboard,
   },
   {
-    name: "create-family",
+    name: "family/new/",
     component: CreateFamily,
+    exact: true,
   },
   {
     name: "invite/",
@@ -139,11 +140,11 @@ const authenticatedRoutes = [
   {
     name: "family/:id/",
     component: FamilyGroup,
-    exact: true,
   },
   {
     name: "family/:id/settings",
     component: FamilyGroupSettings,
+    exact: true,
   },
   {
     name: "bookmarks",
@@ -187,14 +188,16 @@ function App() {
                   sidebarOpen={sidebarOpen}
                   toggleSidebar={toggleSidebar}
                 />
-                {authenticatedRoutes.map(route => (
-                  <PrivateRoute
-                    key={route.name}
-                    path={`/${route.name}`}
-                    exact={route.exact}
-                    component={route.component}
-                  />
-                ))}
+                <Switch>
+                  {authenticatedRoutes.map(route => (
+                    <PrivateRoute
+                      key={route.name}
+                      path={`/${route.name}`}
+                      exact={route.exact}
+                      component={route.component}
+                    />
+                  ))}
+                </Switch>
               </Main>
             </SiteGrid>
           </Route>

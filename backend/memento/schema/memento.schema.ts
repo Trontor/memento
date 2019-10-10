@@ -12,6 +12,8 @@ export interface MementoDocument extends Memento, Document {
   inFamily: Types.ObjectId;
   uploadedBy: Types.ObjectId;
   _bookmarkedBy: Types.ObjectId[];
+  _people: Types.ObjectId[];
+  _beneficiaries: Types.ObjectId[];
   _dates: any;
   _media: any;
 
@@ -90,11 +92,26 @@ DateSchema.methods.toDTO = function(): MementoDate {
   };
 };
 
+const LabelSchema: Schema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  confidence: {
+    type: Number,
+    required: true,
+  },
+});
+
 /**
  * The actual structure of the Memento collection.
  */
 export const MementoSchema: Schema<MementoDocument> = new Schema(
   {
+    title: {
+      type: String,
+      required: true,
+    },
     type: {
       type: String,
       required: true,
@@ -113,7 +130,7 @@ export const MementoSchema: Schema<MementoDocument> = new Schema(
     },
     description: {
       type: String,
-      required: true,
+      required: false,
     },
     location: {
       type: String,
@@ -135,6 +152,28 @@ export const MementoSchema: Schema<MementoDocument> = new Schema(
       ],
       default: [],
     },
+    _people: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+      default: [],
+    },
+    _beneficiaries: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+      default: [],
+    },
+    detectedLabels: {
+      type: [LabelSchema],
+      default: [],
+    },
     tags: {
       type: [String],
       default: [],
@@ -152,6 +191,7 @@ MementoSchema.methods.toDTO = function(): Memento {
   return {
     // mongodb id
     mementoId: this.id,
+    title: this.title,
     location: this.location,
     type: this.type,
     dates: this._dates.map((date: any) => date.toDTO()),
@@ -162,6 +202,11 @@ MementoSchema.methods.toDTO = function(): Memento {
     uploader: this.uploader,
     // dummy: resolved if requested
     bookmarkedBy: [],
+    // dummy: resolved if requested
+    beneficiaries: [],
+    // dummy: resolved if requested
+    people: [],
+    detectedLabels: this.detectedLabels,
     description: this.description,
     tags: this.tags,
     // timestamps
@@ -175,12 +220,10 @@ MementoSchema.methods.toDTO = function(): Memento {
  */
 export interface IFindMementoConditions {
   _id?: {
-    $gt: Types.ObjectId;
+    $lt: Types.ObjectId;
   };
   inFamily: Types.ObjectId;
-  tags?: {
-    $in: string[];
-  };
+  $or?: any[];
 }
 
 export interface IUpdateMementoPayload {

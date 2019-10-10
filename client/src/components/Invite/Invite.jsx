@@ -22,6 +22,12 @@ const isValidEmail = email => {
   return !!email.match(emailValid);
 };
 
+const loadingQuotes = [
+  "beep boop...",
+  "strapping up the pigeon...",
+  "lOwOading...",
+  "emailing...",
+];
 export default function InviteFamily() {
   // States to track current invite step, the selected family, and the list of
   // invite emails
@@ -54,10 +60,9 @@ export default function InviteFamily() {
   //   return <InviteSuccess results={inviteMutationInfo.data.inviteByEmail} />;
   // }
 
-
-  if (true || inviteMutationInfo.data) {
-        return <InviteSuccess results={{sent: ["testemail1@gmail.com", "testemail2@gmail.com"], failed: [{email : "failed@gmail.com", error: "duplicate email"}]}} />;
-      }
+  if (inviteMutationInfo.data) {
+    return <InviteSuccess results={inviteMutationInfo.data.inviteByEmail} />;
+  }
 
   // Stores all the families the user has permission to invite
   let inviteFamilies = [];
@@ -71,7 +76,7 @@ export default function InviteFamily() {
     );
   }
   if (loading || inviteMutationInfo.loading) {
-    return <JollyLoader />;
+    return <JollyLoader quotes={loadingQuotes} />;
   }
 
   // Handles when a family is selected

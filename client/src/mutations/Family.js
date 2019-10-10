@@ -10,12 +10,21 @@ export const CREATE_NEW_FAMILY = gql`
 
 export const LOAD_FAMILY = gql`
   query loadFamily($id: ID!) {
+    currentUser {
+      userId
+    }
     family(familyId: $id) {
       name
       createdAt
+      imageUrl
       colour
       members {
         userId
+        familyRoles {
+          familyId
+          familyRole
+        }
+        imageUrl
         firstName
         lastName
       }

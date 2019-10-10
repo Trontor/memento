@@ -26,10 +26,13 @@ export class CreateMementoInput {
   familyId!: string;
 
   @Field()
+  title!: string;
+
+  @Field()
   type!: string;
 
   @Field()
-  description!: string;
+  description?: string;
 
   @Field({ nullable: true })
   location?: string;
@@ -40,8 +43,20 @@ export class CreateMementoInput {
   @Field(type => [CreateMementoDateInput], { nullable: true })
   dates?: CreateMementoDateInput[];
 
+  @Field(type => [ID], { nullable: true })
+  people?: string[];
+
+  @Field(type => [ID], { nullable: true })
+  beneficiaries?: string[];
+
   @Field(type => [String], { nullable: true })
   tags?: string[];
+
+  @Field(type => Boolean, { defaultValue: true })
+  detectObjects!: boolean;
+
+  @Field(type => Int, { defaultValue: 3 })
+  maxDetectedPerMedia!: number;
 }
 
 /**
@@ -53,10 +68,19 @@ export class UpdateMementoInput {
   mementoId!: string;
 
   @Field({ nullable: true })
+  title?: string;
+
+  @Field({ nullable: true })
   description?: string;
 
   @Field({ nullable: true })
   location?: string;
+
+  @Field(type => [ID], { nullable: true })
+  people?: string[];
+
+  @Field(type => [ID], { nullable: true })
+  beneficiaries?: string[];
 
   @Field(type => [String], { nullable: true })
   tags?: string[];

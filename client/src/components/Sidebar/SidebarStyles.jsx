@@ -116,16 +116,15 @@ export const TextList = styled.li`
     color: ${props => lighten(0.05, props.theme.palette.text)};
   }
 
-  a {
+  span {
     ${props => props.theme.mixins.hoverFade};
     color: ${props => lighten(0.2, props.theme.palette.text)};
-
+    cursor: pointer;
     &:hover {
       ${props => props.theme.mixins.hoverFade};
       color: ${props => lighten(0.05, props.theme.palette.text)};
     }
   }
-
   i {
     color: ${props => lighten(0.5, props.theme.palette.text)};
     margin-right: 10px;

@@ -27,12 +27,17 @@ input CreateMementoDateInput {
 
 input CreateMementoInput {
   familyId: ID!
+  title: String!
   type: String!
   description: String!
   location: String
   media: [CreateMementoMediaInput!]
   dates: [CreateMementoDateInput!]
+  people: [ID!]
+  beneficiaries: [ID!]
   tags: [String!]
+  detectObjects: Boolean = true
+  maxDetectedPerMedia: Int = 3
 }
 
 input CreateMementoMediaInput {
@@ -48,6 +53,11 @@ scalar DateTime
 
 input DeleteMementoMediaInput {
   mediaId: ID!
+}
+
+type DetectionLabel {
+  name: String!
+  confidence: Float!
 }
 
 type FailedInviteOutput {
@@ -108,6 +118,7 @@ enum MediaType {
 
 type Memento {
   mementoId: ID!
+  title: String!
   family: Family!
   uploader: User!
   type: String!
@@ -117,6 +128,9 @@ type Memento {
   dates: [MementoDate!]!
   tags: [String!]
   bookmarkedBy: [User!]!
+  people: [User!]!
+  beneficiaries: [User!]!
+  detectedLabels: [DetectionLabel!]!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -184,8 +198,11 @@ input UpdateFamilyInput {
 
 input UpdateMementoInput {
   mementoId: ID!
+  title: String
   description: String
   location: String
+  people: [ID!]
+  beneficiaries: [ID!]
   tags: [String!]
   updateMedia: [UpdateMementoMediaInput!]
   appendMedia: [CreateMementoMediaInput!]
