@@ -15,4 +15,10 @@ export const InvitationWrapper = styled.div`
   p {
     line-height: 0.8em;
   }
+
+  i {
+    font-size: 80px;
+    margin-bottom: 16px;
+    color: ${props => lighten(0.1, props.theme.palette.main)};
+  }
 `

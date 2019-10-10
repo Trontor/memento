@@ -16,6 +16,7 @@ export default function InviteCode(props) {
     <Container>
       <TextWrapper>
         <InvitationWrapper>
+          <i class="far fa-envelope-open"></i>
           <h2>Join your Family!</h2>
           <p>Received an invitation code?</p>
           <p>Enter it below to accept your invitation:</p>
