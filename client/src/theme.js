@@ -9,7 +9,7 @@ const theme = {
   palette: {
     text: "#44404B",
     lightText: "white",
-    main: "#FF7F5F",
+    main: "#FF7855",
     mainLight: "#FFF2EF",
     secondary: "#56D7E8",
     background: "#F9FAFC",

@@ -47,6 +47,10 @@ const loadingFamilyQuotes = [
   "Loading lavishly...",
   "OwO",
 ];
+
+// Colour Theme Selection for Family Group
+const colorSelection = ["#FF7F5F", "#FF2132", "#FF337D", "#F726B1", "#9127D2", "#5627D2", "#274CE3", "#0099BE", "#00BE4E", "#FFB700", "#F97908"]
+
 export default function CreateFamily(props) {
   const [createNewFamily, { data, loading /* error */ }] = useMutation(
     CREATE_NEW_FAMILY,
@@ -142,6 +146,7 @@ export default function CreateFamily(props) {
                   }}
                   color={props.values.color}
                   width="100%"
+                  colors={colorSelection}
                 />
               </PickerWrapper>
 

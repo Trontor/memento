@@ -328,9 +328,9 @@ export const UploadButton = styled(ButtonPrimaryLight)`
 
   color: ${props => props.familyColour || props.theme.palette.main};
   background: ${props =>
-    lighten(0.25, props.familyColour || props.theme.palette.main)};
+    lighten(0.3, props.familyColour || props.theme.palette.main)};
   border: 1px solid
-    ${props => lighten(0.25, props.familyColour || props.theme.palette.main)};
+    ${props => lighten(0.3, props.familyColour || props.theme.palette.main)};
 
   &:hover {
     background: ${props =>
