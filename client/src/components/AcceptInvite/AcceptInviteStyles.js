@@ -1,6 +1,5 @@
-import styled, { css } from "styled-components";
-
 import { lighten } from "polished";
+import styled from "styled-components";
 
 export const AcceptFieldWrapper = styled.div`
   max-width: 380px;

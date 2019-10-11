@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components";
 
+import { lighten } from "polished";
+
 export const PageContainer = styled.div`
   width: 100%;
   padding: 40px;

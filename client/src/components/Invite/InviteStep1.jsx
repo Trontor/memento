@@ -1,6 +1,7 @@
-import React from "react";
-import { InstructionLabel, FormHelpText, FormSection } from "ui/Forms";
+import { FormHelpText, FormSection, InstructionLabel } from "ui/Forms";
+
 import { FamilyGroup } from "./InviteStyles";
+import React from "react";
 export default function InviteStep1({
   currentStep,
   selectFamily,
