@@ -38,7 +38,7 @@ export default function NoMementos(props) {
     <NoMementoContainer>
       <Center>
         <NoMementosIcon />
-        <h2>There's no mementos yet</h2>
+        <h2>There's no memento yet</h2>
         <p>You can upload mementos by clicking below:</p>
         <UploadButton
           familyColour={familyColour}
