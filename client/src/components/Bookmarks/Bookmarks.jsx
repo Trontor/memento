@@ -12,6 +12,7 @@ import {
   UploaderAvatar,
 } from "./BookmarksStyles";
 import { CardOptions } from "../MementoCard/MementoCardStyles";
+import BookmarksNoMemento from "./BookmarksNoMemento";
 
 export default function Bookmarks(props) {
   const imageSrc = [
@@ -20,10 +21,9 @@ export default function Bookmarks(props) {
     "https://images.unsplash.com/photo-1564595063998-fc31c376d0df?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
   ];
 
-  //const tags = ["Date", "Location"];
-
   return (
-    <Container>
+    <BookmarksNoMemento />
+    /*<Container>
       <Header underline>Saved Mementos</Header>
       <BookmarksWrapper>
         {imageSrc.map(image => (
@@ -52,6 +52,6 @@ export default function Bookmarks(props) {
           </Item>
         ))}
       </BookmarksWrapper>
-    </Container>
+    </Container>*/
   );
 }

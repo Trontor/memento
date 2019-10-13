@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { AuthorAvatar } from "../MementoCard/MementoCardStyles";
+import { BookBookmark } from "styled-icons/boxicons-regular/BookBookmark";
+import { lighten } from "polished";
 
 export const BookmarksWrapper = styled.div`
   display: grid;
@@ -55,4 +57,8 @@ export const UploaderAvatar = styled(AuthorAvatar)`
   i {
     font-size: 32px;
   }
+`;
+
+export const NoBookmarksIcon = styled(BookBookmark)`
+  color: ${props => lighten(0.1, props.theme.palette.main)};
 `;
