@@ -13,8 +13,10 @@ export const Item = styled.div`
   display: grid;
   grid-template-rows: 50% 50%;
   height: 300px;
-  margin: 10px;
+  margin: 15px 15px 0 0;
   border: 1px solid ${props => props.theme.palette.border};
+  border-radius: 4px;
+
   img {
     margin: auto;
     object-fit: cover;
@@ -34,7 +36,7 @@ export const Description = styled.div`
 
 export const UploaderBox = styled.div`
   display: grid;
-  grid-template-columns: 20% 65% 15%;
+  grid-template-columns: 45px auto 40px;
   img {
     width: 35px;
     height: 35px;
