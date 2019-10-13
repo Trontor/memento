@@ -62,3 +62,9 @@ export const UploaderAvatar = styled(AuthorAvatar)`
 export const NoBookmarksIcon = styled(BookBookmark)`
   color: ${props => lighten(0.1, props.theme.palette.main)};
 `;
+
+export const IconButton = styled.div`
+  color: ${props => props.theme.palette.main};
+  margin: auto;
+  font-size: 20px;
+`;

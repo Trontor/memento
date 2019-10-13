@@ -3,9 +3,10 @@ import { Container } from "ui/Helpers";
 import {
   TextWrapper,
   DashboardButtons,
-  ButtonIcons,
+  ButtonHeading,
+  GoToButton,
 } from "../Dashboard/DashboardStyles";
-import { NoBookmarksIcon } from "./BookmarksStyles";
+import { NoBookmarksIcon, IconButton } from "./BookmarksStyles";
 
 export default function Bookmarks(props) {
   const imageSrc = [
@@ -19,9 +20,16 @@ export default function Bookmarks(props) {
       <TextWrapper>
         <NoBookmarksIcon size="150px" />
         <h2>Oops... You don't have any bookmarks yet.</h2>
-        <p>You can add bookmarks to your favourite memento. </p>
-        <DashboardButtons onClick={() => props.history.push("/bookmarks")}>
-          <i class="far fa-paper-plane"></i>
+        <p>You can add bookmark to your favourite memento. </p>
+        <DashboardButtons onClick={() => props.history.push("/mementos")}>
+          <IconButton>
+            <i class="far fa-paper-plane" />
+          </IconButton>
+          <ButtonHeading>
+            View my Memento
+            <span>And save your favourite memento.</span>
+          </ButtonHeading>
+          <GoToButton />
         </DashboardButtons>
       </TextWrapper>
     </Container>
