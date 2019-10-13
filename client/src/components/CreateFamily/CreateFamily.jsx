@@ -20,7 +20,7 @@ import React from "react";
 import { StyledDropzone } from "components/FileDropzone/FileDropzone";
 import { useMutation } from "@apollo/react-hooks";
 
-const MAX_FILE_SIZE = 160 * 1024;
+const MAX_FILE_SIZE = 160 * 1024 * 1024;
 const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
 const CreateFamilyValidationSchema = yup.object().shape({
   familyName: yup.string().required("Please enter a family name"),

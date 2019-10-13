@@ -86,7 +86,7 @@ export const MementoTitle = styled.div`
 export const MementoCoverImg = styled.div`
   margin-bottom: 10px;
   max-width: 100%;
-  max-height: 334px;
+  max-height: 1000px;
   height: auto;
   overflow: hidden;
   border-radius: 4px;

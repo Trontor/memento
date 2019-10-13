@@ -20,7 +20,7 @@ import {
 } from "./FamilyGroupStyles";
 import { MenuContainer, MenuTabs } from "ui/Navigation";
 import React, { useState, useEffect } from "react";
-
+import { GET_MEMENTOS } from "queries/Memento";
 import { FamilyProfileContainer } from "./FamilyGroupStyles";
 import JollyLoader from "components/JollyLoader/JollyLoader";
 import { LOAD_FAMILY } from "mutations/Family";
@@ -29,21 +29,16 @@ import NoMementos from "./NoMementos";
 import MementosViewer from "./MementosViewer";
 import TagsViewer from "./TagsViewer";
 import moment from "moment";
+import { useLocation } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 
-const defaultTags = [
-  "recipes",
-  "painting",
-  "stuffed toys",
-  "cars",
-  "jewellery",
-  "photographs",
-  "clothing",
-  "family",
-  "blanket",
-  "food",
+const defaultTags = [];
+const loadingQuotes = [
+  "Loading...",
+  "Considering a reunion...",
+  "Loading mementos...",
+  "Analysing heirachy...",
 ];
-
 export default function FamilyGroup(props) {
   const menuTabs = ["Mementos", "Members", "Tags"];
   const [currentTabIndex, setTabIndex] = useState(0);
@@ -52,18 +47,25 @@ export default function FamilyGroup(props) {
   const [filterTags, setFilterTags] = useState([]);
   const [mementos, setMementos] = useState(null);
   const [family, setFamily] = useState(null);
-
+  const location = useLocation();
   useEffect(() => {
+    // If there are no mementos, forget about it
     if (!mementos) return;
+    // Otherwise, loop through the memebto list and get all the regular tags
+    // then flatten the 2D array
     const mementoTags = mementos.map(m => m.tags).flat();
+    // and do the same to the detectedLabel tag names
     const detectedTags = mementos
       .map(m => m.detectedLabels.map(l => l.name))
       .flat();
-    console.log("Memento Tags:", mementoTags, "Detected Tags:", detectedTags);
+    // Combine the two arrays and make sure the tags are lowercase for
+    // consistency
     const allTags = [...mementoTags, ...detectedTags].map(t => t.toLowerCase());
-    // Convert to Set and back to array to remove duplicate tags, sneaky...
+    // Convert to Set and then back to array to remove duplicate tags, sneaky...
     setTagOptions(Array.from(new Set(allTags)));
   }, [mementos]);
+
+  // Query to load the family
   const { loading, error } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
 
@@ -74,26 +76,33 @@ export default function FamilyGroup(props) {
     },
   });
 
-  if (loading || !family) {
-    return <JollyLoader />;
+  // Separate query to load the family mementos
+  const getMementosQuery = useQuery(GET_MEMENTOS, {
+    variables: {
+      id: familyId,
+    },
+    fetchPolicy: "network-only",
+    onCompleted: data => {
+      if (data && data.mementos) {
+        console.log("Fetched mementos succesfully:", data.mementos);
+        setMementos(data.mementos);
+      }
+    },
+  });
+  useEffect(() => {
+    console.log("refetching mementos...");
+    getMementosQuery.refetch();
+  }, [getMementosQuery, location]);
+
+  if (loading || !family || getMementosQuery.loading) {
+    return <JollyLoader quotes={loadingQuotes} />;
   }
-
-  // let familyName, members, colour;
-
-  // if (data) {
-  //   familyName = data.family.name;
-  //   members = data.family.members;
-  //   colour = data.family.colour;
-  //   console.log(members);
-  //   console.log(colour);
-  // }
 
   if (error) {
     console.log("Error loading data");
   }
   const onUploadMementoClicked = () =>
     props.history.push(familyId + "/memento/new");
-  const onLoadedMementos = loadedMementos => setMementos(loadedMementos);
   // Handles when a tag is selected on the sidebar
   const selectTag = tag => {
     // Check if the tag has already been selected
@@ -111,7 +120,7 @@ export default function FamilyGroup(props) {
   const mementoViewerComponent = (
     <MementosViewer
       filterTags={filterTags}
-      onLoadedMementos={onLoadedMementos}
+      mementos={mementos}
       familyId={familyId}
     />
   );
@@ -135,7 +144,6 @@ export default function FamilyGroup(props) {
     default:
       break;
   }
-  console.log("Loaded Family: ", family);
   return (
     <FamilyContainer>
       <FamilyLayout>
@@ -144,7 +152,7 @@ export default function FamilyGroup(props) {
             <FamilyProfileContainer>
               {family.imageUrl && (
                 <>
-                  <FamilyImg />
+                  <FamilyImg familyColour={family.colour} />
                   <ProfilePhotoContainer>
                     <img alt="family" src={family.imageUrl} />
                   </ProfilePhotoContainer>
@@ -177,7 +185,10 @@ export default function FamilyGroup(props) {
               </FamilyHeader>
               <Options>
                 {/* Upload Button */}
-                <UploadButton onClick={onUploadMementoClicked}>
+                <UploadButton
+                  familyColour={family.colour}
+                  onClick={onUploadMementoClicked}
+                >
                   <i class="fas fa-feather-alt"></i>
                   <span>Add a Memento</span>
                 </UploadButton>
@@ -196,11 +207,7 @@ export default function FamilyGroup(props) {
                 <h2>Members</h2>
               </SideMenuSectionHeader>
               {family.members.map(member => (
-                <MemberRow
-                  admin={member.familyRoles.some(
-                    r => r.id === familyId && r.role.toLowerCase() === "admin",
-                  )}
-                >
+                <MemberRow admin>
                   {member.imageUrl ? (
                     <img
                       src={member.imageUrl}
@@ -217,7 +224,11 @@ export default function FamilyGroup(props) {
                     >
                       {member.firstName} {member.lastName}
                     </span>
-                    <span>Admin</span>
+                    {member.familyRoles.some(
+                      r =>
+                        r.familyId === familyId &&
+                        r.familyRole.toLowerCase() === "admin",
+                    ) && <span>Admin</span>}
                   </div>
                 </MemberRow>
               ))}
@@ -258,11 +269,13 @@ export default function FamilyGroup(props) {
           <TabComponent>{tabComponent}</TabComponent>
           {/* Desktop */}
           <MainViewer>
-            {mementos && mementos.length ? (
-              mementoViewerComponent
-            ) : (
-              <NoMementos onClick={onUploadMementoClicked} />
+            {mementos && mementos.length === 0 && (
+              <NoMementos
+                familyColour={family.colour}
+                onClick={onUploadMementoClicked}
+              />
             )}
+            {mementos && mementos.length && mementoViewerComponent}
           </MainViewer>
         </div>
       </FamilyLayout>

@@ -25,7 +25,7 @@ const initialFormValues = {
   file: null,
   location: "Amsterdam",
 };
-const MAX_FILE_SIZE = 160 * 1024;
+const MAX_FILE_SIZE = 160 * 1024 * 1024;
 const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
 const uploadMementoValidationSchema = yup.object().shape({
   title: yup
@@ -42,16 +42,16 @@ const uploadMementoValidationSchema = yup.object().shape({
   location: yup.string(),
   file: yup
     .mixed()
-    .required("A file is required")
+    .nullable()
     .test(
       "fileSize",
       "File too large",
-      value => value && value.size <= MAX_FILE_SIZE,
+      value => !value || value.size <= MAX_FILE_SIZE,
     )
     .test(
       "fileFormat",
       "Unsupported Format",
-      value => value && SUPPORTED_FORMATS.includes(value.type),
+      value => !value || SUPPORTED_FORMATS.includes(value.type),
     ),
 });
 
@@ -94,7 +94,7 @@ export default function UploadStep2({
       validationSchema={uploadMementoValidationSchema}
       onSubmit={onSubmit}
       render={props => {
-        console.log(props);
+        // console.log(props);
         return (
           <form onSubmit={props.handleSubmit}>
             <FormSection>

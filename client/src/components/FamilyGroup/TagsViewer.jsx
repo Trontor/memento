@@ -1,7 +1,5 @@
-import React from 'react'
-import {
-  TagRow
-} from "./FamilyGroupStyles";
+import React from "react";
+import { TagRow } from "./FamilyGroupStyles";
 
 export default function TagsViewer(props) {
   return (
@@ -9,12 +7,11 @@ export default function TagsViewer(props) {
       {props.tags.sort().map(tag => (
         <TagRow
           onClick={() => props.selectTag(tag)}
-          selected={props.mementoTags.includes(tag)}>
-          <span>
-            {tag}
-          </span>
+          selected={props.mementoTags.includes(tag)}
+        >
+          <span>{tag}</span>
         </TagRow>
       ))}
     </>
-  )
+  );
 }

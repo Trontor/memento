@@ -19,7 +19,8 @@ export const SidebarContainer = styled.div`
   font-size: 14px;
   z-index: 999;
   margin-left: ${props => -props.theme.size.sidebar}px;
-  box-shadow: 2px 2px 3px -2px ${props => lighten(0.67, props.theme.palette.text)};
+  box-shadow: 2px 2px 3px -2px ${props =>
+    lighten(0.67, props.theme.palette.text)};
   transition: transform .4s ease-in-out;
   ${props =>
     props.isOpen &&
@@ -106,7 +107,7 @@ export const TextList = styled.li`
   ${props => props.theme.mixins.hoverFade};
 
   &:hover {
-    transition: .25s ease-in-out;
+    transition: 0.25s ease-in-out;
     transform: translateX(12px);
   }
 
@@ -115,16 +116,15 @@ export const TextList = styled.li`
     color: ${props => lighten(0.05, props.theme.palette.text)};
   }
 
-  a {
+  span {
     ${props => props.theme.mixins.hoverFade};
     color: ${props => lighten(0.2, props.theme.palette.text)};
-
+    cursor: pointer;
     &:hover {
       ${props => props.theme.mixins.hoverFade};
       color: ${props => lighten(0.05, props.theme.palette.text)};
     }
   }
-
   i {
     color: ${props => lighten(0.5, props.theme.palette.text)};
     margin-right: 10px;
@@ -160,7 +160,7 @@ export const CloseMenu = styled(Close)`
 
 export const NewFamilyGroup = styled.div`
   cursor: pointer;
-  font-family: 'Livvic';
+  font-family: "Livvic";
   font-size: 12px;
   color: ${props => lighten(0, props.theme.palette.main)};
   ${props => props.theme.mixins.hoverFade};
@@ -168,7 +168,7 @@ export const NewFamilyGroup = styled.div`
   display: inline-block;
 
   &:before {
-    content: '+';
+    content: "+";
     display: inline-block;
     padding-right: 6px;
     font-size: 16px;
@@ -176,7 +176,7 @@ export const NewFamilyGroup = styled.div`
 
   &:hover {
     color: ${props => props.theme.palette.main};
-    transition: .2s ease-in-out;
+    transition: 0.2s ease-in-out;
     transform: translateX(10px);
   }
 `;
@@ -187,7 +187,7 @@ export const UserDisplay = styled.div`
   padding-bottom: 12px;
   margin-top: 24px;
   cursor: pointer;
-`
+`;
 
 export const UserAvatar = styled.div`
   margin-right: 8px;
