@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { AuthorAvatar } from "../MementoCard/MementoCardStyles";
+import { CardOptions } from "../MementoCard/MementoCardStyles";
 
 export const BookmarksWrapper = styled.div`
   display: grid;
@@ -57,4 +58,8 @@ export const UploaderAvatar = styled(AuthorAvatar)`
   i {
     font-size: 32px;
   }
+`;
+
+export const BookmarksIcon = styled(CardOptions)`
+  margin-top: 7px;
 `;

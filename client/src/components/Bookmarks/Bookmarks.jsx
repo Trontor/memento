@@ -2,7 +2,7 @@ import React from "react";
 import { Container } from "ui/Helpers";
 import { Header } from "ui/Typography";
 import { FormHelpText } from "ui/Forms";
-import { MementoInfo, MementoOverview } from "../MementoCard/MementoCardStyles";
+import { MementoOverview } from "../MementoCard/MementoCardStyles";
 import {
   BookmarksWrapper,
   Item,
@@ -10,8 +10,8 @@ import {
   UploaderBox,
   UploaderText,
   UploaderAvatar,
+  BookmarksIcon,
 } from "./BookmarksStyles";
-import { CardOptions } from "../MementoCard/MementoCardStyles";
 
 export default function Bookmarks(props) {
   const imageSrc = [
@@ -53,9 +53,9 @@ export default function Bookmarks(props) {
                   Uploader
                   <FormHelpText>Uploader's Family</FormHelpText>
                 </UploaderText>
-                <CardOptions>
+                <BookmarksIcon>
                   <i class="far fa-bookmark"></i>
-                </CardOptions>
+                </BookmarksIcon>
               </UploaderBox>
             </Description>
           </Item>
