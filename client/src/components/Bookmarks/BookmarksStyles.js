@@ -28,7 +28,7 @@ export const Item = styled.div`
 
 export const Description = styled.div`
   display: grid;
-  grid-template-rows: 20% 50% 30%;
+  grid-template-rows: 23% 47% 30%;
   margin: 0 15px;
   h3 {
     margin-top: 5px;
