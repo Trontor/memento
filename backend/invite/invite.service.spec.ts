@@ -7,7 +7,13 @@ import { MailerService } from "@nest-modules/mailer";
 import { USER_WITH_ADMIN_ROLE } from "../common/test/user.mock";
 import { Model } from "mongoose";
 import { InviteDocument } from "./schema/invite.schema";
-import { MockInviteDocument } from "./invite.test.utils";
+import {
+  MockInviteDocument,
+  VALID_INVITE_DOC,
+  EXPIRED_INVITE_DOC,
+} from "./test/invite.test.utils";
+import { Invite } from "./dto/invite.dto";
+import faker from "faker";
 
 describe("InviteService", () => {
   let inviteService: InviteService;
@@ -29,6 +35,7 @@ describe("InviteService", () => {
             const model: any = jest
               .fn()
               .mockImplementation((args: any) => new MockInviteDocument(args));
+            model.findById = jest.fn();
             return model;
           })(),
         },
@@ -64,6 +71,33 @@ describe("InviteService", () => {
         familyId,
       );
       expect(invite).toBeDefined();
+    });
+  });
+
+  describe("get invite", () => {
+    it("should be defined if invite exists", async () => {
+      jest
+        .spyOn(inviteModel, "findById")
+        .mockResolvedValueOnce(VALID_INVITE_DOC);
+      const invite: Invite = await inviteService.getInvite(VALID_INVITE_DOC.id);
+      expect(invite).toBeDefined();
+      expect(inviteModel.findById).toBeCalledWith(VALID_INVITE_DOC.id);
+    });
+
+    it("should throw error if invite does not exist", async () => {
+      jest.spyOn(inviteModel, "findById").mockResolvedValueOnce(null);
+      await expect(
+        inviteService.getInvite(faker.random.uuid()),
+      ).rejects.toThrowError();
+    });
+
+    it("should throw error if invite is expired", async () => {
+      jest
+        .spyOn(inviteModel, "findById")
+        .mockResolvedValueOnce(EXPIRED_INVITE_DOC);
+      await expect(
+        inviteService.getInvite(EXPIRED_INVITE_DOC.id),
+      ).rejects.toThrowError();
     });
   });
 });
