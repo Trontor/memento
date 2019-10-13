@@ -2,7 +2,7 @@ import React from "react";
 import { Container } from "ui/Helpers";
 import { Header } from "ui/Typography";
 import { FormHelpText } from "ui/Forms";
-import { List } from "ui/Radio";
+import { MementoInfo, MementoOverview } from "../MementoCard/MementoCardStyles";
 import {
   BookmarksWrapper,
   Item,
@@ -33,11 +33,17 @@ export default function Bookmarks(props) {
           <Item>
             <img src={image} alt="blah" />
             <Description>
+              {/* Title*/}
               <h3>Bookmarks</h3>
-              <div>
-                <List size="20px" />
-                test
-              </div>
+              <MementoOverview>
+                <span>
+                  <i class="far fa-clock" /> Date
+                </span>
+                <span>
+                  <i class="fas fa-map-marker-alt" />
+                  Location
+                </span>
+              </MementoOverview>
 
               <UploaderBox>
                 <UploaderAvatar>
