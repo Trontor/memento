@@ -1,54 +1,58 @@
 import styled from "styled-components";
-import { SearchBar, SearchIcon, SearchInput } from "../Sidebar/SidebarStyles";
-import { Bookmark } from "styled-icons/boxicons-solid/Bookmark";
-
-export const BookmarksSearchBar = styled(SearchBar)`
-  height: 50px;
-  border: 1px solid ${props => props.theme.palette.main};
-  border-radius: 4px;
-`;
-
-export const BookmarksSearchIcon = styled(SearchIcon)`
-  width: 25px;
-`;
-
-export const BookmarksSearchInput = styled(SearchInput)`
-  font-size: 16px;
-`;
+import { AuthorAvatar } from "../MementoCard/MementoCardStyles";
 
 export const BookmarksWrapper = styled.div`
   display: grid;
   position: relative;
   object-fit: cover;
-  grid-template-columns: repeat(auto-fill, minmax(225px, 0.75fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   justify-content: center;
 `;
 
 export const Item = styled.div`
   display: grid;
   grid-template-rows: 50% 50%;
-  height: 250px;
+  height: 300px;
   margin: 10px;
-
+  border: 1px solid ${props => props.theme.palette.border};
   img {
+    margin: auto;
     object-fit: cover;
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 90%;
   }
 `;
 
 export const Description = styled.div`
   display: grid;
-  grid-template-rows: 10% 90%;
-  background: ${props => props.theme.palette.main};
-  color: white;
-  padding: 0 10px;
+  grid-template-rows: 20% 50% 30%;
+  margin: 0 15px;
+  h3 {
+    margin-top: 5px;
+  }
 `;
 
-export const BookmarksIcon = styled(Bookmark)`
-  color: white;
-  width: 35px;
+export const UploaderBox = styled.div`
+  display: grid;
+  grid-template-columns: 20% 65% 15%;
+  img {
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0;
+  }
+`;
 
-  margin-top: -4px;
-  cursor: pointer;
+export const UploaderText = styled.span`
+  display: grid;
+  grid-template-rows: 40% 50%;
+`;
+
+export const UploaderAvatar = styled(AuthorAvatar)`
+  margin-right: 5px;
+
+  i {
+    font-size: 32px;
+  }
 `;

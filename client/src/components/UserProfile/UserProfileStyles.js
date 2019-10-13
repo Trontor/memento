@@ -1,50 +1,29 @@
 import styled, { css } from "styled-components";
-import { ImgPreview } from "ui/Forms";
 import { Email } from "styled-icons/material/Email";
 import { BirthdayCake } from "styled-icons/fa-solid/BirthdayCake";
 import { Location } from "styled-icons/icomoon/Location";
+import { Home } from "styled-icons/fa-solid/Home";
+import { PersonPin } from "styled-icons/material/PersonPin";
 
 export const ProfileWrapper = styled.div`
   display: grid;
   position: relative;
-  grid-template-columns: 200px auto;
+  grid-template-columns: 25px auto;
   grid-gap: 25px;
-
-  @media screen and (max-width: ${props =>
-      props.theme.breakpoints.tabletPortrait}) {
-    display: block;
-  }
 `;
 
 export const ProfileField = styled.div`
-  width: 100%;
-  margin-top: 5px;
-  padding: 5px 0;
-`;
-
-export const Title = styled.h2`
-  font-size: 25px;
-  letter-spacing: 0.01em;
-  margin: 10px 5px;
-`;
-
-export const UserImg = styled(ImgPreview)`
-  position: relative;
-
-  img {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  @media screen and (max-width: ${props =>
-      props.theme.breakpoints.tabletPortrait}) {
-    justify-content: center;
+  display: grid;
+  grid-template-rows: 40% 40%;
+  margin: 15px 0;
+  label {
+    margin-top: 5px;
   }
 `;
 
 export const IconStyle = css`
   color: ${props => props.theme.palette.main};
-  margin-right: 5px;
+  margin: auto;
 `;
 
 export const UserEmail = styled(Email)`
@@ -58,12 +37,18 @@ export const UserBday = styled(BirthdayCake)`
 export const UserLocation = styled(Location)`
   ${IconStyle}
 `;
+export const UserHome = styled(Home)`
+  ${IconStyle}
+`;
+
+export const UserGender = styled(PersonPin)`
+  ${IconStyle}
+`;
 
 export const Span = styled.span`
   font-size: 20px;
   color: ${props => props.theme.palette.text};
   padding: 5px 0;
-  margin-top: 15px;
 `;
 
 export const PlaceWrapper = styled.div`

@@ -1,5 +1,6 @@
 import { lighten } from "polished";
 import styled from "styled-components";
+import { Circle } from "styled-icons/boxicons-solid/Circle";
 
 export const RadioOption = styled.div`
   position: relative;
@@ -77,4 +78,9 @@ export const RadioLabel = styled.label`
   display: inline-block;
   margin-left: 10px;
   font-size: 13px;
+`;
+
+export const List = styled(Circle)`
+  color: ${props => props.theme.palette.main};
+  margin-right: 10px;
 `;
