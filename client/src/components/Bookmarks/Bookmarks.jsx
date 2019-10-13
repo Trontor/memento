@@ -28,17 +28,21 @@ export default function Bookmarks(props) {
   return (
     <Container>
       <Header underline>Saved Mementos</Header>
+
+      {/* Bookmarks Card*/}
       <BookmarksWrapper>
         {imageSrc.map(image => (
           <Item>
             <img src={image} alt="blah" />
             <Description>
+              {/* Memento Title */}
               <h3>Bookmarks</h3>
+              {/* Memento Tags */}
               <div>
                 <List size="20px" />
                 test
               </div>
-
+              {/* Uploader Information */}
               <UploaderBox>
                 <UploaderAvatar>
                   <i class="fas fa-user-circle"></i>
