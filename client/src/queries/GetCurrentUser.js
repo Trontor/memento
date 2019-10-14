@@ -11,6 +11,10 @@ export default gql`
       location
       hometown
       gender
+      placesLived {
+        city
+        dateMoved
+      }
     }
   }
 `;

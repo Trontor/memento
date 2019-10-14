@@ -54,7 +54,7 @@ const convertUserDataToFormValues = user => {
     locationCountry,
     gender: user.gender,
     hometown: user.hometown,
-    //placesLived: user.placesLived,
+    placesLived: user.placesLived,
   };
 };
 
@@ -77,6 +77,7 @@ export default function SettingsProfile() {
       const user = data.currentUser;
       console.log("Loaded User Data:", user);
       setUser(user);
+      setPlacesLived(user.placesLived);
     },
   });
 
@@ -102,7 +103,7 @@ export default function SettingsProfile() {
   if (currentUserStatus.error) {
     console.log("Error loading user data:", currentUserStatus.error);
   }
-  console.log(currentUserStatus);
+  console.log("current user status:", currentUserStatus);
 
   /**
    * Returns the most appropriate JSX element to represent the user's profile
@@ -119,11 +120,12 @@ export default function SettingsProfile() {
     }
   };
 
+  //Add places lived from the list
   const addPlace = place => {
     setPlacesLived([...placesLived, place]);
   };
 
-  // Deletes an email from the email invite list
+  // Deletes places lived from the list
   const deletePlace = index => {
     const places = [...placesLived];
     places.splice(index, 1);
@@ -149,7 +151,6 @@ export default function SettingsProfile() {
       lastName: values.lastName,
       location,
       hometown: values.hometown,
-      //placesLived: values.placesLived,
     };
     // Only add the "image" attribute if a new file has been selected
     if (values.file) {
@@ -280,15 +281,15 @@ export default function SettingsProfile() {
                       type="text"
                       name="city"
                       placeholder="Select City"
-                      style={{ width: "90%" }}
+                      style={{ width: "85%" }}
                       value={place.city}
-                      //onChange={e => cityHandleChange(idx, e)}
+                      //insert onChange function here
                     />
                     <Calendar
                       name="calendar"
                       placeholderText="Click to select a date"
                       selected={place.date}
-                      //onChange={date => dateHandleChange(idx, date)}
+                      //insert onChange function here
                       showMonthDropdown
                       showYearDropdown
                       dropdownMode="select"

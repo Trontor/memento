@@ -30,7 +30,7 @@ export default function Bookmarks(props) {
     },
   });
 
-  if (mementos.length == 0) {
+  if (mementos.length === 0) {
     return <NoBookmarks />;
   }
 
