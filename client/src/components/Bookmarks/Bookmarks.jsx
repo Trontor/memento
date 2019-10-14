@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { useQuery } from "@apollo/react-hooks";
+import { GET_MEMENTOS } from "queries/Memento";
 import { Container } from "ui/Helpers";
 import { Header } from "ui/Typography";
 import { FormHelpText } from "ui/Forms";
@@ -15,7 +17,22 @@ import {
 import NoBookmarks from "./NoBookmarks";
 
 export default function Bookmarks(props) {
-  const imageSrc = [
+  const [mementos, setMementos] = useState([]);
+
+  const loadMemento = useQuery(GET_MEMENTOS, {
+    variables: {
+      id: "5d8c80b8c4a4ad02c5722152",
+    },
+    onCompleted: data => {
+      if (data && data.mementos) setMementos(data.mementos);
+      console.log(data);
+    },
+  });
+
+  if (mementos.length == 0) {
+    return <NoBookmarks />;
+  }
+  /*const imageSrc = [
     "https://images.unsplash.com/photo-1516668557604-c8e814fdb184?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2089&q=80",
     "https://images.unsplash.com/photo-1564428658805-8001c05e05c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
     "https://images.unsplash.com/photo-1564595063998-fc31c376d0df?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
@@ -26,34 +43,43 @@ export default function Bookmarks(props) {
 
   if (imageSrc.length < 7) {
     return <NoBookmarks />;
-  }
+  }*/
   return (
     <Container>
       <Header underline>Saved Mementos</Header>
 
       {/* Bookmarks Card*/}
       <BookmarksWrapper>
-        {imageSrc.map(image => (
+        {mementos.map(memento => (
           <Item>
-            <img src={image} alt="blah" />
+            {memento.media.length > 0 && (
+              <img alt="blah" src={memento.media[0].url} />
+            )}
             <Description>
               {/* Memento Title */}
-              <h3>Bookmarks</h3>
+              <h3>{memento.title}</h3>
               <MementoOverview>
                 {/* Memento Date */}
                 <span>
-                  <i class="far fa-clock" /> Date
+                  <i class="far fa-clock" /> {memento.dates[0].year}
                 </span>
                 {/* Memento Location */}
                 <span>
                   <i class="fas fa-map-marker-alt" />
-                  Location
+                  {memento.location}
                 </span>
               </MementoOverview>
 
               <UploaderBox>
                 <UploaderAvatar>
-                  <i class="fas fa-user-circle"></i>
+                  {!memento.uploader.imageUrl ? (
+                    <i class="fas fa-user-circle"></i>
+                  ) : (
+                    <img
+                      src={memento.uploader.imageUrl}
+                      alt={memento.uploader.firstName}
+                    />
+                  )}
                 </UploaderAvatar>
                 <UploaderText>
                   Uploader

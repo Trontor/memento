@@ -52,7 +52,7 @@ export default function MementoCard(props) {
             </MementoAuthor>
             {/* Memento  Upload Date */}
             <UploadDate>{createdDate.toLocaleDateString()}</UploadDate>
-            {/* Family group that the memento belongs to */}
+            {/* change family group here */}
             <FamilyGroup>Valerie's Family</FamilyGroup>
           </div>
           {/* Bookmark */}
