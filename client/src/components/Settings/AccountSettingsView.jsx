@@ -22,44 +22,12 @@ export default function SettingsAccount() {
   return (
     <SettingsContainer>
       <FormSection>
-        <EditInput
-          value="test123@gmail.com"
-          inputLabel="Email Address"
-        />
+        <EditInput value="test123@gmail.com" inputLabel="Email Address" />
       </FormSection>
 
       <FormSection>
-        <InputLabel>
-          Password{" "}
-          <EditAccountButton
-            size="25px"
-            onClick={editPasswordHandler}
-            editClick={editPassword}
-          />
-          <CancelButton
-            size="25px"
-            onClick={editPasswordHandler}
-            editClick={editPassword}
-          />
-        </InputLabel>
-        {defaultPassword}
-        <SectionWrapper editClick={editPassword}>
-          <InputField type="password" placeholder="New Password" />
-          <InputField type="password" placeholder="Confirm Password" />
-          <AccountButton onClick={editPasswordHandler}>
-            Update Password
-          </AccountButton>
-        </SectionWrapper>
+        <EditInput value="********" inputLabel="Password" password />
       </FormSection>
-
-      <FormSection>
-        <EditInput
-          value="********"
-          inputLabel="Password"
-          password
-        />
-      </FormSection>
-
     </SettingsContainer>
   );
 }
