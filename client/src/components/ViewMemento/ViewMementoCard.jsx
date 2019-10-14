@@ -14,27 +14,22 @@ import {
 } from "../MementoCard/MementoCardStyles";
 import { useHistory } from "react-router";
 import React from "react";
-import {
-  Card,
-  CardInfo,
-  InfoWrapper,
-  ListText,
-  CardContent,
-  FamilyGroup,
-} from "./ViewMementoStyles";
+import { Card, CardInfo, CardContent, FamilyGroup } from "./ViewMementoStyles";
 
 export default function MementoCard(props) {
   const history = useHistory();
   const {
-    mementoId,
+    //mementoId,
     createdAt,
     dates,
-    // description,
+    title,
+    description,
     location,
     // media,
     // tags,
     // type,
     // updatedAt,
+    beneficiaries,
     uploader,
     people,
   } = props;
@@ -68,7 +63,7 @@ export default function MementoCard(props) {
           </CardOptions>
         </AuthorWrapper>
         {/* Memento  Title */}
-        <MementoTitle>Title</MementoTitle>
+        <MementoTitle>{title}</MementoTitle>
         <MementoOverview>
           {/* Dates */}
           <span>
@@ -93,10 +88,23 @@ export default function MementoCard(props) {
               </div>
             </span>
           )}
+          {/* Beneficiary Tags */}
+          {beneficiaries && beneficiaries.length > 0 && (
+            <span>
+              <i class="fa fa-users" aria-hidden="true" />
+              <div>
+                {props.beneficiaries.map(beneficiary => (
+                  <PeopleTags>
+                    {beneficiary.firstName} {beneficiary.lastName}
+                  </PeopleTags>
+                ))}
+              </div>
+            </span>
+          )}
         </MementoOverview>
 
         {/* Description */}
-        <MementoDescription>{props.description}</MementoDescription>
+        <MementoDescription>{description}</MementoDescription>
 
         {/* Tags */}
         <MementoTagsWrapper>

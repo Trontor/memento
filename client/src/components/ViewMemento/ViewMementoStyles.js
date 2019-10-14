@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Circle } from "styled-icons/boxicons-solid/Circle";
 
 export const Card = styled.div`
   display: grid;
@@ -12,15 +11,6 @@ export const Card = styled.div`
       props.theme.breakpoints.tabletPortrait}) {
     grid-template-columns: 1fr;
   }
-`;
-
-export const ListText = styled.div`
-  margin-bottom: 10px;
-`;
-
-export const InfoWrapper = styled.div`
-  margin-top: 10px;
-  margin-bottom: 30px;
 `;
 
 export const CardInfo = styled.div`

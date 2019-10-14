@@ -12,9 +12,7 @@ import {
   UploaderAvatar,
   BookmarksIcon,
 } from "./BookmarksStyles";
-import { CardOptions } from "../MementoCard/MementoCardStyles";
 import BookmarksNoMemento from "./BookmarksNoMemento";
-import { Bookmark } from "styled-icons/boxicons-solid";
 
 export default function Bookmarks(props) {
   const imageSrc = [
