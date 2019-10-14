@@ -1,4 +1,4 @@
-import { Schema, Document, Query, Types } from "mongoose";
+import { Schema, Document, Query, Types, model } from "mongoose";
 import * as bcrypt from "bcrypt";
 import { User } from "../dto/user.dto";
 import { FamilyRole, Role } from "../dto/role.dto";
@@ -133,7 +133,7 @@ function validateEmail(email: string) {
 }
 
 // NOTE: Arrow functions are not used here as we do not want to use lexical scope for 'this'
-UserSchema.pre<UserDocument>("save", function(next) {
+UserSchema.pre<UserDocument>("validate", function(next) {
   const user = this;
 
   user.lowercaseEmail = user.email.toLowerCase();
@@ -175,3 +175,5 @@ UserSchema.pre<Query<UserDocument>>("findOneAndUpdate", function(next) {
 UserSchema.statics.validateEmail = function(email: string): boolean {
   return validateEmail(email);
 };
+
+export const UserModel = model<UserDocument>("User", UserSchema);

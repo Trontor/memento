@@ -3,7 +3,11 @@ import { AuthService } from "./auth.service";
 import { ConfigService } from "../config/config.service";
 import { JwtService } from "@nestjs/jwt";
 import { UserService } from "../user/user.service";
-import { USER_WITH_ADMIN_ROLE } from "../common/test/user.mock";
+import {
+  USER_WITH_ADMIN_ROLE,
+  createUserDocWithPassword,
+} from "../common/test/user.mock";
+import { UserDocument } from "../user/schema/user.schema";
 
 class MockConfigService {
   constructor() {}
@@ -17,6 +21,7 @@ describe("AuthService", () => {
   let authService: AuthService;
   let mockJwtService: JwtService & jest.Mock<JwtService>;
   let mockConfigService: ConfigService & jest.Mock<ConfigService>;
+  let mockUserService: UserService & jest.Mock<UserService>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -24,7 +29,11 @@ describe("AuthService", () => {
         AuthService,
         {
           provide: UserService,
-          useValue: {},
+          useValue: (() => {
+            const service: any = jest.fn();
+            service.findOneByEmail = jest.fn();
+            return service;
+          })(),
         },
         {
           provide: ConfigService,
@@ -44,6 +53,7 @@ describe("AuthService", () => {
     authService = module.get(AuthService);
     mockJwtService = module.get(JwtService);
     mockConfigService = module.get(ConfigService);
+    mockUserService = module.get(UserService);
   });
 
   it("should be defined", () => {
@@ -82,6 +92,36 @@ describe("AuthService", () => {
           expiry.getTime() / 1000,
         );
       }
+    });
+  });
+
+  describe("login with local strategy", () => {
+    // it("should throw error if incorrect password", async () => {
+    //   const PASSWORD = "incorrectPassword";
+    //   const USER_DOC: UserDocument = await createUserDocWithPassword(
+    //     "otherPassword",
+    //   );
+    //   jest.spyOn(USER_DOC, "save").mockResolvedValueOnce(USER_DOC);
+    //   jest
+    //     .spyOn(mockUserService, "findOneByEmail")
+    //     .mockResolvedValueOnce(USER_DOC);
+    //   await expect(
+    //     authService.loginWithEmailAndPassword(USER_DOC.email, PASSWORD),
+    //   ).toThrowError();
+    // });
+
+    it("should successfully login if correct password", async () => {
+      const PASSWORD = "correctPassword";
+      const USER_DOC: UserDocument = await createUserDocWithPassword(PASSWORD);
+      jest.spyOn(USER_DOC, "save").mockResolvedValueOnce(USER_DOC);
+      jest
+        .spyOn(mockUserService, "findOneByEmail")
+        .mockResolvedValueOnce(USER_DOC);
+      const payload = await authService.loginWithEmailAndPassword(
+        USER_DOC.email,
+        PASSWORD,
+      );
+      expect(payload).toBeDefined();
     });
   });
 });
