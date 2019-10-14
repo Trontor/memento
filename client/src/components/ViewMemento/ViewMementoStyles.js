@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { NoMementosIcon } from "../FamilyGroup/FamilyGroupStyles";
 
 export const Card = styled.div`
   display: grid;
@@ -28,4 +29,8 @@ export const FamilyGroup = styled.span`
   font-size: 13px;
   display: block;
   margin-top: 2px;
+`;
+
+export const NoViewMementoIcon = styled(NoMementosIcon)`
+  height: 150px;
 `;

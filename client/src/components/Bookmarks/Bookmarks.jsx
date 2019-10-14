@@ -12,7 +12,7 @@ import {
   UploaderAvatar,
   BookmarksIcon,
 } from "./BookmarksStyles";
-import BookmarksNoMemento from "./BookmarksNoMemento";
+import NoBookmarks from "./NoBookmarks";
 
 export default function Bookmarks(props) {
   const imageSrc = [
@@ -25,7 +25,7 @@ export default function Bookmarks(props) {
   ];
 
   if (imageSrc.length < 7) {
-    return <BookmarksNoMemento />;
+    return <NoBookmarks />;
   }
   return (
     <Container>

@@ -12,12 +12,10 @@ import {
   MementoTag,
   UploadDate,
 } from "../MementoCard/MementoCardStyles";
-import { useHistory } from "react-router";
 import React from "react";
 import { Card, CardInfo, CardContent, FamilyGroup } from "./ViewMementoStyles";
 
 export default function MementoCard(props) {
-  const history = useHistory();
   const {
     //mementoId,
     createdAt,
@@ -121,10 +119,6 @@ export default function MementoCard(props) {
             <img alt={props.caption} src={props.media[0].url} />
           </MementoCoverImg>
         )}
-        <MementoDescription>
-          This is a caption of the image. Some images will have captions. Some
-          may not
-        </MementoDescription>
       </CardContent>
     </Card>
   );

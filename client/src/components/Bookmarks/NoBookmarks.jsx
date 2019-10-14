@@ -8,7 +8,7 @@ import {
 } from "../Dashboard/DashboardStyles";
 import { NoBookmarksIcon, IconButton } from "./BookmarksStyles";
 
-export default function BookmarksNoMemento(props) {
+export default function NoBookmarks(props) {
   return (
     <Container>
       <TextWrapper>
