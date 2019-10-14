@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { AuthorAvatar } from "../MementoCard/MementoCardStyles";
+import { BookBookmark } from "styled-icons/boxicons-regular/BookBookmark";
+import { lighten } from "polished";
 import { CardOptions } from "../MementoCard/MementoCardStyles";
 
 export const BookmarksWrapper = styled.div`
@@ -62,4 +64,14 @@ export const UploaderAvatar = styled(AuthorAvatar)`
 
 export const BookmarksIcon = styled(CardOptions)`
   margin-top: 7px;
+`;
+
+export const NoBookmarksIcon = styled(BookBookmark)`
+  color: ${props => lighten(0.1, props.theme.palette.main)};
+`;
+
+export const IconButton = styled.div`
+  color: ${props => props.theme.palette.main};
+  margin: auto;
+  font-size: 20px;
 `;
