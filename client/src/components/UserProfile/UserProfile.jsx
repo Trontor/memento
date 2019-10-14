@@ -1,13 +1,14 @@
 import { CenterText, Container } from "ui/Helpers";
 import {
-  //PlaceWrapper,
+  PlaceWrapper,
   ProfileField,
   ProfileWrapper,
   Span,
   UserBday,
-  UserLocation,
+  UserCity,
   UserHome,
   UserGender,
+  UserPlaces,
 } from "./UserProfileStyles";
 
 import GET_CURRENT_USER from "queries/GetCurrentUser";
@@ -50,7 +51,6 @@ export default function UserProfile() {
           {user.firstName} {user.lastName}
         </h1>
       </CenterText>
-
       <ProfileWrapper>
         <UserBday size="25px" />
         <ProfileField>
@@ -58,7 +58,6 @@ export default function UserProfile() {
           <Span>{user.dateOfBirth}</Span>
         </ProfileField>
       </ProfileWrapper>
-
       <ProfileWrapper>
         <UserGender size="30px" />
         <ProfileField>
@@ -66,7 +65,6 @@ export default function UserProfile() {
           <Span>{user.gender}</Span>
         </ProfileField>
       </ProfileWrapper>
-
       <ProfileWrapper>
         <UserHome size="25px" />
         <ProfileField>
@@ -74,31 +72,33 @@ export default function UserProfile() {
           <Span>{user.hometown}</Span>
         </ProfileField>
       </ProfileWrapper>
-
       <ProfileWrapper>
-        <UserLocation size="25px" />
+        <UserCity size="25px" />
         <ProfileField>
           <InputLabel>Current City</InputLabel>
           <Span>{user.location}</Span>
         </ProfileField>
       </ProfileWrapper>
+      <ProfileWrapper>
+        <UserPlaces size="25px" />
+        <ProfileField>
+          <InputLabel>Place I've Lived</InputLabel>
 
-      {/*
-      <ProfileField>
-        <InputLabel>Place I've Lived</InputLabel>
-        <PlaceWrapper>
-          <Span>Surabaya</Span>
-          <Span> February, 2000 - March, 2001</Span>
-        </PlaceWrapper>
-        <PlaceWrapper>
-          <Span>Jakarta</Span>
-          <Span> 2001 - 2016</Span>
-        </PlaceWrapper>
-        <PlaceWrapper>
-          <Span>Melbourne</Span>
-          <Span> July, 2016 - now </Span>
-        </PlaceWrapper>
-      </ProfileField>*/}
+          <PlaceWrapper>
+            <Span>Surabaya</Span>
+            <Span> March, 2001</Span>
+          </PlaceWrapper>
+
+          {/*<PlaceWrapper>
+            <Span>Jakarta</Span>
+            <Span> 2001 - 2016</Span>
+          </PlaceWrapper>
+          <PlaceWrapper>
+            <Span>Melbourne</Span>
+            <Span> July, 2016 - now </Span>
+          </PlaceWrapper>*/}
+        </ProfileField>
+      </ProfileWrapper>
     </Container>
   );
 }
