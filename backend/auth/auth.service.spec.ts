@@ -96,19 +96,19 @@ describe("AuthService", () => {
   });
 
   describe("login with local strategy", () => {
-    // it("should throw error if incorrect password", async () => {
-    //   const PASSWORD = "incorrectPassword";
-    //   const USER_DOC: UserDocument = await createUserDocWithPassword(
-    //     "otherPassword",
-    //   );
-    //   jest.spyOn(USER_DOC, "save").mockResolvedValueOnce(USER_DOC);
-    //   jest
-    //     .spyOn(mockUserService, "findOneByEmail")
-    //     .mockResolvedValueOnce(USER_DOC);
-    //   await expect(
-    //     authService.loginWithEmailAndPassword(USER_DOC.email, PASSWORD),
-    //   ).toThrowError();
-    // });
+    it("should throw error if incorrect password", async () => {
+      const PASSWORD = "incorrectPassword";
+      const USER_DOC: UserDocument = await createUserDocWithPassword(
+        "otherPassword",
+      );
+      jest.spyOn(USER_DOC, "save").mockResolvedValueOnce(USER_DOC);
+      jest
+        .spyOn(mockUserService, "findOneByEmail")
+        .mockResolvedValueOnce(USER_DOC);
+      await expect(
+        authService.loginWithEmailAndPassword(USER_DOC.email, PASSWORD),
+      ).rejects.toThrowError();
+    });
 
     it("should successfully login if correct password", async () => {
       const PASSWORD = "correctPassword";

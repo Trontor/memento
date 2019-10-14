@@ -1,4 +1,4 @@
-import { Schema, Model, Types, Document } from "mongoose";
+import { Schema, Model, Types, Document, model } from "mongoose";
 import { Memento, MementoDate } from "../dto/memento.dto";
 import { MediaType, Media } from "../dto/media.dto";
 import { DateSchema } from "@hapi/joi";
@@ -251,3 +251,8 @@ export interface IUpdateMementoOptions {
   new?: boolean;
   arrayFilters?: any[];
 }
+
+export const MementoModel: Model<MementoDocument> = model(
+  "Memento",
+  MementoSchema,
+);
