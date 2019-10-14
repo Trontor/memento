@@ -18,7 +18,6 @@ import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 
 export default function UserProfile() {
-  let ProfilePicture = <UserAvatar size="125px" style={{ "margin-left": 0 }} />;
   const { data, error, loading } = useQuery(GET_CURRENT_USER);
 
   let user = {};
@@ -35,15 +34,17 @@ export default function UserProfile() {
     user = data.currentUser;
   }
 
-  if (user.imageUrl !== null) {
-    ProfilePicture = user.imageUrl;
-  }
-
   return (
     <Container>
       <CenterText>
         <Header underline>My Profile</Header>
-        <ImgPreview>{ProfilePicture}</ImgPreview>
+        <ImgPreview>
+          {!user.imageUrl ? (
+            <UserAvatar size="125px" style={{ "margin-left": 0 }} />
+          ) : (
+            <img src={user.imageUrl} alt={user.firstName} />
+          )}
+        </ImgPreview>
         <h1>
           {user.firstName} {user.lastName}
         </h1>
