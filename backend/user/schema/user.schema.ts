@@ -79,6 +79,18 @@ export const UserSchema: Schema = new Schema(
     location: {
       type: String,
     },
+    hometown: {
+      type: String,
+    },
+    placesLived: {
+      type: [
+        {
+          city: String,
+          dateMoved: Date,
+        },
+      ],
+      default: [],
+    },
     imageUrl: {
       type: String,
     },
@@ -113,6 +125,8 @@ UserSchema.methods.toDTO = function(): User {
     imageUrl: this.imageUrl,
     dateOfBirth: this.dateOfBirth,
     location: this.location,
+    hometown: this.hometown,
+    placesLived: this.placesLived,
     // family roles
     familyRoles: this.roles,
     // dummy array - resolver will deal with this
