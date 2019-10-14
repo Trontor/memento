@@ -54,12 +54,16 @@ const convertUserDataToFormValues = user => {
     locationCountry,
     gender: user.gender,
     hometown: user.hometown,
+    placesLived: user.placesLived,
   };
 };
 
 export default function SettingsProfile() {
   // User data
   const [user, setUser] = useState(null);
+  const [placesLived, setPlacesLived] = useState([
+    { city: "", dateMoved: null },
+  ]);
   // List of possible genders (infinite)
   const genderList = ["Male", "Female", "Other"];
 
@@ -115,6 +119,17 @@ export default function SettingsProfile() {
     }
   };
 
+  const addPlace = place => {
+    setPlacesLived([...placesLived, place]);
+  };
+
+  // Deletes an email from the email invite list
+  const deletePlace = index => {
+    const places = [...placesLived];
+    places.splice(index, 1);
+    setPlacesLived(places);
+  };
+
   /**
    * Handles the Formik form submit (when the 'Save Changes' button is pressed)
    * @param {any} values Formik values object
@@ -134,6 +149,7 @@ export default function SettingsProfile() {
       lastName: values.lastName,
       location,
       hometown: values.hometown,
+      placesLived: values.placesLived,
     };
     // Only add the "image" attribute if a new file has been selected
     if (values.file) {
@@ -255,46 +271,46 @@ export default function SettingsProfile() {
               <InputLabel>Places You've Lived</InputLabel>
               <InputLabel>Date Moved</InputLabel>
             </PlaceWrapper>
-            {/*<PlacesList>
-              {livePlaces.map((place, idx) => (
-                <PlaceWrapper>
-                  <InputField
-                    type="text"
-                    name="city"
-                    placeholder="Select City"
-                    style={{ width: "90%" }}
-                    value={place.city}
-                    onChange={e => cityHandleChange(idx, e)}
-                  />
+            {
+              <PlacesList>
+                {placesLived.map((place, idx) => (
+                  <PlaceWrapper>
+                    <InputField
+                      type="text"
+                      name="city"
+                      placeholder="Select City"
+                      style={{ width: "90%" }}
+                      value={place.city}
+                      //onChange={e => cityHandleChange(idx, e)}
+                    />
+                    <Calendar
+                      name="calendar"
+                      placeholderText="Click to select a date"
+                      selected={place.date}
+                      //onChange={date => dateHandleChange(idx, date)}
+                      showMonthDropdown
+                      showYearDropdown
+                      dropdownMode="select"
+                      maxDate={new Date()}
+                    />
 
-                  <Calendar
-                    name="calendar"
-                    placeholderText="Click to select a date"
-                    selected={place.date}
-                    onChange={date => dateHandleChange(idx, date)}
-                    showMonthDropdown
-                    showYearDropdown
-                    dropdownMode="select"
-                    maxDate={new Date()}
-                  />
-
-                  {livePlaces.length > 1 && (
-                    <DeleteButton onClick={() => deletePlace(idx)}>
-                      <i className="fa fa-trash"></i>
-                    </DeleteButton>
-                  )}
-                </PlaceWrapper>
-                  ))}
-                  </PlacesList>
-
-            {livePlaces.length < 10 && (
+                    {placesLived.length > 1 && (
+                      <DeleteButton onClick={() => deletePlace(idx)}>
+                        <i className="fa fa-trash"></i>
+                      </DeleteButton>
+                    )}
+                  </PlaceWrapper>
+                ))}
+              </PlacesList>
+            }
+            {placesLived.length < 10 && (
               <AddButton
                 text="Add another"
                 onClick={() => addPlace({ city: "", date: null })}
               >
                 <i className="fa fa-plus"></i>
               </AddButton>
-            )}*/}
+            )}
 
             {/* Save Changes Button  */}
             {props.dirty && (
