@@ -42,9 +42,11 @@ export default function Bookmarks(props) {
               {/* Memento Title */}
               <h3>Bookmarks</h3>
               <MementoOverview>
+                {/* Memento Date */}
                 <span>
                   <i class="far fa-clock" /> Date
                 </span>
+                {/* Memento Location */}
                 <span>
                   <i class="fas fa-map-marker-alt" />
                   Location
