@@ -1,7 +1,7 @@
 import { User } from "../../user/dto/user.dto";
 import * as faker from "faker";
 import { Types } from "mongoose";
-import { FamilyRole } from "../../user/dto/role.dto";
+import { FamilyRole, Role } from "../../user/dto/role.dto";
 import { UserModel, UserDocument } from "../../user/schema/user.schema";
 
 export const USER_WITH_ADMIN_ROLE: User = {
@@ -17,6 +17,22 @@ export const USER_WITH_ADMIN_ROLE: User = {
   lastSeenAt: new Date(),
   families: [],
   bookmarks: [],
+};
+
+export const createUserDTO = (userId?: string, role?: Role): User => {
+  const _userId = userId ? userId : Types.ObjectId().toHexString();
+  return {
+    userId: _userId,
+    email: faker.internet.email(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    familyRoles: role ? [role] : [],
+    createdAt: faker.date.past(),
+    updatedAt: faker.date.recent(),
+    lastSeenAt: new Date(),
+    families: [],
+    bookmarks: [],
+  };
 };
 
 export const createUserDocWithPassword = async (password: string) => {

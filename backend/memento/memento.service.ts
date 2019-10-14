@@ -400,6 +400,7 @@ export class MementoService {
     userIds: string[],
     familyId: string,
   ) {
+    if (userIds.length === 0) return;
     const users: User[] = await this.userService.getUsers(userIds);
     for (let user of users) {
       if (!isUserInFamily(user, familyId)) {
