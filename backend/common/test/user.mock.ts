@@ -35,7 +35,7 @@ export const createUserDTO = (userId?: string, role?: Role): User => {
   };
 };
 
-export const createUserDocWithPassword = async (password: string) => {
+export const createUserDoc = async (password?: string) => {
   let doc: UserDocument = new UserModel({
     _id: Types.ObjectId(),
     email: faker.internet.email(),
@@ -46,6 +46,6 @@ export const createUserDocWithPassword = async (password: string) => {
     lastSeenAt: new Date(),
     password: password,
   });
-  await doc.validate();
+  if (password) await doc.validate();
   return doc;
 };
