@@ -53,8 +53,8 @@ const convertUserDataToFormValues = user => {
     locationRegion,
     locationCountry,
     gender: user.gender,
-    hometown: user.hometown,
-    placesLived: user.placesLived,
+    //hometown: user.hometown,
+    //placesLived: user.placesLived,
   };
 };
 
@@ -148,8 +148,8 @@ export default function SettingsProfile() {
       firstName: values.firstName,
       lastName: values.lastName,
       location,
-      hometown: values.hometown,
-      placesLived: values.placesLived,
+      //hometown: values.hometown,
+      //placesLived: values.placesLived,
     };
     // Only add the "image" attribute if a new file has been selected
     if (values.file) {
