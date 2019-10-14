@@ -32,6 +32,7 @@ export default function UserProfile() {
 
   if (data && data.currentUser) {
     user = data.currentUser;
+    console.log(user);
   }
 
   return (
@@ -70,7 +71,7 @@ export default function UserProfile() {
         <UserHome size="25px" />
         <ProfileField>
           <InputLabel>Hometown</InputLabel>
-          <Span>Jakarta, Indonesia</Span>
+          <Span>{user.hometown}</Span>
         </ProfileField>
       </ProfileWrapper>
 

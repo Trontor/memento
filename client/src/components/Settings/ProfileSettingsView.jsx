@@ -1,10 +1,10 @@
-import { /* AddButton ,*/ ButtonPrimary } from "ui/Buttons";
+import { AddButton, ButtonPrimary } from "ui/Buttons";
 import {
   Calendar,
   RegionPicket,
   CountryPicker,
-  /* PlaceWrapper,
-  PlacesList, */
+  PlaceWrapper,
+  PlacesList,
   SettingsContainer,
   UploadLabel,
   UploadPhoto,
@@ -12,7 +12,7 @@ import {
 import {
   FormSection,
   ImgPreview,
-  // InputField,
+  InputField,
   InputLabel,
   InputSection,
   UserAvatar,
@@ -25,7 +25,7 @@ import {
 } from "ui/Radio";
 import React, { useState, useEffect } from "react";
 
-// import { DeleteButton } from "components/Invite/InviteStyles";
+import { DeleteButton } from "components/Invite/InviteStyles";
 import EditInput from "components/EditInput/EditInput";
 import { Formik } from "formik";
 import GET_CURRENT_USER from "queries/GetCurrentUser";
@@ -53,6 +53,7 @@ const convertUserDataToFormValues = user => {
     locationRegion,
     locationCountry,
     gender: user.gender,
+    hometown: user.hometown,
   };
 };
 
@@ -132,6 +133,7 @@ export default function SettingsProfile() {
       firstName: values.firstName,
       lastName: values.lastName,
       location,
+      hometown: values.hometown,
     };
     // Only add the "image" attribute if a new file has been selected
     if (values.file) {
@@ -222,6 +224,14 @@ export default function SettingsProfile() {
             </FormSection>
 
             <FormSection>
+              <EditInput
+                name="hometown"
+                inputLabel="Hometown"
+                onChange={props.handleChange}
+              />
+            </FormSection>
+
+            <FormSection>
               {/* Location */}
               <InputLabel>Location</InputLabel>
               <CountryPicker
@@ -241,12 +251,11 @@ export default function SettingsProfile() {
               />
             </FormSection>
 
-            {/* <PlaceWrapper>
-              
+            <PlaceWrapper>
               <InputLabel>Places You've Lived</InputLabel>
               <InputLabel>Date Moved</InputLabel>
             </PlaceWrapper>
-            <PlacesList>
+            {/*<PlacesList>
               {livePlaces.map((place, idx) => (
                 <PlaceWrapper>
                   <InputField
@@ -275,8 +284,8 @@ export default function SettingsProfile() {
                     </DeleteButton>
                   )}
                 </PlaceWrapper>
-              ))}
-            </PlacesList>
+                  ))}
+                  </PlacesList>
 
             {livePlaces.length < 10 && (
               <AddButton
@@ -285,7 +294,7 @@ export default function SettingsProfile() {
               >
                 <i className="fa fa-plus"></i>
               </AddButton>
-            )} */}
+            )}*/}
 
             {/* Save Changes Button  */}
             {props.dirty && (
