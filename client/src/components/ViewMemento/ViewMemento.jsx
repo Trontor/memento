@@ -9,7 +9,7 @@ export default function ViewMemento() {
 
   const loadMemento = useQuery(GET_MEMENTOS, {
     variables: {
-      id: "5d849da7a450cc02c84e7629",
+      id: "5d8c80b8c4a4ad02c5722152",
     },
     onCompleted: data => {
       if (data && data.mementos) setMementos(data.mementos);

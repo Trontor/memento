@@ -7,6 +7,7 @@ import {
   MementoDescription,
   MementoTagsWrapper,
   MementoTitle,
+  MementoOverview,
   PeopleTags,
   UploadDate,
 } from "../MementoCard/MementoCardStyles";
@@ -60,20 +61,31 @@ export default function MementoCard(props) {
         </AuthorWrapper>
         {/* Title */}
         <MementoTitle>Title</MementoTitle>
-        <InfoWrapper>
-          <ListText>
-            <List size="20px" />
+        <MementoOverview>
+          <span>
+            <i class="far fa-clock" />
             {dates[0].year}
-          </ListText>
-          <ListText>
-            <List size="20px" />
+          </span>
+          <span>
+            <i class="fas fa-map-marker-alt" />
             {location}
-          </ListText>
-          <ListText>
-            <List size="20px" />
-            FirstName
-          </ListText>
-        </InfoWrapper>
+          </span>
+
+          {/* People Tags */}
+          {people && people.length > 0 && (
+            <span>
+              <i class="fas fa-user-tag"></i>
+              <div>
+                {props.people.map(person => (
+                  <PeopleTags>
+                    {person.firstName} {person.lastName}
+                  </PeopleTags>
+                ))}
+              </div>
+            </span>
+          )}
+        </MementoOverview>
+
         {/* Description */}
         <MementoDescription>{props.description}</MementoDescription>
 
