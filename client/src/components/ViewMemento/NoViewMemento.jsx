@@ -14,7 +14,7 @@ export default function NoViewMemento(props) {
   return (
     <Container>
       <TextWrapper>
-        {/* Bookmarks Icon */}
+        {/* No Memento Icon */}
         <NoViewMementoIcon />
         <h2>Oops... You don't have any memento yet.</h2>
         <p>You can upload memento to your family group. </p>
