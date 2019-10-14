@@ -16,6 +16,7 @@ export default function NoBookmarks(props) {
         <NoBookmarksIcon size="150px" />
         <h2>Oops... You don't have any bookmarks yet.</h2>
         <p>You can add bookmark to your favourite memento. </p>
+        <p>What would you like to do instead?</p>
 
         {/* View my memento button*/}
         <DashboardButtons>
