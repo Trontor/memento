@@ -9,10 +9,10 @@ import {
   MementoTitle,
   MementoOverview,
   PeopleTags,
+  MementoTag,
   UploadDate,
 } from "../MementoCard/MementoCardStyles";
 import { useHistory } from "react-router";
-import { List } from "ui/Radio";
 import React from "react";
 import {
   Card,
@@ -44,33 +44,42 @@ export default function MementoCard(props) {
     <Card>
       <CardInfo>
         <AuthorWrapper>
+          {/* Memento  Uploader Profile Picture */}
           <AuthorAvatar>
-            <i class="fas fa-user-circle"></i>
+            {!uploader.imageUrl ? (
+              <i class="fas fa-user-circle"></i>
+            ) : (
+              <img src={uploader.imageUrl} alt={uploader.firstName} />
+            )}
           </AuthorAvatar>
           <div>
+            {/* Memento  Uploader  */}
             <MementoAuthor>
               {uploader.firstName + " " + uploader.lastName}
             </MementoAuthor>
+            {/* Memento  Upload Date */}
             <UploadDate>{createdDate.toLocaleDateString()}</UploadDate>
+            {/* Family group that the memento belongs to */}
             <FamilyGroup>Valerie's Family</FamilyGroup>
           </div>
-          {/* Edit & Bookmark */}
+          {/* Bookmark */}
           <CardOptions>
             <i class="far fa-bookmark"></i>
           </CardOptions>
         </AuthorWrapper>
-        {/* Title */}
+        {/* Memento  Title */}
         <MementoTitle>Title</MementoTitle>
         <MementoOverview>
+          {/* Dates */}
           <span>
             <i class="far fa-clock" />
             {dates[0].year}
           </span>
+          {/* Location */}
           <span>
             <i class="fas fa-map-marker-alt" />
             {location}
           </span>
-
           {/* People Tags */}
           {people && people.length > 0 && (
             <span>
@@ -89,11 +98,12 @@ export default function MementoCard(props) {
         {/* Description */}
         <MementoDescription>{props.description}</MementoDescription>
 
+        {/* Tags */}
         <MementoTagsWrapper>
-          <ListText>
-            <List size="20px" />
-            Tags
-          </ListText>
+          <i class="fas fa-tags"></i>
+          {props.tags.map(tag => (
+            <MementoTag>{tag}</MementoTag>
+          ))}
         </MementoTagsWrapper>
       </CardInfo>
       <CardContent>
