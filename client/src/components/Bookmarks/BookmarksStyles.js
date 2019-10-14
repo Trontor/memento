@@ -55,10 +55,14 @@ export const UploaderText = styled.span`
 `;
 
 export const UploaderAvatar = styled(AuthorAvatar)`
-  margin-right: 5px;
-
   i {
+    margin-right: 5px;
     font-size: 32px;
+  }
+
+  img {
+    height: 35px;
+    width: 35px;
   }
 `;
 
