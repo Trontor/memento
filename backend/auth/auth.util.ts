@@ -9,14 +9,15 @@ import bcrypt from "bcrypt";
  */
 export const checkPassword = async (
   password: string,
-  hashedPwd: string
+  hashedPwd: string,
 ): Promise<boolean> => {
   return new Promise((resolve, reject) => {
     bcrypt.compare(password, hashedPwd, (error, isMatch) => {
       if (error) {
         reject(error);
+      } else {
+        resolve(isMatch);
       }
-      resolve(isMatch);
     });
   });
 };

@@ -91,7 +91,6 @@ export class FamilyService {
 
     // insert family
     const familyId = Types.ObjectId();
-    this.logger.debug(familyId);
     let doc: FamilyDocument = new this.FamilyModel({
       _id: familyId,
       ...fields,

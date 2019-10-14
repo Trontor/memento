@@ -1,4 +1,4 @@
-import { Schema, Model, Types, Document } from "mongoose";
+import { Schema, Model, Types, Document, model } from "mongoose";
 import { Memento, MementoDate } from "../dto/memento.dto";
 import { MediaType, Media } from "../dto/media.dto";
 import { DateSchema } from "@hapi/joi";
@@ -47,17 +47,20 @@ export interface MediaDocument extends Media, Document {
   toDTO(): Media;
 }
 
+export const mapMediaDocumentToDTO = (doc: MediaDocument): Media => {
+  return {
+    mediaId: doc.id,
+    type: doc.type,
+    url: doc.url,
+    caption: doc.caption,
+  };
+};
+
 /**
  * Converts `MediaDocument` to `Media` DTO
  */
 MediaSchema.methods.toDTO = function(): Media {
-  // include document id in DTO
-  return {
-    mediaId: this.id,
-    type: this.type,
-    url: this.url,
-    caption: this.caption,
-  };
+  return mapMediaDocumentToDTO(this as MediaDocument);
 };
 
 const DateSchema: Schema = new Schema({
@@ -248,3 +251,8 @@ export interface IUpdateMementoOptions {
   new?: boolean;
   arrayFilters?: any[];
 }
+
+export const MementoModel: Model<MementoDocument> = model(
+  "Memento",
+  MementoSchema,
+);

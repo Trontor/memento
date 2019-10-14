@@ -4,6 +4,7 @@ import {
   forwardRef,
   UnauthorizedException,
   InternalServerErrorException,
+  Logger,
 } from "@nestjs/common";
 import { UserService } from "../user/user.service";
 import { AuthOutput } from "./dto/auth.dto";
@@ -20,6 +21,7 @@ import { UserDocument } from "../user/schema/user.schema";
  */
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
   constructor(
     @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,
@@ -41,9 +43,13 @@ export class AuthService {
     try {
       isMatch = await checkPassword(passwordAttempt, userDoc.password);
     } catch (error) {
+      this.logger.error(error);
       throw new InternalServerErrorException();
     }
-    if (!isMatch) throw new UnauthorizedException("Incorrect password");
+    if (!isMatch) {
+      this.logger.log("incorrect password");
+      throw new UnauthorizedException("Incorrect password");
+    }
 
     // If there is a successful match, generate a JWT for the user
     const { token } = this.createJwt(userDoc);
@@ -53,7 +59,7 @@ export class AuthService {
       token,
     };
     userDoc.lastSeenAt = new Date();
-    userDoc.save();
+    await userDoc.save();
     return result;
   }
 
