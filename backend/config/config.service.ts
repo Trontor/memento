@@ -1,7 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common";
 import * as dotenv from "dotenv";
 import * as fs from "fs";
-import path from "path";
 import Joi from "@hapi/joi";
 
 export interface EnvConfig {
@@ -212,21 +211,5 @@ export class ConfigService {
 
   get cdnHostName(): string {
     return this.envConfig.CDN_HOSTNAME;
-  }
-
-  get handlebarsTemplatesDir(): string {
-    const prodTemplatesPath = path.join(
-      __dirname,
-      "..",
-      "..",
-      "..",
-      "..",
-      "backend",
-      "templates",
-    );
-    const devTemplatesPath = path.join(__dirname, "..", "templates");
-    return this.envConfig.NODE_ENV === "production"
-      ? prodTemplatesPath
-      : devTemplatesPath;
   }
 }
