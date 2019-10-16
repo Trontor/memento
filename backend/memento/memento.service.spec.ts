@@ -41,6 +41,7 @@ describe("MementoService", () => {
           useValue: (() => {
             const service: any = jest.fn();
             service.getUsers = jest.fn();
+            service.addUpload = jest.fn();
             return service;
           })(),
         },

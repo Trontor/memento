@@ -13,6 +13,7 @@ export interface UserDocument extends User, Document {
   lowercaseEmail: string;
   roles: Role[];
   _bookmarks: Types.ObjectId[];
+  _uploads: Types.ObjectId[];
 
   /**
    * Converts `UserDocument` to `User` to return to the client
@@ -99,6 +100,15 @@ export const UserSchema: Schema = new Schema(
       default: Date.now,
     },
     _bookmarks: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "Memento",
+        },
+      ],
+      default: [],
+    },
+    _uploads: {
       type: [
         {
           type: Schema.Types.ObjectId,

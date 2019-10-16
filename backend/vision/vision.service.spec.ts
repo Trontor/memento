@@ -1,18 +1,25 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { VisionService } from './vision.service';
+import { Test, TestingModule } from "@nestjs/testing";
+import { VisionService } from "./vision.service";
+import { RekognitionClient } from "../aws/aws.rekognition.client";
 
-describe('VisionService', () => {
-  let service: VisionService;
+describe("VisionService", () => {
+  let visionService: VisionService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [VisionService],
+      providers: [
+        VisionService,
+        {
+          provide: RekognitionClient,
+          useValue: {},
+        },
+      ],
     }).compile();
 
-    service = module.get<VisionService>(VisionService);
+    visionService = module.get<VisionService>(VisionService);
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+  it("should be defined", () => {
+    expect(visionService).toBeDefined();
   });
 });
