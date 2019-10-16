@@ -59,7 +59,9 @@ export default function MementoCard(props) {
           <i
             class="fas fa-pencil-alt"
             onClick={() =>
-              history.push(history.location.pathname + "/memento/" + mementoId)
+              history.push(
+                history.location.pathname + "/edit-memento/" + mementoId,
+              )
             }
           ></i>
           <i class="far fa-bookmark"></i>

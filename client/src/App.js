@@ -24,6 +24,7 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import Signup from "./components/Signup/Signup";
 import UploadMemento from "./components/UploadMemento/UploadMemento";
 import UserProfile from "./components/UserProfile/UserProfile";
+import EditMemento from "./components/EditMemento/EditMemento";
 import { theme } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
@@ -152,6 +153,10 @@ const authenticatedRoutes = [
   {
     name: "profile",
     component: UserProfile,
+  },
+  {
+    name: "edit-memento",
+    component: EditMemento,
   },
 ];
 
