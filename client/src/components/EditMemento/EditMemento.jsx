@@ -2,13 +2,8 @@ import React from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { Container } from "ui/Helpers";
-import {
-  FormSection,
-  Error,
-  InputField,
-  InstructionLabel,
-  TextArea,
-} from "ui/Forms";
+import { FormSection, Error, TextArea } from "ui/Forms";
+import EditInput from "components/EditInput/EditInput";
 
 import { Header } from "ui/Typography";
 
@@ -38,11 +33,23 @@ export default function EditMemento() {
         return (
           <Container>
             <Header underline>Edit Memento</Header>
-            <form>
-              <FormSection>
-                <InstructionLabel>Title:</InstructionLabel>
-              </FormSection>
-            </form>
+
+            <FormSection>
+              <EditInput
+                name="title"
+                value={props.values.firstName}
+                inputLabel="Title"
+                onChange={props.handleChange}
+              />
+            </FormSection>
+            <FormSection>
+              <EditInput
+                name="description"
+                //value={props.values.firstName}
+                inputLabel="Description"
+                //onChange={props.handleChange}
+              />
+            </FormSection>
           </Container>
         );
       }}
