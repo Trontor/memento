@@ -107,10 +107,10 @@ workflows:
             # to avoid installing them on each machine running tests
             - cypress/install
           record: true # record results to Cypress Dashboard
-          parallel: true # run tests in parallel
-          parallelism: 3 # use 3 CircleCI machines
-          group: 3 machines # name this group "3 machines"
-          start: "cd client && npm run dev:start" # start server before running tests
+          # parallel: true # run tests in parallel
+          # parallelism: 3 # use 3 CircleCI machines
+          # group: 3 machines # name this group "3 machines"
+          start: "npm run dev:start" # start server before running tests
       - setup-client:
           filters:
             branches:
