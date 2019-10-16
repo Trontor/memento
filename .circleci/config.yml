@@ -100,6 +100,7 @@ workflows:
           filters:
             branches:
               only:
+                - feature/frontend/testing/cypress-programatic-signup
                 - master
                 - develop
 
@@ -112,11 +113,6 @@ workflows:
       - build-client:
           requires:
             - setup-client
-          filters:
-            branches:
-              only:
-                - master
-                - develop
       # install dependencies first (on 1 machine)
       - cypress/install:
           requires:
