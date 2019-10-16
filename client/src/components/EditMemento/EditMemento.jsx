@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { Container } from "ui/Helpers";
-import { FormSection, Error, InstructionLabel, InputField } from "ui/Forms";
+import { FormSection, InstructionLabel, InputField } from "ui/Forms";
 import EditInput from "components/EditInput/EditInput";
 import { Header } from "ui/Typography";
 import {
@@ -93,9 +93,6 @@ export default function EditMemento() {
                 value={props.values.date}
                 //customDropdown={customDropdown}
               />
-              {/* {props.errors.date && props.touched.date && (
-                <Error>{props.errors.date}</Error>
-              )} */}
             </FormSection>
 
             <FormSection>
@@ -147,9 +144,6 @@ export default function EditMemento() {
                 inputLabel="Add Location:"
                 onChange={props.handleChange}
               />
-              {/* {props.errors.location && props.touched.location && (
-                <Error>{props.errors.location}</Error>
-              )} */}
             </FormSection>
 
             <FormSection>
