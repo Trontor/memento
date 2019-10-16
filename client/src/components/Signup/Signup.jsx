@@ -6,12 +6,9 @@ import {
   HelpText,
   InputField,
   InputLabel,
-  InputSection
+  InputSection,
 } from "ui/Forms";
-import {
-  NameInputContainer,
-  SignupContainer
-} from "./SignupStyles";
+import { NameInputContainer, SignupContainer } from "./SignupStyles";
 
 import { ButtonPrimary } from "ui/Buttons";
 import { Formik } from "formik";
@@ -22,12 +19,12 @@ import { SIGNUP } from "mutations/Authentication";
 import { useMutation } from "@apollo/react-hooks";
 import { withRouter } from "react-router-dom";
 
-const defaultValues = {
-  firstName: "Jane",
-  lastName: "Doe",
-  email: `test-account-${Math.trunc(Math.random() * 1000000)}@email.com`,
-  password: "compl14n7Pa$$w0rd",
-  confirmPassword: "compl14n7Pa$$w0rd",
+const emptyValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
 };
 
 /**
@@ -126,7 +123,7 @@ const Signup = props => {
   return (
     <>
       <Formik
-        initialValues={defaultValues}
+        initialValues={emptyValues}
         onSubmit={(values, actions) => {
           const { confirmPassword, ...inputValues } = values;
           signup({ variables: { input: inputValues } });
@@ -140,9 +137,9 @@ const Signup = props => {
 
             {signUpErrors.length > 0 && (
               <ErrorBanner>
-              {signUpErrors.map(error => (
-                <div>{error}</div>
-              ))}
+                {signUpErrors.map(error => (
+                  <div>{error}</div>
+                ))}
               </ErrorBanner>
             )}
 
