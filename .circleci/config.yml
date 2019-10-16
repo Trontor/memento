@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   heroku: circleci/heroku@0.0.8
-  cypress: cypress-io/cypress@1.11.0
+  cypress: cypress-io/cypress@1.11.1
 jobs:
   setup-client:
     docker:
@@ -96,21 +96,20 @@ workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - cypress/install:
-          # run a custom app build step
-          build: "npm run build"
+      # install dependencies first (on 1 machine)
+      - cypress/install
+      # now run tests
       - cypress/run:
-          # make sure app has been installed and built
-          # before running tests across multiple machines
-          # this avoids installing same dependencies 10 times
+          # give this job a custom name for clarity
+          name: "end-to-end tests"
           requires:
+            # use previously installed dependencies
+            # to avoid installing them on each machine running tests
             - cypress/install
-          record: true # record results on Cypress Dashboard
-          parallel: true # split all specs across machines
-          parallelism: 4 # use 4 CircleCI machines to finish quickly
-          group: "all tests" # name this group "all tests" on the dashboard
-          start: "npm start" # start server before running tests
-      - setup-backend:
+          record: true # record results to Cypress Dashboard
+          parallel: true # run tests in parallel
+          parallelism: 3 # use 3 CircleCI machines
+          group: 3 machines # name this group "3 machines"
       - setup-client:
           filters:
             branches:
