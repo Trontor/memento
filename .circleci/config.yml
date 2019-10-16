@@ -119,6 +119,8 @@ workflows:
                 - develop
       # install dependencies first (on 1 machine)
       - cypress/install
+          requires:
+            - build-client
       # now run tests
       - cypress/run:
           # give this job a custom name for clarity
@@ -131,7 +133,7 @@ workflows:
           # parallel: true # run tests in parallel
           # parallelism: 3 # use 3 CircleCI machines
           # group: 3 machines # name this group "3 machines"
-          start: "npm i --prefix client && npm run dev:test" # start server before running tests
+          start: "npm run dev:test" # start server before running tests
       - test-backend:
           requires:
             - setup-backend
