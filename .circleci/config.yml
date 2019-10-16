@@ -100,7 +100,6 @@ workflows:
           filters:
             branches:
               only:
-                - feature/frontend/testing/cypress-programatic-signup
                 - master
                 - develop
 
@@ -113,25 +112,23 @@ workflows:
       - build-client:
           requires:
             - setup-client
-      # install dependencies first (on 1 machine)
-      - cypress/install:
-          requires:
-            - build-client
-      # now run tests
-      - cypress/run:
-          - attach_workspace:
-            at: ~/memento/client
-          # give this job a custom name for clarity
-          name: "end-to-end testing"
-          requires:
-            # use previously installed dependencies
-            # to avoid installing them on each machine running tests
-            - cypress/install
-          record: true # record results to Cypress Dashboard
-          # parallel: true # run tests in parallel
-          # parallelism: 3 # use 3 CircleCI machines
-          # group: 3 machines # name this group "3 machines"
-          start: "npm run dev:test" # start server before running tests
+      # # install dependencies first (on 1 machine)
+      # - cypress/install:
+      #     requires:
+      #       - build-client
+      # # now run tests
+      # - cypress/run:
+      #     # give this job a custom name for clarity
+      #     name: "end-to-end testing"
+      #     requires:
+      #       # use previously installed dependencies
+      #       # to avoid installing them on each machine running tests
+      #       - cypress/install
+      #     record: true # record results to Cypress Dashboard
+      #     # parallel: true # run tests in parallel
+      #     # parallelism: 3 # use 3 CircleCI machines
+      #     # group: 3 machines # name this group "3 machines"
+      #     start: "npm run dev:test" # start server before running tests
       - test-backend:
           requires:
             - setup-backend
