@@ -10,7 +10,6 @@ import {
   UserGender,
   UserPlaces,
 } from "./UserProfileStyles";
-
 import GET_CURRENT_USER from "queries/GetCurrentUser";
 import { Header } from "ui/Typography";
 import { InputLabel, UserAvatar, ImgPreview } from "ui/Forms";
@@ -81,22 +80,16 @@ export default function UserProfile() {
       </ProfileWrapper>
       <ProfileWrapper>
         <UserPlaces size="25px" />
-        <ProfileField>
-          <InputLabel>Place I've Lived</InputLabel>
 
+        <ProfileField>
           <PlaceWrapper>
-            <Span>Surabaya</Span>
+            <InputLabel>Place I've Lived</InputLabel>
+            <InputLabel>Date Moved</InputLabel>
+          </PlaceWrapper>
+          <PlaceWrapper>
+            <Span>Amsterdam</Span>
             <Span> March, 2001</Span>
           </PlaceWrapper>
-
-          {/*<PlaceWrapper>
-            <Span>Jakarta</Span>
-            <Span> 2001 - 2016</Span>
-          </PlaceWrapper>
-          <PlaceWrapper>
-            <Span>Melbourne</Span>
-            <Span> July, 2016 - now </Span>
-          </PlaceWrapper>*/}
         </ProfileField>
       </ProfileWrapper>
     </Container>
