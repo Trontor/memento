@@ -119,6 +119,8 @@ workflows:
             - build-client
       # now run tests
       - cypress/run:
+          - attach_workspace:
+            at: ~/memento/client
           # give this job a custom name for clarity
           name: "end-to-end testing"
           requires:
