@@ -118,7 +118,7 @@ workflows:
                 - master
                 - develop
       # install dependencies first (on 1 machine)
-      - cypress/install
+      - cypress/install:
           requires:
             - build-client
       # now run tests
