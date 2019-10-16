@@ -171,6 +171,7 @@ input PlaceInput {
 type Query {
   user(userId: String!): User!
   currentUser: User!
+  getMyUploadedMementos: [Memento!]!
   refreshToken: String!
   family(familyId: ID!): Family!
   invite(inviteId: ID!): Invite!
