@@ -49,7 +49,12 @@ export class UserService implements IUserService {
    */
   async createUser(input: UserSignupInput): Promise<User> {
     const createdUser = new this.UserModel(input);
-
+    const existingUser = await this.UserModel.findOne({
+      lowercaseEmail: input.email.toLowerCase(),
+    }).exec();
+    if (existingUser) {
+      throw new BadRequestException(`${input.email} is already registered :o`);
+    }
     let userDoc: UserDocument;
     try {
       userDoc = await createdUser.save();

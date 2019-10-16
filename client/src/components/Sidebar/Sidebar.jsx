@@ -90,14 +90,21 @@ const Sidebar = props => {
             </TextList>
           ))
         )}
-        <NewFamilyGroup onClick={() => history.push("/family/new")}>
+        <NewFamilyGroup
+          data-cy="new-family"
+          onClick={() => history.push("/family/new")}
+        >
           New Family group
         </NewFamilyGroup>
       </FamilyListSection>
       <MenuSection>
         <TextList>
           <i class="fas fa-user-plus"></i>
-          <span href="#" onClick={() => history.push("/invite")}>
+          <span
+            data-cy="invite"
+            href="#"
+            onClick={() => history.push("/invite")}
+          >
             Invite
           </span>
         </TextList>
@@ -119,7 +126,11 @@ const Sidebar = props => {
       <MenuSection>
         <TextList>
           <i class="fas fa-pencil-alt"></i>
-          <span href="#" onClick={() => history.push("/settings")}>
+          <span
+            data-cy="edit-account"
+            href="#"
+            onClick={() => history.push("/settings")}
+          >
             Edit profile & account
           </span>
         </TextList>

@@ -17,7 +17,12 @@ Cypress.Commands.add("resetDb", () => {
 });
 Cypress.Commands.add(
   "signup",
-  (email, password, firstName = "Test", lastName = "User") => {
+  (
+    email,
+    password = "Tes7Password123",
+    firstName = "Test",
+    lastName = "User",
+  ) => {
     const signupQuery = `mutation {
               signup(input: { 
                 email: "${email}",
@@ -46,15 +51,17 @@ Cypress.Commands.add(
         failOnStatusCode: false,
       };
     };
-    cy.request(
-      graphqlReqConfig({
-        query: signupQuery,
-      }),
-    ).then(res => {
-      const data = res.body.data; // your result
-      cy.log(data);
-      window.localStorage.setItem("AUTH-TOKEN", data.signup.token);
-    });
+    return cy
+      .request(
+        graphqlReqConfig({
+          query: signupQuery,
+        }),
+      )
+      .then(res => res.body.data.signup)
+      .then(res => {
+        window.localStorage.setItem("AUTH-TOKEN", res.token);
+        return res;
+      });
   },
 );
 //

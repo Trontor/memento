@@ -5,7 +5,7 @@ import { Close } from "styled-icons/material/Close";
 import { Search } from "styled-icons/boxicons-regular/Search";
 import { lighten } from "polished";
 
-export const SidebarContainer = styled.div`
+export const SidebarContainer = styled.div.attrs({ "data-cy": "sidebar" })`
   min-width: ${props => props.theme.size.sidebar}px;
   border-right: 1px solid ${props => lighten(0.66, props.theme.palette.text)};
   min-height: 100%;
