@@ -38,7 +38,7 @@ export default function NoMementos(props) {
   console.log(props);
 
   return (
-    <NoMementoContainer>
+    <NoMementoContainer data-cy="no-mementos">
       <Center>
         no mementos...yet
         <br />

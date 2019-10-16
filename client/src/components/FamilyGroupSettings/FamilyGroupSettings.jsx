@@ -53,6 +53,7 @@ export default function FamilyGroupSettings(props) {
         <InputLabel>Colour Theme</InputLabel>
         <div style={{ marginTop: "15px" }}>
           <CirclePicker
+            data-cy="circle-picker"
             // onChange={color => {
             //   props.setFieldValue("color", color.hex);
             // }}
