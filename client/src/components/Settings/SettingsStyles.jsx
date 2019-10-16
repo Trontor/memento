@@ -35,7 +35,7 @@ export const Calendar = styled(DatePicker)`
   height: 40px;
   width: 100%;
   font-size: 16px;
-  font-weight: bold;
+  font-family: "Rubik";
   color: ${props => props.theme.palette.text};
   padding: 6px;
   margin-top: 10px;
@@ -46,7 +46,7 @@ export const Calendar = styled(DatePicker)`
 const PickerStyle = css`
   margin: 10px 10px 10px 0;
   font-size: 16px;
-  font-weight: bold;
+  font-family: "Rubik";
   color: ${props => props.theme.palette.text};
   border: none;
   height: 40px;

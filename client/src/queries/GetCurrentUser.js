@@ -9,8 +9,12 @@ export default gql`
       dateOfBirth
       imageUrl
       location
+      hometown
       gender
-      email
+      placesLived {
+        city
+        dateMoved
+      }
     }
   }
 `;

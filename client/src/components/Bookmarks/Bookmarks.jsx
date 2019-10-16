@@ -1,45 +1,85 @@
-import React from "react";
-import { CenterText, Container } from "ui/Helpers";
+import React, { useState } from "react";
+import { useQuery } from "@apollo/react-hooks";
+import { GET_MEMENTOS } from "queries/Memento";
+import { Container } from "ui/Helpers";
 import { Header } from "ui/Typography";
+import { FormHelpText } from "ui/Forms";
+import { MementoOverview } from "../MementoCard/MementoCardStyles";
 import {
-  BookmarksSearchBar,
-  BookmarksSearchIcon,
-  BookmarksSearchInput,
   BookmarksWrapper,
   Item,
   Description,
+  UploaderBox,
+  UploaderText,
+  UploaderAvatar,
   BookmarksIcon,
 } from "./BookmarksStyles";
+import NoBookmarks from "./NoBookmarks";
 
-export default function Bookmarks() {
-  const imageSrc = [
-    "https://images.unsplash.com/photo-1516668557604-c8e814fdb184?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2089&q=80",
-    "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
-    "https://images.unsplash.com/photo-1525921429624-479b6a26d84d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
-    "https://images.unsplash.com/photo-1511948374796-056e8f289f34?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
-    "https://images.unsplash.com/photo-1564428658805-8001c05e05c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80",
-    "https://images.unsplash.com/photo-1557246565-8a3d3ab5d7f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
-    "https://images.unsplash.com/photo-1455906876003-298dd8c44ec8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2127&q=80",
-    "https://images.unsplash.com/photo-1549767742-ccfdeb07b71d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
-    "https://images.unsplash.com/photo-1513899337336-48b3db5df46e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
-  ];
+export default function Bookmarks(props) {
+  const [mementos, setMementos] = useState([]);
+
+  const loadMemento = useQuery(GET_MEMENTOS, {
+    variables: {
+      //id: "5d8c80b8c4a4ad02c5722152",
+      id: "5d849da7a450cc02c84e7629",
+    },
+    onCompleted: data => {
+      if (data && data.mementos) setMementos(data.mementos);
+      console.log(data);
+    },
+  });
+
+  if (mementos.length === 0) {
+    return <NoBookmarks />;
+  }
 
   return (
     <Container>
-      <CenterText>
-        <Header underline>My Bookmarks</Header>
-      </CenterText>
-      <BookmarksSearchBar>
-        <BookmarksSearchIcon />
-        <BookmarksSearchInput type="text" placeholder="Search all bookmarks" />
-      </BookmarksSearchBar>
+      <Header underline>Saved Mementos</Header>
+
+      {/* Bookmarks Card*/}
       <BookmarksWrapper>
-        {imageSrc.map(image => (
+        {mementos.map(memento => (
           <Item>
-            <img src={image} alt="blah" />
+            {memento.media.length > 0 && (
+              <img alt="blah" src={memento.media[0].url} />
+            )}
             <Description>
-              <BookmarksIcon />
-              <h2>Bookmarks</h2>
+              {/* Memento Title */}
+              <h3>{memento.title}</h3>
+              <MementoOverview>
+                {/* Memento Date */}
+                <span>
+                  <i class="far fa-clock" /> {memento.dates[0].year}
+                </span>
+                {/* Memento Location */}
+                <span>
+                  <i class="fas fa-map-marker-alt" />
+                  {memento.location}
+                </span>
+              </MementoOverview>
+
+              <UploaderBox>
+                <UploaderAvatar>
+                  {!memento.uploader.imageUrl ? (
+                    <i class="fas fa-user-circle"></i>
+                  ) : (
+                    <img
+                      src={memento.uploader.imageUrl}
+                      alt={memento.uploader.firstName}
+                    />
+                  )}
+                </UploaderAvatar>
+                <UploaderText>
+                  {memento.uploader.firstName}
+                  <FormHelpText>Uploader's Family</FormHelpText>
+                  {/*change family group name */}
+                </UploaderText>
+                <BookmarksIcon>
+                  <i class="far fa-bookmark"></i>
+                </BookmarksIcon>
+              </UploaderBox>
             </Description>
           </Item>
         ))}

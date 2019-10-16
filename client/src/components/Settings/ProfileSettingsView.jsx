@@ -1,10 +1,10 @@
-import { /* AddButton ,*/ ButtonPrimary } from "ui/Buttons";
+import { AddButton, ButtonPrimary } from "ui/Buttons";
 import {
   Calendar,
   RegionPicket,
   CountryPicker,
-  /* PlaceWrapper,
-  PlacesList, */
+  PlaceWrapper,
+  PlacesList,
   SettingsContainer,
   UploadLabel,
   UploadPhoto,
@@ -12,7 +12,7 @@ import {
 import {
   FormSection,
   ImgPreview,
-  // InputField,
+  InputField,
   InputLabel,
   InputSection,
   UserAvatar,
@@ -25,7 +25,7 @@ import {
 } from "ui/Radio";
 import React, { useState, useEffect } from "react";
 
-// import { DeleteButton } from "components/Invite/InviteStyles";
+import { DeleteButton } from "components/Invite/InviteStyles";
 import EditInput from "components/EditInput/EditInput";
 import { Formik } from "formik";
 import GET_CURRENT_USER from "queries/GetCurrentUser";
@@ -53,12 +53,17 @@ const convertUserDataToFormValues = user => {
     locationRegion,
     locationCountry,
     gender: user.gender,
+    hometown: user.hometown,
+    placesLived: user.placesLived,
   };
 };
 
 export default function SettingsProfile() {
   // User data
   const [user, setUser] = useState(null);
+  const [placesLived, setPlacesLived] = useState([
+    { city: "", dateMoved: null },
+  ]);
   // List of possible genders (infinite)
   const genderList = ["Male", "Female", "Other"];
 
@@ -72,6 +77,7 @@ export default function SettingsProfile() {
       const user = data.currentUser;
       console.log("Loaded User Data:", user);
       setUser(user);
+      setPlacesLived(user.placesLived);
     },
   });
 
@@ -97,7 +103,7 @@ export default function SettingsProfile() {
   if (currentUserStatus.error) {
     console.log("Error loading user data:", currentUserStatus.error);
   }
-  console.log(currentUserStatus);
+  console.log("current user status:", currentUserStatus);
 
   /**
    * Returns the most appropriate JSX element to represent the user's profile
@@ -112,6 +118,18 @@ export default function SettingsProfile() {
     } else {
       return <UserAvatar size="125px" />;
     }
+  };
+
+  //Add places lived from the list
+  const addPlace = place => {
+    setPlacesLived([...placesLived, place]);
+  };
+
+  // Deletes places lived from the list
+  const deletePlace = index => {
+    const places = [...placesLived];
+    places.splice(index, 1);
+    setPlacesLived(places);
   };
 
   /**
@@ -132,6 +150,7 @@ export default function SettingsProfile() {
       firstName: values.firstName,
       lastName: values.lastName,
       location,
+      hometown: values.hometown,
     };
     // Only add the "image" attribute if a new file has been selected
     if (values.file) {
@@ -222,6 +241,15 @@ export default function SettingsProfile() {
             </FormSection>
 
             <FormSection>
+              <EditInput
+                name="hometown"
+                inputLabel="Hometown"
+                value={props.values.hometown}
+                onChange={props.handleChange}
+              />
+            </FormSection>
+
+            <FormSection>
               {/* Location */}
               <InputLabel>Location</InputLabel>
               <CountryPicker
@@ -241,51 +269,50 @@ export default function SettingsProfile() {
               />
             </FormSection>
 
-            {/* <PlaceWrapper>
-              
+            <PlaceWrapper>
               <InputLabel>Places You've Lived</InputLabel>
               <InputLabel>Date Moved</InputLabel>
             </PlaceWrapper>
-            <PlacesList>
-              {livePlaces.map((place, idx) => (
-                <PlaceWrapper>
-                  <InputField
-                    type="text"
-                    name="city"
-                    placeholder="Select City"
-                    style={{ width: "90%" }}
-                    value={place.city}
-                    onChange={e => cityHandleChange(idx, e)}
-                  />
+            {
+              <PlacesList>
+                {placesLived.map((place, idx) => (
+                  <PlaceWrapper>
+                    <InputField
+                      type="text"
+                      name="city"
+                      placeholder="Select City"
+                      style={{ width: "85%" }}
+                      value={place.city}
+                      //insert onChange function here
+                    />
+                    <Calendar
+                      name="calendar"
+                      placeholderText="Click to select a date"
+                      selected={place.date}
+                      //insert onChange function here
+                      showMonthDropdown
+                      showYearDropdown
+                      dropdownMode="select"
+                      maxDate={new Date()}
+                    />
 
-                  <Calendar
-                    name="calendar"
-                    placeholderText="Click to select a date"
-                    selected={place.date}
-                    onChange={date => dateHandleChange(idx, date)}
-                    showMonthDropdown
-                    showYearDropdown
-                    dropdownMode="select"
-                    maxDate={new Date()}
-                  />
-
-                  {livePlaces.length > 1 && (
-                    <DeleteButton onClick={() => deletePlace(idx)}>
-                      <i className="fa fa-trash"></i>
-                    </DeleteButton>
-                  )}
-                </PlaceWrapper>
-              ))}
-            </PlacesList>
-
-            {livePlaces.length < 10 && (
+                    {placesLived.length > 1 && (
+                      <DeleteButton onClick={() => deletePlace(idx)}>
+                        <i className="fa fa-trash"></i>
+                      </DeleteButton>
+                    )}
+                  </PlaceWrapper>
+                ))}
+              </PlacesList>
+            }
+            {placesLived.length < 10 && (
               <AddButton
                 text="Add another"
                 onClick={() => addPlace({ city: "", date: null })}
               >
                 <i className="fa fa-plus"></i>
               </AddButton>
-            )} */}
+            )}
 
             {/* Save Changes Button  */}
             {props.dirty && (
