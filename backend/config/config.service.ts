@@ -1,8 +1,8 @@
 import { Injectable, Logger } from "@nestjs/common";
 import * as dotenv from "dotenv";
 import * as fs from "fs";
-import path from "path";
 import Joi from "@hapi/joi";
+import { MongoMemoryServer } from "mongodb-memory-server";
 
 export interface EnvConfig {
   [key: string]: string;
@@ -16,6 +16,24 @@ export interface EnvConfig {
 export class ConfigService {
   private readonly logger = new Logger(ConfigService.name);
   private readonly envConfig: EnvConfig = {};
+  private static instance: ConfigService | null = null;
+  private static mongodbURI: string;
+
+  public static async getInstance() {
+    if (this.instance == null) {
+      if (process.env.NODE_ENV == "test") {
+        console.log("Creating in memory server for testing...");
+        await ConfigService.createInMemoryServer();
+      }
+      this.instance = new ConfigService();
+    }
+    return this.instance;
+  }
+  private static async createInMemoryServer() {
+    const mongod = new MongoMemoryServer();
+    const uri = await mongod.getConnectionString();
+    this.mongodbURI = uri;
+  }
 
   constructor(filePath: string = "") {
     let file: Buffer | undefined;
@@ -56,6 +74,8 @@ export class ConfigService {
         AWS_S3_SECRET_ACCESS_KEY: process.env.AWS_S3_SECRET_ACCESS_KEY,
         CDN_HOSTNAME: process.env.CDN_HOSTNAME,
       } as EnvConfig;
+      if (process.env.NODE_ENV == "test")
+        config.MONGO_URI = ConfigService.mongodbURI;
       this.logger.log(`Config: ${JSON.stringify(config)}`);
     }
     if (config) this.envConfig = this.validateInput(config);
@@ -68,7 +88,7 @@ export class ConfigService {
   private validateInput(envConfig: EnvConfig): EnvConfig {
     const envVarsSchema: Joi.ObjectSchema = Joi.object({
       NODE_ENV: Joi.string()
-        .valid(["production", "development"])
+        .valid(["production", "development", "test"])
         .default("production"),
       MONGO_URI: Joi.string().required(),
       MONGO_AUTH_ENABLED: Joi.boolean().default(false),
@@ -212,21 +232,5 @@ export class ConfigService {
 
   get cdnHostName(): string {
     return this.envConfig.CDN_HOSTNAME;
-  }
-
-  get handlebarsTemplatesDir(): string {
-    const prodTemplatesPath = path.join(
-      __dirname,
-      "..",
-      "..",
-      "..",
-      "..",
-      "backend",
-      "templates",
-    );
-    const devTemplatesPath = path.join(__dirname, "..", "templates");
-    return this.envConfig.NODE_ENV === "production"
-      ? prodTemplatesPath
-      : devTemplatesPath;
   }
 }

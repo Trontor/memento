@@ -86,23 +86,35 @@ import {
     MailerModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService): MailerOptions => ({
-        transport: configService.emailSmtpUri,
-        defaults: {
-          from: configService.emailFrom,
-        },
-        template: {
-          // templates are not found in `dist` dir as they are static, not TS
-          dir:
-            process.env.NODE_ENV === "production"
-              ? join(__dirname + "../../backend/templates")
-              : __dirname + "/templates",
-          adapter: new HandlebarsAdapter(),
-          options: {
-            strict: true,
+      useFactory: (configService: ConfigService): MailerOptions => {
+        const prodTemplatesDir: string = join(
+          __dirname,
+          "..",
+          "..",
+          "backend",
+          "templates",
+        );
+        const devTemplatesDir: string = join(__dirname, "templates");
+
+        const templatesDir: string = configService.isDevEnv
+          ? devTemplatesDir
+          : prodTemplatesDir;
+        Logger.log("Using templates dir: " + templatesDir);
+        return {
+          transport: configService.emailSmtpUri,
+          defaults: {
+            from: configService.emailFrom,
           },
-        },
-      }),
+          template: {
+            // templates are not found in `dist` dir as they are static, not TS
+            dir: templatesDir,
+            adapter: new HandlebarsAdapter(),
+            options: {
+              strict: true,
+            },
+          },
+        };
+      },
     }),
     UserModule,
     AuthModule,
