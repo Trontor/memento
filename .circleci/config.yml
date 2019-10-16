@@ -110,7 +110,7 @@ workflows:
           # parallel: true # run tests in parallel
           # parallelism: 3 # use 3 CircleCI machines
           # group: 3 machines # name this group "3 machines"
-          start: "npm run dev:start" # start server before running tests
+          start: "npm run dev:test" # start server before running tests
       - setup-client:
           filters:
             branches:
