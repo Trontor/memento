@@ -30,7 +30,9 @@ export class ConfigService {
     return this.instance;
   }
   private static async createInMemoryServer() {
-    const mongod = new MongoMemoryServer();
+    const mongod = new MongoMemoryServer({
+      instance: { dbName: "memento-e2e", port: 27017 },
+    });
     const uri = await mongod.getConnectionString();
     this.mongodbURI = uri;
   }

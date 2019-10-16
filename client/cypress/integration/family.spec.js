@@ -1,11 +1,14 @@
-/// <reference types="Cypress" />
+///<reference types="cypress" />
 
-describe("Family", () => {
+describe("Signup", () => {
   beforeEach(() => {
-    cy.exec("");
+    cy.resetDb();
   });
-  it("Loads Dashboard on Login", () => {
-    cy.visit("/dashboard");
+  it("Successful Signup redirects to Dashboard", () => {
+    cy.signup("testuser@exampleemail.com", "Tes7Password123", "Test");
+    cy.log(window.localStorage.getItem("AUTH-TOKEN"));
+    cy.visit("/");
     cy.location("pathname").should("equal", "/dashboard");
+    cy.get("[data-cy=welcome]").contains("Hello Test");
   });
 });
