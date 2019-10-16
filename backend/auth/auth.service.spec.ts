@@ -3,10 +3,7 @@ import { AuthService } from "./auth.service";
 import { ConfigService } from "../config/config.service";
 import { JwtService } from "@nestjs/jwt";
 import { UserService } from "../user/user.service";
-import {
-  USER_WITH_ADMIN_ROLE,
-  createUserDocWithPassword,
-} from "../common/test/user.mock";
+import { USER_WITH_ADMIN_ROLE, createUserDoc } from "../common/test/user.mock";
 import { UserDocument } from "../user/schema/user.schema";
 
 class MockConfigService {
@@ -98,9 +95,7 @@ describe("AuthService", () => {
   describe("login with local strategy", () => {
     it("should throw error if incorrect password", async () => {
       const PASSWORD = "incorrectPassword";
-      const USER_DOC: UserDocument = await createUserDocWithPassword(
-        "otherPassword",
-      );
+      const USER_DOC: UserDocument = await createUserDoc("otherPassword");
       jest.spyOn(USER_DOC, "save").mockResolvedValueOnce(USER_DOC);
       jest
         .spyOn(mockUserService, "findOneByEmail")
@@ -112,7 +107,7 @@ describe("AuthService", () => {
 
     it("should successfully login if correct password", async () => {
       const PASSWORD = "correctPassword";
-      const USER_DOC: UserDocument = await createUserDocWithPassword(PASSWORD);
+      const USER_DOC: UserDocument = await createUserDoc(PASSWORD);
       jest.spyOn(USER_DOC, "save").mockResolvedValueOnce(USER_DOC);
       jest
         .spyOn(mockUserService, "findOneByEmail")

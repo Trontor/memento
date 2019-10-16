@@ -4,8 +4,8 @@ import { FileService } from "../file/file.service";
 import { VisionService } from "../vision/vision.service";
 import { UserService } from "../user/user.service";
 import { getModelToken } from "@nestjs/mongoose";
-import { MementoDocument } from "./schema/memento.schema";
-import { Model } from "mongoose";
+import { MementoDocument, MementoModel } from "./schema/memento.schema";
+import { Model, Types } from "mongoose";
 import { USER_WITH_ADMIN_ROLE, createUserDTO } from "../common/test/user.mock";
 import {
   CREATE_MEMENTO_INPUT,
@@ -14,6 +14,8 @@ import {
   CREATE_MEMENTO_INPUT_WITH_MEDIA,
 } from "./test/memento.test.utils";
 import { FamilyRole } from "../user/dto/role.dto";
+import faker from "faker";
+import { Memento } from "./dto/memento.dto";
 
 describe("MementoService", () => {
   let mementoService: MementoService;
@@ -49,6 +51,7 @@ describe("MementoService", () => {
               .fn()
               .mockImplementation((args: any) => new MockMementoDocument(args));
             model.findById = jest.fn();
+            model.findOneAndUpdate = jest.fn();
             return model;
           })(),
         },
@@ -118,6 +121,32 @@ describe("MementoService", () => {
         USER_WITH_ADMIN_ROLE,
         CREATE_MEMENTO_INPUT_WITH_MEDIA,
       );
+      expect(memento).toBeDefined();
+    });
+  });
+
+  describe("update memento", () => {
+    it("should update successfully", async () => {
+      const mementoId: string = Types.ObjectId().toHexString();
+      const title: string = faker.lorem.words(20);
+      const location: string = "Australia";
+      const description: string = faker.lorem.sentence();
+      const tags: string[] = ["TAG1", "GOLD"];
+      jest
+        .spyOn(mementoModel, "findById")
+        .mockResolvedValueOnce(
+          new MementoModel({ _id: mementoId, inFamily: Types.ObjectId() }),
+        );
+      jest
+        .spyOn(mementoModel, "findOneAndUpdate")
+        .mockResolvedValueOnce(new MementoModel({ _id: mementoId, title }));
+      const memento: Memento = await mementoService.updateMemento({
+        mementoId,
+        title,
+        location,
+        description,
+        tags,
+      });
       expect(memento).toBeDefined();
     });
   });
