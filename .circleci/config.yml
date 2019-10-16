@@ -96,27 +96,13 @@ workflows:
   version: 2
   build_and_deploy:
     jobs:
-      # install dependencies first (on 1 machine)
-      - cypress/install
-      # now run tests
-      - cypress/run:
-          # give this job a custom name for clarity
-          name: "end-to-end testing"
-          requires:
-            # use previously installed dependencies
-            # to avoid installing them on each machine running tests
-            - cypress/install
-          record: true # record results to Cypress Dashboard
-          # parallel: true # run tests in parallel
-          # parallelism: 3 # use 3 CircleCI machines
-          # group: 3 machines # name this group "3 machines"
-          start: "npm run dev:test" # start server before running tests
       - setup-client:
           filters:
             branches:
               only:
                 - master
                 - develop
+
       - setup-backend:
           filters:
             branches:
@@ -131,6 +117,21 @@ workflows:
               only:
                 - master
                 - develop
+      # install dependencies first (on 1 machine)
+      - cypress/install
+      # now run tests
+      - cypress/run:
+          # give this job a custom name for clarity
+          name: "end-to-end testing"
+          requires:
+            # use previously installed dependencies
+            # to avoid installing them on each machine running tests
+            - cypress/install
+          record: true # record results to Cypress Dashboard
+          # parallel: true # run tests in parallel
+          # parallelism: 3 # use 3 CircleCI machines
+          # group: 3 machines # name this group "3 machines"
+          start: "npm i --prefix client && npm run dev:test" # start server before running tests
       - test-backend:
           requires:
             - setup-backend
