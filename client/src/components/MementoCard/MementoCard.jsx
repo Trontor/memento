@@ -21,7 +21,7 @@ import React from "react";
 export default function MementoCard(props) {
   const history = useHistory();
   const {
-    mementoId,
+    //mementoId,
     createdAt,
     dates,
     title,
@@ -56,14 +56,14 @@ export default function MementoCard(props) {
         </div>
         {/* Edit & Bookmark */}
         <CardOptions>
-          <i
+          {/*<i
             class="fas fa-pencil-alt"
             onClick={() =>
               history.push(
                 history.location.pathname + "/edit-memento/" + mementoId,
               )
             }
-          ></i>
+          ></i>*/}
           <i class="far fa-bookmark"></i>
         </CardOptions>
       </AuthorWrapper>

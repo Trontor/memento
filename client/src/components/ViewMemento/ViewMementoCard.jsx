@@ -14,10 +14,12 @@ import {
 } from "../MementoCard/MementoCardStyles";
 import React from "react";
 import { Card, CardInfo, CardContent, FamilyGroup } from "./ViewMementoStyles";
+import { useHistory } from "react-router";
 
 export default function MementoCard(props) {
+  const history = useHistory();
   const {
-    //mementoId,
+    mementoId,
     createdAt,
     dates,
     title,
@@ -55,8 +57,14 @@ export default function MementoCard(props) {
             {/* change family group here */}
             <FamilyGroup>Valerie's Family</FamilyGroup>
           </div>
-          {/* Bookmark */}
+          {/* Edit & Bookmark */}
           <CardOptions>
+            <i
+              class="fas fa-pencil-alt"
+              onClick={() =>
+                history.push(history.location.pathname + "/edit/" + mementoId)
+              }
+            />
             <i class="far fa-bookmark"></i>
           </CardOptions>
         </AuthorWrapper>

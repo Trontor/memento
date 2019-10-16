@@ -17,7 +17,7 @@ export default function ViewMemento() {
       if (data && data.mementos) setMementos(data.mementos);
     },
   });
-
+  console.log(mementos);
   if (mementos.length === 0) {
     return <NoViewMemento />;
   }
