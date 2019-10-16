@@ -28,6 +28,7 @@ import {
   MementoDataLoaderById,
 } from "../memento/memento.dataloader";
 import { MementoDocument } from "../memento/schema/memento.schema";
+import { UserDocument } from "./schema/user.schema";
 
 /**
  * Resolves GraphQL mutations and queries related to users.
@@ -97,6 +98,22 @@ export class UserResolver {
   @UseGuards(JwtAuthGuard)
   async currentUser(@CurrentUser() user: User): Promise<User> {
     return user;
+  }
+
+  /**
+   * Returns the Mementos uploaded by the current authenticate user.
+   * @param user current authenticated user
+   */
+  @Query(returns => [Memento])
+  @UseGuards(JwtAuthGuard)
+  async getMyUploadedMementos(@CurrentUser() user: User): Promise<Memento[]> {
+    const userDoc: UserDocument = await this.usersDataLoaderById.load(
+      user.userId,
+    );
+    const mementoDocs: MementoDocument[] = await this.mementoDataLoaderById.loadMany(
+      userDoc._uploads.map(id => id.toHexString()),
+    );
+    return mementoDocs.map(doc => doc.toDTO());
   }
 
   /**

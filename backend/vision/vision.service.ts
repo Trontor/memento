@@ -1,9 +1,5 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { RekognitionClient } from "../aws/aws.rekognition.client";
-import { FamilyService } from "../family/family.service";
-
-type UserId = string;
-type CollectionName = string;
 
 /**
  * Interface for a Vision service.
@@ -13,12 +9,15 @@ export interface IVisionService {
     imageKey: string,
     minConfidence: number,
   ): Promise<Set<IDetectionResults> | undefined>;
-  initVisionForFamily(familyId: string): Promise<CollectionName>;
-  identifyUserFacesInImage(imageKey: string, familyId: string): Promise<UserId>;
 }
 
+/**
+ * Interface for Object detection results.
+ */
 export interface IDetectionResults {
+  // label name
   name: string;
+  // float: [0, 100] indicating confidence of detection
   confidence: number;
 }
 
@@ -28,34 +27,7 @@ export interface IDetectionResults {
  */
 @Injectable()
 export class VisionService implements IVisionService {
-  private readonly logger = new Logger(VisionService.name);
-  constructor(
-    private readonly rekognition: RekognitionClient,
-    private readonly familyService: FamilyService,
-  ) {}
-
-  async initVisionForFamily(familyId: string): Promise<CollectionName> {
-    this.logger.log(`Initialising vision for family ${familyId}`);
-    const arn = await this.rekognition.createCollection();
-    return arn;
-  }
-
-  /**
-   * Identifies faces of users in an image and returns an array of images.
-   *
-   * @param imageKey reference to image (e.g. in S3)
-   * @param familyId
-   */
-  async identifyUserFacesInImage(
-    imageKey: string,
-    familyId: string,
-  ): Promise<UserId> {
-    const collectionArn = await this.familyService.getVisionCollection(
-      familyId,
-    );
-    this.rekognition.findFacesInImage(imageKey, collectionArn);
-    return "user id";
-  }
+  constructor(private readonly rekognition: RekognitionClient) {}
 
   /**
    * Detects objects in images.
