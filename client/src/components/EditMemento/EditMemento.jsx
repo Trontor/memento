@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { Container } from "ui/Helpers";
-import { FormSection, Error, InstructionLabel } from "ui/Forms";
+import { FormSection, Error, InstructionLabel, InputField } from "ui/Forms";
 import EditInput from "components/EditInput/EditInput";
 import { Header } from "ui/Typography";
 import {
@@ -31,9 +31,37 @@ import { StyledDropzone } from "components/FileDropzone/FileDropzone";
 // });
 
 export default function EditMemento() {
+  const memento = {
+    title: "Childhood pic",
+    description: "This is my childhood pic",
+    location: "Amsterdam",
+    familyMemberOptions: [
+      "Gigi Leung",
+      "Valerie Febriana",
+      "Rohyl Joshi",
+      "Jackson Huang",
+    ],
+    memberTags: ["Gigi Leung", "Valerie Febriana"],
+    tags: ["cars", "family"],
+  };
+
+  const [tags, setTags] = useState([
+    "recipes",
+    "painting",
+    "stuffed toys",
+    "cars",
+    "jewellery",
+    "photographs",
+    "clothing",
+    "family",
+    "blanket",
+    "food",
+  ]);
+  const [newTag, setNewTag] = useState(null);
+
   return (
     <Formik
-      //initialValues={initialFormValues}
+      initialValues={memento}
       //validationSchema={editMementoValidationSchema}
       //onChange={}
       render={props => {
@@ -41,11 +69,10 @@ export default function EditMemento() {
         return (
           <Container>
             <Header underline>Edit Memento</Header>
-
             <FormSection>
               <EditInput
                 name="title"
-                value={props.values.firstName}
+                value={props.values.title}
                 inputLabel="Title"
                 onChange={props.handleChange}
               />
@@ -53,9 +80,9 @@ export default function EditMemento() {
             <FormSection>
               <EditInput
                 name="description"
-                //value={props.values.firstName}
+                value={props.values.description}
                 inputLabel="Description"
-                //onChange={props.handleChange}
+                onChange={props.handleChange}
               />
             </FormSection>
             <FormSection>
@@ -80,14 +107,14 @@ export default function EditMemento() {
                 isMulti
                 create
                 name="memberTags"
-                // //value={familyMemberOptions.filter(m =>
-                //   props.values.memberTags.includes(m.value),
-                // )}
-                // onChange={members => {
+                value={memento.familyMemberOptions.filter(m =>
+                  props.values.memberTags.includes(m.value),
+                )}
+                // // onChange={members => {
                 //   const memberIDs = !members ? [] : members.map(m => m.value);
                 //   props.setFieldValue("memberTags", memberIDs);
                 // }}
-                // options={familyMemberOptions}
+                options={memento.familyMemberOptions}
               />
             </FormSection>
 
@@ -116,13 +143,46 @@ export default function EditMemento() {
             <FormSection>
               <EditInput
                 name="location"
-                //value={props.values.firstName}
+                value={props.values.location}
                 inputLabel="Add Location:"
-                //onChange={props.handleChange}
+                onChange={props.handleChange}
               />
               {/* {props.errors.location && props.touched.location && (
                 <Error>{props.errors.location}</Error>
               )} */}
+            </FormSection>
+
+            <FormSection>
+              <InstructionLabel>Tags:</InstructionLabel>
+              <TagsContainer>
+                {tags.sort().map(tag => (
+                  <Tag
+                  // onClick={() => {
+                  //   if (props.values.tags.includes(tag)) {
+                  //     props.setFieldValue(
+                  //       "tags",
+                  //       props.values.tags.filter(t => t !== tag),
+                  //     );
+                  //   }
+                  // }}
+                  >
+                    {tag}
+                  </Tag>
+                ))}
+                <NewTag type="button" onClick={() => setNewTag("")}>
+                  <i class="fas fa-plus"></i> new tag
+                </NewTag>
+              </TagsContainer>
+              {newTag !== null && (
+                <>
+                  <InputField
+                    placeholder="New tag name"
+                    value={newTag}
+                    //onChange={e => handleChange(e)}
+                    // onBlur={() => setDefaultTags([...defaultTags, newTag])}
+                  />
+                </>
+              )}
             </FormSection>
 
             {/* <FormSection>

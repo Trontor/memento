@@ -33,6 +33,7 @@ export default function MementoCard(props) {
     uploader,
     people,
   } = props;
+  console.log(props);
   const createdDate = new Date(createdAt);
 
   return (
