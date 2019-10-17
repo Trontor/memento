@@ -127,6 +127,15 @@ export const MementoTagsWrapper = styled.ul`
   i {
     color: ${props => props.theme.palette.main};
     margin-right: 8px;
+    width: 20px;
+  }
+
+  &:last-of-type {
+    margin-top: 5px;
+
+    &:first-child {
+      margin: 0;
+    }
   }
 `;
 

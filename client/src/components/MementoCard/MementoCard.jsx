@@ -15,8 +15,9 @@ import {
   PeopleTags,
   UploadDate,
 } from "./MementoCardStyles";
-import { useHistory } from "react-router";
+
 import React from "react";
+import { useHistory } from "react-router";
 
 export default function MementoCard(props) {
   const history = useHistory();
@@ -98,7 +99,7 @@ export default function MementoCard(props) {
             {/* Beneficiary Tags */}
             {beneficiaries && beneficiaries.length > 0 && (
               <span>
-                <i class="fas fa-user-tag"></i>
+                <i class="far fa-handshake"></i>
                 <div>
                   {props.beneficiaries.map(beneficiary => (
                     <PeopleTags>
@@ -121,15 +122,18 @@ export default function MementoCard(props) {
         )}
       </CardContent>
       {/* Tags */}
-      <MementoTagsWrapper>
-        <i class="fas fa-tags"></i>
-        {props.tags.map(tag => (
-          <MementoTag>{tag}</MementoTag>
-        ))}
-      </MementoTagsWrapper>
+      {props.tags && props.tags.length > 0 && (
+        <MementoTagsWrapper>
+          <i class="fas fa-tags"></i>
+          {props.tags.map(tag => (
+            <MementoTag>{tag}</MementoTag>
+          ))}
+        </MementoTagsWrapper>
+      )}
       {/* Rekognition Tags */}
+      {detectedLabels && detectedLabels.length > 0 && (
       <MementoTagsWrapper>
-        <i class="fas fa-camera"></i>
+        <i class="far fa-eye"></i>
         {detectedLabels.map(result => (
           <MementoTag>
             {result.name.toLowerCase()}{" "}
@@ -137,6 +141,7 @@ export default function MementoCard(props) {
           </MementoTag>
         ))}
       </MementoTagsWrapper>
+      )}
     </Card>
   );
 }

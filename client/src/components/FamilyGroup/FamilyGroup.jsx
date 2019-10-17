@@ -209,7 +209,7 @@ export default function FamilyGroup(props) {
               <SideMenuSectionHeader>
                 <h2>Members</h2>
               </SideMenuSectionHeader>
-              {family.members.map(member => (
+              {/* {family.members.map(member => (
                 <MemberRow admin>
                   {member.imageUrl ? (
                     <img
@@ -234,7 +234,35 @@ export default function FamilyGroup(props) {
                     ) && <span>Admin</span>}
                   </div>
                 </MemberRow>
-              ))}
+              ))} */}
+              <MemberRow>
+                <i class="fas fa-user-circle"></i>
+                <div>
+                  <span>Rohyl Joshi</span>
+                  <span>Admin</span>
+                </div>
+              </MemberRow>
+              <MemberRow>
+                <i class="fas fa-user-circle"></i>
+                <div>
+                  <span>Jackson Huang</span>
+                  <span>Admin</span>
+                </div>
+              </MemberRow>
+              <MemberRow>
+                <i class="fas fa-user-circle"></i>
+                <div>
+                  <span>Valerie Febriana</span>
+                  <span>Admin</span>
+                </div>
+              </MemberRow>
+              <MemberRow>
+                <i class="fas fa-user-circle"></i>
+                <div>
+                  <span>Gigi Leung</span>
+                  <span>Admin</span>
+                </div>
+              </MemberRow>
             </SideMenuSectionContainer>
 
             <SideMenuSectionContainer>
