@@ -55,7 +55,6 @@ export class UserService implements IUserService {
     if (existingUser) {
       throw new BadRequestException(`${input.email} is already registered :o`);
     }
-    let userDoc: UserDocument;
     try {
       const userDoc = await createdUser.save();
       return userDoc.toDTO();
