@@ -94,6 +94,7 @@ export default function EditMemento() {
       { label: "Valerie Febriana", value: 2 },
     ],
     tags: ["cars", "family"],
+    beneficiaries: [{ label: "Gigi Leung", value: 1 }],
   };
 
   const [tags, setTags] = useState([
@@ -172,13 +173,11 @@ export default function EditMemento() {
               <Select
                 isClearable
                 placeholder="Select family members..."
-                //styles={customDropdown}
+                styles={customDropdown}
                 isMulti
                 create
                 name="beneficiaries"
-                // value={familyMemberOptions.filter(m =>
-                //   props.values.beneficiaries.includes(m.value),
-                // )}
+                value={memento.beneficiaries}
                 // onChange={members => {
                 //   const memberIDs = !members ? [] : members.map(m => m.value);
                 //   props.setFieldValue("beneficiaries", memberIDs);
@@ -186,6 +185,7 @@ export default function EditMemento() {
                 // options={familyMemberOptions.filter(
                 //   m => m.value !== currentUserId,
                 // )}
+                options={memento.familyMemberOptions}
               />
             </FormSection>
 
@@ -201,7 +201,7 @@ export default function EditMemento() {
             <FormSection>
               <InstructionLabel>Tags:</InstructionLabel>
               <TagsContainer>
-                {tags.sort().map(tag => (
+                {memento.tags.sort().map(tag => (
                   <Tag
                   // onClick={() => {
                   //   if (props.values.tags.includes(tag)) {
