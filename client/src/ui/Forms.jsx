@@ -86,7 +86,7 @@ export const InstructionLabel = styled.label`
 `;
 
 // Error Message
-export const Error = styled.div`
+export const Error = styled.div.attrs({ "data-cy": "error" })`
   font-family: "Livvic", sans-serif;
   letter-spacing: 0.01em;
   color: ${props => props.theme.palette.error};
@@ -194,7 +194,7 @@ export const InputEdit = styled.div`
   grid-column-gap: 10px;
 `;
 
-export const ErrorBanner = styled.div`
+export const ErrorBanner = styled.div.attrs({ "data-cy": "errorBanner" })`
   font-family: "Livvic", sans-serif;
   width: 100%;
   font-size: 16px;

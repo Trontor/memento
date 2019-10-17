@@ -66,7 +66,7 @@ export default function CreateFamily(props) {
   }
 
   return (
-    <Container>
+    <Container data-cy="new-family">
       <Header underline>Create a New Family</Header>
       <Formik
         initialValues={defaultValues}
@@ -135,7 +135,7 @@ export default function CreateFamily(props) {
               <InstructionLabel>
                 Pick a colour theme for your Family group page.
               </InstructionLabel>
-              <PickerWrapper>
+              <PickerWrapper data-cy="circle-picker">
                 <CirclePicker
                   onChange={color => {
                     props.setFieldValue("color", color.hex);

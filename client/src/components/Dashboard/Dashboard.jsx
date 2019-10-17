@@ -47,7 +47,7 @@ export default function Dashboard(props) {
   return (
     <Container>
       <TextWrapper>
-        <h2>Hello {user.firstName}!</h2>
+        <h2 data-cy="welcome">Hello {user.firstName}!</h2>
         <p>Get started with one of the following actions: </p>
 
         <DashboardButtons onClick={() => props.history.push("/family/new")}>
