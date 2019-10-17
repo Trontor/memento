@@ -50,14 +50,13 @@ export class UserService implements IUserService {
   async createUser(input: UserSignupInput): Promise<User> {
     const createdUser = new this.UserModel(input);
 
-    let userDoc: UserDocument;
     try {
-      userDoc = await createdUser.save();
+      const userDoc = await createdUser.save();
+      return userDoc.toDTO();
     } catch (err) {
       this.logger.error(err);
       throw this.evaluateMongoError(err, input);
     }
-    return userDoc.toDTO();
   }
 
   /**

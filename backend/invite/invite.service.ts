@@ -151,7 +151,6 @@ export class InviteService {
         inviteLink,
       },
     };
-    this.logger.log(this.configService.handlebarsTemplatesDir);
     try {
       const res = await this.mailerService.sendMail(mailOptions);
       if (!res.accepted) {
