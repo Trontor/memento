@@ -56,7 +56,12 @@ export class MementoResolver {
     @CurrentUser() user: User,
     @Args("input") input: CreateMementoInput,
   ) {
-    return this.mementoService.createMemento(user, input);
+    const memento: Memento = await this.mementoService.createMemento(
+      user,
+      input,
+    );
+    this.userLoaderById.clear(user.userId);
+    return memento;
   }
 
   /**

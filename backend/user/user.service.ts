@@ -60,6 +60,27 @@ export class UserService implements IUserService {
   }
 
   /**
+   * Adds upload to the user.
+   * @param id mementoId
+   */
+  async addUpload(user: User, mementoId: string) {
+    const updated = await this.UserModel.findByIdAndUpdate(
+      fromHexStringToObjectId(user.userId),
+      {
+        $addToSet: {
+          _uploads: fromHexStringToObjectId(mementoId),
+        },
+      },
+    );
+    if (!updated) {
+      this.logger.error(
+        `Couldn't add memento ${mementoId} to user ${user.userId}'s uploads`,
+      );
+      throw new InternalServerErrorException();
+    }
+  }
+
+  /**
    * Finds user by id.
    * @param userId user id as a string
    */

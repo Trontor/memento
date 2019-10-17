@@ -342,6 +342,7 @@ export class MementoService {
     // insert document
     try {
       doc = await doc.save();
+      await this.userService.addUpload(uploader, doc.id);
     } catch (err) {
       this.logger.error(err);
       throw new InternalServerErrorException("Could not save Memento");
