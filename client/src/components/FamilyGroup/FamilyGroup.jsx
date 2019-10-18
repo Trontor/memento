@@ -66,10 +66,12 @@ export default function FamilyGroup(props) {
   }, [mementos]);
 
   // Query to load the family
-  const { loading, error } = useQuery(LOAD_FAMILY, {
+  const { loading, error, refetch } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
-
+    fetchPolicy: "cache-and-network",
     onCompleted: data => {
+      console.log("Loaded family...");
+
       if (data && data.family) {
         setUserID(data.currentUser.userId);
         setFamily(data.family);
@@ -91,7 +93,8 @@ export default function FamilyGroup(props) {
     },
   });
   useEffect(() => {
-    console.log("refetching mementos...");
+    console.log("Refetching family and mementos..");
+    refetch();
     getMementosQuery.refetch();
     // eslint-disable-next-line
   }, [location]);
