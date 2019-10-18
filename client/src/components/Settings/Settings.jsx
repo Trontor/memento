@@ -39,8 +39,10 @@ export default function Settings(props) {
   return (
     <Container>
       <SettingsHeader>
-        <BackToView>
-          <BackButton onClick={() => props.history.push("/profile/" + user.userId)}/>
+        <BackToView
+          onClick={() => props.history.push("/profile/" + user.userId)}
+        >
+          <BackButton />
         </BackToView>
         <Header center>My Settings</Header>
         <div></div>

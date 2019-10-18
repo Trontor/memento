@@ -4,9 +4,9 @@ import styled from "styled-components";
 import { lighten } from "polished";
 
 const getColor = props => {
-  if (props.isDragAccept) {
-    return props => lighten(0.1, props.theme.palette.loading);
-  }
+  // if (props.isDragAccept) {
+  //   return props => lighten(0.1, props.theme.palette.loading);
+  // }
   if (props.isDragReject) {
     return props => props.theme.palette.error;
   }

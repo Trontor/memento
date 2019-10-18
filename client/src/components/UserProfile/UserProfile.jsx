@@ -10,31 +10,36 @@ import {
   UserGender,
   UserPlaces,
 } from "./UserProfileStyles";
-import GET_CURRENT_USER from "queries/GetCurrentUser";
+import { GET_USER } from "queries/UserQueries";
 import { Header } from "ui/Typography";
 import { InputLabel, UserAvatar, ImgPreview } from "ui/Forms";
 import JollyLoader from "components/JollyLoader/JollyLoader";
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
-
+import { useParams } from "react-router-dom";
+import moment from "moment";
 export default function UserProfile() {
-  const { data, error, loading } = useQuery(GET_CURRENT_USER);
-
-  let user = {};
+  const params = useParams();
+  const [user, setUser] = useState(null);
+  const { error, loading } = useQuery(GET_USER, {
+    variables: { id: params.id },
+    onCompleted: data => {
+      if (data && data.user) {
+        setUser(data.user);
+        console.log(data.user);
+      }
+    },
+  });
 
   //Handle the states of displaying data, error and loading
   if (error) {
     console.log("Error loading user data:", error);
   }
-  if (loading) {
+  console.log("User:", user);
+
+  if (loading || !user) {
     return <JollyLoader />;
   }
-
-  if (data && data.currentUser) {
-    user = data.currentUser;
-    console.log(user);
-  }
-
   return (
     <Container>
       <CenterText>
@@ -54,7 +59,7 @@ export default function UserProfile() {
         <UserBday size="25px" />
         <ProfileField>
           <InputLabel>Date of Birth</InputLabel>
-          <Span>{user.dateOfBirth}</Span>
+          <Span>{moment(user.dateOfBirth).format("DD/MM/YYYY")}</Span>
         </ProfileField>
       </ProfileWrapper>
       <ProfileWrapper>
