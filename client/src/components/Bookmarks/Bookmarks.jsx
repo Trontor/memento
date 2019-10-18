@@ -19,7 +19,7 @@ import NoBookmarks from "./NoBookmarks";
 export default function Bookmarks(props) {
   const [mementos, setMementos] = useState([]);
 
-  const loadMemento = useQuery(GET_MEMENTOS, {
+  useQuery(GET_MEMENTOS, {
     variables: {
       //id: "5d8c80b8c4a4ad02c5722152",
       id: "5d849da7a450cc02c84e7629",
