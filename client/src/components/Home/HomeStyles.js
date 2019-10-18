@@ -1,4 +1,6 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+import { lighten } from "polished";
 
 export const PageHeader = styled.div`
   height: 70px;
@@ -10,12 +12,13 @@ export const PageHeader = styled.div`
 
 export const Intro = styled.section`
   padding: 0 8vw;
+  border-bottom: 1px solid ${props => lighten(0.65, props.theme.palette.text)};
 `;
 
 export const IntroContent = styled.div`
   margin: 0 auto;
   text-align: center;
-  padding: 70px 0 100px 0;
+  padding: 80px 0 120px 0;
   max-width: 480px;
 
   h1 {
@@ -53,6 +56,11 @@ export const PitchActions = styled.div`
     margin: 0 10px;
   }
 `;
+const floating = keyframes`
+    from { transform: translate(0,  0px); }
+    65%  { transform: translate(-2px, 10px); }
+    to   { transform: translate(0, 0px); }
+`;
 
 export const FeaturesOverview = styled.section`
   margin: 0 auto;
@@ -61,13 +69,15 @@ export const FeaturesOverview = styled.section`
 `
 export const FeaturesContentWrapper = styled.div`
   max-width: 800px;
+  margin-bottom: 80px;
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletPortrait}) {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: auto auto;
     grid-gap: 80px;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
   }
 `;
 
@@ -87,8 +97,8 @@ export const FeatureWrapper = styled.div`
 `;
 
 export const FeatureImg = styled.div`
-  flex: 0 0 120px;
-  margin-right: 24px;
+  flex: 0 0 108px;
+  margin-right: 32px;
 
   img {
     width: 100%;
@@ -96,8 +106,9 @@ export const FeatureImg = styled.div`
     @media screen and (min-width: ${props =>
     props.theme.breakpoints.tabletPortrait}) {
       width: auto;
-      height: 100px;
+      height: 80px;
       margin-bottom: 24px;
+      animation: ${floating} 5s linear infinite;
     }
   }
 `;
@@ -111,5 +122,10 @@ export const FeatureTitle = styled.div`
 export const FeatureDescription = styled.div`
   opacity: 0.7;
   line-height: 1.5em;
-  font-size: 16px;
+  font-size: 15px;
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletPortrait}) {
+    font-size: 16px;
+  }
 `;

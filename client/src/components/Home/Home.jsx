@@ -20,7 +20,7 @@ const features = [
     image: "https://image.flaticon.com/icons/svg/2219/2219802.svg",
     alt: "family",
     title: "Create or Join Family Groups",
-    description: "Invite your closest family members, or even extended family members to your personalised & private space."
+    description: "Invite your closest family members, or even extended family members to a personalised & private space."
   },
   {
     image: "https://image.flaticon.com/icons/svg/2159/2159991.svg",
@@ -52,13 +52,13 @@ export default function Home() {
       <Intro>
         <IntroContent>
           <h1>
-            Store your most significant memories in one place.
+            Store all of your significant memories in one place.
           </h1>
           <p>
             Memento offers a safe and simple way to preserve your life events, milestones and artefacts for you and your family to appreciate for generations come.
           </p>
           <PitchActions>
-            <ButtonPrimary>Get Started</ButtonPrimary>
+            <ButtonPrimary>Sign Up</ButtonPrimary>
             <ButtonSecondary>Learn More</ButtonSecondary>
           </PitchActions>
         </IntroContent>
@@ -81,6 +81,9 @@ export default function Home() {
             </FeatureWrapper>
           ))}
         </FeaturesContentWrapper>
+        <PitchActions>
+          <ButtonPrimary>Get Started</ButtonPrimary>
+        </PitchActions>
       </FeaturesOverview>
     </>
   )
