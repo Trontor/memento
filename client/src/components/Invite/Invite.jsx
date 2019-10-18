@@ -139,6 +139,7 @@ export default function InviteFamily() {
 
     sendInviteByEmail({ variables: { input: payload } });
   };
+
   return (
     <Formik
       validateOnBlur={false}

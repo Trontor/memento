@@ -23,7 +23,7 @@ const initialFormValues = {
   beneficiaries: [],
   tags: [],
   file: null,
-  location: "Amsterdam",
+  location: "",
 };
 const MAX_FILE_SIZE = 160 * 1024 * 1024;
 const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif", "image/png"];

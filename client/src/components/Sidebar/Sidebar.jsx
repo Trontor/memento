@@ -12,7 +12,7 @@ import {
   UserName,
 } from "./SidebarStyles";
 import React, { useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { NavLink, useHistory, useLocation } from "react-router-dom";
 
 import GET_CURRENT_USER from "queries/GetCurrentUser";
 import { GET_USER_FAMILIES } from "queries/UserQueries";
@@ -83,11 +83,9 @@ const Sidebar = props => {
           <Spinner />
         ) : (
           families.map(family => (
-            <TextList key={family.familyId}>
-              <span onClick={() => history.push(`/family/${family.familyId}`)}>
-                {family.name}
-              </span>
-            </TextList>
+            <SidebarLink name="invite" to={`/family/${family.familyId}`}>
+              {family.name}
+            </SidebarLink>
           ))
         )}
         <NewFamilyGroup
@@ -98,45 +96,40 @@ const Sidebar = props => {
         </NewFamilyGroup>
       </FamilyListSection>
       <MenuSection>
-        <TextList>
-          <i class="fas fa-user-plus"></i>
-          <span
-            data-cy="invite"
-            href="#"
-            onClick={() => history.push("/invite")}
-          >
-            Invite
-          </span>
-        </TextList>
+        <SidebarLink icon="fas fa-user-plus" name="invite" to="/invite">
+          Invite
+        </SidebarLink>
       </MenuSection>
       <MenuSection>
-        <TextList>
-          <i class="far fa-paper-plane"></i>
-          <span href="#" onClick={() => history.push("/mementos")}>
-            View my Mementos
-          </span>
-        </TextList>
-        <TextList>
-          <i class="far fa-bookmark"></i>
-          <span href="#" onClick={() => history.push("/bookmarks")}>
-            Bookmarks
-          </span>
-        </TextList>
+        <SidebarLink icon="far fa-paper-plane" name="mementos" to="/mementos">
+          View My Mementos
+        </SidebarLink>
+        <SidebarLink icon="far fa-bookmark" name="bookmarks" to="/bookmarks">
+          Bookmarks
+        </SidebarLink>
       </MenuSection>
       <MenuSection>
-        <TextList>
-          <i class="fas fa-pencil-alt"></i>
-          <span
-            data-cy="edit-account"
-            href="#"
-            onClick={() => history.push("/settings")}
-          >
-            Edit profile & account
-          </span>
-        </TextList>
+        <SidebarLink
+          icon="fas fa-pencil-alt"
+          name="edit-account"
+          to="/settings"
+        >
+          Edit profile & account
+        </SidebarLink>
       </MenuSection>
       <SignOutButton onClick={signOut}>Sign Out</SignOutButton>
     </SidebarContainer>
+  );
+};
+
+const SidebarLink = ({ to, name, icon, children }) => {
+  return (
+    <TextList to={to}>
+      {icon && <i className={icon}></i>}
+      <span data-cy={name} href="#">
+        {children}
+      </span>
+    </TextList>
   );
 };
 export default Sidebar;
