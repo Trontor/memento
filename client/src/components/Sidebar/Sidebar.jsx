@@ -68,7 +68,7 @@ const Sidebar = props => {
       <UserDisplay onClick={() => history.push("/profile/" + user.userId)}>
         <UserAvatar>
           {!user.imageUrl ? (
-            <i class="fas fa-user-circle"></i>
+            <i className="fas fa-user-circle"></i>
           ) : (
             <img src={user.imageUrl} alt="profile_image"></img>
           )}
@@ -83,7 +83,11 @@ const Sidebar = props => {
           <Spinner />
         ) : (
           families.map(family => (
-            <SidebarLink name="invite" to={`/family/${family.familyId}`}>
+            <SidebarLink
+              key={family.familyId}
+              name="invite"
+              to={`/family/${family.familyId}`}
+            >
               {family.name}
             </SidebarLink>
           ))

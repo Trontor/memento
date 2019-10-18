@@ -10,3 +10,22 @@ export const GET_USER_FAMILIES = gql`
     }
   }
 `;
+
+export const GET_USER = gql`
+  query getUser($id: String!) {
+    user(userId: $id) {
+      userId
+      firstName
+      lastName
+      dateOfBirth
+      imageUrl
+      location
+      hometown
+      gender
+      placesLived {
+        city
+        dateMoved
+      }
+    }
+  }
+`;
