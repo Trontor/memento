@@ -425,7 +425,8 @@ export const SearchInput = styled.input`
 `;
 
 export const NoMementosIcon = styled(PhotoAlbum)`
-  color: ${props => lighten(0.1, props.familyColour)};
+  color: ${props =>
+    lighten(0.1, props.familyColour || props.theme.palette.main)};
   margin: auto;
   height: 120px;
 `;
