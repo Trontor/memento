@@ -2,6 +2,9 @@ import gql from "graphql-tag";
 
 export const GET_MEMENTOS = gql`
   query getMementos($id: ID!) {
+    currentUser {
+      userId
+    }
     mementos(familyId: $id) {
       mementoId
       title
@@ -39,6 +42,10 @@ export const GET_MEMENTOS = gql`
       tags
       createdAt
       updatedAt
+
+      bookmarkedBy {
+        userId
+      }
     }
   }
 `;

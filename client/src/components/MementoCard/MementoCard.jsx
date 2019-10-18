@@ -16,11 +16,14 @@ import {
   UploadDate,
 } from "./MementoCardStyles";
 import { useHistory } from "react-router";
+import { useMutation } from "@apollo/react-hooks";
 import React from "react";
+import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
 
 export default function MementoCard(props) {
   const history = useHistory();
   const {
+    userId,
     mementoId,
     createdAt,
     dates,
@@ -32,12 +35,30 @@ export default function MementoCard(props) {
     // type,
     // updatedAt,
     detectedLabels,
+    bookmarkedBy,
     beneficiaries,
     uploader,
     people,
+    onBookmarkToggled,
   } = props;
   const createdDate = new Date(createdAt);
 
+  const [bookmark] = useMutation(ADD_BOOKMARK, {
+    variables: { id: mementoId },
+    onCompleted: data => {
+      onBookmarkToggled();
+    },
+  });
+
+  const [removeBookmark] = useMutation(DELETE_BOOKMARK, {
+    variables: { id: mementoId },
+    onCompleted: data => {
+      onBookmarkToggled();
+    },
+  });
+
+  const isBookmarked = bookmarkedBy.some(id => id.userId === userId);
+  const isUploader = uploader.userId === userId;
   return (
     <Card>
       <AuthorWrapper>
@@ -56,13 +77,16 @@ export default function MementoCard(props) {
         </div>
         {/* Edit & Bookmark */}
         <CardOptions>
+          {isUploader && (
+            <i
+              className="fas fa-pencil-alt"
+              onClick={() => history.push("/memento/" + mementoId + "/edit")}
+            />
+          )}
           <i
-            className="fas fa-pencil-alt"
-            onClick={() =>
-              history.push(history.location.pathname + "/memento/" + mementoId)
-            }
+            className={(isBookmarked ? "fa " : "far ") + "fa-bookmark"}
+            onClick={() => (isBookmarked ? removeBookmark() : bookmark())}
           ></i>
-          <i className="far fa-bookmark"></i>
         </CardOptions>
       </AuthorWrapper>
       <CardContent>
