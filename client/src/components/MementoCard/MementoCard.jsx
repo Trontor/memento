@@ -16,11 +16,14 @@ import {
   UploadDate,
 } from "./MementoCardStyles";
 import { useHistory } from "react-router";
+import { useMutation } from "@apollo/react-hooks";
 import React from "react";
+import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
 
 export default function MementoCard(props) {
   const history = useHistory();
   const {
+    userId,
     mementoId,
     createdAt,
     dates,
@@ -32,11 +35,30 @@ export default function MementoCard(props) {
     // type,
     // updatedAt,
     detectedLabels,
+    bookmarkedBy,
     beneficiaries,
     uploader,
     people,
+    onBookmarkToggled,
   } = props;
   const createdDate = new Date(createdAt);
+
+  const [bookmark] = useMutation(ADD_BOOKMARK, {
+    variables: { id: mementoId },
+    onCompleted: data => {
+      onBookmarkToggled();
+    },
+  });
+
+  const [removeBookmark] = useMutation(DELETE_BOOKMARK, {
+    variables: { id: mementoId },
+    onCompleted: data => {
+      onBookmarkToggled();
+    },
+  });
+
+  const isBookmarked = bookmarkedBy.some(id => id.userId == userId);
+  console.log(isBookmarked, userId);
 
   return (
     <Card>
@@ -62,7 +84,10 @@ export default function MementoCard(props) {
               history.push(history.location.pathname + "/memento/" + mementoId)
             }
           ></i>
-          <i className="far fa-bookmark"></i>
+          <i
+            className={(isBookmarked ? "fa " : "far ") + "fa-bookmark"}
+            onClick={() => (isBookmarked ? removeBookmark() : bookmark())}
+          ></i>
         </CardOptions>
       </AuthorWrapper>
       <CardContent>

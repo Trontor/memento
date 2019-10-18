@@ -4,7 +4,7 @@ import React from "react";
 import JollyLoader from "components/JollyLoader/JollyLoader";
 
 export default function MementosViewer(props) {
-  const { mementos } = props;
+  const { mementos, userId, refreshMementos } = props;
 
   if (!mementos) {
     return <JollyLoader />;
@@ -20,11 +20,17 @@ export default function MementosViewer(props) {
         ),
     );
   }
+  console.log("mementos:", mementos);
 
   return (
     <MementoCardColumns>
       {filteredMementos.map(memento => (
-        <MementoCard key={memento.mementoId} {...memento} />
+        <MementoCard
+          key={memento.mementoId}
+          onBookmarkToggled={refreshMementos}
+          userId={userId}
+          {...memento}
+        />
       ))}
     </MementoCardColumns>
   );
