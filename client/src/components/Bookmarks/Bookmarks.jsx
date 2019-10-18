@@ -16,11 +16,12 @@ import {
 import NoBookmarks from "./NoBookmarks";
 import { GET_BOOKMARKS } from "queries/Bookmarks";
 import { DELETE_BOOKMARK } from "mutations/Memento";
+import JollyLoader from "components/JollyLoader/JollyLoader";
 
 export default function Bookmarks(props) {
   const [bookmarks, setBookmarks] = useState([]);
 
-  const { refetch } = useQuery(GET_BOOKMARKS, {
+  const { refetch, loading } = useQuery(GET_BOOKMARKS, {
     fetchPolicy: "cache-and-network",
     onCompleted: data => {
       if (data && data.currentUser) setBookmarks(data.currentUser.bookmarks);
@@ -32,6 +33,9 @@ export default function Bookmarks(props) {
       refetch();
     },
   });
+  if (loading) {
+    return <JollyLoader />;
+  }
   if (bookmarks.length === 0) {
     return <NoBookmarks />;
   }
