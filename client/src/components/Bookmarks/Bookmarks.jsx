@@ -51,11 +51,11 @@ export default function Bookmarks(props) {
               <MementoOverview>
                 {/* Memento Date */}
                 <span>
-                  <i class="far fa-clock" /> {memento.dates[0].year}
+                  <i className="far fa-clock" /> {memento.dates[0].year}
                 </span>
                 {/* Memento Location */}
                 <span>
-                  <i class="fas fa-map-marker-alt" />
+                  <i className="fas fa-map-marker-alt" />
                   {memento.location}
                 </span>
               </MementoOverview>
@@ -63,7 +63,7 @@ export default function Bookmarks(props) {
               <UploaderBox>
                 <UploaderAvatar>
                   {!memento.uploader.imageUrl ? (
-                    <i class="fas fa-user-circle"></i>
+                    <i className="fas fa-user-circle"></i>
                   ) : (
                     <img
                       src={memento.uploader.imageUrl}
@@ -77,7 +77,7 @@ export default function Bookmarks(props) {
                   {/*change family group name */}
                 </UploaderText>
                 <BookmarksIcon>
-                  <i class="far fa-bookmark"></i>
+                  <i className="far fa-bookmark"></i>
                 </BookmarksIcon>
               </UploaderBox>
             </Description>

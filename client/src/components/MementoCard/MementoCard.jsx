@@ -43,7 +43,7 @@ export default function MementoCard(props) {
       <AuthorWrapper>
         <AuthorAvatar>
           {!uploader.imageUrl ? (
-            <i class="fas fa-user-circle"></i>
+            <i className="fas fa-user-circle"></i>
           ) : (
             <img src={uploader.imageUrl} alt={uploader.firstName} />
           )}
@@ -57,12 +57,12 @@ export default function MementoCard(props) {
         {/* Edit & Bookmark */}
         <CardOptions>
           <i
-            class="fas fa-pencil-alt"
+            className="fas fa-pencil-alt"
             onClick={() =>
               history.push(history.location.pathname + "/memento/" + mementoId)
             }
           ></i>
-          <i class="far fa-bookmark"></i>
+          <i className="far fa-bookmark"></i>
         </CardOptions>
       </AuthorWrapper>
       <CardContent>
@@ -72,23 +72,23 @@ export default function MementoCard(props) {
           <MementoOverview>
             {/* Date */}
             <span>
-              <i class="far fa-clock"></i>
+              <i className="far fa-clock"></i>
               {dates[0].month.toString().padStart(2, "0")}/{dates[0].year}
             </span>
             {/* Location */}
             {location && (
               <span>
-                <i class="fas fa-map-marker-alt"></i>
+                <i className="fas fa-map-marker-alt"></i>
                 {location}
               </span>
             )}
             {/* People Tags */}
             {people && people.length > 0 && (
               <span>
-                <i class="fas fa-user-tag"></i>
+                <i className="fas fa-user-tag"></i>
                 <div>
                   {props.people.map(person => (
-                    <PeopleTags>
+                    <PeopleTags key={person.firstName}>
                       {person.firstName} {person.lastName}
                     </PeopleTags>
                   ))}
@@ -98,10 +98,10 @@ export default function MementoCard(props) {
             {/* Beneficiary Tags */}
             {beneficiaries && beneficiaries.length > 0 && (
               <span>
-                <i class="fas fa-user-tag"></i>
+                <i className="fas fa-user-tag"></i>
                 <div>
                   {props.beneficiaries.map(beneficiary => (
-                    <PeopleTags>
+                    <PeopleTags key={beneficiary.firstName}>
                       {beneficiary.firstName} {beneficiary.lastName}
                     </PeopleTags>
                   ))}
@@ -122,16 +122,16 @@ export default function MementoCard(props) {
       </CardContent>
       {/* Tags */}
       <MementoTagsWrapper>
-        <i class="fas fa-tags"></i>
+        <i className="fas fa-tags"></i>
         {props.tags.map(tag => (
-          <MementoTag>{tag}</MementoTag>
+          <MementoTag key={tag}>{tag}</MementoTag>
         ))}
       </MementoTagsWrapper>
       {/* Rekognition Tags */}
       <MementoTagsWrapper>
-        <i class="fas fa-camera"></i>
+        <i className="fas fa-camera"></i>
         {detectedLabels.map(result => (
-          <MementoTag>
+          <MementoTag key={result.name}>
             {result.name.toLowerCase()}{" "}
             <span>{Math.round(result.confidence, 0)}%</span>
           </MementoTag>

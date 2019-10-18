@@ -16,7 +16,7 @@ export default function JollyError(props) {
     <PageSpinnerWrapper>
       <SadError>
         {errorEmojis.map(emoji => (
-           <i class={emoji}></i>
+           <i className={emoji}></i>
         ))}
         <p>{error}</p>
       </SadError>

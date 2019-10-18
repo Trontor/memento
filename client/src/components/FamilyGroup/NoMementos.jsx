@@ -45,7 +45,7 @@ export default function NoMementos(props) {
           style={{ marginTop: "10px" }}
           onClick={onClick}
         >
-          <i class="fas fa-feather-alt"></i>
+          <i className="fas fa-feather-alt"></i>
           <span>Add a Memento</span>
         </UploadButton>
       </Center>

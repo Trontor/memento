@@ -234,7 +234,7 @@ export default function UploadStep2({
                   </Tag>
                 ))}
                 <NewTag type="button" onClick={() => setNewTag("")}>
-                  <i class="fas fa-plus"></i> new tag
+                  <i className="fas fa-plus"></i> new tag
                 </NewTag>
               </TagsContainer>
 

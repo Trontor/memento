@@ -167,18 +167,18 @@ export default function FamilyGroup(props) {
                 <DetailsWrapper>
                   <GroupDetails>
                     {/* Date of Group Creation */}
-                    <i class="far fa-clock"></i>
+                    <i className="far fa-clock"></i>
                     Created on the{" "}
                     {moment(family.createdAt).format("Do MMM, YYYY")}
                   </GroupDetails>
                   <GroupDetails>
                     {/* Number of Mementos */}
-                    <i class="far fa-paper-plane"></i>
+                    <i className="far fa-paper-plane"></i>
                     {mementos ? mementos.length : "~"} mementos
                   </GroupDetails>
                   <GroupDetails>
                     {/* Number of Members */}
-                    <i class="fas fa-users"></i>
+                    <i className="fas fa-users"></i>
                     {family ? family.members.length : "~"} members
                   </GroupDetails>
                 </DetailsWrapper>
@@ -189,14 +189,14 @@ export default function FamilyGroup(props) {
                   familyColour={family.colour}
                   onClick={onUploadMementoClicked}
                 >
-                  <i class="fas fa-feather-alt"></i>
+                  <i className="fas fa-feather-alt"></i>
                   <span>Add a Memento</span>
                 </UploadButton>
                 {/* Settings Button */}
                 <SettingsButton
                   onClick={() => props.history.push(familyId + "/settings")}
                 >
-                  <i class="fas fa-cog"></i>
+                  <i className="fas fa-cog"></i>
                 </SettingsButton>
               </Options>
             </FamilyProfileContainer>
@@ -206,32 +206,35 @@ export default function FamilyGroup(props) {
               <SideMenuSectionHeader>
                 <h2>Members</h2>
               </SideMenuSectionHeader>
-              {family.members.map(member => (
-                <MemberRow admin>
-                  {member.imageUrl ? (
-                    <img
-                      src={member.imageUrl}
-                      alt={`${member.firstName}'s avatar`}
-                    />
-                  ) : (
-                    <i class="fas fa-user-circle"></i>
-                  )}
-                  <div>
-                    <span
-                      onClick={() =>
-                        props.history.push("/profile/" + member.userId)
-                      }
-                    >
-                      {member.firstName} {member.lastName}
-                    </span>
-                    {member.familyRoles.some(
-                      r =>
-                        r.familyId === familyId &&
-                        r.familyRole.toLowerCase() === "admin",
-                    ) && <span>Admin</span>}
-                  </div>
-                </MemberRow>
-              ))}
+              {family.members.map(member => {
+                const isAdmin = member.familyRoles.some(
+                  r =>
+                    r.familyId === familyId &&
+                    r.familyRole.toLowerCase() === "admin",
+                );
+                return (
+                  <MemberRow key={member.firstName} admin={isAdmin}>
+                    {member.imageUrl ? (
+                      <img
+                        src={member.imageUrl}
+                        alt={`${member.firstName}'s avatar`}
+                      />
+                    ) : (
+                      <i className="fas fa-user-circle"></i>
+                    )}
+                    <div>
+                      <span
+                        onClick={() =>
+                          props.history.push("/profile/" + member.userId)
+                        }
+                      >
+                        {member.firstName} {member.lastName}
+                      </span>
+                      {isAdmin && <span>Admin</span>}
+                    </div>
+                  </MemberRow>
+                );
+              })}
             </SideMenuSectionContainer>
 
             <SideMenuSectionContainer>
@@ -242,6 +245,7 @@ export default function FamilyGroup(props) {
               {!tagOptions.length && <TagRow>No Tags</TagRow>}
               {tagOptions.sort().map(tag => (
                 <TagRow
+                  key={tag}
                   onClick={() => selectTag(tag)}
                   selected={filterTags.includes(tag)}
                 >
@@ -255,6 +259,7 @@ export default function FamilyGroup(props) {
             <MenuContainer>
               {menuTabs.map((tab, idx) => (
                 <MenuTabs
+                  key={idx}
                   active={currentTabIndex === idx}
                   onClick={() => setTabIndex(idx)}
                 >

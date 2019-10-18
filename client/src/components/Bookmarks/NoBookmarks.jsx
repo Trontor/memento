@@ -21,7 +21,7 @@ export default function NoBookmarks(props) {
         {/* View my memento button*/}
         <DashboardButtons>
           <IconButton>
-            <i class="far fa-paper-plane" />
+            <i className="far fa-paper-plane" />
           </IconButton>
           <ButtonHeading>
             View my Memento
