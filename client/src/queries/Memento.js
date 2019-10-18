@@ -22,6 +22,9 @@ export const GET_MEMENTOS = gql`
         firstName
         lastName
       }
+      family {
+        colour
+      }
       type
       description
       location
@@ -111,6 +114,7 @@ export const GET_A_MEMENTO = gql`
       beneficiaries {
         firstName
         lastName
+        imageUrl
       }
       type
       description
