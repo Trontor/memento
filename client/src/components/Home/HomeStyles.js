@@ -56,29 +56,33 @@ export const PitchActions = styled.div`
 
 export const FeaturesOverview = styled.section`
   margin: 0 auto;
-  padding: 20px 8vw;
+  padding: 80px 8vw;
   background-color: #F5F8FC;
+`
+export const FeaturesContentWrapper = styled.div`
+  max-width: 800px;
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletPortrait}) {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 40px 15vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 80px;
+    margin: 0 auto;
   }
-`
+`;
 
 export const FeatureWrapper = styled.div`
   display: flex;
   flex-direction: row;
   font-size: 15px;
   align-items: center;
-  margin-bottom: 50px;
+  margin-bottom: 60px;
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletPortrait}) {
-    flex: 0 1 50%;
     flex-direction: column;
     align-items: flex-start;
+    margin-bottom: 0;
   }
 `;
 
@@ -91,7 +95,9 @@ export const FeatureImg = styled.div`
 
     @media screen and (min-width: ${props =>
     props.theme.breakpoints.tabletPortrait}) {
-      height: 128px;
+      width: auto;
+      height: 100px;
+      margin-bottom: 24px;
     }
   }
 `;
@@ -99,9 +105,11 @@ export const FeatureImg = styled.div`
 export const FeatureTitle = styled.div`
   font-family: "Livvic", sans-serif;
   margin-bottom: 8px;
+  font-size: 17px;
 `;
 
 export const FeatureDescription = styled.div`
   opacity: 0.7;
   line-height: 1.5em;
+  font-size: 16px;
 `;
