@@ -40,6 +40,7 @@ export const ButtonSecondary = styled.button.attrs(() => ({ type: "button" }))`
   border-radius: 4px;
   display: inline-block;
   font-size: 15px;
+  height: 42px;
   ${props => props.theme.mixins.hoverFade};
 
   &:hover {
