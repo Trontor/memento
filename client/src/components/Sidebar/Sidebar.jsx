@@ -12,7 +12,7 @@ import {
   UserName,
 } from "./SidebarStyles";
 import React, { useEffect, useState } from "react";
-import { NavLink, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import GET_CURRENT_USER from "queries/GetCurrentUser";
 import { GET_USER_FAMILIES } from "queries/UserQueries";

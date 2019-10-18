@@ -20,7 +20,8 @@ import { useParams } from "react-router-dom";
 import moment from "moment";
 export default function UserProfile() {
   const params = useParams();
-  const { data, error, loading } = useQuery(GET_USER, {
+  const [user, setUser] = useState(null);
+  const { error, loading } = useQuery(GET_USER, {
     variables: { id: params.id },
     onCompleted: data => {
       if (data && data.user) {
@@ -29,7 +30,6 @@ export default function UserProfile() {
       }
     },
   });
-  const [user, setUser] = useState(null);
 
   //Handle the states of displaying data, error and loading
   if (error) {

@@ -105,7 +105,11 @@ export default function FamilyGroupSettings(props) {
                 <InputLabel>Family Group Photo</InputLabel>
                 {!changeImage ? (
                   <>
-                    <img src={family.imageUrl} style={{ width: "100%" }} />
+                    <img
+                      alt={family.name}
+                      src={family.imageUrl}
+                      style={{ width: "100%" }}
+                    />
                     <ButtonPrimary onClick={() => setChangeImage(true)}>
                       Change Image
                     </ButtonPrimary>
@@ -115,6 +119,7 @@ export default function FamilyGroupSettings(props) {
                     {newImageFile ? (
                       <div>
                         <img
+                          alt={newImageFile.path}
                           style={{ width: "100%" }}
                           src={URL.createObjectURL(newImageFile)}
                         />
