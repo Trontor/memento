@@ -6,7 +6,6 @@ import {
   FamilyLayout,
   GroupDetails,
   MainViewer,
-  MemberRow,
   Menu,
   Options,
   ProfilePhotoContainer,
@@ -206,35 +205,7 @@ export default function FamilyGroup(props) {
               <SideMenuSectionHeader>
                 <h2>Members</h2>
               </SideMenuSectionHeader>
-              {family.members.map(member => {
-                const isAdmin = member.familyRoles.some(
-                  r =>
-                    r.familyId === familyId &&
-                    r.familyRole.toLowerCase() === "admin",
-                );
-                return (
-                  <MemberRow key={member.firstName} admin={isAdmin}>
-                    {member.imageUrl ? (
-                      <img
-                        src={member.imageUrl}
-                        alt={`${member.firstName}'s avatar`}
-                      />
-                    ) : (
-                      <i className="fas fa-user-circle"></i>
-                    )}
-                    <div>
-                      <span
-                        onClick={() =>
-                          props.history.push("/profile/" + member.userId)
-                        }
-                      >
-                        {member.firstName} {member.lastName}
-                      </span>
-                      {isAdmin && <span>Admin</span>}
-                    </div>
-                  </MemberRow>
-                );
-              })}
+              <MembersViewer members={family.members} familyId={familyId} />
             </SideMenuSectionContainer>
 
             <SideMenuSectionContainer>

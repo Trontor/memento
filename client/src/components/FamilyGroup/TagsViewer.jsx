@@ -6,6 +6,7 @@ export default function TagsViewer(props) {
     <>
       {props.tags.sort().map(tag => (
         <TagRow
+          key={tag}
           onClick={() => props.selectTag(tag)}
           selected={props.mementoTags.includes(tag)}
         >
