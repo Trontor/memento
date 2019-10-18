@@ -275,7 +275,7 @@ export default function FamilyGroup(props) {
                 onClick={onUploadMementoClicked}
               />
             )}
-            {mementos && mementos.length && mementoViewerComponent}
+            {mementos && mementos.length !== 0 && mementoViewerComponent}
           </MainViewer>
         </div>
       </FamilyLayout>

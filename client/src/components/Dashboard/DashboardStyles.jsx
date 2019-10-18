@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-
 import { Group } from "styled-icons/material/Group";
 import { NavigateNext } from "styled-icons/material/NavigateNext";
 import { UserPlus } from "styled-icons/boxicons-regular/UserPlus";

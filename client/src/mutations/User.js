@@ -8,6 +8,11 @@ export const UPDATE_USER = gql`
       dateOfBirth
       gender
       location
+      hometown
+      placesLived {
+        city
+        dateMoved
+      }
     }
   }
 `;
