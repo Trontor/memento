@@ -109,7 +109,11 @@ const Sidebar = props => {
         </SidebarLink>
       </MenuSection>
       <MenuSection>
-        <SidebarLink icon="fas fa-pencil-alt" name="edit-button" to="/settings">
+        <SidebarLink
+          icon="fas fa-pencil-alt"
+          name="edit-account"
+          to="/settings"
+        >
           Edit profile & account
         </SidebarLink>
       </MenuSection>
