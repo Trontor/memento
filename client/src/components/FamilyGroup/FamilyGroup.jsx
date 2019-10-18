@@ -96,7 +96,7 @@ export default function FamilyGroup(props) {
     // eslint-disable-next-line
   }, [location]);
 
-  if (!family && (loading || getMementosQuery.loading)) {
+  if (!family || (loading && getMementosQuery.loading)) {
     return <JollyLoader quotes={loadingQuotes} />;
   }
 

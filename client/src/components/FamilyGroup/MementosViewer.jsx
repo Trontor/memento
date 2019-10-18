@@ -20,7 +20,6 @@ export default function MementosViewer(props) {
         ),
     );
   }
-  console.log("mementos:", mementos);
 
   return (
     <MementoCardColumns>

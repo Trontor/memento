@@ -58,8 +58,7 @@ export default function MementoCard(props) {
   });
 
   const isBookmarked = bookmarkedBy.some(id => id.userId === userId);
-  console.log(isBookmarked, userId);
-
+  const isUploader = uploader.userId === userId;
   return (
     <Card>
       <AuthorWrapper>
@@ -78,12 +77,12 @@ export default function MementoCard(props) {
         </div>
         {/* Edit & Bookmark */}
         <CardOptions>
-          <i
-            className="fas fa-pencil-alt"
-            onClick={() =>
-              history.push(history.location.pathname + "/memento/" + mementoId)
-            }
-          ></i>
+          {isUploader && (
+            <i
+              className="fas fa-pencil-alt"
+              onClick={() => history.push("/memento/" + mementoId + "/edit")}
+            />
+          )}
           <i
             className={(isBookmarked ? "fa " : "far ") + "fa-bookmark"}
             onClick={() => (isBookmarked ? removeBookmark() : bookmark())}
