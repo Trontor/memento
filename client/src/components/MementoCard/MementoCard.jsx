@@ -17,8 +17,9 @@ import {
 } from "./MementoCardStyles";
 import { useHistory } from "react-router";
 import { useMutation } from "@apollo/react-hooks";
-import React from "react";
+import React, { useState } from "react";
 import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
+import InheritanceTree from "components/InheritanceTree/InheritanceTree";
 
 export default function MementoCard(props) {
   const history = useHistory();
@@ -34,6 +35,7 @@ export default function MementoCard(props) {
     // tags,
     // type,
     // updatedAt,
+    family,
     detectedLabels,
     bookmarkedBy,
     beneficiaries,
@@ -42,6 +44,7 @@ export default function MementoCard(props) {
     onBookmarkToggled,
   } = props;
   const createdDate = new Date(createdAt);
+  const [showInheritanceTree, setShowInheritanceTree] = useState(false);
 
   const [bookmark] = useMutation(ADD_BOOKMARK, {
     variables: { id: mementoId },
@@ -77,6 +80,12 @@ export default function MementoCard(props) {
         </div>
         {/* Edit & Bookmark */}
         <CardOptions>
+          {beneficiaries && beneficiaries.length > 0 && (
+            <i
+              className="fas fa-tree"
+              onClick={() => setShowInheritanceTree(!showInheritanceTree)}
+            />
+          )}
           {isUploader && (
             <i
               className="fas fa-pencil-alt"
@@ -138,10 +147,19 @@ export default function MementoCard(props) {
           <MementoDescription>{description}</MementoDescription>
         </MementoInfo>
         {/* Cover Image */}
-        {props.media.length > 0 && (
-          <MementoCoverImg>
-            <img alt={props.caption} src={props.media[0].url} />
-          </MementoCoverImg>
+        {showInheritanceTree && beneficiaries.length > 0 ? (
+          <InheritanceTree
+            width="100%"
+            height="400px"
+            mementoId={mementoId}
+            familyColour={family.colour}
+          />
+        ) : (
+          props.media.length > 0 && (
+            <MementoCoverImg>
+              <img alt={props.caption} src={props.media[0].url} />
+            </MementoCoverImg>
+          )
         )}
       </CardContent>
       {/* Tags */}
