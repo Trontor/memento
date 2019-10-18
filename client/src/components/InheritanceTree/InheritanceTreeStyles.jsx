@@ -17,13 +17,13 @@ export const NodeWrapper = styled.div`
 export const NodeImage = styled.img`
   width: ${({ size }) => size || "50px"};
   height: ${({ size }) => size || "50px"};
-  font-style: 
   border-radius: ${({ size }) => size || "50px"};
   border: 2px solid black;
 `;
 
 export const NodeText = styled.p`
   margin: 0;
+  font-style: ${props => (props.italics ? "italic" : "inherit")};
   font-size: ${props => {
     switch (props.size) {
       case "small":

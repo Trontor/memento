@@ -44,7 +44,7 @@ export default function MementoCard(props) {
     onBookmarkToggled,
   } = props;
   const createdDate = new Date(createdAt);
-  const [showInheritanceTree, setShowInheritanceTree] = useState(true);
+  const [showInheritanceTree, setShowInheritanceTree] = useState(false);
 
   const [bookmark] = useMutation(ADD_BOOKMARK, {
     variables: { id: mementoId },

@@ -51,7 +51,7 @@ export default function InheritanceTree(props) {
     },
   });
   useEffect(() => {
-    if (treeContainer && Object.keys(translate).length == 0) {
+    if (treeContainer && Object.keys(translate).length === 0) {
       const dimensions = treeContainer.getBoundingClientRect();
       const newTranslate = {
         x: dimensions.width / 2,
@@ -59,7 +59,7 @@ export default function InheritanceTree(props) {
       };
       setTranslate(newTranslate);
     }
-  }, [treeContainer]);
+  }, [treeContainer, translate]);
 
   if (!memento) {
     return null;
