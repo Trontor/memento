@@ -115,7 +115,7 @@ const authenticatedRoutes = [
     exact: true,
   },
   {
-    name: "invite/",
+    name: "invite",
     component: Invite,
     exact: true,
   },
