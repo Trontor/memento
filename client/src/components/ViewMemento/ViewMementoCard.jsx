@@ -14,7 +14,6 @@ import {
 } from "../MementoCard/MementoCardStyles";
 import { Card, CardContent, CardInfo, FamilyGroup } from "./ViewMementoStyles";
 
-import { List } from "ui/Radio";
 import React from "react";
 
 export default function MementoCard(props) {

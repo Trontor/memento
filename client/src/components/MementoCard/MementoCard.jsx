@@ -16,7 +16,6 @@ import {
   UploadDate,
 } from "./MementoCardStyles";
 
-import React from "react";
 import { useHistory } from "react-router";
 import { useMutation } from "@apollo/react-hooks";
 import React, { useState } from "react";
@@ -175,15 +174,15 @@ export default function MementoCard(props) {
       )}
       {/* Rekognition Tags */}
       {detectedLabels && detectedLabels.length > 0 && (
-      <MementoTagsWrapper>
-        <i class="far fa-eye"></i>
-        {detectedLabels.map(result => (
-          <MementoTag key={result.name}>
-            {result.name.toLowerCase()}{" "}
-            <span>{Math.round(result.confidence, 0)}%</span>
-          </MementoTag>
-        ))}
-      </MementoTagsWrapper>
+        <MementoTagsWrapper>
+          <i class="far fa-eye"></i>
+          {detectedLabels.map(result => (
+            <MementoTag key={result.name}>
+              {result.name.toLowerCase()}{" "}
+              <span>{Math.round(result.confidence, 0)}%</span>
+            </MementoTag>
+          ))}
+        </MementoTagsWrapper>
       )}
     </Card>
   );
