@@ -9,11 +9,11 @@ const sameMonth = memento => {
   return mementoDates.some(date => date.month === currentMonth);
 };
 
-const sameYear = memento => {
-  const mementoDates = memento.dates;
-  const currentYear = new Date().getYear();
-  return mementoDates.some(date => date.year === currentYear);
-};
+// const sameYear = memento => {
+//   const mementoDates = memento.dates;
+//   const currentYear = new Date().getYear();
+//   return mementoDates.some(date => date.year === currentYear);
+// };
 
 export default function FamilyMementosViewer(props) {
   const { familyId } = props;
