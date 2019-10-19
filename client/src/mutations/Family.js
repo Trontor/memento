@@ -19,6 +19,11 @@ export const LOAD_FAMILY = gql`
   query loadFamily($id: ID!) {
     currentUser {
       userId
+      familyRoles {
+        familyId
+        familyRole
+        __typename
+      }
     }
     family(familyId: $id) {
       name

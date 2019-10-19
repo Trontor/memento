@@ -47,7 +47,7 @@ export default function FamilyGroup(props) {
   const [filterTags, setFilterTags] = useState([]);
   const [mementos, setMementos] = useState(null);
   const [family, setFamily] = useState(null);
-  const [userID, setUserID] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
   const location = useLocation();
   useEffect(() => {
     // If there are no mementos, forget about it
@@ -71,11 +71,10 @@ export default function FamilyGroup(props) {
     variables: { id: familyId },
     fetchPolicy: "cache-and-network",
     onCompleted: data => {
-      console.log("Loaded family...");
-
       if (data && data.family) {
-        setUserID(data.currentUser.userId);
+        setCurrentUser(data.currentUser);
         setFamily(data.family);
+        console.log("Loaded family...", data.family);
       }
     },
   });
@@ -93,6 +92,7 @@ export default function FamilyGroup(props) {
       }
     },
   });
+
   useEffect(() => {
     console.log("Refetching family and mementos..");
     refetch();
@@ -128,7 +128,7 @@ export default function FamilyGroup(props) {
       filterTags={filterTags}
       mementos={mementos}
       familyId={familyId}
-      userId={userID}
+      userId={currentUser.userID}
       refreshMementos={getMementosQuery.refetch}
     />
   );
@@ -152,6 +152,11 @@ export default function FamilyGroup(props) {
     default:
       break;
   }
+
+  const isAdmin = currentUser.familyRoles.some(
+    f => f.familyId === familyId && f.familyRole === "Admin",
+  );
+
   return (
     <FamilyContainer>
       <FamilyLayout>
@@ -160,14 +165,18 @@ export default function FamilyGroup(props) {
             <FamilyProfileContainer>
               <FamilyImg familyColour={family.colour} />
               {family.imageUrl ? (
-              <ProfilePhotoContainer>
-                <img alt="family" src={family.imageUrl} />
-              </ProfilePhotoContainer>
-            ) :
-              <ProfilePhotoContainer thick>
-                <img svg alt="family" src="https://image.flaticon.com/icons/svg/1999/1999109.svg" />
-              </ProfilePhotoContainer>
-              }
+                <ProfilePhotoContainer>
+                  <img alt="family" src={family.imageUrl} />
+                </ProfilePhotoContainer>
+              ) : (
+                <ProfilePhotoContainer thick>
+                  <img
+                    svg
+                    alt="family"
+                    src="https://image.flaticon.com/icons/svg/1999/1999109.svg"
+                  />
+                </ProfilePhotoContainer>
+              )}
               <FamilyHeader>
                 <div></div> {/* Empty div to center title */}
                 <div></div> {/* Empty div to center title */}
@@ -203,11 +212,13 @@ export default function FamilyGroup(props) {
                   <span>Add a Memento</span>
                 </UploadButton>
                 {/* Settings Button */}
-                <SettingsButton
-                  onClick={() => props.history.push(familyId + "/settings")}
-                >
-                  <i className="fas fa-cog"></i>
-                </SettingsButton>
+                {isAdmin && (
+                  <SettingsButton
+                    onClick={() => props.history.push(familyId + "/settings")}
+                  >
+                    <i className="fas fa-cog"></i>
+                  </SettingsButton>
+                )}
               </Options>
             </FamilyProfileContainer>
 
