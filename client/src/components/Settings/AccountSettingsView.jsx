@@ -1,11 +1,9 @@
 import {
   AccountButton,
-  CancelButton,
-  EditAccountButton,
   SectionWrapper,
   SettingsContainer,
 } from "./SettingsStyles";
-import { DefaultInput, FormSection, InputField, InputLabel } from "ui/Forms";
+import { DefaultInput, FormSection, InputField } from "ui/Forms";
 import React, { useState } from "react";
 
 import EditInput from "components/EditInput/EditInput";
