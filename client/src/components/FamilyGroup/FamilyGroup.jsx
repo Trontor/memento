@@ -128,7 +128,7 @@ export default function FamilyGroup(props) {
       filterTags={filterTags}
       mementos={mementos}
       familyId={familyId}
-      userId={currentUser.userID}
+      userId={currentUser.userId}
       refreshMementos={getMementosQuery.refetch}
     />
   );

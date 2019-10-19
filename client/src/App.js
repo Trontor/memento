@@ -15,7 +15,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import FamilyGroup from "./components/FamilyGroup/FamilyGroup";
 import FamilyGroupSettings from "./components/FamilyGroupSettings/FamilyGroupSettings";
 import Hamburger from "./components/Sidebar/Hamburger";
-import Home from "./components/Home/Home"
+import Home from "./components/Home/Home";
 import Invite from "./components/Invite/Invite";
 import InviteCode from "./components/AcceptInvite/InviteCode";
 import Login from "./components/Login/Login";
