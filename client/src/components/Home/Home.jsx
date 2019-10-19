@@ -1,3 +1,4 @@
+import {Background, Bubbles} from "./BubblesStyles";
 import {ButtonPrimary, ButtonSecondary} from "ui/Buttons";
 import {
   FeatureDescription,
@@ -50,9 +51,21 @@ export default function Home() {
         <ButtonSecondary>Login</ButtonSecondary>
       </PageHeader>
       <Intro>
+        <Background>
+          <Bubbles/>
+          <Bubbles/>
+          <Bubbles/>
+          <Bubbles/>
+          <Bubbles/>
+          <Bubbles/>
+          <Bubbles/>
+          <Bubbles/>
+          <Bubbles/>
+          <Bubbles/>
+        </Background>
         <IntroContent>
           <h1>
-            Store all of your significant memories in one place.
+            Store your significant memories all in one place.
           </h1>
           <p>
             Memento offers a safe and simple way to preserve your life events, milestones and artefacts for you and your family to appreciate for generations come.

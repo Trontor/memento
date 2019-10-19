@@ -8,6 +8,13 @@ export const PageHeader = styled.div`
   justify-content: space-between;
   padding: 0 8vw;
   align-items: center;
+  width: 100%;
+  /* background-color: ${props => props.theme.palette.background}; */
+  /* position: fixed;
+  top: 0; */
+  /* z-index: 9999; */
+  /* border-bottom: 1px solid ${props => lighten(0.65, props.theme.palette.text)};
+  box-shadow: 0 1px 2px rgba(0,0,0,.03); */
 `;
 
 export const Intro = styled.section`
@@ -57,9 +64,9 @@ export const PitchActions = styled.div`
   }
 `;
 const floating = keyframes`
-    from { transform: translate(0,  0px); }
-    65%  { transform: translate(-2px, 10px); }
-    to   { transform: translate(0, 0px); }
+    from { transform: translate(0,  -5px); }
+    65%  { transform: translate(-2px, 5px); }
+    to   { transform: translate(0, -5px); }
 `;
 
 export const FeaturesOverview = styled.section`
@@ -68,14 +75,14 @@ export const FeaturesOverview = styled.section`
   background-color: #F5F8FC;
 `
 export const FeaturesContentWrapper = styled.div`
-  max-width: 800px;
+  max-width: 768px;
   margin-bottom: 80px;
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletPortrait}) {
     display: grid;
     grid-template-columns: auto auto;
-    grid-gap: 80px;
+    grid-gap: 100px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -108,7 +115,7 @@ export const FeatureImg = styled.div`
       width: auto;
       height: 80px;
       margin-bottom: 24px;
-      animation: ${floating} 5s linear infinite;
+      animation: ${floating} 4.5s linear infinite;
     }
   }
 `;
@@ -116,7 +123,7 @@ export const FeatureImg = styled.div`
 export const FeatureTitle = styled.div`
   font-family: "Livvic", sans-serif;
   margin-bottom: 8px;
-  font-size: 17px;
+  font-size: 18px;
 `;
 
 export const FeatureDescription = styled.div`
