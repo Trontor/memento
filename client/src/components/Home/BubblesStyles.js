@@ -4,16 +4,10 @@ import styled, {keyframes} from "styled-components";
 export const Background = styled.div`
   width: 100%;
   max-width: 100%;
+  height: 100%;
   padding: 0;
+  overflow: hidden;
 `;
-
-// const floating = keyframes`
-//   from { transform: translate(0, 0px); }
-//   25%  { transform: translate(-2px, 10px); }
-//   40%  { transform: translate(-5px, 20px); }
-//   65%  { transform: translate(0px, 7px); }
-//   to   { transform: translate(0, 0px); }
-// `;
 
 const floating = keyframes`
   from { transform: translate(0, 0px); }
@@ -42,32 +36,66 @@ const shapeshift = keyframes`
 `;
 
 export const Bubbles = styled.div`
-  position: absolute;
-  overflow: hidden;
   border-radius: 41% 59% 41% 59% / 43% 45% 55% 57%;
   left: 50%;
+  position: absolute;
+  z-index: -1;
+
+  &:before, &:after {
+    display: block;
+    content: '';
+  }
+
+  &:before {
+    width: 10px;
+    height: 10px;
+    margin-left: 500px;
+    top: 100px;
+    background:
+      linear-gradient(225deg,
+        ${transparentize(0.7, "#DCE5FD")},
+        ${transparentize(0.9, "#CEE8F9")}
+      );
+    animation: ${floating} 5s linear infinite, ${shapeshift} 1.5s linear infinite;
+  }
 
   &:first-child {
     width: 115px;
     height: 105px;
-    margin-left: -440px;
-    top: 130px;
+    margin-left: -500px;
+    top: 110px;
     background:
       linear-gradient(225deg,
-        ${transparentize(0.85, "#A4CBF0")},
-        ${transparentize(0.95, "#90B6E8")}
+        ${transparentize(0.85, "#DCE5FD")},
+        ${transparentize(0.8, "#D3E1F7")}
       );
     animation: ${floating} 5s linear infinite, ${shapeshift} 1.5s linear infinite;
+
+    &:after {
+      content: '';
+      display: block;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      margin-left: 200px;
+      margin-top: -100px;
+      background:
+        linear-gradient(90deg,
+          ${transparentize(0.7, "#DCE5FD")},
+          ${transparentize(0.9, "#CEE8F9")}
+        );
+      animation: ${floating} 20s linear infinite;
+    }
   }
 
   &:nth-child(2) {
     width: 32px;
     height: 30px;
     margin-left: -400px;
-    top: 70px;
+    top: 50px;
     background:
       linear-gradient(-30deg,
-        ${transparentize(0.97, "#90B6E8")},
+        ${transparentize(0.9, "#90B6E8")},
         ${transparentize(0.9, "#A4CBF0")}
       );
     animation: ${floating} 4s linear infinite, ${shapeshift} 2s linear infinite;
@@ -77,11 +105,11 @@ export const Bubbles = styled.div`
     width: 70px;
     height: 70px;
     margin-left: -360px;
-    top: 85px;
+    top: 65px;
     background:
       linear-gradient(135deg,
-        ${transparentize(0.95, "#A4CBF0")},
-        ${transparentize(0.85, "#A4CBF0")}
+        ${transparentize(0.8, "#DCEDFD")},
+        ${transparentize(0.75, "#DCE5FD")}
       );
     rotate: 45deg;
     animation-delay: 0.5s;
@@ -92,7 +120,7 @@ export const Bubbles = styled.div`
     width: 165px;
     height: 140px;
     margin-left: 280px;
-    top: 290px;
+    top: 270px;
     background:
       linear-gradient(100deg,
         ${transparentize(0.97, "#A4CBF0")},
@@ -105,24 +133,40 @@ export const Bubbles = styled.div`
     width: 45px;
     height: 45px;
     margin-left: -370px;
-    top: 380px;
+    top: 360px;
     background:
       linear-gradient(135deg,
         ${transparentize(0.9, "#A4CBF0")},
         ${transparentize(0.85, "#A4CBF0")}
       );
     animation: ${floating} 4s linear infinite, ${shapeshift} 1s linear infinite;
+
+    &:after {
+      display: block;
+      content: "";
+      width: 500px;
+      height: 300px;
+      margin-left: -220px;
+      margin-top: 25px;
+      background:
+        linear-gradient(-90deg,
+          ${transparentize(0.92, "#A4C8F0")},
+          ${transparentize(0.9, "#CCD3FF")}
+        );
+      animation: ${floating} 12s linear infinite, ${shapeshift} 2s linear infinite;
+      rotate: 50deg;
+    }
   }
 
   &:nth-child(6) {
     width: 80px;
     height: 75px;
     margin-left: 260px;
-    top: 270px;
+    top: 250px;
     background:
       linear-gradient(225deg,
         ${transparentize(0.9, "#A4CBF0")},
-        ${transparentize(0.85, "#A4CBF0")}
+        ${transparentize(0.85, "#DCE5FD")}
       );
     animation: ${floating} 5s linear infinite, ${shapeshift} 2s linear infinite;
   }
@@ -131,7 +175,7 @@ export const Bubbles = styled.div`
     width: 18px;
     height: 18px;
     margin-left: 290px;
-    top: 100px;
+    top: 80px;
     background:
       linear-gradient(225deg,
         ${transparentize(0.9, "#A4CBF0")},
@@ -144,10 +188,10 @@ export const Bubbles = styled.div`
     width: 220px;
     height: 190px;
     margin-left: 330px;
-    top: 220px;
+    top: 200px;
     background:
       linear-gradient(90deg,
-        ${transparentize(0.9, "#A4CBF0")},
+        ${transparentize(0.9, "#DCE5FD")},
         ${transparentize(0.95, "#A4CBF0")}
       );
     animation: ${floating} 6s linear infinite, ${shapeshift} 2s linear infinite;
@@ -158,7 +202,7 @@ export const Bubbles = styled.div`
     width: 20px;
     height: 18px;
     margin-left: -305px;
-    top: 130px;
+    top: 105px;
     background:
       linear-gradient(180deg,
         ${transparentize(0.9, "#A4CBF0")},
@@ -183,14 +227,16 @@ export const Bubbles = styled.div`
   }
 
   &:nth-child(11) {
-      width: 300px;
-      height: 300px;
-      top: 100px;
-      background:
-        linear-gradient(225deg,
-          ${transparentize(0.9, "#A4CBF0")},
-          ${transparentize(0.85, "#A4CBF0")}
-        );
-      animation: ${floating} 4.2s linear infinite, ${shapeshift} 2s linear infinite;
-    }
+    width: 280px;
+    height: 280px;
+    margin-left: 30px;
+    top: 40px;
+    background:
+      linear-gradient(225deg,
+        ${transparentize(0.85, "#D6E0FF")},
+        ${transparentize(0.85, "#DCEDFD")}
+      );
+    animation: ${floating} 6s linear infinite, ${shapeshift} 3s linear infinite;
+    animation-delay: 0.5s;
+  }
 `;

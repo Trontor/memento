@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 
-import { lighten } from "polished";
+import { transparentize } from "polished";
 
 export const PageHeader = styled.div`
   height: 70px;
@@ -9,23 +9,19 @@ export const PageHeader = styled.div`
   padding: 0 8vw;
   align-items: center;
   width: 100%;
-  /* background-color: ${props => props.theme.palette.background}; */
-  /* position: fixed;
-  top: 0; */
-  /* z-index: 9999; */
-  /* border-bottom: 1px solid ${props => lighten(0.65, props.theme.palette.text)};
-  box-shadow: 0 1px 2px rgba(0,0,0,.03); */
 `;
 
 export const Intro = styled.section`
   padding: 0 8vw;
-  border-bottom: 1px solid ${props => lighten(0.65, props.theme.palette.text)};
+  border-bottom: 1px solid ${props => transparentize(0.95, props.theme.palette.text)};
+  position: relative;
+  overflow: hidden;
 `;
 
 export const IntroContent = styled.div`
   margin: 0 auto;
   text-align: center;
-  padding: 80px 0 120px 0;
+  padding: 100px 0 140px 0;
   max-width: 480px;
 
   h1 {
@@ -72,7 +68,7 @@ const floating = keyframes`
 export const FeaturesOverview = styled.section`
   margin: 0 auto;
   padding: 80px 8vw;
-  background-color: #F5F8FC;
+  background-color: #F5F9FC;
 `
 export const FeaturesContentWrapper = styled.div`
   max-width: 768px;

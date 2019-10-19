@@ -43,6 +43,23 @@ const features = [
   }
 ]
 
+let bubbleBackground = (
+  <Background>
+    <Bubbles/>
+    <Bubbles/>
+    <Bubbles/>
+    <Bubbles/>
+    <Bubbles/>
+    <Bubbles/>
+    <Bubbles/>
+    <Bubbles/>
+    <Bubbles/>
+    <Bubbles/>
+    <Bubbles/>
+    <Bubbles/>
+  </Background>
+);
+
 export default function Home() {
   return (
     <>
@@ -51,18 +68,7 @@ export default function Home() {
         <ButtonSecondary>Login</ButtonSecondary>
       </PageHeader>
       <Intro>
-        <Background>
-          <Bubbles/>
-          <Bubbles/>
-          <Bubbles/>
-          <Bubbles/>
-          <Bubbles/>
-          <Bubbles/>
-          <Bubbles/>
-          <Bubbles/>
-          <Bubbles/>
-          <Bubbles/>
-        </Background>
+        {bubbleBackground}
         <IntroContent>
           <h1>
             Store your significant memories all in one place.

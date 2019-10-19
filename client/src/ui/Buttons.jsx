@@ -1,4 +1,4 @@
-import { adjustHue, lighten } from "polished";
+import { adjustHue, lighten, transparentize } from "polished";
 import styled, { css } from "styled-components";
 
 import { Cancel } from "styled-icons/material/Cancel";
@@ -21,6 +21,8 @@ export const ButtonPrimary = styled.button.attrs(() => ({ type: "button" }))`
     border: 1px solid ${props => lighten(0.03, props.theme.palette.main)};
     background: ${props => lighten(0.03, props.theme.palette.main)};
     ${props => props.theme.mixins.hoverFade};
+    transform: translateY(-2px);
+    box-shadow: 0px 1px 3px ${props => transparentize(0.7, props.theme.palette.main)};
   }
 
   &:disabled,
@@ -44,9 +46,11 @@ export const ButtonSecondary = styled.button.attrs(() => ({ type: "button" }))`
   ${props => props.theme.mixins.hoverFade};
 
   &:hover {
-    background: ${props => adjustHue(-20, lighten(0.3, props.theme.palette.main))};
+    background: ${props => adjustHue(-20, transparentize(0.97, props.theme.palette.main))};
     ${props => props.theme.mixins.hoverFade};
     border: 1px solid ${props => lighten(0.1, props.theme.palette.main)};
+    transform: translateY(-2px);
+    box-shadow: 0px 1px 3px ${props => transparentize(0.8, props.theme.palette.main)};
   }
 
   &:disabled,
@@ -66,6 +70,8 @@ export const ButtonPrimaryLight = styled(ButtonPrimary)`
   &:hover {
     background: ${props => lighten(0.27, props.theme.palette.main)};
     border: 1px solid ${props => lighten(0.27, props.theme.palette.main)};
+    transform: translateY(-2px);
+    box-shadow: 0px 1px 3px ${props => transparentize(0.8, props.theme.palette.text)};
   }
 `;
 
