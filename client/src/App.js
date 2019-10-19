@@ -26,6 +26,7 @@ import UploadMemento from "./components/UploadMemento/UploadMemento";
 import UserProfile from "./components/UserProfile/UserProfile";
 import ViewMemento from "./components/ViewMemento/ViewMemento";
 import { theme } from "./theme";
+import InheritanceTree from "components/InheritanceTree/InheritanceTree";
 
 const GlobalStyle = createGlobalStyle`
   /* Reset styles */
@@ -157,6 +158,10 @@ const authenticatedRoutes = [
   {
     name: "mementos",
     component: ViewMemento,
+  },
+  {
+    name: "tree",
+    component: InheritanceTree,
   },
 ];
 

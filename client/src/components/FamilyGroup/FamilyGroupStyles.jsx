@@ -329,13 +329,13 @@ export const UploadButton = styled(ButtonPrimaryLight)`
 
   color: ${props => props.familyColour || props.theme.palette.main};
   background: ${props =>
-    lighten(0.3, props.familyColour || props.theme.palette.main)};
+    lighten(0.75, props.familyColour || props.theme.palette.main)};
   border: 1px solid
     ${props => lighten(0.3, props.familyColour || props.theme.palette.main)};
 
   &:hover {
     background: ${props =>
-      lighten(0.27, props.familyColour || props.theme.palette.main)};
+      lighten(0.5, props.familyColour || props.theme.palette.main)};
     border: 1px solid
       ${props => lighten(0.27, props.familyColour || props.theme.palette.main)};
   }
@@ -426,7 +426,8 @@ export const SearchInput = styled.input`
 `;
 
 export const NoMementosIcon = styled(PhotoAlbum)`
-  color: ${props => lighten(0.1, props.theme.palette.main)};
+  color: ${props =>
+    lighten(0.1, props.familyColour || props.theme.palette.main)};
   margin: auto;
   height: 120px;
 `;

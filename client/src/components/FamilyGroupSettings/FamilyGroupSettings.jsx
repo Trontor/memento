@@ -13,6 +13,7 @@ import { StyledDropzone } from "components/FileDropzone/FileDropzone";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { ButtonPrimary } from "ui/Buttons";
 import { useHistory } from "react-router-dom";
+
 export default function FamilyGroupSettings(props) {
   const history = useHistory();
   // Stores information about the current user, and the form values
@@ -146,6 +147,12 @@ export default function FamilyGroupSettings(props) {
                 <MembersList>
                   {family.members.map(member => (
                     <Member key={member.firstName}>
+                      {/*
+                      {!member.imageUrl ? (
+                        <i className="fas fa-user-circle"></i>
+                      ) : (
+                        <img src={member.imageUrl} alt={member.firstName} />
+                      )}*/}
                       {member.firstName} {member.lastName}
                       {member.familyRoles.some(
                         r =>

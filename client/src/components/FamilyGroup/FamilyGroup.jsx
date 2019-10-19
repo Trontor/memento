@@ -47,6 +47,7 @@ export default function FamilyGroup(props) {
   const [filterTags, setFilterTags] = useState([]);
   const [mementos, setMementos] = useState(null);
   const [family, setFamily] = useState(null);
+  const [userID, setUserID] = useState(null);
   const location = useLocation();
   useEffect(() => {
     // If there are no mementos, forget about it
@@ -66,11 +67,14 @@ export default function FamilyGroup(props) {
   }, [mementos]);
 
   // Query to load the family
-  const { loading, error } = useQuery(LOAD_FAMILY, {
+  const { loading, error, refetch } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
-
+    fetchPolicy: "cache-and-network",
     onCompleted: data => {
+      console.log("Loaded family...");
+
       if (data && data.family) {
+        setUserID(data.currentUser.userId);
         setFamily(data.family);
       }
     },
@@ -81,7 +85,7 @@ export default function FamilyGroup(props) {
     variables: {
       id: familyId,
     },
-    fetchPolicy: "network-only",
+    fetchPolicy: "cache-and-network",
     onCompleted: data => {
       if (data && data.mementos) {
         console.log("Fetched mementos succesfully:", data.mementos);
@@ -90,11 +94,13 @@ export default function FamilyGroup(props) {
     },
   });
   useEffect(() => {
-    console.log("refetching mementos...");
+    console.log("Refetching family and mementos..");
+    refetch();
     getMementosQuery.refetch();
-  }, [getMementosQuery, location]);
+    // eslint-disable-next-line
+  }, [location]);
 
-  if (loading || !family || getMementosQuery.loading) {
+  if (!family || (loading && getMementosQuery.loading)) {
     return <JollyLoader quotes={loadingQuotes} />;
   }
 
@@ -122,6 +128,8 @@ export default function FamilyGroup(props) {
       filterTags={filterTags}
       mementos={mementos}
       familyId={familyId}
+      userId={userID}
+      refreshMementos={getMementosQuery.refetch}
     />
   );
   switch (menuTabs[currentTabIndex]) {

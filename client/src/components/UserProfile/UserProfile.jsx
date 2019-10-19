@@ -18,6 +18,16 @@ import React, { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { useParams } from "react-router-dom";
 import moment from "moment";
+
+const formatBirthday = date => {
+  const parsedDate = moment(date);
+  if (parsedDate.isValid()) {
+    return parsedDate.format("DD/MM/YYYY");
+  } else {
+    return "No birthday set";
+  }
+};
+
 export default function UserProfile() {
   const params = useParams();
   const [user, setUser] = useState(null);
@@ -59,7 +69,7 @@ export default function UserProfile() {
         <UserBday size="25px" />
         <ProfileField>
           <InputLabel>Date of Birth</InputLabel>
-          <Span>{moment(user.dateOfBirth).format("DD/MM/YYYY")}</Span>
+          <Span>{formatBirthday(user.dateOfBirth)}</Span>
         </ProfileField>
       </ProfileWrapper>
       <ProfileWrapper>

@@ -18,10 +18,15 @@ import {
 
 import React from "react";
 import { useHistory } from "react-router";
+import { useMutation } from "@apollo/react-hooks";
+import React, { useState } from "react";
+import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
+import InheritanceTree from "components/InheritanceTree/InheritanceTree";
 
 export default function MementoCard(props) {
   const history = useHistory();
   const {
+    userId,
     mementoId,
     createdAt,
     dates,
@@ -32,13 +37,33 @@ export default function MementoCard(props) {
     // tags,
     // type,
     // updatedAt,
+    family,
     detectedLabels,
+    bookmarkedBy,
     beneficiaries,
     uploader,
     people,
+    onBookmarkToggled,
   } = props;
   const createdDate = new Date(createdAt);
+  const [showInheritanceTree, setShowInheritanceTree] = useState(false);
 
+  const [bookmark] = useMutation(ADD_BOOKMARK, {
+    variables: { id: mementoId },
+    onCompleted: data => {
+      onBookmarkToggled();
+    },
+  });
+
+  const [removeBookmark] = useMutation(DELETE_BOOKMARK, {
+    variables: { id: mementoId },
+    onCompleted: data => {
+      onBookmarkToggled();
+    },
+  });
+
+  const isBookmarked = bookmarkedBy.some(id => id.userId === userId);
+  const isUploader = uploader.userId === userId;
   return (
     <Card>
       <AuthorWrapper>
@@ -57,13 +82,22 @@ export default function MementoCard(props) {
         </div>
         {/* Edit & Bookmark */}
         <CardOptions>
+          {beneficiaries && beneficiaries.length > 0 && (
+            <i
+              className="fas fa-tree"
+              onClick={() => setShowInheritanceTree(!showInheritanceTree)}
+            />
+          )}
+          {isUploader && (
+            <i
+              className="fas fa-pencil-alt"
+              onClick={() => history.push("/memento/" + mementoId + "/edit")}
+            />
+          )}
           <i
-            className="fas fa-pencil-alt"
-            onClick={() =>
-              history.push(history.location.pathname + "/memento/" + mementoId)
-            }
+            className={(isBookmarked ? "fa " : "far ") + "fa-bookmark"}
+            onClick={() => (isBookmarked ? removeBookmark() : bookmark())}
           ></i>
-          <i className="far fa-bookmark"></i>
         </CardOptions>
       </AuthorWrapper>
       <CardContent>
@@ -115,10 +149,19 @@ export default function MementoCard(props) {
           <MementoDescription>{description}</MementoDescription>
         </MementoInfo>
         {/* Cover Image */}
-        {props.media.length > 0 && (
-          <MementoCoverImg>
-            <img alt={props.caption} src={props.media[0].url} />
-          </MementoCoverImg>
+        {showInheritanceTree && beneficiaries.length > 0 ? (
+          <InheritanceTree
+            width="100%"
+            height="400px"
+            mementoId={mementoId}
+            familyColour={family.colour}
+          />
+        ) : (
+          props.media.length > 0 && (
+            <MementoCoverImg>
+              <img alt={props.caption} src={props.media[0].url} />
+            </MementoCoverImg>
+          )
         )}
       </CardContent>
       {/* Tags */}
