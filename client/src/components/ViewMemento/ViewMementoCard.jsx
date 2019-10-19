@@ -7,25 +7,24 @@ import {
   MementoDescription,
   MementoTagsWrapper,
   MementoTitle,
-  PeopleTags,
   UploadDate,
 } from "../MementoCard/MementoCardStyles";
-import { useHistory } from "react-router";
-import { List } from "ui/Radio";
-import React from "react";
 import {
   Card,
+  CardContent,
   CardInfo,
+  FamilyGroup,
   InfoWrapper,
   ListText,
-  CardContent,
-  FamilyGroup,
 } from "./ViewMementoStyles";
 
+import { List } from "ui/Radio";
+import React from "react";
+
 export default function MementoCard(props) {
-  const history = useHistory();
+  // const history = useHistory();
   const {
-    mementoId,
+    // mementoId,
     createdAt,
     dates,
     // description,
@@ -35,7 +34,7 @@ export default function MementoCard(props) {
     // type,
     // updatedAt,
     uploader,
-    people,
+    // people,
   } = props;
   const createdDate = new Date(createdAt);
 

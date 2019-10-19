@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Circle } from "styled-icons/boxicons-solid/Circle";
 
 export const Card = styled.div`
   display: grid;

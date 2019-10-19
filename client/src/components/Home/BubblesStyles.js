@@ -1,5 +1,6 @@
-import { lighten, transparentize } from "polished";
 import styled, {keyframes} from "styled-components";
+
+import { transparentize } from "polished";
 
 export const Background = styled.div`
   width: 100%;

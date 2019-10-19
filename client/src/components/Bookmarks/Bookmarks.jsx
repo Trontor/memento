@@ -1,17 +1,18 @@
-import React from "react";
-import { Container } from "ui/Helpers";
-import { Header } from "ui/Typography";
-import { FormHelpText, UserAvatar } from "ui/Forms";
-import { List } from "ui/Radio";
 import {
   BookmarksWrapper,
-  Item,
   Description,
+  Item,
+  UploaderAvatar,
   UploaderBox,
   UploaderText,
-  UploaderAvatar,
 } from "./BookmarksStyles";
+
 import { CardOptions } from "../MementoCard/MementoCardStyles";
+import { Container } from "ui/Helpers";
+import { FormHelpText } from "ui/Forms";
+import { Header } from "ui/Typography";
+import { List } from "ui/Radio";
+import React from "react";
 
 export default function Bookmarks(props) {
   const imageSrc = [

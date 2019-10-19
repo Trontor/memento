@@ -7,8 +7,8 @@ import {
   InviteFamily,
   TextWrapper
 } from "components/Dashboard/DashboardStyles";
-import { Container, WhiteBoxWrapper } from "ui/Helpers";
 
+import { Container } from "ui/Helpers";
 import React from "react";
 
 export default function InviteNoFamilies(props) {
