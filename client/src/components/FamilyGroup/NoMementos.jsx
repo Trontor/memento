@@ -1,27 +1,31 @@
+import { NoMementosIcon, UploadButton } from "./FamilyGroupStyles";
+
 import React from "react";
-import { UploadButton, NoMementosIcon } from "./FamilyGroupStyles";
 import styled from "styled-components";
+import {transparentize} from "polished";
 
 // Please feel free to refactor this if equivalent styles are in the ui/ folder
 const NoMementoContainer = styled.div`
   position: relative;
-  height: 100%;
   text-align: center;
+  height: 100%;
 `;
 
 const Center = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: ${props => props.theme.palette.foreground};
   margin: auto;
-  margin-left: 20px;
   border-radius: 5px;
-  border: 1px solid #eee;
   padding: 20px;
-  height: 300px; /*requires explicit height*/
+  height: 100%; /*requires explicit height*/
+
+  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
+    background: ${props => props.theme.palette.foreground};
+    border: 1px solid ${props => transparentize(0.93, props.theme.palette.text)};
+    display: flex;
+    align-items: center;
+    > div {
+      width: 100%;
+    }
+  }
 `;
 
 /**
@@ -37,17 +41,18 @@ export default function NoMementos(props) {
   return (
     <NoMementoContainer data-cy="no-mementos">
       <Center>
-        <NoMementosIcon familyColour={familyColour} />
-        <h2>Nobody has added a Memento yet</h2>
-        <p>You can upload mementos by clicking below:</p>
-        <UploadButton
-          familyColour={familyColour}
-          style={{ marginTop: "10px" }}
-          onClick={onClick}
-        >
-          <i className="fas fa-feather-alt"></i>
-          <span>Add a Memento</span>
-        </UploadButton>
+        <div>
+          <NoMementosIcon familyColour={familyColour} />
+          <h2>No mementos have been added yet...</h2>
+          <UploadButton
+            familyColour={familyColour}
+            style={{ marginTop: "10px" }}
+            onClick={onClick}
+          >
+            <i className="fas fa-feather-alt"></i>
+            <span>Add a Memento</span>
+          </UploadButton>
+        </div>
       </Center>
     </NoMementoContainer>
   );
