@@ -127,11 +127,12 @@ export const ProfilePhotoContainer = styled.div`
 
   img {
     ${center};
-    width: 128px;
-    height: 128px;
+    width: ${props => (props.thick ? "118px" : "128px")};
+    height: ${props => (props.thick ? "118px" : "128px")};
     object-fit: cover;
     border-radius: 5px;
   }
+
 
   @media screen and (min-width: ${props =>
       props.theme.breakpoints.tabletLandscape}) {
@@ -328,13 +329,13 @@ export const UploadButton = styled(ButtonPrimaryLight)`
 
   color: ${props => props.familyColour || props.theme.palette.main};
   background: ${props =>
-    lighten(0.25, props.familyColour || props.theme.palette.main)};
+    lighten(0.75, props.familyColour || props.theme.palette.main)};
   border: 1px solid
-    ${props => lighten(0.25, props.familyColour || props.theme.palette.main)};
+    ${props => lighten(0.3, props.familyColour || props.theme.palette.main)};
 
   &:hover {
     background: ${props =>
-      lighten(0.27, props.familyColour || props.theme.palette.main)};
+      lighten(0.5, props.familyColour || props.theme.palette.main)};
     border: 1px solid
       ${props => lighten(0.27, props.familyColour || props.theme.palette.main)};
   }
@@ -425,7 +426,8 @@ export const SearchInput = styled.input`
 `;
 
 export const NoMementosIcon = styled(PhotoAlbum)`
-  color: ${props => lighten(0.1, props.theme.palette.main)};
+  color: ${props =>
+    lighten(0.1, props.familyColour || props.theme.palette.main)};
   margin: auto;
   height: 120px;
 `;

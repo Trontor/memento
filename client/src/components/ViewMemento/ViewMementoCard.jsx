@@ -5,13 +5,15 @@ import {
   MementoAuthor,
   MementoCoverImg,
   MementoDescription,
+  MementoOverview,
+  MementoTag,
   MementoTagsWrapper,
   MementoTitle,
-  MementoOverview,
   PeopleTags,
-  MementoTag,
   UploadDate,
 } from "../MementoCard/MementoCardStyles";
+import { Card, CardContent, CardInfo, FamilyGroup } from "./ViewMementoStyles";
+
 import React from "react";
 import { Card, CardInfo, CardContent, FamilyGroup } from "./ViewMementoStyles";
 import { useHistory } from "react-router";
@@ -43,7 +45,7 @@ export default function MementoCard(props) {
           {/* Memento  Uploader Profile Picture */}
           <AuthorAvatar>
             {!uploader.imageUrl ? (
-              <i class="fas fa-user-circle"></i>
+              <i className="fas fa-user-circle"></i>
             ) : (
               <img src={uploader.imageUrl} alt={uploader.firstName} />
             )}
@@ -74,18 +76,18 @@ export default function MementoCard(props) {
         <MementoOverview>
           {/* Dates */}
           <span>
-            <i class="far fa-clock" />
+            <i className="far fa-clock" />
             {dates[0].year}
           </span>
           {/* Location */}
           <span>
-            <i class="fas fa-map-marker-alt" />
+            <i className="fas fa-map-marker-alt" />
             {location}
           </span>
           {/* People Tags */}
           {people && people.length > 0 && (
             <span>
-              <i class="fas fa-user-tag"></i>
+              <i className="fas fa-user-tag"></i>
               <div>
                 {props.people.map(person => (
                   <PeopleTags>
@@ -98,7 +100,7 @@ export default function MementoCard(props) {
           {/* Beneficiary Tags */}
           {beneficiaries && beneficiaries.length > 0 && (
             <span>
-              <i class="fa fa-users" aria-hidden="true" />
+              <i className="fa fa-users" aria-hidden="true" />
               <div>
                 {props.beneficiaries.map(beneficiary => (
                   <PeopleTags>
@@ -115,7 +117,7 @@ export default function MementoCard(props) {
 
         {/* Tags */}
         <MementoTagsWrapper>
-          <i class="fas fa-tags"></i>
+          <i className="fas fa-tags"></i>
           {props.tags.map(tag => (
             <MementoTag>{tag}</MementoTag>
           ))}

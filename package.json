@@ -4,6 +4,7 @@
   "description": "Team memento's IT project 2019",
   "main": "dist/server.js",
   "scripts": {
+    "cypress": "cypress open",
     "start": "node dist/server.js",
     "lint": "tslint --project tsconfig.json",
     "gql": "cd old-graphql && graphql-codegen --config codegen.yml",
@@ -58,6 +59,7 @@
     "graphql": "^14.4.2",
     "graphql-tools": "^4.0.5",
     "graphql-upload": "^8.0.7",
+    "mongodb": "^3.3.3",
     "mongodb-memory-server": "^5.2.8",
     "mongoose": "^5.6.11",
     "passport": "^0.4.0",
@@ -70,6 +72,7 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
+    "cypress": "^3.4.1",
     "@graphql-codegen/cli": "^1.6.1",
     "@graphql-codegen/introspection": "^1.5.0",
     "@graphql-codegen/typescript": "1.5.0",

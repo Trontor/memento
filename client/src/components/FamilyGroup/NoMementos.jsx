@@ -35,17 +35,17 @@ export default function NoMementos(props) {
   console.log(props);
 
   return (
-    <NoMementoContainer>
+    <NoMementoContainer data-cy="no-mementos">
       <Center>
-        <NoMementosIcon />
-        <h2>There's no memento yet</h2>
+        <NoMementosIcon familyColour={familyColour} />
+        <h2>Nobody has added a Memento yet</h2>
         <p>You can upload mementos by clicking below:</p>
         <UploadButton
           familyColour={familyColour}
           style={{ marginTop: "10px" }}
           onClick={onClick}
         >
-          <i class="fas fa-feather-alt"></i>
+          <i className="fas fa-feather-alt"></i>
           <span>Add a Memento</span>
         </UploadButton>
       </Center>

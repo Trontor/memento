@@ -47,6 +47,10 @@ const loadingFamilyQuotes = [
   "Loading lavishly...",
   "OwO",
 ];
+
+// Colour Theme Selection for Family Group
+const colorSelection = ["#FF7F5F", "#FF3221", "#FF337D", "#EA40E0", "#9127D2", "#5627D2", "#274CE3", "#2883FF", "#0099BE", "#00C494", "#00BE4E", "#FFB700", "#F97908"]
+
 export default function CreateFamily(props) {
   const [createNewFamily, { data, loading /* error */ }] = useMutation(
     CREATE_NEW_FAMILY,
@@ -66,7 +70,7 @@ export default function CreateFamily(props) {
   }
 
   return (
-    <Container>
+    <Container data-cy="new-family">
       <Header underline>Create a New Family</Header>
       <Formik
         initialValues={defaultValues}
@@ -135,13 +139,14 @@ export default function CreateFamily(props) {
               <InstructionLabel>
                 Pick a colour theme for your Family group page.
               </InstructionLabel>
-              <PickerWrapper>
+              <PickerWrapper data-cy="circle-picker">
                 <CirclePicker
                   onChange={color => {
                     props.setFieldValue("color", color.hex);
                   }}
                   color={props.values.color}
                   width="100%"
+                  colors={colorSelection}
                 />
               </PickerWrapper>
 

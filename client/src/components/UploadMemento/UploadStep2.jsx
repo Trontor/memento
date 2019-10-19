@@ -23,7 +23,7 @@ const initialFormValues = {
   beneficiaries: [],
   tags: [],
   file: null,
-  location: "Amsterdam",
+  location: "",
 };
 const MAX_FILE_SIZE = 160 * 1024 * 1024;
 const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
@@ -234,7 +234,7 @@ export default function UploadStep2({
                   </Tag>
                 ))}
                 <NewTag type="button" onClick={() => setNewTag("")}>
-                  <i class="fas fa-plus"></i> new tag
+                  <i className="fas fa-plus"></i> new tag
                 </NewTag>
               </TagsContainer>
 

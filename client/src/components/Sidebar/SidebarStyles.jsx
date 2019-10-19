@@ -4,8 +4,9 @@ import { ButtonSecondary } from "../../ui/Buttons";
 import { Close } from "styled-icons/material/Close";
 import { Search } from "styled-icons/boxicons-regular/Search";
 import { lighten } from "polished";
+import { NavLink } from "react-router-dom";
 
-export const SidebarContainer = styled.div`
+export const SidebarContainer = styled.div.attrs({ "data-cy": "sidebar" })`
   min-width: ${props => props.theme.size.sidebar}px;
   border-right: 1px solid ${props => lighten(0.66, props.theme.palette.text)};
   min-height: 100%;
@@ -97,7 +98,7 @@ export const FamilyListSection = styled.div`
   }
 `;
 
-export const TextList = styled.li`
+export const TextList = styled(NavLink)`
   list-style-type: none;
   line-height: 30px;
   letter-spacing: 0.01em;
@@ -116,9 +117,15 @@ export const TextList = styled.li`
     color: ${props => lighten(0.05, props.theme.palette.text)};
   }
 
+  &.active {
+    span {
+      color: red;
+    }
+  }
   span {
     ${props => props.theme.mixins.hoverFade};
     color: ${props => lighten(0.2, props.theme.palette.text)};
+
     cursor: pointer;
     &:hover {
       ${props => props.theme.mixins.hoverFade};

@@ -1,4 +1,9 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
+
+export const line = keyframes`
+  from { width: 0; }
+  to { width: 100%;}
+`;
 
 // Page heading
 export const Header = styled.h1`
@@ -19,8 +24,17 @@ export const Header = styled.h1`
   ${({ underline }) =>
     underline &&
     css`
-      border-bottom: 0.15em solid ${props => props.theme.palette.main};
-      padding-bottom: 0.1em;
-      margin-bottom: 1em;
+      &:after {
+        content: '';
+        display: block;
+        width: 0;
+        height: 0.155em;
+        background-color:${props => props.theme.palette.main};
+        margin-top: 4px;
+        padding-bottom: 0.1em;
+        margin-bottom: 1em;
+        animation: ${line} 0.3s forwards;
+        animation-delay: 0.1s;
+      }
     `};
 `;

@@ -44,7 +44,7 @@ export default function InviteStep2({
               />
               {inviteEmails.length > 1 && (
                 <DeleteButton onClick={() => deleteEmail(idx)}>
-                  <i class="fa fa-trash"></i>
+                  <i className="fa fa-trash"></i>
                 </DeleteButton>
               )}
             </EmailInvite>

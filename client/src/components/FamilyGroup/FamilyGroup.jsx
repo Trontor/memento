@@ -6,7 +6,6 @@ import {
   FamilyLayout,
   GroupDetails,
   MainViewer,
-  MemberRow,
   Menu,
   Options,
   ProfilePhotoContainer,
@@ -19,14 +18,15 @@ import {
   UploadButton,
 } from "./FamilyGroupStyles";
 import { MenuContainer, MenuTabs } from "ui/Navigation";
-import React, { useState, useEffect } from "react";
-import { GET_MEMENTOS } from "queries/Memento";
+import React, { useEffect, useState } from "react";
+
 import { FamilyProfileContainer } from "./FamilyGroupStyles";
+import { GET_MEMENTOS } from "queries/Memento";
 import JollyLoader from "components/JollyLoader/JollyLoader";
 import { LOAD_FAMILY } from "mutations/Family";
 import MembersViewer from "./MembersViewer";
-import NoMementos from "./NoMementos";
 import MementosViewer from "./MementosViewer";
+import NoMementos from "./NoMementos";
 import TagsViewer from "./TagsViewer";
 import moment from "moment";
 import { useLocation } from "react-router-dom";
@@ -47,6 +47,7 @@ export default function FamilyGroup(props) {
   const [filterTags, setFilterTags] = useState([]);
   const [mementos, setMementos] = useState(null);
   const [family, setFamily] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
   const location = useLocation();
   useEffect(() => {
     // If there are no mementos, forget about it
@@ -66,12 +67,14 @@ export default function FamilyGroup(props) {
   }, [mementos]);
 
   // Query to load the family
-  const { loading, error } = useQuery(LOAD_FAMILY, {
+  const { loading, error, refetch } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
-
+    fetchPolicy: "cache-and-network",
     onCompleted: data => {
       if (data && data.family) {
+        setCurrentUser(data.currentUser);
         setFamily(data.family);
+        console.log("Loaded family...", data.family);
       }
     },
   });
@@ -81,7 +84,7 @@ export default function FamilyGroup(props) {
     variables: {
       id: familyId,
     },
-    fetchPolicy: "network-only",
+    fetchPolicy: "cache-and-network",
     onCompleted: data => {
       if (data && data.mementos) {
         console.log("Fetched mementos succesfully:", data.mementos);
@@ -89,12 +92,15 @@ export default function FamilyGroup(props) {
       }
     },
   });
-  useEffect(() => {
-    console.log("refetching mementos...");
-    getMementosQuery.refetch();
-  }, [getMementosQuery, location]);
 
-  if (loading || !family || getMementosQuery.loading) {
+  useEffect(() => {
+    console.log("Refetching family and mementos..");
+    refetch();
+    getMementosQuery.refetch();
+    // eslint-disable-next-line
+  }, [location]);
+
+  if (!family || (loading && getMementosQuery.loading)) {
     return <JollyLoader quotes={loadingQuotes} />;
   }
 
@@ -122,6 +128,8 @@ export default function FamilyGroup(props) {
       filterTags={filterTags}
       mementos={mementos}
       familyId={familyId}
+      userId={currentUser.userID}
+      refreshMementos={getMementosQuery.refetch}
     />
   );
   switch (menuTabs[currentTabIndex]) {
@@ -144,19 +152,30 @@ export default function FamilyGroup(props) {
     default:
       break;
   }
+
+  const isAdmin = currentUser.familyRoles.some(
+    f => f.familyId === familyId && f.familyRole === "Admin",
+  );
+
   return (
     <FamilyContainer>
       <FamilyLayout>
         <div>
           <SideMenu>
             <FamilyProfileContainer>
-              {family.imageUrl && (
-                <>
-                  <FamilyImg familyColour={family.colour} />
-                  <ProfilePhotoContainer>
-                    <img alt="family" src={family.imageUrl} />
-                  </ProfilePhotoContainer>
-                </>
+              <FamilyImg familyColour={family.colour} />
+              {family.imageUrl ? (
+                <ProfilePhotoContainer>
+                  <img alt="family" src={family.imageUrl} />
+                </ProfilePhotoContainer>
+              ) : (
+                <ProfilePhotoContainer thick>
+                  <img
+                    svg
+                    alt="family"
+                    src="https://image.flaticon.com/icons/svg/1999/1999109.svg"
+                  />
+                </ProfilePhotoContainer>
               )}
               <FamilyHeader>
                 <div></div> {/* Empty div to center title */}
@@ -167,18 +186,18 @@ export default function FamilyGroup(props) {
                 <DetailsWrapper>
                   <GroupDetails>
                     {/* Date of Group Creation */}
-                    <i class="far fa-clock"></i>
+                    <i className="far fa-clock"></i>
                     Created on the{" "}
                     {moment(family.createdAt).format("Do MMM, YYYY")}
                   </GroupDetails>
                   <GroupDetails>
                     {/* Number of Mementos */}
-                    <i class="far fa-paper-plane"></i>
+                    <i className="far fa-paper-plane"></i>
                     {mementos ? mementos.length : "~"} mementos
                   </GroupDetails>
                   <GroupDetails>
                     {/* Number of Members */}
-                    <i class="fas fa-users"></i>
+                    <i className="fas fa-users"></i>
                     {family ? family.members.length : "~"} members
                   </GroupDetails>
                 </DetailsWrapper>
@@ -189,15 +208,17 @@ export default function FamilyGroup(props) {
                   familyColour={family.colour}
                   onClick={onUploadMementoClicked}
                 >
-                  <i class="fas fa-feather-alt"></i>
+                  <i className="fas fa-feather-alt"></i>
                   <span>Add a Memento</span>
                 </UploadButton>
                 {/* Settings Button */}
-                <SettingsButton
-                  onClick={() => props.history.push(familyId + "/settings")}
-                >
-                  <i class="fas fa-cog"></i>
-                </SettingsButton>
+                {isAdmin && (
+                  <SettingsButton
+                    onClick={() => props.history.push(familyId + "/settings")}
+                  >
+                    <i className="fas fa-cog"></i>
+                  </SettingsButton>
+                )}
               </Options>
             </FamilyProfileContainer>
 
@@ -206,32 +227,7 @@ export default function FamilyGroup(props) {
               <SideMenuSectionHeader>
                 <h2>Members</h2>
               </SideMenuSectionHeader>
-              {family.members.map(member => (
-                <MemberRow admin>
-                  {member.imageUrl ? (
-                    <img
-                      src={member.imageUrl}
-                      alt={`${member.firstName}'s avatar`}
-                    />
-                  ) : (
-                    <i class="fas fa-user-circle"></i>
-                  )}
-                  <div>
-                    <span
-                      onClick={() =>
-                        props.history.push("/profile/" + member.userId)
-                      }
-                    >
-                      {member.firstName} {member.lastName}
-                    </span>
-                    {member.familyRoles.some(
-                      r =>
-                        r.familyId === familyId &&
-                        r.familyRole.toLowerCase() === "admin",
-                    ) && <span>Admin</span>}
-                  </div>
-                </MemberRow>
-              ))}
+              <MembersViewer members={family.members} familyId={familyId} />
             </SideMenuSectionContainer>
 
             <SideMenuSectionContainer>
@@ -242,6 +238,7 @@ export default function FamilyGroup(props) {
               {!tagOptions.length && <TagRow>No Tags</TagRow>}
               {tagOptions.sort().map(tag => (
                 <TagRow
+                  key={tag}
                   onClick={() => selectTag(tag)}
                   selected={filterTags.includes(tag)}
                 >
@@ -255,6 +252,7 @@ export default function FamilyGroup(props) {
             <MenuContainer>
               {menuTabs.map((tab, idx) => (
                 <MenuTabs
+                  key={idx}
                   active={currentTabIndex === idx}
                   onClick={() => setTabIndex(idx)}
                 >

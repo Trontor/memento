@@ -23,12 +23,17 @@ export default function DateSelector({
   // };
 
   useEffect(() => {
-    const proposedDate = `${day}/${month}/${year}`;
-    const validDate = moment(proposedDate).isValid();
-    if (!day || !month || !year) {
+    const proposedDate = `${year}-${month}-${day}`;
+    const momentDate = moment(proposedDate, "YYYY-M-D", true);
+    const validDate = momentDate.isValid();
+    const wellConstructedDate = year.length === 4;
+
+    if (!wellConstructedDate || !day || !month || !year) {
       setFieldValue("date", null);
       return;
     }
+    console.log("Proposed Date:", proposedDate);
+    console.log(momentDate, validDate);
     if (!validDate) {
       console.log("Invalid date: " + proposedDate);
       setDay(1);
@@ -84,8 +89,8 @@ export default function DateSelector({
         onChange={e => setDay(e.target.value)}
       />
       <Select
-        value={monthOptions[month]}
-        onChange={e => setMonth(e.value)}
+        value={monthOptions[month - 1]}
+        onChange={e => setMonth(e.value + 1)}
         options={monthOptions}
         placeholder="Month"
         styles={customDropdown}
