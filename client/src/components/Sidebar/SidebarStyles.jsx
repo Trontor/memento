@@ -158,8 +158,8 @@ export const FamilyList = styled(NavLink)`
   color: ${props => transparentize(0.25, props.theme.palette.text)};
 
   &:hover {
-    background-color: ${props => transparentize(0.97, props.theme.palette.main)};
-    border-radius: 5px;
+    transition: 0.25s ease-in-out;
+    transform: translateX(16px);
   }
 
   &.active {
@@ -177,10 +177,10 @@ export const FamilyAvatar = styled.span`
   margin-bottom: 0;
 
   img {
-    border: 3px solid ${props => transparentize(0.3, props.familyColour || props.theme.palette.main)};
+    border: 2px solid ${props => transparentize(0.35, props.familyColour || props.theme.palette.main)};
     border-radius: 50%;
-    width: 32px;
-    height: 32px;
+    width: 48px;
+    height: 48px;
     object-fit: cover;
   }
 `;
@@ -206,7 +206,7 @@ export const CloseMenu = styled(Close)`
   }
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLandscape}) {
+  props.theme.breakpoints.tabletLandscape}) {
     display: none;
   }
 `;
