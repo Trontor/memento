@@ -63,7 +63,7 @@ export const Bubbles = styled.div`
     width: 115px;
     height: 105px;
     margin-left: -500px;
-    top: 110px;
+    top: 90px;
     background:
       linear-gradient(225deg,
         ${transparentize(0.85, "#DCE5FD")},
@@ -92,7 +92,7 @@ export const Bubbles = styled.div`
     width: 32px;
     height: 30px;
     margin-left: -400px;
-    top: 50px;
+    top: 30px;
     background:
       linear-gradient(-30deg,
         ${transparentize(0.9, "#90B6E8")},
