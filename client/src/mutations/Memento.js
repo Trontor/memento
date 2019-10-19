@@ -23,3 +23,11 @@ export const DELETE_BOOKMARK = gql`
     }
   }
 `;
+
+export const UPDATE_MEMENTO = gql`
+  mutation updateMemento($input: UpdateMementoInput!) {
+    updateMemento(input: $input) {
+      mementoId
+    }
+  }
+`;

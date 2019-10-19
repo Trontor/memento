@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik } from "formik";
 //import * as yup from "yup";
 import { Container } from "ui/Helpers";
@@ -14,6 +14,11 @@ import {
 import { AlignRight } from "ui/Helpers";
 import Select from "react-select";
 import DateSelector from "components/DateSelector/DateSelector";
+import { useQuery, useLazyQuery, useMutation } from "@apollo/react-hooks";
+import { GET_A_MEMENTO } from "queries/Memento";
+import JollyLoader from "components/JollyLoader/JollyLoader";
+import { LOAD_FAMILY } from "mutations/Family";
+import { UPDATE_MEMENTO } from "mutations/Memento";
 
 //Style react select dropdown with styles api
 const customDropdown = {
@@ -78,24 +83,36 @@ const customDropdown = {
 //   location: yup.string(),
 // });
 
-export default function EditMemento() {
-  const memento = {
-    title: "Childhood pic",
-    description: "This is my childhood pic",
-    location: "Amsterdam",
-    familyMemberOptions: [
-      { label: "Gigi Leung", value: 1 },
-      { label: "Valerie Febriana", value: 2 },
-      { label: "Rohyl Joshi", value: 3 },
-      { label: "Jackson Huang", value: 4 },
-    ],
-    memberTags: [
-      { label: "Gigi Leung", value: 1 },
-      { label: "Valerie Febriana", value: 2 },
-    ],
-    tags: ["cars", "family"],
-    beneficiaries: [{ label: "Gigi Leung", value: 1 }],
-  };
+export default function EditMemento(props) {
+  const [memento, setMemento] = useState(null);
+  const [family, setFamily] = useState(null);
+  const [user, setUser] = useState(null);
+  useQuery(GET_A_MEMENTO, {
+    variables: { id: props.match.params.id },
+    onCompleted: data => {
+      if (data && data.memento) {
+        setMemento(data.memento);
+      }
+    },
+  });
+
+  const [loadFamily] = useLazyQuery(LOAD_FAMILY, {
+    onCompleted: data => {
+      if (data && data.family) {
+        setFamily(data.family);
+        setUser(data.currentUser);
+      }
+    },
+  });
+
+  const [updateMemento] = useMutation(UPDATE_MEMENTO, {
+    onCompleted: data => {
+      if (data && data.updateMemento) {
+        // window.location.reload();
+        // props.history.push("/memento/" + data.updateMemento.mementoId);
+      }
+    },
+  });
 
   const [tags, setTags] = useState([
     "recipes",
@@ -114,145 +131,216 @@ export default function EditMemento() {
     tag = tag.target.value;
     setNewTag(tag);
   };
+  useEffect(() => {
+    if (!family && memento) {
+      setTags(memento.tags);
+      loadFamily({ variables: { id: memento.family.familyId } });
+    }
+  }, [memento, family, loadFamily]);
 
+  if (!memento || !family) {
+    return <JollyLoader />;
+  }
+
+  const firstDate = memento.dates[0];
+  const initialDateSelectorValue = new Date(
+    firstDate.year,
+    firstDate.month,
+    firstDate.day,
+  );
+
+  const initialFormikValues = {
+    ...memento,
+    title: memento.title,
+    description: memento.description,
+    date: initialDateSelectorValue,
+    memberTags: memento.people.map(p => p.userId),
+    beneficiaries: memento.beneficiaries,
+    location: memento.location,
+    tags: memento.tags,
+  };
+  const familyMemberOptions = family.members.map(member => ({
+    label: `${member.firstName} ${member.lastName}`,
+    value: member.userId,
+  }));
+  const onSubmit = values => {
+    const mutationValues = {
+      mementoId: memento.mementoId,
+      title: values.title,
+      description: values.description,
+      location: values.location,
+      // dates: [
+      //   {
+      //     day: values.date.getDate(),
+      //     month: values.date.getMonth() + 1,
+      //     year: values.date.getFullYear(),
+      //   },
+      // ],
+      people: values.memberTags,
+      beneficiaries: values.beneficiaries,
+      tags: values.tags,
+    };
+    console.log(mutationValues);
+
+    updateMemento({ variables: { input: mutationValues } });
+  };
   return (
     <Formik
-      initialValues={memento}
+      initialValues={initialFormikValues}
+      onSubmit={onSubmit}
       //validationSchema={editMementoValidationSchema}
       render={props => {
-        // console.log(props);
+        // console.log(props.values);
         return (
-          <Container>
-            <Header underline>Edit Memento</Header>
-            <FormSection>
-              <EditInput
-                name="title"
-                value={props.values.title}
-                inputLabel="Title"
-                onChange={props.handleChange}
-              />
-            </FormSection>
-            <FormSection>
-              <EditInput
-                name="description"
-                value={props.values.description}
-                inputLabel="Description"
-                onChange={props.handleChange}
-              />
-            </FormSection>
-            <FormSection>
-              <InstructionLabel>Date:</InstructionLabel>
-              <DateSelector
-                setFieldValue={props.setFieldValue}
-                // onChange={props.handleChange}
-                value={props.values.date}
-                //customDropdown={customDropdown}
-              />
-            </FormSection>
+          <form onSubmit={props.handleSubmit}>
+            <Container>
+              <Header underline>Edit Memento</Header>
+              <FormSection>
+                <EditInput
+                  name="title"
+                  value={props.values.title}
+                  inputLabel="Title"
+                  onChange={props.handleChange}
+                />
+              </FormSection>
+              <FormSection>
+                <EditInput
+                  name="description"
+                  value={props.values.description}
+                  inputLabel="Description"
+                  onChange={props.handleChange}
+                />
+              </FormSection>
+              <FormSection>
+                <InstructionLabel>Date:</InstructionLabel>
+                <DateSelector
+                  setFieldValue={props.setFieldValue}
+                  // onChange={props.handleChange}
+                  value={props.values.date}
+                  customDropdown={customDropdown}
+                />
+              </FormSection>
 
-            <FormSection>
-              <InstructionLabel>Tag People:</InstructionLabel>
-              <Select
-                isClearable
-                placeholder="Select family members.."
-                styles={customDropdown}
-                isMulti
-                create
-                name="memberTags"
-                value={memento.memberTags}
-                // onChange={members => {
-                //   const memberIDs = !members ? [] : members.map(m => m.value);
-                //   props.setFieldValue("memberTags", memberIDs);
-                // }}
-                options={memento.familyMemberOptions}
-              />
-            </FormSection>
+              <FormSection>
+                <InstructionLabel>Tag People:</InstructionLabel>
+                <Select
+                  isClearable
+                  placeholder="Select family members.."
+                  styles={customDropdown}
+                  isMulti
+                  create
+                  name="memberTags"
+                  options={familyMemberOptions}
+                  value={familyMemberOptions.filter(m =>
+                    props.values.memberTags.includes(m.value),
+                  )}
+                  onChange={members => {
+                    const memberIDs = !members ? [] : members.map(m => m.value);
+                    props.setFieldValue("memberTags", memberIDs);
+                  }}
+                />
+              </FormSection>
 
-            <FormSection>
-              <InstructionLabel>Assign Beneficiaries:</InstructionLabel>
-              <Select
-                isClearable
-                placeholder="Select family members..."
-                styles={customDropdown}
-                isMulti
-                create
-                name="beneficiaries"
-                value={memento.beneficiaries}
-                // onChange={members => {
-                //   const memberIDs = !members ? [] : members.map(m => m.value);
-                //   props.setFieldValue("beneficiaries", memberIDs);
-                // }}
-                // options={familyMemberOptions.filter(
-                //   m => m.value !== currentUserId,
-                // )}
-                options={memento.familyMemberOptions}
-              />
-            </FormSection>
+              <FormSection>
+                <InstructionLabel>Assign Beneficiaries:</InstructionLabel>
+                <Select
+                  isClearable
+                  placeholder="Select family members..."
+                  styles={customDropdown}
+                  isMulti
+                  create
+                  name="beneficiaries"
+                  value={familyMemberOptions.filter(m =>
+                    props.values.beneficiaries.includes(m.value),
+                  )}
+                  onChange={members => {
+                    const memberIDs = !members ? [] : members.map(m => m.value);
+                    props.setFieldValue("beneficiaries", memberIDs);
+                  }}
+                  options={familyMemberOptions.filter(
+                    m => m.value !== user.userId,
+                  )}
+                />
+              </FormSection>
 
-            <FormSection>
-              <EditInput
-                name="location"
-                value={props.values.location}
-                inputLabel="Add Location:"
-                onChange={props.handleChange}
-              />
-            </FormSection>
+              <FormSection>
+                <EditInput
+                  name="location"
+                  value={props.values.location}
+                  inputLabel="Add Location:"
+                  onChange={props.handleChange}
+                />
+              </FormSection>
 
-            <FormSection>
-              <InstructionLabel>Tags:</InstructionLabel>
-              <TagsContainer>
-                {memento.tags.sort().map(tag => (
-                  <Tag
-                  // onClick={() => {
-                  //   if (props.values.tags.includes(tag)) {
-                  //     props.setFieldValue(
-                  //       "tags",
-                  //       props.values.tags.filter(t => t !== tag),
-                  //     );
-                  //   }
-                  //}}
-                  >
-                    {tag}
-                  </Tag>
-                ))}
-                <NewTag type="button" onClick={() => setNewTag("")}>
-                  <i class="fas fa-plus"></i> new tag
-                </NewTag>
-              </TagsContainer>
-              {newTag !== null && (
-                <>
-                  <InputField
-                    placeholder="New tag name"
-                    value={newTag}
-                    onChange={e => handleChange(e)}
-                    //onBlur={() => setDefaultTags([...defaultTags, newTag])}
-                  />
-                  <ButtonPrimary
-                    type="button"
-                    onClick={() => {
-                      setTags([...new Set([...tags, newTag])]);
-                      props.setFieldValue("tags", [
-                        ...props.values.tags,
-                        newTag,
-                      ]);
-                      setNewTag(null);
-                    }}
-                  >
-                    Create new tag
-                  </ButtonPrimary>
-                  <AlignRight>
-                    <ButtonSecondary
-                      type="button"
-                      onClick={() => setNewTag(null)}
+              <FormSection>
+                <InstructionLabel>Tags:</InstructionLabel>
+                <TagsContainer>
+                  {tags.sort().map(tag => (
+                    <Tag
+                      onClick={() => {
+                        if (props.values.tags.includes(tag)) {
+                          props.setFieldValue(
+                            "tags",
+                            props.values.tags.filter(t => t !== tag),
+                          );
+                        } else {
+                          props.setFieldValue("tags", [
+                            ...props.values.tags,
+                            tag,
+                          ]);
+                        }
+                      }}
+                      selected={props.values.tags.includes(tag)}
                     >
-                      Cancel
-                    </ButtonSecondary>
-                  </AlignRight>
-                </>
+                      {tag}
+                    </Tag>
+                  ))}
+                  <NewTag type="button" onClick={() => setNewTag("")}>
+                    <i class="fas fa-plus"></i> new tag
+                  </NewTag>
+                </TagsContainer>
+                {newTag !== null && (
+                  <>
+                    <InputField
+                      placeholder="New tag name"
+                      value={newTag}
+                      onChange={e => handleChange(e)}
+                      //onBlur={() => setDefaultTags([...defaultTags, newTag])}
+                    />
+                    <ButtonPrimary
+                      type="button"
+                      onClick={() => {
+                        setTags([...new Set([...tags, newTag])]);
+                        props.setFieldValue("tags", [
+                          ...props.values.tags,
+                          newTag,
+                        ]);
+                        setNewTag(null);
+                      }}
+                    >
+                      Create new tag
+                    </ButtonPrimary>
+                    <AlignRight>
+                      <ButtonSecondary
+                        type="button"
+                        onClick={() => setNewTag(null)}
+                      >
+                        Cancel
+                      </ButtonSecondary>
+                    </AlignRight>
+                  </>
+                )}
+              </FormSection>
+              {/* Save Changes Button  */}
+              {props.dirty && (
+                <ButtonPrimary
+                  type="submit"
+                  style={{ float: "right", marginBottom: "10px" }}
+                >
+                  Save Changes
+                </ButtonPrimary>
               )}
-            </FormSection>
-
-            {/* <FormSection>
+              {/* <FormSection>
               <InstructionLabel>Tags:</InstructionLabel>
               <TagsContainer>
                 {tags.sort().map(tag => (
@@ -313,7 +401,8 @@ export default function EditMemento() {
                 </>
               )}
             </FormSection> */}
-          </Container>
+            </Container>
+          </form>
         );
       }}
     />

@@ -12,8 +12,6 @@ import {
   PeopleTags,
   UploadDate,
 } from "../MementoCard/MementoCardStyles";
-import { Card, CardContent, CardInfo, FamilyGroup } from "./ViewMementoStyles";
-
 import React from "react";
 import { Card, CardInfo, CardContent, FamilyGroup } from "./ViewMementoStyles";
 import { useHistory } from "react-router";

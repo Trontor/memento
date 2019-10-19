@@ -165,7 +165,7 @@ const authenticatedRoutes = [
     component: InheritanceTree,
   },
   {
-    name: "edit-memento",
+    name: "memento/:id/edit",
     component: EditMemento,
   },
 ];
