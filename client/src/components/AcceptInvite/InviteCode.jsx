@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { ButtonPrimary } from "ui/Buttons";
 import { Container } from "ui/Helpers";
 import { InputField } from "ui/Forms";
-import { TextWrapper } from "components/Dashboard/DashboardStyles";
+import { TextWrapper } from "components/Dashboard/NewUser/NewUserStyles";
 
 export default function InviteCode(props) {
   const [inviteId, setInviteId] = useState("");
@@ -24,9 +24,12 @@ export default function InviteCode(props) {
             <InputField
               value={inviteId}
               onChange={e => setInviteId(e.target.value)}
-              placeholder="Invitation Code"/>
+              placeholder="Invitation Code"
+            />
           </AcceptFieldWrapper>
-          <ButtonPrimary onClick={handleAcceptClick} disabled={!inviteId}>Accept</ButtonPrimary>
+          <ButtonPrimary onClick={handleAcceptClick} disabled={!inviteId}>
+            Accept
+          </ButtonPrimary>
         </InvitationWrapper>
       </TextWrapper>
     </Container>

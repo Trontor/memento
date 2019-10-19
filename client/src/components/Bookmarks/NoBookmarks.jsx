@@ -5,7 +5,7 @@ import {
   DashboardButtons,
   ButtonHeading,
   GoToButton,
-} from "../Dashboard/DashboardStyles";
+} from "../Dashboard/NewUser/NewUserStyles";
 import { NoBookmarksIcon, IconButton } from "./BookmarksStyles";
 import { useHistory } from "react-router-dom";
 
