@@ -1,9 +1,16 @@
 import styled, { css } from "styled-components";
 
-export const PageContainer = styled.div`
-  width: 100%;
-  padding: 40px;
-  height: 100vh;
+export const FormWrapper = styled.div`
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletPortrait}) {
+    width: 450px;
+  }
 `
 
 // Used for centering elements within its parent

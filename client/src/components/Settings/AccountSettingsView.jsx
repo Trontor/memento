@@ -29,19 +29,6 @@ export default function SettingsAccount() {
       </FormSection>
 
       <FormSection>
-        <InputLabel>
-          Password{" "}
-          <EditAccountButton
-            size="25px"
-            onClick={editPasswordHandler}
-            editClick={editPassword}
-          />
-          <CancelButton
-            size="25px"
-            onClick={editPasswordHandler}
-            editClick={editPassword}
-          />
-        </InputLabel>
         {defaultPassword}
         <SectionWrapper editClick={editPassword}>
           <InputField type="password" placeholder="New Password" />

@@ -60,12 +60,12 @@ let bubbleBackground = (
   </Background>
 );
 
-export default function Home() {
+export default function Home(props) {
   return (
     <>
       <PageHeader>
         <Logo/>
-        <ButtonSecondary>Login</ButtonSecondary>
+        <ButtonSecondary onClick={() => props.history.push("/login")}>Login</ButtonSecondary>
       </PageHeader>
       <Intro>
         {bubbleBackground}
@@ -77,7 +77,7 @@ export default function Home() {
             Memento offers a safe and simple way to preserve your life events, milestones and artefacts for you and your family to appreciate for generations come.
           </p>
           <PitchActions>
-            <ButtonPrimary>Sign Up</ButtonPrimary>
+            <ButtonPrimary onClick={() => props.history.push("/signup")}>Sign Up</ButtonPrimary>
             <ButtonSecondary>Learn More</ButtonSecondary>
           </PitchActions>
         </IntroContent>
@@ -101,7 +101,7 @@ export default function Home() {
           ))}
         </FeaturesContentWrapper>
         <PitchActions>
-          <ButtonPrimary>Get Started</ButtonPrimary>
+          <ButtonPrimary onClick={() => props.history.push("/signup")}>Get Started</ButtonPrimary>
         </PitchActions>
       </FeaturesOverview>
     </>

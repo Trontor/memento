@@ -10,15 +10,13 @@ import {
 } from "ui/Forms";
 
 import { ButtonPrimary } from "ui/Buttons";
+import { FormWrapper } from "ui/Helpers";
 import { Formik } from "formik";
 import { Header } from "ui/Typography";
 import { LOGIN } from "mutations/Authentication";
-import { LoginWrapper } from "./LoginStyles";
 import { Logo } from "ui/Logos";
 import { MsgLink } from "./LoginStyles";
-import {
-  PageContainer
-} from "ui/Helpers";
+import { PageHeader } from "components/Home/HomeStyles";
 import React from "react";
 import { Spinner } from "ui/Loaders";
 import { useHistory } from "react-router-dom";
@@ -77,17 +75,19 @@ export default function Login(props) {
   }
 
   return (
-    <PageContainer>
-      <Logo pointer center onClick={() => history.push("/")}/>
-      <LoginWrapper>
+    <>
+      <PageHeader>
+        <Logo pointer center onClick={() => history.push("/")}/>
+      </PageHeader>
+      <FormWrapper>
         <Header underline>Welcome back!</Header>
         {loginErrors.length > 0 && (
-              <ErrorBanner>
-              {loginErrors.map(error => (
-                <div>{error}</div>
-              ))}
-              </ErrorBanner>
-            )}
+          <ErrorBanner>
+          {loginErrors.map(error => (
+            <div>{error}</div>
+          ))}
+          </ErrorBanner>
+        )}
         <Formik
           initialValues={defaultValues}
           onSubmit={(values, actions) => {
@@ -131,12 +131,12 @@ export default function Login(props) {
               </ButtonPrimary>
               <HelpText>
                 Don't have an account?
-                <MsgLink to="/"> Sign up</MsgLink>
+                <MsgLink to="/signup"> Sign up</MsgLink>
               </HelpText>
             </form>
           )}
         />
-      </LoginWrapper>
-    </PageContainer>
+      </FormWrapper>
+    </>
   );
 }
