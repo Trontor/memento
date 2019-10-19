@@ -15,6 +15,7 @@ import {
   PeopleTags,
   UploadDate,
 } from "./MementoCardStyles";
+
 import { useHistory } from "react-router";
 import { useMutation } from "@apollo/react-hooks";
 import React, { useState } from "react";
@@ -131,7 +132,7 @@ export default function MementoCard(props) {
             {/* Beneficiary Tags */}
             {beneficiaries && beneficiaries.length > 0 && (
               <span>
-                <i className="fas fa-user-tag"></i>
+                <i class="far fa-handshake"></i>
                 <div>
                   {props.beneficiaries.map(beneficiary => (
                     <PeopleTags key={beneficiary.firstName}>
@@ -163,22 +164,26 @@ export default function MementoCard(props) {
         )}
       </CardContent>
       {/* Tags */}
-      <MementoTagsWrapper>
-        <i className="fas fa-tags"></i>
-        {props.tags.map(tag => (
-          <MementoTag key={tag}>{tag}</MementoTag>
-        ))}
-      </MementoTagsWrapper>
+      {props.tags && props.tags.length > 0 && (
+        <MementoTagsWrapper>
+          <i class="fas fa-tags"></i>
+          {props.tags.map(tag => (
+            <MementoTag>{tag}</MementoTag>
+          ))}
+        </MementoTagsWrapper>
+      )}
       {/* Rekognition Tags */}
-      <MementoTagsWrapper>
-        <i className="fas fa-camera"></i>
-        {detectedLabels.map(result => (
-          <MementoTag key={result.name}>
-            {result.name.toLowerCase()}{" "}
-            <span>{Math.round(result.confidence, 0)}%</span>
-          </MementoTag>
-        ))}
-      </MementoTagsWrapper>
+      {detectedLabels && detectedLabels.length > 0 && (
+        <MementoTagsWrapper>
+          <i class="far fa-eye"></i>
+          {detectedLabels.map(result => (
+            <MementoTag key={result.name}>
+              {result.name.toLowerCase()}{" "}
+              <span>{Math.round(result.confidence, 0)}%</span>
+            </MementoTag>
+          ))}
+        </MementoTagsWrapper>
+      )}
     </Card>
   );
 }

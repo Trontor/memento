@@ -8,6 +8,7 @@ import { Container } from "ui/Helpers";
 import { FormNav } from "ui/Forms";
 import { Formik } from "formik";
 import { Header } from "ui/Typography";
+import InviteNoFamilies from "./InviteNoFamilies";
 import InviteStep1 from "./InviteStep1";
 import InviteStep2 from "./InviteStep2";
 import InviteSuccess from "./InviteSuccess";
@@ -139,6 +140,12 @@ export default function InviteFamily() {
 
     sendInviteByEmail({ variables: { input: payload } });
   };
+
+  if (inviteFamilies.length === 0) {
+    return (
+      <InviteNoFamilies/>
+    )
+  }
 
   return (
     <Formik

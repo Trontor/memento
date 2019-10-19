@@ -127,11 +127,12 @@ export const ProfilePhotoContainer = styled.div`
 
   img {
     ${center};
-    width: 128px;
-    height: 128px;
+    width: ${props => (props.thick ? "118px" : "128px")};
+    height: ${props => (props.thick ? "118px" : "128px")};
     object-fit: cover;
     border-radius: 5px;
   }
+
 
   @media screen and (min-width: ${props =>
       props.theme.breakpoints.tabletLandscape}) {
@@ -330,7 +331,7 @@ export const UploadButton = styled(ButtonPrimaryLight)`
   background: ${props =>
     lighten(0.75, props.familyColour || props.theme.palette.main)};
   border: 1px solid
-    ${props => lighten(0.25, props.familyColour || props.theme.palette.main)};
+    ${props => lighten(0.3, props.familyColour || props.theme.palette.main)};
 
   &:hover {
     background: ${props =>

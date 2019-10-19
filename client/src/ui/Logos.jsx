@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 //Logotype to be used across the site
 const StyledLogo = styled.div`
-  color: ${props => props.theme.palette.text};
-  font-size: ${props => (props.size === "small" ? "24px" : "40px")};
+  color: ${props => (props.color ? props.theme.palette.main : props.theme.palette.text)};
+  font-size: ${props => (props.size === "small" ? "24px" : "30px")};
   opacity: 0.9;
   text-transform: lowercase;
   padding: 10px 0;

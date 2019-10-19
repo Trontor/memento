@@ -5,15 +5,16 @@ import {
   MementoAuthor,
   MementoCoverImg,
   MementoDescription,
+  MementoOverview,
+  MementoTag,
   MementoTagsWrapper,
   MementoTitle,
-  MementoOverview,
   PeopleTags,
-  MementoTag,
   UploadDate,
 } from "../MementoCard/MementoCardStyles";
+import { Card, CardContent, CardInfo, FamilyGroup } from "./ViewMementoStyles";
+
 import React from "react";
-import { Card, CardInfo, CardContent, FamilyGroup } from "./ViewMementoStyles";
 
 export default function MementoCard(props) {
   const {

@@ -1,8 +1,10 @@
+import { AcceptFieldWrapper, InvitationWrapper } from "./AcceptInviteStyles";
 import React, { useState } from "react";
-import { Container, CenterText } from "ui/Helpers";
-import { Header } from "ui/Typography";
-import { InputField } from "ui/Forms";
+
 import { ButtonPrimary } from "ui/Buttons";
+import { Container } from "ui/Helpers";
+import { InputField } from "ui/Forms";
+import { TextWrapper } from "components/Dashboard/DashboardStyles";
 
 export default function InviteCode(props) {
   const [inviteId, setInviteId] = useState("");
@@ -12,22 +14,21 @@ export default function InviteCode(props) {
   };
   return (
     <Container>
-      <CenterText>
-        <Header underline>Accept Invite</Header>
-        <div>
-          <InputField
-            style={{
-              textAlign: "center",
-              maxWidth: "250px",
-              marginBottom: "10px",
-            }}
-            value={inviteId}
-            onChange={e => setInviteId(e.target.value)}
-            placeholder="Invitation Code"
-          ></InputField>
-        </div>
-        <ButtonPrimary onClick={handleAcceptClick}>Accept</ButtonPrimary>
-      </CenterText>
+      <TextWrapper>
+        <InvitationWrapper>
+          <i class="far fa-envelope-open"></i>
+          <h2>Join your Family today!</h2>
+          <p>Got an invitation code?</p>
+          <p>Enter it below to accept your invitation:</p>
+          <AcceptFieldWrapper>
+            <InputField
+              value={inviteId}
+              onChange={e => setInviteId(e.target.value)}
+              placeholder="Invitation Code"/>
+          </AcceptFieldWrapper>
+          <ButtonPrimary onClick={handleAcceptClick} disabled={!inviteId}>Accept</ButtonPrimary>
+        </InvitationWrapper>
+      </TextWrapper>
     </Container>
   );
 }

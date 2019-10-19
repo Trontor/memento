@@ -5,14 +5,15 @@ import { Header } from "ui/Typography";
 import { FormHelpText } from "ui/Forms";
 import { MementoOverview } from "../MementoCard/MementoCardStyles";
 import {
+  BookmarksIcon,
   BookmarksWrapper,
-  Item,
   Description,
+  Item,
+  UploaderAvatar,
   UploaderBox,
   UploaderText,
-  UploaderAvatar,
-  BookmarksIcon,
 } from "./BookmarksStyles";
+
 import NoBookmarks from "./NoBookmarks";
 import { GET_BOOKMARKS } from "queries/Bookmarks";
 import { DELETE_BOOKMARK } from "mutations/Memento";

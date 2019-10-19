@@ -18,14 +18,15 @@ import {
   UploadButton,
 } from "./FamilyGroupStyles";
 import { MenuContainer, MenuTabs } from "ui/Navigation";
-import React, { useState, useEffect } from "react";
-import { GET_MEMENTOS } from "queries/Memento";
+import React, { useEffect, useState } from "react";
+
 import { FamilyProfileContainer } from "./FamilyGroupStyles";
+import { GET_MEMENTOS } from "queries/Memento";
 import JollyLoader from "components/JollyLoader/JollyLoader";
 import { LOAD_FAMILY } from "mutations/Family";
 import MembersViewer from "./MembersViewer";
-import NoMementos from "./NoMementos";
 import MementosViewer from "./MementosViewer";
+import NoMementos from "./NoMementos";
 import TagsViewer from "./TagsViewer";
 import moment from "moment";
 import { useLocation } from "react-router-dom";
@@ -157,14 +158,16 @@ export default function FamilyGroup(props) {
         <div>
           <SideMenu>
             <FamilyProfileContainer>
-              {family.imageUrl && (
-                <>
-                  <FamilyImg familyColour={family.colour} />
-                  <ProfilePhotoContainer>
-                    <img alt="family" src={family.imageUrl} />
-                  </ProfilePhotoContainer>
-                </>
-              )}
+              <FamilyImg familyColour={family.colour} />
+              {family.imageUrl ? (
+              <ProfilePhotoContainer>
+                <img alt="family" src={family.imageUrl} />
+              </ProfilePhotoContainer>
+            ) :
+              <ProfilePhotoContainer thick>
+                <img svg alt="family" src="https://image.flaticon.com/icons/svg/1999/1999109.svg" />
+              </ProfilePhotoContainer>
+              }
               <FamilyHeader>
                 <div></div> {/* Empty div to center title */}
                 <div></div> {/* Empty div to center title */}
