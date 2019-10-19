@@ -5,15 +5,14 @@ import {
   MementoAuthor,
   MementoCoverImg,
   MementoDescription,
+  MementoOverview,
+  MementoTag,
   MementoTagsWrapper,
   MementoTitle,
-  MementoOverview,
   PeopleTags,
-  MementoTag,
   UploadDate,
 } from "../MementoCard/MementoCardStyles";
-import React from "react";
-import { Card, CardInfo, CardContent, FamilyGroup } from "./ViewMementoStyles";
+import { Card, CardContent, CardInfo, FamilyGroup } from "./ViewMementoStyles";
 
 import { List } from "ui/Radio";
 import React from "react";
@@ -32,7 +31,7 @@ export default function MementoCard(props) {
     // updatedAt,
     beneficiaries,
     uploader,
-    // people,
+    people,
   } = props;
   const createdDate = new Date(createdAt);
 

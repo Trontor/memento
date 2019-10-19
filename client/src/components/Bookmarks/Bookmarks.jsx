@@ -1,21 +1,21 @@
-import React, { useState } from "react";
-import { useQuery } from "@apollo/react-hooks";
-import { GET_MEMENTOS } from "queries/Memento";
-import { Container } from "ui/Helpers";
-import { Header } from "ui/Typography";
-import { FormHelpText } from "ui/Forms";
-import { MementoOverview } from "../MementoCard/MementoCardStyles";
 import {
+  BookmarksIcon,
   BookmarksWrapper,
   Description,
   Item,
   UploaderAvatar,
   UploaderBox,
   UploaderText,
-  UploaderAvatar,
-  BookmarksIcon,
 } from "./BookmarksStyles";
+import React, { useState } from "react";
+
+import { Container } from "ui/Helpers";
+import { FormHelpText } from "ui/Forms";
+import { GET_MEMENTOS } from "queries/Memento";
+import { Header } from "ui/Typography";
+import { MementoOverview } from "../MementoCard/MementoCardStyles";
 import NoBookmarks from "./NoBookmarks";
+import { useQuery } from "@apollo/react-hooks";
 
 export default function Bookmarks(props) {
   const [mementos, setMementos] = useState([]);

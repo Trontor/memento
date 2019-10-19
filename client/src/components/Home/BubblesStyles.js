@@ -61,8 +61,8 @@ export const Bubbles = styled.div`
   }
 
   &:first-child {
-    width: 115px;
-    height: 105px;
+    width: 155px;
+    height: 135px;
     margin-left: -500px;
     top: 90px;
     background:
@@ -70,7 +70,7 @@ export const Bubbles = styled.div`
         ${transparentize(0.85, "#DCE5FD")},
         ${transparentize(0.8, "#D3E1F7")}
       );
-    animation: ${floating} 5s linear infinite, ${shapeshift} 1.5s linear infinite;
+    animation: ${floating} 5.5s linear infinite, ${shapeshift} 1.5s linear infinite;
 
     &:after {
       content: '';
