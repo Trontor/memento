@@ -6,7 +6,7 @@ import {
   HelpText,
   InputField,
   InputLabel,
-  InputSection
+  InputSection,
 } from "ui/Forms";
 
 import { ButtonPrimary } from "ui/Buttons";

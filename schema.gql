@@ -158,9 +158,20 @@ type Mutation {
   deleteBookmark(mementoId: ID!): Memento!
 }
 
+type Place {
+  city: String!
+  dateMoved: DateTime!
+}
+
+input PlaceInput {
+  city: String!
+  dateMoved: DateTime!
+}
+
 type Query {
   user(userId: String!): User!
   currentUser: User!
+  getMyUploadedMementos: [Memento!]!
   refreshToken: String!
   family(familyId: ID!): Family!
   invite(inviteId: ID!): Invite!
@@ -221,9 +232,11 @@ type UpdateRoleOutput {
 
 input UpdateUserInput {
   userId: ID!
-  firstName: String!
+  firstName: String
   lastName: String
   location: String
+  hometown: String
+  placesLived: [PlaceInput!]
   dateOfBirth: String
   gender: Gender
   image: Upload
@@ -239,6 +252,8 @@ type User {
   lastName: String!
   imageUrl: String
   location: String
+  hometown: String
+  placesLived: [Place!]
   dateOfBirth: String
   gender: String
   familyRoles: [Role!]!

@@ -7,32 +7,30 @@ import {
   MementoDescription,
   MementoTagsWrapper,
   MementoTitle,
+  MementoOverview,
+  PeopleTags,
+  MementoTag,
   UploadDate,
 } from "../MementoCard/MementoCardStyles";
-import {
-  Card,
-  CardContent,
-  CardInfo,
-  FamilyGroup,
-  InfoWrapper,
-  ListText,
-} from "./ViewMementoStyles";
+import React from "react";
+import { Card, CardInfo, CardContent, FamilyGroup } from "./ViewMementoStyles";
 
 import { List } from "ui/Radio";
 import React from "react";
 
 export default function MementoCard(props) {
-  // const history = useHistory();
   const {
-    // mementoId,
+    //mementoId,
     createdAt,
     dates,
-    // description,
+    title,
+    description,
     location,
     // media,
     // tags,
     // type,
     // updatedAt,
+    beneficiaries,
     uploader,
     // people,
   } = props;
@@ -42,45 +40,79 @@ export default function MementoCard(props) {
     <Card>
       <CardInfo>
         <AuthorWrapper>
+          {/* Memento  Uploader Profile Picture */}
           <AuthorAvatar>
-            <i class="fas fa-user-circle"></i>
+            {!uploader.imageUrl ? (
+              <i className="fas fa-user-circle"></i>
+            ) : (
+              <img src={uploader.imageUrl} alt={uploader.firstName} />
+            )}
           </AuthorAvatar>
           <div>
+            {/* Memento  Uploader  */}
             <MementoAuthor>
               {uploader.firstName + " " + uploader.lastName}
             </MementoAuthor>
+            {/* Memento  Upload Date */}
             <UploadDate>{createdDate.toLocaleDateString()}</UploadDate>
+            {/* change family group here */}
             <FamilyGroup>Valerie's Family</FamilyGroup>
           </div>
-          {/* Edit & Bookmark */}
+          {/* Bookmark */}
           <CardOptions>
-            <i class="far fa-bookmark"></i>
+            <i className="far fa-bookmark"></i>
           </CardOptions>
         </AuthorWrapper>
-        {/* Title */}
-        <MementoTitle>Title</MementoTitle>
-        <InfoWrapper>
-          <ListText>
-            <List size="20px" />
+        {/* Memento  Title */}
+        <MementoTitle>{title}</MementoTitle>
+        <MementoOverview>
+          {/* Dates */}
+          <span>
+            <i className="far fa-clock" />
             {dates[0].year}
-          </ListText>
-          <ListText>
-            <List size="20px" />
+          </span>
+          {/* Location */}
+          <span>
+            <i className="fas fa-map-marker-alt" />
             {location}
-          </ListText>
-          <ListText>
-            <List size="20px" />
-            FirstName
-          </ListText>
-        </InfoWrapper>
-        {/* Description */}
-        <MementoDescription>{props.description}</MementoDescription>
+          </span>
+          {/* People Tags */}
+          {people && people.length > 0 && (
+            <span>
+              <i className="fas fa-user-tag"></i>
+              <div>
+                {props.people.map(person => (
+                  <PeopleTags>
+                    {person.firstName} {person.lastName}
+                  </PeopleTags>
+                ))}
+              </div>
+            </span>
+          )}
+          {/* Beneficiary Tags */}
+          {beneficiaries && beneficiaries.length > 0 && (
+            <span>
+              <i className="fa fa-users" aria-hidden="true" />
+              <div>
+                {props.beneficiaries.map(beneficiary => (
+                  <PeopleTags>
+                    {beneficiary.firstName} {beneficiary.lastName}
+                  </PeopleTags>
+                ))}
+              </div>
+            </span>
+          )}
+        </MementoOverview>
 
+        {/* Description */}
+        <MementoDescription>{description}</MementoDescription>
+
+        {/* Tags */}
         <MementoTagsWrapper>
-          <ListText>
-            <List size="20px" />
-            Tags
-          </ListText>
+          <i className="fas fa-tags"></i>
+          {props.tags.map(tag => (
+            <MementoTag>{tag}</MementoTag>
+          ))}
         </MementoTagsWrapper>
       </CardInfo>
       <CardContent>
@@ -90,10 +122,6 @@ export default function MementoCard(props) {
             <img alt={props.caption} src={props.media[0].url} />
           </MementoCoverImg>
         )}
-        <MementoDescription>
-          This is a caption of the image. Some images will have captions. Some
-          may not
-        </MementoDescription>
       </CardContent>
     </Card>
   );

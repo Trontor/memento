@@ -68,7 +68,7 @@ const Sidebar = props => {
       <UserDisplay onClick={() => history.push("/profile/" + user.userId)}>
         <UserAvatar>
           {!user.imageUrl ? (
-            <i class="fas fa-user-circle"></i>
+            <i className="fas fa-user-circle"></i>
           ) : (
             <img src={user.imageUrl} alt="profile_image"></img>
           )}
@@ -83,49 +83,57 @@ const Sidebar = props => {
           <Spinner />
         ) : (
           families.map(family => (
-            <TextList key={family.familyId}>
-              <span onClick={() => history.push(`/family/${family.familyId}`)}>
-                {family.name}
-              </span>
-            </TextList>
+            <SidebarLink
+              key={family.familyId}
+              name="invite"
+              to={`/family/${family.familyId}`}
+            >
+              {family.name}
+            </SidebarLink>
           ))
         )}
-        <NewFamilyGroup onClick={() => history.push("/family/new")}>
+        <NewFamilyGroup
+          data-cy="new-family"
+          onClick={() => history.push("/family/new")}
+        >
           New Family group
         </NewFamilyGroup>
       </FamilyListSection>
       <MenuSection>
-        <TextList>
-          <i class="fas fa-user-plus"></i>
-          <span href="#" onClick={() => history.push("/invite")}>
-            Invite
-          </span>
-        </TextList>
+        <SidebarLink icon="fas fa-user-plus" name="invite" to="/invite">
+          Invite
+        </SidebarLink>
       </MenuSection>
       <MenuSection>
-        <TextList>
-          <i class="far fa-paper-plane"></i>
-          <span href="#" onClick={() => history.push("/mementos")}>
-            View my Mementos
-          </span>
-        </TextList>
-        <TextList>
-          <i class="far fa-bookmark"></i>
-          <span href="#" onClick={() => history.push("/bookmarks")}>
-            Bookmarks
-          </span>
-        </TextList>
+        <SidebarLink icon="far fa-paper-plane" name="mementos" to="/mementos">
+          View My Mementos
+        </SidebarLink>
+        <SidebarLink icon="far fa-bookmark" name="bookmarks" to="/bookmarks">
+          Bookmarks
+        </SidebarLink>
       </MenuSection>
       <MenuSection>
-        <TextList>
-          <i class="fas fa-pencil-alt"></i>
-          <span href="#" onClick={() => history.push("/settings")}>
-            Edit profile & account
-          </span>
-        </TextList>
+        <SidebarLink
+          icon="fas fa-pencil-alt"
+          name="edit-account"
+          to="/settings"
+        >
+          Edit profile & account
+        </SidebarLink>
       </MenuSection>
       <SignOutButton onClick={signOut}>Sign Out</SignOutButton>
     </SidebarContainer>
+  );
+};
+
+const SidebarLink = ({ to, name, icon, children }) => {
+  return (
+    <TextList to={to}>
+      {icon && <i className={icon}></i>}
+      <span data-cy={name} href="#">
+        {children}
+      </span>
+    </TextList>
   );
 };
 export default Sidebar;

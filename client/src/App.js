@@ -115,7 +115,7 @@ const authenticatedRoutes = [
     exact: true,
   },
   {
-    name: "invite/",
+    name: "invite",
     component: Invite,
     exact: true,
   },
@@ -127,6 +127,11 @@ const authenticatedRoutes = [
   {
     name: "invite/accept/:inviteId",
     component: AcceptInvite,
+  },
+  {
+    name: "family/:id/settings",
+    component: FamilyGroupSettings,
+    exact: true,
   },
   {
     name: "family/:id/memento/new",
@@ -142,16 +147,11 @@ const authenticatedRoutes = [
     component: FamilyGroup,
   },
   {
-    name: "family/:id/settings",
-    component: FamilyGroupSettings,
-    exact: true,
-  },
-  {
     name: "bookmarks",
     component: Bookmarks,
   },
   {
-    name: "profile",
+    name: "profile/:id/",
     component: UserProfile,
   },
   {

@@ -49,15 +49,40 @@ export class UserService implements IUserService {
    */
   async createUser(input: UserSignupInput): Promise<User> {
     const createdUser = new this.UserModel(input);
-
-    let userDoc: UserDocument;
+    const existingUser = await this.UserModel.findOne({
+      lowercaseEmail: input.email.toLowerCase(),
+    }).exec();
+    if (existingUser) {
+      throw new BadRequestException(`${input.email} is already registered :o`);
+    }
     try {
-      userDoc = await createdUser.save();
+      const userDoc = await createdUser.save();
+      return userDoc.toDTO();
     } catch (err) {
       this.logger.error(err);
       throw this.evaluateMongoError(err, input);
     }
-    return userDoc.toDTO();
+  }
+
+  /**
+   * Adds upload to the user.
+   * @param id mementoId
+   */
+  async addUpload(user: User, mementoId: string) {
+    const updated = await this.UserModel.findByIdAndUpdate(
+      fromHexStringToObjectId(user.userId),
+      {
+        $addToSet: {
+          _uploads: fromHexStringToObjectId(mementoId),
+        },
+      },
+    );
+    if (!updated) {
+      this.logger.error(
+        `Couldn't add memento ${mementoId} to user ${user.userId}'s uploads`,
+      );
+      throw new InternalServerErrorException();
+    }
   }
 
   /**

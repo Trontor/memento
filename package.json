@@ -4,6 +4,7 @@
   "description": "Team memento's IT project 2019",
   "main": "dist/server.js",
   "scripts": {
+    "cypress": "cypress open",
     "start": "node dist/server.js",
     "lint": "tslint --project tsconfig.json",
     "gql": "cd old-graphql && graphql-codegen --config codegen.yml",
@@ -11,6 +12,7 @@
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
     "build-client": "npm run build --prefix client",
     "dev": "concurrently \"npm run client\" \"npm run server\"",
+    "dev:test": "set NODE_ENV=test&&concurrently \"npm run client\" \"npm run server\"",
     "client": "npm start --prefix client",
     "postinstall": "rimraf dist && tsc -p tsconfig.build.json",
     "server": "nodemon --exec ts-node server.ts",
@@ -57,6 +59,7 @@
     "graphql": "^14.4.2",
     "graphql-tools": "^4.0.5",
     "graphql-upload": "^8.0.7",
+    "mongodb-memory-server": "^5.2.8",
     "mongoose": "^5.6.11",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
@@ -68,6 +71,7 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
+    "cypress": "^3.4.1",
     "@graphql-codegen/cli": "^1.6.1",
     "@graphql-codegen/introspection": "^1.5.0",
     "@graphql-codegen/typescript": "1.5.0",
@@ -76,6 +80,7 @@
     "@types/aws-sdk": "^2.7.0",
     "@types/bcrypt": "^3.0.0",
     "@types/dotenv": "^6.1.1",
+    "@types/faker": "^4.1.6",
     "@types/graphql-upload": "^8.0.3",
     "@types/hapi__joi": "^15.0.3",
     "@types/jest": "^24.0.18",
@@ -87,6 +92,7 @@
     "@types/uuid": "^3.4.5",
     "apollo-server-testing": "^2.8.2",
     "concurrently": "^4.1.2",
+    "faker": "^4.1.0",
     "jest": "^24.8.0",
     "nodemon": "^1.19.1",
     "ts-jest": "^24.0.2",

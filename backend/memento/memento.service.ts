@@ -342,6 +342,7 @@ export class MementoService {
     // insert document
     try {
       doc = await doc.save();
+      await this.userService.addUpload(uploader, doc.id);
     } catch (err) {
       this.logger.error(err);
       throw new InternalServerErrorException("Could not save Memento");
@@ -400,6 +401,7 @@ export class MementoService {
     userIds: string[],
     familyId: string,
   ) {
+    if (userIds.length === 0) return;
     const users: User[] = await this.userService.getUsers(userIds);
     for (let user of users) {
       if (!isUserInFamily(user, familyId)) {

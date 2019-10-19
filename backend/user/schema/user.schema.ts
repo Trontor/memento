@@ -1,4 +1,4 @@
-import { Schema, Document, Query, Types } from "mongoose";
+import { Schema, Document, Query, Types, model } from "mongoose";
 import * as bcrypt from "bcrypt";
 import { User } from "../dto/user.dto";
 import { FamilyRole, Role } from "../dto/role.dto";
@@ -13,6 +13,7 @@ export interface UserDocument extends User, Document {
   lowercaseEmail: string;
   roles: Role[];
   _bookmarks: Types.ObjectId[];
+  _uploads: Types.ObjectId[];
 
   /**
    * Converts `UserDocument` to `User` to return to the client
@@ -79,6 +80,18 @@ export const UserSchema: Schema = new Schema(
     location: {
       type: String,
     },
+    hometown: {
+      type: String,
+    },
+    placesLived: {
+      type: [
+        {
+          city: String,
+          dateMoved: Date,
+        },
+      ],
+      default: [],
+    },
     imageUrl: {
       type: String,
     },
@@ -87,6 +100,15 @@ export const UserSchema: Schema = new Schema(
       default: Date.now,
     },
     _bookmarks: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "Memento",
+        },
+      ],
+      default: [],
+    },
+    _uploads: {
       type: [
         {
           type: Schema.Types.ObjectId,
@@ -113,6 +135,8 @@ UserSchema.methods.toDTO = function(): User {
     imageUrl: this.imageUrl,
     dateOfBirth: this.dateOfBirth,
     location: this.location,
+    hometown: this.hometown,
+    placesLived: this.placesLived,
     // family roles
     familyRoles: this.roles,
     // dummy array - resolver will deal with this
@@ -133,7 +157,7 @@ function validateEmail(email: string) {
 }
 
 // NOTE: Arrow functions are not used here as we do not want to use lexical scope for 'this'
-UserSchema.pre<UserDocument>("save", function(next) {
+UserSchema.pre<UserDocument>("validate", function(next) {
   const user = this;
 
   user.lowercaseEmail = user.email.toLowerCase();
@@ -175,3 +199,5 @@ UserSchema.pre<Query<UserDocument>>("findOneAndUpdate", function(next) {
 UserSchema.statics.validateEmail = function(email: string): boolean {
   return validateEmail(email);
 };
+
+export const UserModel = model<UserDocument>("User", UserSchema);

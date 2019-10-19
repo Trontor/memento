@@ -23,9 +23,9 @@ export default function MementosViewer(props) {
 
   return (
     <MementoCardColumns>
-      {filteredMementos.map(memento => {
-        return <MementoCard {...memento} />;
-      })}
+      {filteredMementos.map(memento => (
+        <MementoCard key={memento.mementoId} {...memento} />
+      ))}
     </MementoCardColumns>
   );
 }

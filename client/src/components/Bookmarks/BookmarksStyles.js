@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import { AuthorAvatar } from "../MementoCard/MementoCardStyles";
+import { BookBookmark } from "styled-icons/boxicons-regular/BookBookmark";
+import { lighten } from "polished";
+import { CardOptions } from "../MementoCard/MementoCardStyles";
 
 export const BookmarksWrapper = styled.div`
   display: grid;
@@ -13,8 +16,10 @@ export const Item = styled.div`
   display: grid;
   grid-template-rows: 50% 50%;
   height: 300px;
-  margin: 10px;
+  margin: 15px 15px 0 0;
   border: 1px solid ${props => props.theme.palette.border};
+  border-radius: 4px;
+
   img {
     margin: auto;
     object-fit: cover;
@@ -25,7 +30,7 @@ export const Item = styled.div`
 
 export const Description = styled.div`
   display: grid;
-  grid-template-rows: 20% 50% 30%;
+  grid-template-rows: 23% 47% 30%;
   margin: 0 15px;
   h3 {
     margin-top: 5px;
@@ -34,7 +39,7 @@ export const Description = styled.div`
 
 export const UploaderBox = styled.div`
   display: grid;
-  grid-template-columns: 20% 65% 15%;
+  grid-template-columns: 45px auto 40px;
   img {
     width: 35px;
     height: 35px;
@@ -50,9 +55,27 @@ export const UploaderText = styled.span`
 `;
 
 export const UploaderAvatar = styled(AuthorAvatar)`
-  margin-right: 5px;
-
   i {
+    margin-right: 5px;
     font-size: 32px;
   }
+
+  img {
+    height: 35px;
+    width: 35px;
+  }
+`;
+
+export const BookmarksIcon = styled(CardOptions)`
+  margin-top: 7px;
+`;
+
+export const NoBookmarksIcon = styled(BookBookmark)`
+  color: ${props => lighten(0.1, props.theme.palette.main)};
+`;
+
+export const IconButton = styled.div`
+  color: ${props => props.theme.palette.main};
+  margin: auto;
+  font-size: 20px;
 `;

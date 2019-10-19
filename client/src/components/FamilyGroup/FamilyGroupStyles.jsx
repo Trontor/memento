@@ -2,6 +2,7 @@ import { ButtonPrimaryLight, ButtonSecondary } from "ui/Buttons";
 import { Container, center } from "ui/Helpers";
 import { adjustHue, lighten } from "polished";
 import styled, { css } from "styled-components";
+import { PhotoAlbum } from "styled-icons/boxicons-regular/PhotoAlbum";
 
 export const FamilyContainer = styled(Container)`
   margin: 0;
@@ -422,4 +423,10 @@ export const SearchInput = styled.input`
   &:active {
     outline: none;
   }
+`;
+
+export const NoMementosIcon = styled(PhotoAlbum)`
+  color: ${props => lighten(0.1, props.theme.palette.main)};
+  margin: auto;
+  height: 120px;
 `;

@@ -1,6 +1,7 @@
 import { InputType, ID, Field } from "type-graphql";
 import { Gender } from "../dto/gender.dto";
 import { GraphQLUpload } from "graphql-upload";
+import { PlaceInput } from "./place.input";
 
 /**
  * GraphQL input for updating a `User`.
@@ -10,7 +11,7 @@ export class UpdateUserInput {
   @Field(type => ID)
   userId!: string;
 
-  @Field()
+  @Field({ nullable: true })
   firstName?: string;
 
   @Field({ nullable: true })
@@ -18,6 +19,12 @@ export class UpdateUserInput {
 
   @Field({ nullable: true })
   location?: string;
+
+  @Field({ nullable: true })
+  hometown?: string;
+
+  @Field(type => [PlaceInput], { nullable: true })
+  placesLived?: PlaceInput[];
 
   @Field({ nullable: true })
   dateOfBirth?: string;

@@ -1,62 +1,67 @@
 import { CenterText, Container } from "ui/Helpers";
 import {
-  //PlaceWrapper,
+  PlaceWrapper,
   ProfileField,
   ProfileWrapper,
   Span,
   UserBday,
-  UserLocation,
+  UserCity,
   UserHome,
   UserGender,
+  UserPlaces,
 } from "./UserProfileStyles";
-
-import GET_CURRENT_USER from "queries/GetCurrentUser";
+import { GET_USER } from "queries/UserQueries";
 import { Header } from "ui/Typography";
 import { InputLabel, UserAvatar, ImgPreview } from "ui/Forms";
 import JollyLoader from "components/JollyLoader/JollyLoader";
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
-
+import { useParams } from "react-router-dom";
+import moment from "moment";
 export default function UserProfile() {
-  let ProfilePicture = <UserAvatar size="125px" style={{ "margin-left": 0 }} />;
-  const { data, error, loading } = useQuery(GET_CURRENT_USER);
-
-  let user = {};
+  const params = useParams();
+  const [user, setUser] = useState(null);
+  const { error, loading } = useQuery(GET_USER, {
+    variables: { id: params.id },
+    onCompleted: data => {
+      if (data && data.user) {
+        setUser(data.user);
+        console.log(data.user);
+      }
+    },
+  });
 
   //Handle the states of displaying data, error and loading
   if (error) {
     console.log("Error loading user data:", error);
   }
-  if (loading) {
+  console.log("User:", user);
+
+  if (loading || !user) {
     return <JollyLoader />;
   }
-
-  if (data && data.currentUser) {
-    user = data.currentUser;
-  }
-
-  if (user.imageUrl !== null) {
-    ProfilePicture = user.imageUrl;
-  }
-
   return (
     <Container>
       <CenterText>
         <Header underline>My Profile</Header>
-        <ImgPreview>{ProfilePicture}</ImgPreview>
+        <ImgPreview>
+          {!user.imageUrl ? (
+            <UserAvatar size="125px" style={{ "margin-left": 0 }} />
+          ) : (
+            <img src={user.imageUrl} alt={user.firstName} />
+          )}
+        </ImgPreview>
         <h1>
           {user.firstName} {user.lastName}
         </h1>
       </CenterText>
-
       <ProfileWrapper>
         <UserBday size="25px" />
         <ProfileField>
           <InputLabel>Date of Birth</InputLabel>
-          <Span>{user.dateOfBirth}</Span>
+          <Span>{moment(user.dateOfBirth).format("DD/MM/YYYY")}</Span>
         </ProfileField>
       </ProfileWrapper>
-
       <ProfileWrapper>
         <UserGender size="30px" />
         <ProfileField>
@@ -64,39 +69,34 @@ export default function UserProfile() {
           <Span>{user.gender}</Span>
         </ProfileField>
       </ProfileWrapper>
-
       <ProfileWrapper>
         <UserHome size="25px" />
         <ProfileField>
           <InputLabel>Hometown</InputLabel>
-          <Span>Jakarta, Indonesia</Span>
+          <Span>{user.hometown}</Span>
         </ProfileField>
       </ProfileWrapper>
-
       <ProfileWrapper>
-        <UserLocation size="25px" />
+        <UserCity size="25px" />
         <ProfileField>
           <InputLabel>Current City</InputLabel>
           <Span>{user.location}</Span>
         </ProfileField>
       </ProfileWrapper>
+      <ProfileWrapper>
+        <UserPlaces size="25px" />
 
-      {/*
-      <ProfileField>
-        <InputLabel>Place I've Lived</InputLabel>
-        <PlaceWrapper>
-          <Span>Surabaya</Span>
-          <Span> February, 2000 - March, 2001</Span>
-        </PlaceWrapper>
-        <PlaceWrapper>
-          <Span>Jakarta</Span>
-          <Span> 2001 - 2016</Span>
-        </PlaceWrapper>
-        <PlaceWrapper>
-          <Span>Melbourne</Span>
-          <Span> July, 2016 - now </Span>
-        </PlaceWrapper>
-      </ProfileField>*/}
+        <ProfileField>
+          <PlaceWrapper>
+            <InputLabel>Place I've Lived</InputLabel>
+            <InputLabel>Date Moved</InputLabel>
+          </PlaceWrapper>
+          <PlaceWrapper>
+            <Span>Amsterdam</Span>
+            <Span> March, 2001</Span>
+          </PlaceWrapper>
+        </ProfileField>
+      </ProfileWrapper>
     </Container>
   );
 }

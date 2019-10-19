@@ -5,6 +5,7 @@ import { Role } from "./role.dto";
 
 import { Family } from "../../family/dto/family.dto";
 import { Memento } from "../../memento/dto/memento.dto";
+import { Place } from "./place.dto";
 
 /**
  * GraphQL class for returning User objects.
@@ -29,6 +30,12 @@ export class User {
 
   @Field({ nullable: true })
   location?: string;
+
+  @Field({ nullable: true })
+  hometown?: string;
+
+  @Field(type => [Place], { nullable: true })
+  placesLived?: Place[];
 
   @Field({ nullable: true })
   dateOfBirth?: string;

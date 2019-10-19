@@ -1,4 +1,4 @@
-import { Schema, model, Model, Document } from "mongoose";
+import { Schema, model, Document } from "mongoose";
 import { Family } from "../dto/family.dto";
 
 // Name of family collection
@@ -19,11 +19,6 @@ export interface FamilyDocument extends Family, Document {
    */
   toDTO(): Family;
 }
-
-/**
- * More methods can be added here for future flexibility
- */
-export interface IFamilyModel extends Model<FamilyDocument> {}
 
 /**
  * The actual structure of the Family collection.
@@ -77,10 +72,7 @@ FamilySchema.methods.toDTO = function(): Family {
 };
 
 // export a Mongoose `Model` based on `FamilyDocument` defined above
-export const FamilyModel: IFamilyModel = model<FamilyDocument, IFamilyModel>(
-  "Family",
-  FamilySchema,
-);
+export const FamilyModel = model<FamilyDocument>("Family", FamilySchema);
 
 /**
  * Interface for the data to update family

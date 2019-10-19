@@ -16,14 +16,14 @@ export default function InviteSuccess({ results }) {
   return (
     <Container>
       <TextWrapper>
-        <i class="fas fa-paper-plane"></i>
+        <i className="fas fa-paper-plane"></i>
         {results.sent.length > 0 && (
           <SentMessage>
             <p>Invitations were sent to the following email addresses:</p>
             <EmailsList>
               {results.sent.map(email => (
                 <>
-                  <i class="fas fa-smile"></i>
+                  <i className="fas fa-smile"></i>
                   <Email>{email}</Email>
                 </>
               ))}
@@ -36,7 +36,7 @@ export default function InviteSuccess({ results }) {
             <EmailsList failure>
               {results.failed.map(({ email, error }) => (
                 <>
-                  <i class="far fa-frown"></i>
+                  <i className="far fa-frown"></i>
                   <div>
                     <Email>{email}</Email>
                     <p>{error}</p>

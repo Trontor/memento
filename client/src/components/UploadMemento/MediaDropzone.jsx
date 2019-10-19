@@ -110,7 +110,7 @@ export function MediaDropzone({ onChange }) {
       >
         <input {...getInputProps()} />
         <DropzoneContent>
-          <i class="fas fa-upload"></i>
+          <i className="fas fa-upload"></i>
           Drag & drop or browse files to upload.
         </DropzoneContent>
       </DropzoneContainer>

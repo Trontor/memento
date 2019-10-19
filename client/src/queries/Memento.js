@@ -42,3 +42,46 @@ export const GET_MEMENTOS = gql`
     }
   }
 `;
+
+export const GET_MY_MEMENTOS = gql`
+  query getMyUploadedMementos {
+    getMyUploadedMementos {
+      mementoId
+      title
+      uploader {
+        userId
+        imageUrl
+        firstName
+        lastName
+      }
+      people {
+        firstName
+        lastName
+      }
+      beneficiaries {
+        firstName
+        lastName
+      }
+      type
+      description
+      location
+      detectedLabels {
+        name
+        confidence
+      }
+      media {
+        type
+        url
+        caption
+      }
+      dates {
+        day
+        month
+        year
+      }
+      tags
+      createdAt
+      updatedAt
+    }
+  }
+`;
