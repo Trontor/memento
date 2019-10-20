@@ -62,6 +62,7 @@ export default function MementoCard(props) {
   });
 
   const isBookmarked = bookmarkedBy.some(id => id.userId === userId);
+
   const isUploader = uploader.userId === userId;
   return (
     <Card>
