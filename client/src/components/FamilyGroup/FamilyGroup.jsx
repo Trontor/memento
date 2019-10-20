@@ -130,6 +130,7 @@ export default function FamilyGroup(props) {
       familyId={familyId}
       userId={currentUser.userID}
       refreshMementos={getMementosQuery.refetch}
+      familyColour={family.colour}
     />
   );
   switch (menuTabs[currentTabIndex]) {
@@ -146,6 +147,7 @@ export default function FamilyGroup(props) {
           selectTag={selectTag}
           mementoTags={filterTags}
           setMementoTags={setFilterTags}
+          familyColour={family.colour}
         />
       );
       break;
@@ -214,6 +216,7 @@ export default function FamilyGroup(props) {
                 {/* Settings Button */}
                 {isAdmin && (
                   <SettingsButton
+                    familyColour={family.colour}
                     onClick={() => props.history.push(familyId + "/settings")}
                   >
                     <i className="fas fa-cog"></i>
@@ -241,6 +244,7 @@ export default function FamilyGroup(props) {
                   key={tag}
                   onClick={() => selectTag(tag)}
                   selected={filterTags.includes(tag)}
+                  familyColour={family.colour}
                 >
                   <span>{tag}</span>
                 </TagRow>
@@ -251,10 +255,11 @@ export default function FamilyGroup(props) {
           <Menu>
             <MenuContainer>
               {menuTabs.map((tab, idx) => (
-                <MenuTabs
+                <MenuTabs 
                   key={idx}
                   active={currentTabIndex === idx}
                   onClick={() => setTabIndex(idx)}
+                  familyColour={family.colour}
                 >
                   {tab}
                 </MenuTabs>

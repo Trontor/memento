@@ -1,3 +1,4 @@
+import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
 import {
   AuthorAvatar,
   AuthorWrapper,
@@ -15,12 +16,11 @@ import {
   PeopleTags,
   UploadDate,
 } from "./MementoCardStyles";
+import React, { useState } from "react";
 
+import InheritanceTree from "components/InheritanceTree/InheritanceTree";
 import { useHistory } from "react-router";
 import { useMutation } from "@apollo/react-hooks";
-import React, { useState } from "react";
-import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
-import InheritanceTree from "components/InheritanceTree/InheritanceTree";
 
 export default function MementoCard(props) {
   const history = useHistory();
@@ -103,7 +103,7 @@ export default function MementoCard(props) {
         <MementoInfo>
           {/* Title */}
           <MementoTitle>{title}</MementoTitle>
-          <MementoOverview>
+          <MementoOverview familyColour={family.colour}>
             {/* Date */}
             <span>
               <i className="far fa-clock"></i>
@@ -165,19 +165,19 @@ export default function MementoCard(props) {
       </CardContent>
       {/* Tags */}
       {props.tags && props.tags.length > 0 && (
-        <MementoTagsWrapper>
+        <MementoTagsWrapper familyColour={family.colour}>
           <i class="fas fa-tags"></i>
           {props.tags.map(tag => (
-            <MementoTag>{tag}</MementoTag>
+            <MementoTag familyColour={family.colour}>{tag}</MementoTag>
           ))}
         </MementoTagsWrapper>
       )}
       {/* Rekognition Tags */}
       {detectedLabels && detectedLabels.length > 0 && (
-        <MementoTagsWrapper>
+        <MementoTagsWrapper familyColour={family.colour}>
           <i class="far fa-eye"></i>
           {detectedLabels.map(result => (
-            <MementoTag key={result.name}>
+            <MementoTag key={result.name} familyColour={family.colour}>
               {result.name.toLowerCase()}{" "}
               <span>{Math.round(result.confidence, 0)}%</span>
             </MementoTag>

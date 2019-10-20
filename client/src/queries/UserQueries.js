@@ -6,6 +6,8 @@ export const GET_USER_FAMILIES = gql`
       families {
         familyId
         name
+        imageUrl
+        colour
       }
     }
   }

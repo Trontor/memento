@@ -71,7 +71,7 @@ export const ButtonPrimaryLight = styled(ButtonPrimary)`
     background: ${props => lighten(0.27, props.theme.palette.main)};
     border: 1px solid ${props => lighten(0.27, props.theme.palette.main)};
     transform: translateY(-2px);
-    box-shadow: 0px 1px 3px ${props => transparentize(0.8, props.theme.palette.text)};
+    box-shadow: 0px 1px 3px ${props => transparentize(0.92, props.theme.palette.text)};
   }
 `;
 
