@@ -7,6 +7,7 @@ export const GET_DASHBOARD_INFORMATION = gql`
       firstName
       families {
         familyId
+        name
       }
     }
   }

@@ -16,6 +16,6 @@ export const MonthlyMementosWrapper = styled.div`
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletPortrait}) {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 `;

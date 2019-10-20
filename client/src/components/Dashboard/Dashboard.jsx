@@ -1,10 +1,12 @@
+import React, { useState } from "react";
+
+import { GET_DASHBOARD_INFORMATION } from "queries/Dashboard";
 import JollyError from "components/JollyError/JollyError";
 import JollyLoader from "components/JollyLoader/JollyLoader";
-import React, { useState } from "react";
-import { useQuery } from "@apollo/react-hooks";
-import NewUser from "./NewUser/NewUser";
-import { GET_DASHBOARD_INFORMATION } from "queries/Dashboard";
 import MonthlyMementos from "./MonthlyMementos/MonthlyMementos";
+import NewUser from "./NewUser/NewUser";
+import { useQuery } from "@apollo/react-hooks";
+
 const loadingQuotes = [
   "Dashboarding things...",
   "Talking to GraphQL...",
@@ -35,5 +37,8 @@ export default function Dashboard() {
   if (families && families.length === 0) {
     return <NewUser user={user} />;
   }
-  return <MonthlyMementos familyIds={families.map(f => f.familyId)} />;
+
+  return <MonthlyMementos
+    families={families}
+  />;
 }
