@@ -14,7 +14,6 @@ import { useMutation, useQuery } from "@apollo/react-hooks";
 
 import { Container } from "ui/Helpers";
 import { DELETE_BOOKMARK } from "mutations/Memento";
-import { FormHelpText } from "ui/Forms";
 import { GET_BOOKMARKS } from "queries/Bookmarks";
 import { Header } from "ui/Typography";
 import JollyLoader from "components/JollyLoader/JollyLoader";
@@ -43,6 +42,8 @@ export default function Bookmarks(props) {
     return <NoBookmarks />;
   }
 
+  console.log(bookmarks)
+
   return (
     <Container>
       <Header underline>Saved Mementos</Header>
@@ -66,14 +67,14 @@ export default function Bookmarks(props) {
                   {moment(memento.dates[0].day.toString().padStart(2, "0") + "/" +  memento.dates[0].month.toString().padStart(2, "0") + "/" + memento.dates[0].year).format("Do  MMM YYYY")}
                 </span>
                 {/* Memento Location */}
-                {memento.location && (
+                {memento.location ? (
                   <span>
                     <i className="fas fa-map-marker-alt" />
                     {memento.location}
                   </span>
-                )}
+                ) : <span>{" "}</span>}
                 {/* People Tags */}
-                {memento.people && memento.people.length > 0 && (
+                {memento.people && memento.people.length > 0 ? (
                   <span>
                     <i className="fas fa-user-tag"></i>
                     <div>
@@ -84,8 +85,9 @@ export default function Bookmarks(props) {
                       ))}
                     </div>
                   </span>
-                )}
-              </MementoOverview>
+                  ) : <span>{" "}</span>}
+                </MementoOverview>
+              </BookmarkContent>
               <UploaderBox>
                 <UploaderAvatar>
                   {!memento.uploader.imageUrl ? (
@@ -98,8 +100,12 @@ export default function Bookmarks(props) {
                   )}
                 </UploaderAvatar>
                 <UploaderText>
-                  {memento.uploader.firstName}
-                  <FormHelpText>{memento.family.name}</FormHelpText>
+                  <span>
+                    {memento.uploader.firstName}
+                  </span>
+                  <span>
+                    {memento.family.name}
+                  </span>
                   {/*change family group name */}
                 </UploaderText>
                 <BookmarksIcon>
@@ -111,7 +117,6 @@ export default function Bookmarks(props) {
                   ></i>
                 </BookmarksIcon>
               </UploaderBox>
-            </BookmarkContent>
           </BookmarkCard>
         ))}
       </BookmarksWrapper>

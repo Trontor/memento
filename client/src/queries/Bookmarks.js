@@ -23,9 +23,11 @@ export const GET_BOOKMARKS = gql`
         }
         uploader {
           imageUrl
+          firstName
         }
         family {
           name
+          imageUrl
         }
       }
     }
