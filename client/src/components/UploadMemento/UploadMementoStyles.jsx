@@ -13,6 +13,7 @@ export const TagsContainer = styled.ul`
 export const Tag = styled.li`
   font-family: "Livvic", sans-serif;
   font-size: 14px;
+  font-weight: 600;
   color: ${props => props.theme.palette.text};
   border: 1px solid ${props => lighten(0.6, props.theme.palette.text)};
   display: inline-block;
@@ -150,4 +151,20 @@ export const UploadFileIcon = styled.span`
 export const UploadFileLabel = styled.label`
   display: inline-block;
   padding-top: 10px;
+`;
+
+export const NewTagsForm = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  > input {
+    margin-bottom: 12px;
+    font-size: 15px;
+  }
+
+  > div > button {
+    height: 36px;
+    padding: 5px 16px;
+  }
+
 `;

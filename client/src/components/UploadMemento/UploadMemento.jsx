@@ -1,7 +1,9 @@
 import { ButtonPrimary, ButtonSecondary } from "ui/Buttons";
 import React, { useState } from "react";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 
-import { AlignRight } from "ui/Helpers";
+// import { AlignRight } from "ui/Helpers";
+import { CREATE_NEW_MEMENTO } from "mutations/Memento";
 import { Container } from "ui/Helpers";
 import { FormNav } from "ui/Forms";
 import { Header } from "ui/Typography";
@@ -9,8 +11,6 @@ import JollyLoader from "components/JollyLoader/JollyLoader";
 import { LOAD_FAMILY } from "mutations/Family";
 import UploadStep1 from "./UploadStep1";
 import UploadStep2 from "./UploadStep2";
-import { useQuery, useMutation } from "@apollo/react-hooks";
-import { CREATE_NEW_MEMENTO } from "mutations/Memento";
 
 export default function UploadMemento(props) {
   //Define react hooks
@@ -164,44 +164,45 @@ export default function UploadMemento(props) {
   };
   return (
     <Container>
-      <Header underline>Create a Memento</Header>
+      <form onSubmit={props.handleSubmit}>
+        <Header underline>Create a Memento</Header>
 
-      {currentStep === 1 && (
-        <UploadStep1
-          selectMementoType={selectMementoType}
-          selectEventType={selectEventType}
-          setSelectEventType={setSelectEventType}
-          handleRadioChange={handleRadioChange}
-          customDropdown={customDropdown}
-        />
-      )}
+        {currentStep === 1 && (
+          <UploadStep1
+            selectMementoType={selectMementoType}
+            selectEventType={selectEventType}
+            setSelectEventType={setSelectEventType}
+            handleRadioChange={handleRadioChange}
+            customDropdown={customDropdown}
+          />
+        )}
 
-      {currentStep === 2 && (
-        <UploadStep2
-          // mementoTags={mementoTags}
-          // selectTag={selectTag}
-          // addFile={addFile}
-          // deleteFile={deleteFile}
-          // mementoFiles={mementoFiles}
-          // setMementoFiles={setMementoFiles}
-          currentUserId={data.currentUser.userId}
-          customDropdown={customDropdown}
-          members={members}
-          onSubmit={onSubmit}
-        />
-      )}
+        {currentStep === 2 && (
+          <UploadStep2
+            // mementoTags={mementoTags}
+            // selectTag={selectTag}
+            // addFile={addFile}
+            // deleteFile={deleteFile}
+            // mementoFiles={mementoFiles}
+            // setMementoFiles={setMementoFiles}
+            currentUserId={data.currentUser.userId}
+            customDropdown={customDropdown}
+            members={members}
+            onSubmit={onSubmit}
+          />
+        )}
 
-      <FormNav>
+        <FormNav>
         {currentStep !== 1 ? (
-          <ButtonSecondary onClick={prevStep}>Back</ButtonSecondary>
-        ) : null}
-
-        <AlignRight>
-          {currentStep !== 2 ? (
-            <ButtonPrimary onClick={nextStep}>Next</ButtonPrimary>
+            <ButtonSecondary onClick={prevStep}>Back</ButtonSecondary>
           ) : null}
-        </AlignRight>
-      </FormNav>
+
+        {currentStep !== 2 ? (
+          <ButtonPrimary onClick={nextStep}>Next</ButtonPrimary>
+        ) : <ButtonPrimary type="submit">Create Memento</ButtonPrimary>
+      }
+        </FormNav>
+      </form>
     </Container>
   );
 }
