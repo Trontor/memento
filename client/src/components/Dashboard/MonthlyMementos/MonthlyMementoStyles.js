@@ -30,13 +30,13 @@ export const MonthlyMementosWrapper = styled.div`
 
 export const DashboardNotifier = styled.div`
   width: 100%;
-  background-color: ${props => transparentize(0.8, props.theme.palette.foreground)};
-  border: 1px solid ${props => transparentize(0.9, props.theme.palette.foreground)};
+  background-color: ${props => transparentize(0.5, props.theme.palette.foreground)};
+  border: 1px solid ${props => transparentize(0.95, props.theme.palette.text)};
   padding: 20px;
-  border-radius: 4px;
+  border-radius: 8px;
   font-family: "Livvic";
   font-weight: 700;
-  box-shadow: 1px 1px 4px ${props => transparentize(0.9, props.theme.palette.text)};
+  box-shadow: 1px 1px 16px ${props => transparentize(0.95, props.theme.palette.text)};
   /* color: ${props => transparentize(0.3, props.theme.palette.text)}; */
 
   @media screen and (min-width: ${props =>
