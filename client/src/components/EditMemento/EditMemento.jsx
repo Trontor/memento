@@ -109,7 +109,7 @@ export default function EditMemento(props) {
     onCompleted: data => {
       if (data && data.updateMemento) {
         // window.location.reload();
-        // props.history.push("/memento/" + data.updateMemento.mementoId);
+        props.history.push("/memento/" + data.updateMemento.mementoId);
       }
     },
   });
