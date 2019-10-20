@@ -17,7 +17,7 @@ export const TextWrapper = styled.div`
   box-shadow: 1px 1px 16px ${props => lighten(0.7, props.theme.palette.text)};
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     width: 600px;
   }
 

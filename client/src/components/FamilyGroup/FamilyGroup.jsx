@@ -189,8 +189,8 @@ export default function FamilyGroup(props) {
                   <GroupDetails>
                     {/* Date of Group Creation */}
                     <i className="far fa-clock"></i>
-                    Created on the{" "}
-                    {moment(family.createdAt).format("Do MMM, YYYY")}
+                    Created on {" "}
+                    {moment(family.createdAt).format("Do MMM YYYY")}
                   </GroupDetails>
                   <GroupDetails>
                     {/* Number of Mementos */}

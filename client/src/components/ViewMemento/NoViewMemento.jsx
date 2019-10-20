@@ -7,7 +7,7 @@ import {
   GoToButton,
   CreateFamily,
   InviteFamily,
-} from "../Dashboard/DashboardStyles";
+} from "../Dashboard/NewUser/NewUserStyles";
 import { NoViewMementoIcon } from "./ViewMementoStyles";
 
 export default function NoViewMemento(props) {
