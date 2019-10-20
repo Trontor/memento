@@ -19,7 +19,7 @@ export default function MonthlyMementos(props) {
       <DashboardNotifier>
         Hi {props.user.firstName}!
         <p>Now that you have joined a famly group, allow us to introduce <span>Monthly Mementos</span>!</p>
-        <p><span>Monthly Mementos</span> displays all the mementos from your family groups that is dated with the current month from any year in history.</p>
+        <p><span>Monthly Mementos</span> displays all the mementos from each of your Family Groups that is dated with the current month from any year in history.</p>
       </DashboardNotifier>
       <Header underline>{currentMonth} Mementos</Header>
       {families.map(family => (
