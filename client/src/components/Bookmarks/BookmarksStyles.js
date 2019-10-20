@@ -1,45 +1,66 @@
-import styled from "styled-components";
+import { lighten, transparentize } from "polished";
+
 import { AuthorAvatar } from "../MementoCard/MementoCardStyles";
 import { BookBookmark } from "styled-icons/boxicons-regular/BookBookmark";
-import { lighten } from "polished";
 import { CardOptions } from "../MementoCard/MementoCardStyles";
+import styled from "styled-components";
 
 export const BookmarksWrapper = styled.div`
   display: grid;
-  position: relative;
-  object-fit: cover;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  justify-content: center;
+  grid-gap: 16px;
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.mobile}) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletPortrait}) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.desktop}) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 `;
 
-export const Item = styled.div`
-  display: grid;
-  grid-template-rows: 50% 50%;
-  height: 300px;
-  margin: 15px 15px 0 0;
-  border: 1px solid ${props => props.theme.palette.border};
+export const BookmarkCard = styled.div`
+  border: 1px solid ${props => transparentize(0.95, props.theme.palette.text)};
   border-radius: 4px;
+  width: 100%;
+  padding-bottom: 12px;
+  overflow: hidden;
+  background-color: ${props => props.theme.palette.foreground};
+  box-shadow: 1px 2px 3px -2px ${props => transparentize(0.95, props.theme.palette.text)};
 
   img {
-    margin: auto;
-    object-fit: cover;
-    width: 90%;
-    height: 90%;
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
   }
 `;
 
-export const Description = styled.div`
-  display: grid;
-  grid-template-rows: 23% 47% 30%;
-  margin: 0 15px;
-  h3 {
-    margin-top: 5px;
-  }
+export const BookmarkImg = styled.div`
+  background-color: ${props => props.theme.palette.foreground};
+  width: 100%;
+  /* border-bottom: 1px solid ${props => transparentize(0.95, props.theme.palette.text)}; */
+  padding: 12px;
+`;
+
+export const BookmarkContent = styled.div`
+  padding: 0 16px;
 `;
 
 export const UploaderBox = styled.div`
   display: grid;
   grid-template-columns: 45px auto 40px;
+
   img {
     width: 35px;
     height: 35px;

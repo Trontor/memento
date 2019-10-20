@@ -10,7 +10,7 @@ export const Card = styled.div`
   border-radius: 4px;
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLandscape}) {
+  props.theme.breakpoints.tabletLandscape}) {
     width: 100%;
     margin-top: 0;
     margin-bottom: ${props => props.theme.size.gutterWidth};
@@ -61,6 +61,7 @@ export const MementoOverview = styled.div`
   line-height: 1.5em;
   margin-bottom: 16px;
   margin-right: 16px;
+  font-size: 13px;
 
   i {
     color: ${props => props.familyColour || props.theme.palette.main};
