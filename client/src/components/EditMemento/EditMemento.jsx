@@ -155,7 +155,7 @@ export default function EditMemento(props) {
     description: memento.description,
     date: initialDateSelectorValue,
     memberTags: memento.people.map(p => p.userId),
-    beneficiaries: memento.beneficiaries,
+    beneficiaries: memento.beneficiaries.map(m => m.userId),
     location: memento.location,
     tags: memento.tags,
   };
@@ -180,8 +180,6 @@ export default function EditMemento(props) {
       beneficiaries: values.beneficiaries,
       tags: values.tags,
     };
-    console.log(mutationValues);
-
     updateMemento({ variables: { input: mutationValues } });
   };
   return (

@@ -119,6 +119,7 @@ export const GET_A_MEMENTO = gql`
         firstName
         lastName
         imageUrl
+        userId
       }
       type
       description
