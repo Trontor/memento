@@ -11,11 +11,11 @@ const sameMonth = memento => {
   return mementoDates.some(date => date.month === currentMonth);
 };
 
-// const sameYear = memento => {
-//   const mementoDates = memento.dates;
-//   const currentYear = new Date().getYear();
-//   return mementoDates.some(date => date.year === currentYear);
-// };
+const sameDay = memento => {
+  const mementoDates = memento.dates;
+  const today = new Date().getDay();
+  return mementoDates.some(date => date.day === today);
+};
 
 export default function FamilyMementosViewer(props) {
   const { familyId } = props;
@@ -36,6 +36,7 @@ export default function FamilyMementosViewer(props) {
   }
   // Filter mementos by the same month
   const filteredMementos = mementos.filter(sameMonth);
+  const todayMementos = mementos.filter(sameDay)
 
   return (
     <MonthlyMementosWrapper>

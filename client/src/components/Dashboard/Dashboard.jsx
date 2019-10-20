@@ -40,5 +40,6 @@ export default function Dashboard() {
 
   return <MonthlyMementos
     families={families}
+    user={user}
   />;
 }

@@ -1,4 +1,5 @@
-import { DashboardContainer } from "./MonthlyMementoStyles";
+import { DashboardContainer, DashboardNotifier } from "./MonthlyMementoStyles";
+
 import FamilyMementosViewer from "./FamilyMementosViewer";
 import { Header } from "ui/Typography";
 import React from "react";
@@ -15,10 +16,15 @@ export default function MonthlyMementos(props) {
   // Load
   return (
     <DashboardContainer>
+      <DashboardNotifier>
+        Hi {props.user.firstName}!
+        <p>Now that you have joined a famly group, allow us to introduce <span>Monthly Mementos</span>!</p>
+        <p><span>Monthly Mementos</span> displays all the mementos from your family groups that is dated with the current month from any year in history.</p>
+      </DashboardNotifier>
       <Header underline>{currentMonth} Mementos</Header>
       {families.map(family => (
         <>
-          {family.name}
+          <h2>{family.name}</h2>
           <FamilyMementosViewer familyId={family.familyId} />
         </>
       ))}
