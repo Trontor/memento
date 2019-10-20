@@ -1,11 +1,25 @@
 import styled, { css } from "styled-components";
 
 export const PageSpinnerWrapper = styled.div`
+  opacity: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   height: 100vh;
+  /* You could use :after - it doesn't really matter */
+  ::before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.5;
+    background: url("https://www.toptal.com/designers/subtlepatterns/patterns/memphis-mini.png");
+  }
 `;
 
 //Pure css spinner for loading state

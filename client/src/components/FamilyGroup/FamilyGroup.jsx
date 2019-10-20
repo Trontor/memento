@@ -128,7 +128,7 @@ export default function FamilyGroup(props) {
       filterTags={filterTags}
       mementos={mementos}
       familyId={familyId}
-      userId={currentUser.userID}
+      userId={currentUser.userId}
       refreshMementos={getMementosQuery.refetch}
       familyColour={family.colour}
     />
@@ -255,7 +255,7 @@ export default function FamilyGroup(props) {
           <Menu>
             <MenuContainer>
               {menuTabs.map((tab, idx) => (
-                <MenuTabs 
+                <MenuTabs
                   key={idx}
                   active={currentTabIndex === idx}
                   onClick={() => setTabIndex(idx)}
