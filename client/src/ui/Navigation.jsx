@@ -25,7 +25,7 @@ export const MenuTabs = styled.div`
   ${({ active }) =>
     active &&
     css`
-      box-shadow: inset 0 -2.5px 0 ${props => props.theme.palette.main};
+      box-shadow: inset 0 -2.5px 0 ${props => props.familyColour || props.theme.palette.main};
       border-color: ${props => props.theme.palette.main};
       color: ${props => props.theme.palette.text};
     `};

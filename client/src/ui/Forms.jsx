@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 
+import Textarea from "react-textarea-autosize";
 import { User } from "styled-icons/fa-regular/User";
 import { lighten } from "polished";
-import Textarea from "react-textarea-autosize";
 
 // Single-line text input field
 export const InputField = styled.input`
@@ -122,6 +122,8 @@ export const HelpText = styled.span`
 // Container used to hold form navigation buttons
 export const FormNav = styled.div`
   width: 100%;
+  display: flex;
+  justify-content: space-between;
 `;
 
 // Array of form input fields

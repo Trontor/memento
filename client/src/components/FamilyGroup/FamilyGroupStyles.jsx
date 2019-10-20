@@ -1,7 +1,8 @@
 import { ButtonPrimaryLight, ButtonSecondary } from "ui/Buttons";
 import { Container, center } from "ui/Helpers";
-import { adjustHue, lighten } from "polished";
+import { adjustHue, lighten, transparentize } from "polished";
 import styled, { css } from "styled-components";
+
 import { PhotoAlbum } from "styled-icons/boxicons-regular/PhotoAlbum";
 
 export const FamilyContainer = styled(Container)`
@@ -249,14 +250,14 @@ export const TagRow = styled.div`
 
   &:hover {
     background-color: ${props =>
-      adjustHue(-10, lighten(0.295, props.theme.palette.main))};
+      adjustHue(-10, transparentize(0.95, props.familyColour || props.theme.palette.main))};
   }
 
   ${({ selected }) =>
     selected &&
     css`
-      box-shadow: inset 3px 0 0 ${props => props.theme.palette.main};
-      background-color: ${props => lighten(0.3, props.theme.palette.main)};
+      box-shadow: inset 3px 0 0 ${props => props.familyColour || props.theme.palette.main};
+      background-color: ${props => transparentize(0.9, props.familyColour || props.theme.palette.main)};
     `};
 
   @media screen and (min-width: ${props =>
@@ -278,15 +279,18 @@ export const Options = styled.div`
 `;
 
 export const SettingsButton = styled(ButtonSecondary)`
-  color: ${props => props.theme.palette.main};
+  color: ${props => props.familyColour || props.theme.palette.main};
   border-radius: 5px;
   padding: 0;
   width: 38px;
   height: 38px;
   font-size: 18px;
+  border-color: ${props => transparentize(0.2, props.familyColour || props.theme.palette.main)};
 
   &:hover {
-    color: ${props => props.theme.palette.main};
+    color: ${props => props.familyColour || props.theme.palette.main};
+    background-color: ${props => transparentize(0.95, props.familyColour || props.theme.palette.main)};
+    border-color: ${props => transparentize(0.1, props.familyColour || props.theme.palette.main)};
   }
 
   @media screen and (min-width: ${props =>
@@ -329,15 +333,13 @@ export const UploadButton = styled(ButtonPrimaryLight)`
 
   color: ${props => props.familyColour || props.theme.palette.main};
   background: ${props =>
-    lighten(0.75, props.familyColour || props.theme.palette.main)};
-  border: 1px solid
-    ${props => lighten(0.3, props.familyColour || props.theme.palette.main)};
+    transparentize(0.85, props.familyColour || props.theme.palette.main)};
+  border: none;
 
   &:hover {
     background: ${props =>
-      lighten(0.5, props.familyColour || props.theme.palette.main)};
-    border: 1px solid
-      ${props => lighten(0.27, props.familyColour || props.theme.palette.main)};
+      transparentize(0.8, props.familyColour || props.theme.palette.main)};
+    border: none;
   }
 
   i {
@@ -359,36 +361,6 @@ export const UploadButton = styled(ButtonPrimaryLight)`
     i {
       margin-right: 8px;
     }
-  }
-`;
-
-export const FeatherButton = styled.button`
-  width: 40px;
-  height: 40px;
-  border-radius: 4px;
-  border: 1px solid ${props => lighten(0.6, props.theme.palette.text)};
-  display: flex;
-  align-items: center;
-  margin-right: 20px;
-
-  &:hover {
-    border-color: ${props => lighten(0.2, props.theme.palette.main)};
-  }
-
-  &:hover > i {
-    color: ${props => props.theme.palette.main};
-  }
-
-  i {
-    display: block;
-    color: ${props => props.theme.palette.main};
-    font-size: 20px;
-    margin: 0 auto;
-  }
-
-  @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLandscape}) {
-    display: none;
   }
 `;
 

@@ -63,7 +63,7 @@ export const MementoOverview = styled.div`
   margin-right: 16px;
 
   i {
-    color: ${props => props.theme.palette.main};
+    color: ${props => props.familyColour || props.theme.palette.main};
     justify-content: left;
   }
 
@@ -125,7 +125,7 @@ export const MementoTagsWrapper = styled.ul`
   align-items: center;
 
   i {
-    color: ${props => props.theme.palette.main};
+    color: ${props => props.familyColour || props.theme.palette.main};
     margin-right: 8px;
     width: 20px;
   }
@@ -152,11 +152,10 @@ export const MementoTag = styled.li`
   ${props => props.theme.mixins.hoverFade};
 
   &:hover {
-    color: ${props => props.theme.palette.main};
-    border-color: ${props => lighten(0.2, props.theme.palette.main)};
+    color: ${props => props.familyColour || props.theme.palette.main};
+    border-color: ${props => lighten(0.2, props.familyColour || props.theme.palette.main)};
     box-shadow: inset 0 0 0 1px ${props =>
-      lighten(0.2, props.theme.palette.main)};
-    /* color: ${props => props.theme.palette.main} */
+      lighten(0.2, props.familyColour || props.theme.palette.main)};
   }
   span {
     color: gray;
@@ -190,7 +189,7 @@ export const CardOptions = styled.span`
     }
 
     &:hover {
-      color: ${props => props.theme.palette.main};
+      color: ${props => props.familyColour || props.theme.palette.main};
     }
   }
 `;

@@ -1,19 +1,21 @@
-import { ButtonPrimary, ButtonSecondary } from "ui/Buttons";
+import * as yup from "yup";
+
+import { ButtonPrimary, ButtonPrimaryLight, ButtonSecondary } from "ui/Buttons";
 import {
-  FormSection,
   Error,
+  FormSection,
   InputField,
   InstructionLabel,
   TextArea,
 } from "ui/Forms";
-import { NewTag, Tag, TagsContainer } from "./UploadMementoStyles";
+import { NewTag, NewTagsForm, Tag, TagsContainer } from "./UploadMementoStyles";
 import React, { useState } from "react";
-import { AlignRight } from "ui/Helpers";
-import Select from "react-select";
+
 import DateSelector from "components/DateSelector/DateSelector";
-import { StyledDropzone } from "components/FileDropzone/FileDropzone";
+import { FormNav } from "ui/Forms";
 import { Formik } from "formik";
-import * as yup from "yup";
+import Select from "react-select";
+import { StyledDropzone } from "components/FileDropzone/FileDropzone";
 
 const initialFormValues = {
   title: "",
@@ -239,37 +241,36 @@ export default function UploadStep2({
               </TagsContainer>
 
               {newTag !== null && (
-                <>
+                <NewTagsForm>
                   <InputField
                     placeholder="New tag name"
                     value={newTag}
                     onChange={e => handleChange(e)}
                     // onBlur={() => setDefaultTags([...defaultTags, newTag])}
                   />
-
-                  <ButtonPrimary
-                    type="button"
-                    onClick={() => {
-                      setTags([...new Set([...tags, newTag])]);
-                      props.setFieldValue("tags", [
-                        ...props.values.tags,
-                        newTag,
-                      ]);
-                      setNewTag(null);
-                    }}
-                  >
-                    Create new tag
-                  </ButtonPrimary>
-
-                  <AlignRight>
+                  <FormNav>
                     <ButtonSecondary
                       type="button"
                       onClick={() => setNewTag(null)}
                     >
                       Cancel
                     </ButtonSecondary>
-                  </AlignRight>
-                </>
+
+                    <ButtonPrimaryLight
+                      type="button"
+                      onClick={() => {
+                        setTags([...new Set([...tags, newTag])]);
+                        props.setFieldValue("tags", [
+                          ...props.values.tags,
+                          newTag,
+                        ]);
+                        setNewTag(null);
+                      }}
+                    >
+                      Add new tag
+                    </ButtonPrimaryLight>
+                  </FormNav>
+                </NewTagsForm>
               )}
             </FormSection>
             <FormSection>
