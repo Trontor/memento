@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import { Container } from "ui/Helpers";
 import { GET_MEMENTOS } from "queries/Memento";
 import MementoCard from "components/MementoCard/MementoCard";
 import { MonthlyMementosWrapper } from "./MonthlyMementoStyles";
@@ -8,7 +7,7 @@ import { useQuery } from "@apollo/react-hooks";
 
 const sameMonth = memento => {
   const mementoDates = memento.dates;
-  const currentMonth = 2 || new Date().getMonth();
+  const currentMonth = 10 || new Date().getMonth();
   return mementoDates.some(date => date.month === currentMonth);
 };
 
@@ -35,12 +34,15 @@ export default function FamilyMementosViewer(props) {
   if (!mementos) {
     return null;
   }
-  // Filter mementos by the same year
+  // Filter mementos by the same month
   const filteredMementos = mementos.filter(sameMonth);
+
   return (
     <MonthlyMementosWrapper>
       {filteredMementos.map(memento => (
-        <MementoCard {...memento} />
+        <MementoCard
+          key={memento.mementoId}
+          {...memento} />
       ))}
     </MonthlyMementosWrapper>
   );

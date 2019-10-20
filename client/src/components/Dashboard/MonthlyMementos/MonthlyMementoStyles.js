@@ -11,11 +11,11 @@ export const DashboardContainer = styled.div`
 `;
 
 export const MonthlyMementosWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-gap: ${props => props.theme.size.gutterWidth};
 
-  > div {
-    flex-grow: 1;
-    width: 33%;
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletPortrait}) {
+    grid-template-columns: 1fr 1fr;
   }
 `;

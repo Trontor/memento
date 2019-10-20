@@ -64,7 +64,7 @@ export default function Bookmarks(props) {
                 {/* Memento Date */}
                 <span>
                   <i className="far fa-clock" />
-                  {moment(memento.dates[0].day.toString().padStart(2, "0") + "/" +  memento.dates[0].month.toString().padStart(2, "0") + "/" + memento.dates[0].year).format("Do  MMM YYYY")}
+                  {moment(memento.dates[0].day.toString().padStart(2, "0") + "/" +  memento.dates[0].month.toString().padStart(2, "0") + "/" + memento.dates[0].year, "DD-MM-YYYY").format("Do  MMM YYYY")}
                 </span>
                 {/* Memento Location */}
                 {memento.location ? (
