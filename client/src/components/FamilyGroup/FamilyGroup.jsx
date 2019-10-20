@@ -130,6 +130,7 @@ export default function FamilyGroup(props) {
       familyId={familyId}
       userId={currentUser.userId}
       refreshMementos={getMementosQuery.refetch}
+      familyColour={family.colour}
     />
   );
   switch (menuTabs[currentTabIndex]) {
@@ -146,6 +147,7 @@ export default function FamilyGroup(props) {
           selectTag={selectTag}
           mementoTags={filterTags}
           setMementoTags={setFilterTags}
+          familyColour={family.colour}
         />
       );
       break;
@@ -187,8 +189,8 @@ export default function FamilyGroup(props) {
                   <GroupDetails>
                     {/* Date of Group Creation */}
                     <i className="far fa-clock"></i>
-                    Created on the{" "}
-                    {moment(family.createdAt).format("Do MMM, YYYY")}
+                    Created on {" "}
+                    {moment(family.createdAt).format("Do MMM YYYY")}
                   </GroupDetails>
                   <GroupDetails>
                     {/* Number of Mementos */}
@@ -214,6 +216,7 @@ export default function FamilyGroup(props) {
                 {/* Settings Button */}
                 {isAdmin && (
                   <SettingsButton
+                    familyColour={family.colour}
                     onClick={() => props.history.push(familyId + "/settings")}
                   >
                     <i className="fas fa-cog"></i>
@@ -241,6 +244,7 @@ export default function FamilyGroup(props) {
                   key={tag}
                   onClick={() => selectTag(tag)}
                   selected={filterTags.includes(tag)}
+                  familyColour={family.colour}
                 >
                   <span>{tag}</span>
                 </TagRow>
@@ -255,6 +259,7 @@ export default function FamilyGroup(props) {
                   key={idx}
                   active={currentTabIndex === idx}
                   onClick={() => setTabIndex(idx)}
+                  familyColour={family.colour}
                 >
                   {tab}
                 </MenuTabs>

@@ -1,23 +1,24 @@
-import React, { useState } from "react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
-import { Container } from "ui/Helpers";
-import { Header } from "ui/Typography";
-import { FormHelpText } from "ui/Forms";
-import { MementoOverview } from "../MementoCard/MementoCardStyles";
 import {
+  BookmarkCard,
+  BookmarkContent,
+  BookmarkImg,
   BookmarksIcon,
   BookmarksWrapper,
-  Description,
-  Item,
   UploaderAvatar,
   UploaderBox,
   UploaderText,
 } from "./BookmarksStyles";
+import { MementoOverview, PeopleTags } from "../MementoCard/MementoCardStyles";
+import React, { useState } from "react";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 
-import NoBookmarks from "./NoBookmarks";
-import { GET_BOOKMARKS } from "queries/Bookmarks";
+import { Container } from "ui/Helpers";
 import { DELETE_BOOKMARK } from "mutations/Memento";
+import { GET_BOOKMARKS } from "queries/Bookmarks";
+import { Header } from "ui/Typography";
 import JollyLoader from "components/JollyLoader/JollyLoader";
+import NoBookmarks from "./NoBookmarks";
+import moment from "moment";
 
 export default function Bookmarks(props) {
   const [bookmarks, setBookmarks] = useState([]);
@@ -41,6 +42,8 @@ export default function Bookmarks(props) {
     return <NoBookmarks />;
   }
 
+  console.log(bookmarks)
+
   return (
     <Container>
       <Header underline>Saved Mementos</Header>
@@ -48,38 +51,63 @@ export default function Bookmarks(props) {
       {/* Bookmarks Card*/}
       <BookmarksWrapper>
         {bookmarks.map(memento => (
-          <Item>
+          <BookmarkCard>
             {memento.media.length > 0 && (
-              <img alt="blah" src={memento.media[0].url} />
+              <BookmarkImg>
+                <img alt="blah" src={memento.media[0].url} />
+              </BookmarkImg>
             )}
-            <Description>
+            <BookmarkContent>
               {/* Memento Title */}
               <h3>{memento.title}</h3>
-              <MementoOverview>
+              <MementoOverview familyColour={memento.family.colour}>
                 {/* Memento Date */}
                 <span>
-                  <i className="far fa-clock" /> {memento.dates[0].year}
+                  <i className="far fa-clock" />
+                  {moment(memento.dates[0].day.toString().padStart(2, "0") + "/" +  memento.dates[0].month.toString().padStart(2, "0") + "/" + memento.dates[0].year, "DD-MM-YYYY").format("Do  MMM YYYY")}
                 </span>
                 {/* Memento Location */}
-                <span>
-                  <i className="fas fa-map-marker-alt" />
-                  {memento.location}
-                </span>
-              </MementoOverview>
+                {memento.location ? (
+                  <span>
+                    <i className="fas fa-map-marker-alt" />
+                    {memento.location}
+                  </span>
+                ) : <span>{" "}</span>}
+                {/* People Tags */}
+                {memento.people && memento.people.length > 0 ? (
+                  <span>
+                    <i className="fas fa-user-tag"></i>
+                    <div>
+                      {memento.people.map(person => (
+                        <PeopleTags key={person.firstName}>
+                          {person.firstName} {person.lastName}
+                        </PeopleTags>
+                      ))}
+                    </div>
+                  </span>
+                  ) : <span>{" "}</span>}
+                </MementoOverview>
+              </BookmarkContent>
               <UploaderBox>
-                <UploaderAvatar>
-                  {!memento.uploader.imageUrl ? (
-                    <i className="fas fa-user-circle"></i>
+                <UploaderAvatar onClick={() => props.history.push("/family/" + memento.family.familyId)}>
+                  {!memento.family.imageUrl ? (
+                    <img src="https://image.flaticon.com/icons/svg/1999/1999109.svg" alt={""}/>
+
                   ) : (
                     <img
-                      src={memento.uploader.imageUrl}
+                      src={memento.family.imageUrl}
                       alt={memento.uploader.firstName}
                     />
                   )}
                 </UploaderAvatar>
                 <UploaderText>
-                  {memento.uploader.firstName}
-                  <FormHelpText>{memento.family.name}</FormHelpText>
+                  <span>
+                    {memento.uploader.firstName}
+                  </span>
+                  <span
+                    onClick={() => props.history.push("/family/" + memento.family.familyId)}>
+                    {memento.family.name}
+                  </span>
                   {/*change family group name */}
                 </UploaderText>
                 <BookmarksIcon>
@@ -91,8 +119,7 @@ export default function Bookmarks(props) {
                   ></i>
                 </BookmarksIcon>
               </UploaderBox>
-            </Description>
-          </Item>
+          </BookmarkCard>
         ))}
       </BookmarksWrapper>
     </Container>

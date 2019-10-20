@@ -1,7 +1,8 @@
+import JollyLoader from "components/JollyLoader/JollyLoader";
 import MementoCard from "components/MementoCard/MementoCard";
 import { MementoCardColumns } from "./MementosViewerStyles";
+import NoMementos from "./NoMementos";
 import React from "react";
-import JollyLoader from "components/JollyLoader/JollyLoader";
 
 export default function MementosViewer(props) {
   const { mementos, userId, refreshMementos } = props;
@@ -22,15 +23,21 @@ export default function MementosViewer(props) {
   }
 
   return (
-    <MementoCardColumns>
-      {filteredMementos.map(memento => (
-        <MementoCard
-          key={memento.mementoId}
-          onBookmarkToggled={refreshMementos}
-          userId={userId}
-          {...memento}
-        />
-      ))}
-    </MementoCardColumns>
+    <>
+      {mementos && mementos.length === 0 ? (
+        <NoMementos />
+      ) : (
+        <MementoCardColumns>
+          {filteredMementos.map(memento => (
+            <MementoCard
+              key={memento.mementoId}
+              onBookmarkToggled={refreshMementos}
+              userId={userId}
+              {...memento}
+            />
+          ))}
+        </MementoCardColumns>
+      )}
+    </>
   );
 }

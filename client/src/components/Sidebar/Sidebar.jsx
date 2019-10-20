@@ -1,5 +1,7 @@
 import {
   CloseMenu,
+  FamilyAvatar,
+  FamilyList,
   FamilyListSection,
   MenuSection,
   NewFamilyGroup,
@@ -9,7 +11,7 @@ import {
   TextList,
   UserAvatar,
   UserDisplay,
-  UserName,
+  UserName
 } from "./SidebarStyles";
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
@@ -55,6 +57,8 @@ const Sidebar = props => {
     refetch();
   }, [refetch, location]);
 
+  console.log(families)
+
   return (
     <SidebarContainer isOpen={props.sidebarOpen}>
       <SidebarHeader>
@@ -83,13 +87,15 @@ const Sidebar = props => {
           <Spinner />
         ) : (
           families.map(family => (
-            <SidebarLink
+            <FamilyLink
               key={family.familyId}
-              name="invite"
+              name="family"
               to={`/family/${family.familyId}`}
+              familyIcon={family.imageUrl}
+              familyColour={family.colour}
             >
               {family.name}
-            </SidebarLink>
+            </FamilyLink>
           ))
         )}
         <NewFamilyGroup
@@ -103,13 +109,16 @@ const Sidebar = props => {
         <SidebarLink icon="fas fa-user-plus" name="invite" to="/invite">
           Invite
         </SidebarLink>
+        <SidebarLink icon="far fa-envelope-open" exact to="/invite/accept">
+          Join a Family
+        </SidebarLink>
       </MenuSection>
       <MenuSection>
         <SidebarLink icon="far fa-paper-plane" name="mementos" to="/mementos">
           View My Mementos
         </SidebarLink>
         <SidebarLink icon="far fa-bookmark" name="bookmarks" to="/bookmarks">
-          Bookmarks
+          Saved Mementos
         </SidebarLink>
       </MenuSection>
       <MenuSection>
@@ -136,4 +145,28 @@ const SidebarLink = ({ to, name, icon, children }) => {
     </TextList>
   );
 };
+
+const FamilyLink = ({to, name, familyIcon, children, familyColour}) => {
+  return (
+    <FamilyList
+      to={to}
+      familyColour={familyColour}>
+      <FamilyAvatar familyColour={familyColour}>
+      {
+        familyIcon ?
+        <img src={familyIcon} alt={""}/>
+        :
+        familyIcon === null ?
+        <img src="https://image.flaticon.com/icons/svg/1999/1999109.svg" alt={""}/>
+        :
+        null
+      }
+    </FamilyAvatar>
+    <span data-cy={name} href="#">
+      {children}
+    </span>
+  </FamilyList>
+  );
+}
+
 export default Sidebar;

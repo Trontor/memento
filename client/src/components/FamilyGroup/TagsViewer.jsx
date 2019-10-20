@@ -9,6 +9,7 @@ export default function TagsViewer(props) {
           key={tag}
           onClick={() => props.selectTag(tag)}
           selected={props.mementoTags.includes(tag)}
+          familyColour={props.familyColour}
         >
           <span>{tag}</span>
         </TagRow>

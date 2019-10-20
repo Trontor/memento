@@ -1,3 +1,4 @@
+import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
 import {
   AuthorAvatar,
   AuthorWrapper,
@@ -15,12 +16,12 @@ import {
   PeopleTags,
   UploadDate,
 } from "./MementoCardStyles";
+import React, { useState } from "react";
 
+import InheritanceTree from "components/InheritanceTree/InheritanceTree";
+import moment from "moment";
 import { useHistory } from "react-router";
 import { useMutation } from "@apollo/react-hooks";
-import React, { useState } from "react";
-import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
-import InheritanceTree from "components/InheritanceTree/InheritanceTree";
 
 export default function MementoCard(props) {
   const history = useHistory();
@@ -64,6 +65,9 @@ export default function MementoCard(props) {
   const isBookmarked = bookmarkedBy.some(id => id.userId === userId);
 
   const isUploader = uploader.userId === userId;
+
+  const mementoDate = moment(dates[0].day.toString().padStart(2, "0") + "/" +  dates[0].month.toString().padStart(2, "0") + "/" + dates[0].year, "DD-MM-YYYY").format("Do  MMM YYYY");
+
   return (
     <Card>
       <AuthorWrapper>
@@ -78,7 +82,7 @@ export default function MementoCard(props) {
           <MementoAuthor>
             {uploader.firstName + " " + uploader.lastName}
           </MementoAuthor>
-          <UploadDate>{createdDate.toLocaleDateString()}</UploadDate>
+          <UploadDate>{moment(createdDate.toLocaleDateString(), "DD-MM-YYYY").fromNow()}</UploadDate>
         </div>
         {/* Edit & Bookmark */}
         <CardOptions>
@@ -95,7 +99,7 @@ export default function MementoCard(props) {
             />
           )}
           <i
-            className={(isBookmarked ? "fa " : "far ") + "fa-bookmark"}
+            className={(isBookmarked ? "fas" : "far") + " fa-bookmark"}
             onClick={() => (isBookmarked ? removeBookmark() : bookmark())}
           ></i>
         </CardOptions>
@@ -104,11 +108,11 @@ export default function MementoCard(props) {
         <MementoInfo>
           {/* Title */}
           <MementoTitle>{title}</MementoTitle>
-          <MementoOverview>
+          <MementoOverview familyColour={family.colour}>
             {/* Date */}
             <span>
               <i className="far fa-clock"></i>
-              {dates[0].month.toString().padStart(2, "0")}/{dates[0].year}
+              {mementoDate}
             </span>
             {/* Location */}
             {location && (
@@ -166,19 +170,19 @@ export default function MementoCard(props) {
       </CardContent>
       {/* Tags */}
       {props.tags && props.tags.length > 0 && (
-        <MementoTagsWrapper>
+        <MementoTagsWrapper familyColour={family.colour}>
           <i class="fas fa-tags"></i>
           {props.tags.map(tag => (
-            <MementoTag>{tag}</MementoTag>
+            <MementoTag familyColour={family.colour}>{tag}</MementoTag>
           ))}
         </MementoTagsWrapper>
       )}
       {/* Rekognition Tags */}
       {detectedLabels && detectedLabels.length > 0 && (
-        <MementoTagsWrapper>
+        <MementoTagsWrapper familyColour={family.colour}>
           <i class="far fa-eye"></i>
           {detectedLabels.map(result => (
-            <MementoTag key={result.name}>
+            <MementoTag key={result.name} familyColour={family.colour}>
               {result.name.toLowerCase()}{" "}
               <span>{Math.round(result.confidence, 0)}%</span>
             </MementoTag>

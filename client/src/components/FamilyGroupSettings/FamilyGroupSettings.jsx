@@ -1,17 +1,18 @@
 import { AdminTag, Member, MembersList } from "./FamilyGroupSettingsStyles";
 import { BackButton, BackToView, SettingsHeader } from "ui/Navigation";
 import { FormSection, InputLabel } from "ui/Forms";
-import { Formik } from "formik";
+import { LOAD_FAMILY, UPDATE_FAMILY } from "mutations/Family";
+import React, { useState } from "react";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+
+import { ButtonPrimary } from "ui/Buttons";
 import { CirclePicker } from "react-color";
 import { Container } from "ui/Helpers";
 import EditInput from "components/EditInput/EditInput";
+import { Formik } from "formik";
 import { Header } from "ui/Typography";
 import JollyLoader from "components/JollyLoader/JollyLoader";
-import { LOAD_FAMILY, UPDATE_FAMILY } from "mutations/Family";
-import React, { useState } from "react";
 import { StyledDropzone } from "components/FileDropzone/FileDropzone";
-import { useQuery, useMutation } from "@apollo/react-hooks";
-import { ButtonPrimary } from "ui/Buttons";
 import { useHistory } from "react-router-dom";
 
 export default function FamilyGroupSettings(props) {
@@ -38,6 +39,10 @@ export default function FamilyGroupSettings(props) {
   if (loading || !family || updateFamilyStatus.loading) {
     return <JollyLoader />;
   }
+
+  // Colour Theme Selection for Family Group
+  const colorSelection = ["#FF7F5F", "#FF3221", "#FF337D", "#EA40E0", "#9127D2", "#5627D2", "#274CE3", "#2883FF", "#0099BE", "#00C494", "#00BE4E", "#FFB700", "#F97908"]
+
 
   /**
    * Handles the Formik form submit (when the 'Save Changes' button is pressed)
@@ -98,6 +103,7 @@ export default function FamilyGroupSettings(props) {
                     // color={props.values.color}
                     color={props.values.colour}
                     width="100%"
+                    colors={colorSelection}
                   />
                 </div>
               </FormSection>
