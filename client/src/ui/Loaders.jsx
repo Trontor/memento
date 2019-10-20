@@ -1,6 +1,8 @@
 import styled, { css } from "styled-components";
 
 export const PageSpinnerWrapper = styled.div`
+  background: url("https://www.toptal.com/designers/subtlepatterns/patterns/memphis-mini.png");
+
   display: flex;
   justify-content: center;
   align-items: center;
