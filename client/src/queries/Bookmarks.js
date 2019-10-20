@@ -28,6 +28,8 @@ export const GET_BOOKMARKS = gql`
         family {
           name
           imageUrl
+          familyId
+          colour
         }
       }
     }

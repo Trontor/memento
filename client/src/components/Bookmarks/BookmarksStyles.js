@@ -34,7 +34,6 @@ export const BookmarkCard = styled.div`
   border: 1px solid ${props => transparentize(0.95, props.theme.palette.text)};
   border-radius: 4px;
   width: 100%;
-  padding-bottom: 12px;
   overflow: hidden;
   background-color: ${props => props.theme.palette.foreground};
   box-shadow: 1px 2px 3px -2px ${props => transparentize(0.97, props.theme.palette.text)};
@@ -57,11 +56,15 @@ export const BookmarkContent = styled.div`
   padding: 0 16px;
   display: grid;
   grid-template-rows: auto 1.2em 1.2em 1.2em;
+
+  h3 {
+    font-size: 15px;
+  }
 `;
 
 export const UploaderBox = styled.div`
   display: flex;
-  padding: 12px;
+  padding: 12px 16px 12px 16px;
 
   img {
     width: 35px;
@@ -69,12 +72,15 @@ export const UploaderBox = styled.div`
     object-fit: cover;
     border-radius: 50%;
     margin: 0;
+    cursor: pointer;
   }
 `;
 
 export const UploaderText = styled.div`
   display: flex;
   flex-direction: column;
+  cursor: pointer;
+  font-size: 14px;
 
   span:first-child {
     font-weight: bold;
@@ -83,7 +89,6 @@ export const UploaderText = styled.div`
 
   span:last-child {
     opacity: 0.7;
-    font-size: 15px;
   }
 `;
 

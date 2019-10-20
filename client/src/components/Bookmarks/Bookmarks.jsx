@@ -60,7 +60,7 @@ export default function Bookmarks(props) {
             <BookmarkContent>
               {/* Memento Title */}
               <h3>{memento.title}</h3>
-              <MementoOverview>
+              <MementoOverview familyColour={memento.family.colour}>
                 {/* Memento Date */}
                 <span>
                   <i className="far fa-clock" />
@@ -89,12 +89,13 @@ export default function Bookmarks(props) {
                 </MementoOverview>
               </BookmarkContent>
               <UploaderBox>
-                <UploaderAvatar>
-                  {!memento.uploader.imageUrl ? (
-                    <i className="fas fa-user-circle"></i>
+                <UploaderAvatar onClick={() => props.history.push("/family/" + memento.family.familyId)}>
+                  {!memento.family.imageUrl ? (
+                    <img src="https://image.flaticon.com/icons/svg/1999/1999109.svg" alt={""}/>
+
                   ) : (
                     <img
-                      src={memento.uploader.imageUrl}
+                      src={memento.family.imageUrl}
                       alt={memento.uploader.firstName}
                     />
                   )}
@@ -103,7 +104,8 @@ export default function Bookmarks(props) {
                   <span>
                     {memento.uploader.firstName}
                   </span>
-                  <span>
+                  <span
+                    onClick={() => props.history.push("/family/" + memento.family.familyId)}>
                     {memento.family.name}
                   </span>
                   {/*change family group name */}
