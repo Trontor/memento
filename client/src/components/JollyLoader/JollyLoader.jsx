@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { PageSpinnerWrapper, Spinner } from "ui/Loaders";
 import { JollyQuote } from "./JollyLoaderStyles";
+import { ReactComponent as Pig } from "./pig.svg";
 
 let usedQuotes = [];
 
@@ -30,7 +31,9 @@ export default function JollyLoader(props) {
 
   return (
     <PageSpinnerWrapper>
-      <Spinner size="large" />
+      {/* Pig is an actual React component */}
+      <Pig />
+      {/* <Spinner size="large" /> */}
       <JollyQuote>{currentQuote}</JollyQuote>
     </PageSpinnerWrapper>
   );
