@@ -68,3 +68,22 @@ export const TagsWrapper = styled.div`
     margin-bottom: 20px;
   }
 `;
+
+export const BackButtonDiv = styled.button`
+  padding: 10px 10px 10px 0;
+  margin-bottom: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  opacity: 0.7;
+
+  span {
+    font-family: "Livvic", sans-serif;
+    display: inline-block;
+    padding-left: 10px;
+    padding-top: 2px;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+`;

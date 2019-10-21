@@ -184,7 +184,7 @@ export const PeopleTags = styled.span`
 
 export const CardOptions = styled.span`
   margin-left: auto;
-  color: ${props => lighten(0.6, props.theme.palette.text)};
+  color: ${props => lighten(0.55, props.theme.palette.text)};
   cursor: pointer;
   align-self: flex-start;
   font-size: 18px;
@@ -197,5 +197,12 @@ export const CardOptions = styled.span`
     &:hover {
       color: ${props => props.familyColour || props.theme.palette.main};
     }
+  }
+`;
+
+
+export const Bookmark = styled.span`
+  i {
+    color: ${props => props.bookmarked ? props.familyColour || props.theme.palette.main : "default"}
   }
 `;

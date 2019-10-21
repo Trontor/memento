@@ -2,6 +2,7 @@ import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
 import {
   AuthorAvatar,
   AuthorWrapper,
+  Bookmark,
   Card,
   CardContent,
   CardOptions,
@@ -14,7 +15,7 @@ import {
   MementoTagsWrapper,
   MementoTitle,
   PeopleTags,
-  UploadDate,
+  UploadDate
 } from "./MementoCardStyles";
 import React, { useState } from "react";
 
@@ -94,7 +95,7 @@ export default function MementoCard(props) {
           </UploadDate>
         </div>
         {/* Edit & Bookmark */}
-        <CardOptions>
+        <CardOptions familyColour={family.colour}>
           {beneficiaries && beneficiaries.length > 0 && (
             <i
               className="fas fa-sitemap"
@@ -110,10 +111,14 @@ export default function MementoCard(props) {
           <i className="fas fa-link"
             onClick={()=> history.push("/memento/" + mementoId)}
           />
-          <i
-            className={(isBookmarked ? "fas" : "far") + " fa-bookmark"}
+          <Bookmark
             onClick={() => (isBookmarked ? removeBookmark() : bookmark())}
-          ></i>
+            bookmarked={isBookmarked}
+            familyColour={family.colour}>
+            <i
+              className={(isBookmarked ? "fas" : "far") + " fa-bookmark"}
+            ></i>
+          </Bookmark>
         </CardOptions>
       </AuthorWrapper>
       <CardContent>

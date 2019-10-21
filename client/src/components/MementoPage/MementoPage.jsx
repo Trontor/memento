@@ -1,13 +1,26 @@
-import { Card, LargerTag, MementoImg, TagSectionWrapper, TagsWrapper } from "./MementoPageStyles";
 import {
+  AuthorAvatar,
+  AuthorWrapper,
   CardContent,
+  CardOptions,
+  MementoAuthor,
   MementoDescription,
   MementoOverview,
-  PeopleTags
+  PeopleTags,
+  UploadDate
 } from "components/MementoCard/MementoCardStyles";
+import {
+  BackButtonDiv,
+  Card,
+  LargerTag,
+  MementoImg,
+  TagSectionWrapper,
+  TagsWrapper
+} from "./MementoPageStyles";
 import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
+import { BackButton } from "ui/Navigation";
 import { Container } from "ui/Helpers";
 import { GET_A_MEMENTO } from "queries/Memento";
 import JollyLoader from "components/JollyLoader/JollyLoader";
@@ -27,6 +40,7 @@ export default function MementoPage() {
     },
   });
 
+
   /** Loading/Error state management */
   if (!memento) {
     return <JollyLoader />;
@@ -41,11 +55,17 @@ export default function MementoPage() {
     "DD-MM-YYYY",
   ).format("Do  MMM YYYY");
 
+  const createdDate = new Date(memento.createdAt);
 
   /** Business Logic */
 
   return (
     <Container>
+      <BackButtonDiv onClick={()=> history.push("/family/" + memento.family.familyId)}>
+        <BackButton>
+        </BackButton>
+        <span>Back</span>
+      </BackButtonDiv>
       <Card>
         {
           memento.media.length > 0 && (
@@ -55,6 +75,38 @@ export default function MementoPage() {
           )
         }
         <CardContent>
+          <AuthorWrapper>
+            <AuthorAvatar>
+              {!memento.uploader.imageUrl ? (
+                <i className="fas fa-user-circle"></i>
+              ) : (
+                <img src={memento.uploader.imageUrl} alt={memento.uploader.firstName} />
+              )}
+            </AuthorAvatar>
+            <div>
+              <MementoAuthor>
+                {memento.uploader.firstName + " " + memento.uploader.lastName}
+              </MementoAuthor>
+              <UploadDate>
+                {moment(createdDate.toLocaleDateString(), "DD-MM-YYYY").fromNow()}
+              </UploadDate>
+            </div>
+            {/* Edit & Bookmark */}
+            <CardOptions>
+              {memento.beneficiaries && memento.beneficiaries.length > 0 && (
+                <i
+                  className="fas fa-sitemap"
+                />
+              )}
+              <i
+                className="fas fa-pencil-alt"
+                onClick={() => history.push("/memento/" + mementoId + "/edit")}
+              />
+              <i className="fas fa-link"
+                onClick={()=> history.push("/memento/" + mementoId)}
+              />
+            </CardOptions>
+          </AuthorWrapper>
           <h1>
             {memento.title}
           </h1>
