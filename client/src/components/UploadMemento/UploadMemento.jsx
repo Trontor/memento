@@ -1,4 +1,4 @@
-import { ButtonPrimary, ButtonSecondary } from "ui/Buttons";
+import { ButtonSecondary } from "ui/Buttons";
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 
@@ -62,10 +62,10 @@ export default function UploadMemento(props) {
     setSelectMementoType(value);
   };
 
-  //Go to next step
-  const nextStep = () => {
-    setCurrentStep(currentStep + 1);
-  };
+  // //Go to next step
+  // const nextStep = () => {
+  //   setCurrentStep(currentStep + 1);
+  // };
 
   //Go back to prev step
   const prevStep = () => {
