@@ -56,7 +56,7 @@ export default function UserProfile() {
         <Header underline>My Profile</Header>
         <ImgPreview>
           {!user.imageUrl ? (
-            <UserAvatar size="125px" style={{ "margin-left": 0 }} />
+            <i className="fas fa-user-circle" />
           ) : (
             <img src={user.imageUrl} alt={user.firstName} />
           )}

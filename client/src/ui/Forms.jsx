@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-
 import Textarea from "react-textarea-autosize";
 import { User } from "styled-icons/fa-regular/User";
 import { lighten } from "polished";
@@ -176,11 +175,16 @@ export const ImgPreview = styled.div`
   background: #f8f8f8;
   height: 200px;
   width: 200px;
-  border: 2px solid gray;
+  border-radius: 50%;
 
   img {
     width: 100%;
     height: 100%;
+    border-radius: 50%;
+  }
+
+  i {
+    font-size: 200px;
   }
 `;
 

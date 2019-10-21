@@ -116,7 +116,7 @@ export default function SettingsProfile() {
     } else if (user.imageUrl) {
       return <img src={user.imageUrl} alt="."></img>;
     } else {
-      return <UserAvatar size="125px" />;
+      return <i className="fas fa-user-circle" />;
     }
   };
 
@@ -186,6 +186,7 @@ export default function SettingsProfile() {
                 value={props.values.firstName}
                 inputLabel="First Name"
                 onChange={props.handleChange}
+                placeholder="Enter your first name"
               />
             </FormSection>
 
@@ -196,6 +197,7 @@ export default function SettingsProfile() {
                 value={props.values.lastName}
                 inputLabel="Last Name"
                 onChange={props.handleChange}
+                placeholder="Enter your last name"
               />
             </FormSection>
 
@@ -246,6 +248,7 @@ export default function SettingsProfile() {
                 inputLabel="Hometown"
                 value={props.values.hometown}
                 onChange={props.handleChange}
+                placeholder="Enter your hometown"
               />
             </FormSection>
 
