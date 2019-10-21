@@ -90,12 +90,11 @@ export default function Bookmarks(props) {
               </BookmarkContent>
               <UploaderBox>
                 <UploaderAvatar onClick={() => props.history.push("/family/" + memento.family.familyId)}>
-                  {!memento.family.imageUrl ? (
-                    <img src="https://image.flaticon.com/icons/svg/1999/1999109.svg" alt={""}/>
-
+                  {!memento.uploader.imageUrl ? (
+                    <i className="fas fa-user-circle"></i>
                   ) : (
                     <img
-                      src={memento.family.imageUrl}
+                      src={memento.uploader.imageUrl}
                       alt={memento.uploader.firstName}
                     />
                   )}
