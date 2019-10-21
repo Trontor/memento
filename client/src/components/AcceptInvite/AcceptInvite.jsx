@@ -9,6 +9,11 @@ const ERROR_ALREADY_JOINED_FAMILY = "Already joined family";
 export default function AcceptInvite(props) {
   const inviteId = props.match.params.inviteId;
   const [acceptInvite, { data, loading, error }] = useMutation(ACCEPT_INVITE);
+  // Check if there is a user currently logged in
+  if (!localStorage.getItem("AUTH-TOKEN")) {
+    localStorage.setItem("PENDING-INVITE", inviteId);
+    props.history.push("/login");
+  }
 
   useEffect(() => {
     acceptInvite({ variables: { input: { inviteId } } });

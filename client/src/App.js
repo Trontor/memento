@@ -127,10 +127,6 @@ const authenticatedRoutes = [
     exact: true,
   },
   {
-    name: "invite/accept/:inviteId",
-    component: AcceptInvite,
-  },
-  {
     name: "family/:id/settings",
     component: FamilyGroupSettings,
     exact: true,
@@ -184,6 +180,11 @@ function App() {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/login" component={Login} />
+          <Route
+            exact
+            path="/invite/accept/:inviteId"
+            component={AcceptInvite}
+          />
           <Route path="/signup" component={Signup} />
           <Route paths={authenticatedPaths}>
             <SiteGrid>
