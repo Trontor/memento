@@ -107,6 +107,9 @@ export const GET_A_MEMENTO = gql`
     memento(mementoId: $id) {
       mementoId
       title
+      family {
+        familyId
+      }
       uploader {
         userId
         imageUrl
@@ -114,6 +117,7 @@ export const GET_A_MEMENTO = gql`
         lastName
       }
       people {
+        userId
         firstName
         lastName
       }
@@ -121,6 +125,7 @@ export const GET_A_MEMENTO = gql`
         firstName
         lastName
         imageUrl
+        userId
       }
       type
       description

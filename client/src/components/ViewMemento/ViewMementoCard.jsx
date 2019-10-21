@@ -12,13 +12,14 @@ import {
   PeopleTags,
   UploadDate,
 } from "../MementoCard/MementoCardStyles";
-import { Card, CardContent, CardInfo, FamilyGroup } from "./ViewMementoStyles";
-
 import React from "react";
+import { Card, CardInfo, CardContent, FamilyGroup } from "./ViewMementoStyles";
+import { useHistory } from "react-router";
 
-export default function ViewMementoCard(props) {
+export default function MementoCard(props) {
+  const history = useHistory();
   const {
-    //mementoId,
+    mementoId,
     createdAt,
     dates,
     title,
@@ -32,6 +33,7 @@ export default function ViewMementoCard(props) {
     uploader,
     people,
   } = props;
+  console.log(props);
   const createdDate = new Date(createdAt);
 
   return (
@@ -52,9 +54,13 @@ export default function ViewMementoCard(props) {
             {/* Memento  Upload Date */}
             <UploadDate>{createdDate.toLocaleDateString()}</UploadDate>
           </div>
-          {/* Bookmark */}
+          {/* Edit & Bookmark */}
           <CardOptions>
-            <i className="far fa-bookmark"></i>
+            <i
+              class="fas fa-pencil-alt"
+              onClick={() => history.push(`/memento/${mementoId}/edit/`)}
+            />
+            <i class="far fa-bookmark"></i>
           </CardOptions>
         </AuthorWrapper>
         {/* Memento  Title */}

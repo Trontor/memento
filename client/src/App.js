@@ -15,8 +15,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import FamilyGroup from "./components/FamilyGroup/FamilyGroup";
 import FamilyGroupSettings from "./components/FamilyGroupSettings/FamilyGroupSettings";
 import Hamburger from "./components/Sidebar/Hamburger";
-import Home from "./components/Home/Home"
-import InheritanceTree from "components/InheritanceTree/InheritanceTree";
+import Home from "./components/Home/Home";
 import Invite from "./components/Invite/Invite";
 import InviteCode from "./components/AcceptInvite/InviteCode";
 import Login from "./components/Login/Login";
@@ -26,7 +25,8 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import Signup from "./components/Signup/Signup";
 import UploadMemento from "./components/UploadMemento/UploadMemento";
 import UserProfile from "./components/UserProfile/UserProfile";
-import ViewMemento from "./components/ViewMementos/ViewMemento";
+import ViewMemento from "./components/ViewMemento/ViewMemento";
+import EditMemento from "./components/EditMemento/EditMemento";
 import { theme } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
@@ -127,10 +127,6 @@ const authenticatedRoutes = [
     exact: true,
   },
   {
-    name: "invite/accept/:inviteId",
-    component: AcceptInvite,
-  },
-  {
     name: "family/:id/settings",
     component: FamilyGroupSettings,
     exact: true,
@@ -161,13 +157,14 @@ const authenticatedRoutes = [
     component: ViewMemento,
   },
   {
-    name: "tree",
-    component: InheritanceTree,
+    name: "memento/:mementoId",
+    component: MementoPage,
+    exact: true,
   },
   {
-    name: "memento",
-    component: MementoPage
-  }
+    name: "memento/:id/edit",
+    component: EditMemento,
+  },
 ];
 
 function App() {
@@ -184,6 +181,11 @@ function App() {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/login" component={Login} />
+          <Route
+            exact
+            path="/invite/accept/:inviteId"
+            component={AcceptInvite}
+          />
           <Route path="/signup" component={Signup} />
           <Route paths={authenticatedPaths}>
             <SiteGrid>

@@ -19,7 +19,7 @@ export default function ViewMemento() {
         setMementos(data.getMyUploadedMementos);
     },
   });
-
+  console.log(mementos);
   if (mementos.length === 0) {
     return <NoViewMemento />;
   }

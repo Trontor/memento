@@ -11,7 +11,7 @@ import {
   TextList,
   UserAvatar,
   UserDisplay,
-  UserName
+  UserName,
 } from "./SidebarStyles";
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
@@ -57,7 +57,7 @@ const Sidebar = props => {
     refetch();
   }, [refetch, location]);
 
-  console.log(families)
+  console.log(families);
 
   return (
     <SidebarContainer isOpen={props.sidebarOpen}>
@@ -146,27 +146,24 @@ const SidebarLink = ({ to, name, icon, children }) => {
   );
 };
 
-const FamilyLink = ({to, name, familyIcon, children, familyColour}) => {
+const FamilyLink = ({ to, name, familyIcon, children, familyColour }) => {
   return (
-    <FamilyList
-      to={to}
-      familyColour={familyColour}>
+    <FamilyList to={to} familyColour={familyColour}>
       <FamilyAvatar familyColour={familyColour}>
-      {
-        familyIcon ?
-        <img src={familyIcon} alt={""}/>
-        :
-        familyIcon === null ?
-        <img src="https://image.flaticon.com/icons/svg/1999/1999109.svg" alt={""}/>
-        :
-        null
-      }
-    </FamilyAvatar>
-    <span data-cy={name} href="#">
-      {children}
-    </span>
-  </FamilyList>
+        {familyIcon ? (
+          <img src={familyIcon} alt={""} />
+        ) : familyIcon === null ? (
+          <img
+            src="https://image.flaticon.com/icons/svg/1999/1999109.svg"
+            alt={""}
+          />
+        ) : null}
+      </FamilyAvatar>
+      <span data-cy={name} href="#">
+        {children}
+      </span>
+    </FamilyList>
   );
-}
+};
 
 export default Sidebar;
