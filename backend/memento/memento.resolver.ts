@@ -173,6 +173,11 @@ export class MementoResolver {
     return memento.toDTO();
   }
 
+  /**
+   * Deletes a user's bookmark
+   * @param user current authenticated user
+   * @param mementoId id of memento that needs to be unbookmarked by the user
+   */
   @Mutation(returns => Memento, { name: "deleteBookmark" })
   @UseGuards(JwtAuthGuard, ReadMementoGuard)
   async deleteBookmark(
@@ -186,6 +191,25 @@ export class MementoResolver {
     this.mementoLoaderById.clear(mementoId).prime(mementoId, memento);
     this.userLoaderById.clear(user.userId).prime(user.userId, userDoc);
     return memento.toDTO();
+  }
+
+  /**
+   * Deletes an existing Memento.
+   * @param mementoId id of memento
+   */
+  @Mutation(returns => String)
+  @UseGuards(JwtAuthGuard, UpdateMementoGuard)
+  async deleteMemento(
+    @Args({ name: "mementoId", type: () => ID }) mementoId: string,
+  ) {
+    // remove bookmarks
+    const bookmarkers: string[] = await this.mementoService.deleteMemento(
+      mementoId,
+    );
+    // clear data loaders as cached user docs are modified
+    this.mementoLoaderById.clear(mementoId);
+    bookmarkers.forEach(userId => this.userLoaderById.clear(userId));
+    return "Deleted!";
   }
 
   /**

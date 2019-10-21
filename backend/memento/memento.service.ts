@@ -179,7 +179,7 @@ export class MementoService {
       { _id: mementoId },
       updateObj,
       updateOptions,
-    ).exec();
+    );
     if (!doc) throw new InternalServerErrorException();
     return doc.toDTO();
   }
@@ -373,6 +373,24 @@ export class MementoService {
       throw new InternalServerErrorException("Could not save Memento");
     }
     return doc.toDTO();
+  }
+
+  /**
+   * Deletes an existing Memento and removes it from bookmarks.
+   * @param mementoId id of memento
+   * @returns array of users whose documents were modified by this function
+   */
+  async deleteMemento(mementoId: string) {
+    const memento: MementoDocument | null = await this.MementoModel.findByIdAndDelete(
+      fromHexStringToObjectId(mementoId),
+    );
+    if (!memento) throw new MementoNotFoundException();
+    const bookmarkers = memento._bookmarkedBy.map(b => b.toHexString());
+    const removedBookmarkPromises = bookmarkers.map(userId =>
+      this.userService.deleteBookmarkFromUser(userId, mementoId),
+    );
+    await Promise.all(removedBookmarkPromises);
+    return bookmarkers;
   }
 
   private readonly MIN_CONFIDENCE = 80;
