@@ -29,7 +29,7 @@ export const Container = styled.div`
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.mobile}) {
-    margin: 30px 40px;
+    margin: 30px 35px;
   }
 
   @media screen and (min-width: ${props =>

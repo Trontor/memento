@@ -19,6 +19,7 @@ import {
 import React, { useState } from "react";
 
 import InheritanceTree from "components/InheritanceTree/InheritanceTree";
+import moment from "moment";
 import { useHistory } from "react-router";
 import { useMutation } from "@apollo/react-hooks";
 
@@ -62,7 +63,11 @@ export default function MementoCard(props) {
   });
 
   const isBookmarked = bookmarkedBy.some(id => id.userId === userId);
+
   const isUploader = uploader.userId === userId;
+
+  const mementoDate = moment(dates[0].day.toString().padStart(2, "0") + "/" +  dates[0].month.toString().padStart(2, "0") + "/" + dates[0].year, "DD-MM-YYYY").format("Do  MMM YYYY");
+
   return (
     <Card>
       <AuthorWrapper>
@@ -77,7 +82,7 @@ export default function MementoCard(props) {
           <MementoAuthor>
             {uploader.firstName + " " + uploader.lastName}
           </MementoAuthor>
-          <UploadDate>{createdDate.toLocaleDateString()}</UploadDate>
+          <UploadDate>{moment(createdDate.toLocaleDateString(), "DD-MM-YYYY").fromNow()}</UploadDate>
         </div>
         {/* Edit & Bookmark */}
         <CardOptions>
@@ -94,7 +99,7 @@ export default function MementoCard(props) {
             />
           )}
           <i
-            className={(isBookmarked ? "fa " : "far ") + "fa-bookmark"}
+            className={(isBookmarked ? "fas" : "far") + " fa-bookmark"}
             onClick={() => (isBookmarked ? removeBookmark() : bookmark())}
           ></i>
         </CardOptions>
@@ -107,7 +112,7 @@ export default function MementoCard(props) {
             {/* Date */}
             <span>
               <i className="far fa-clock"></i>
-              {dates[0].month.toString().padStart(2, "0")}/{dates[0].year}
+              {mementoDate}
             </span>
             {/* Location */}
             {location && (

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { PageSpinnerWrapper, Spinner } from "ui/Loaders";
+import { PageSpinnerWrapper } from "ui/Loaders";
 import { JollyQuote } from "./JollyLoaderStyles";
+import { ReactComponent as Pig } from "./pig.svg";
+import { ReactComponent as Brain } from "./brain.svg";
 
 let usedQuotes = [];
 
@@ -11,6 +13,7 @@ let usedQuotes = [];
 export default function JollyLoader(props) {
   let quotes = props.quotes || ["Loading..."];
   const [currentQuote, setQuote] = useState(quotes[0]);
+  const { brain } = props;
   useEffect(() => {
     if (props.quotes)
       setQuote(props.quotes[Math.floor(Math.random() * props.quotes.length)]);
@@ -24,13 +27,15 @@ export default function JollyLoader(props) {
       usedQuotes.push(nextQuote);
       setQuote(nextQuote);
     };
-    const id = setInterval(tick, 1000);
+    const id = setInterval(tick, props.interval || 1000);
     return () => clearInterval(id);
-  }, [currentQuote, quotes]);
+  }, [currentQuote, quotes, props.interval]);
 
   return (
     <PageSpinnerWrapper>
-      <Spinner size="large" />
+      {/* Pig is an actual React component */}
+      {brain ? <Brain /> : <Pig />}
+      {/* <Spinner size="large" /> */}
       <JollyQuote>{currentQuote}</JollyQuote>
     </PageSpinnerWrapper>
   );

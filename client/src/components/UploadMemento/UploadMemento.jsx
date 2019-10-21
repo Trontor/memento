@@ -12,6 +12,12 @@ import { LOAD_FAMILY } from "mutations/Family";
 import UploadStep1 from "./UploadStep1";
 import UploadStep2 from "./UploadStep2";
 
+const regularQuotes = ["Loading..."];
+const machineVisionQuotes = [
+  "👀 Applying Norton Vision 👀",
+  "Uploading Memento...",
+  "101001010101001010100001010001",
+];
 export default function UploadMemento(props) {
   //Define react hooks
   const [selectMementoType, setSelectMementoType] = useState("");
@@ -31,8 +37,17 @@ export default function UploadMemento(props) {
       },
     },
   );
+  uploadMementoResults.loading = true;
   if (loading || uploadMementoResults.loading) {
-    return <JollyLoader />;
+    return (
+      <JollyLoader
+        interval={2500}
+        quotes={
+          uploadMementoResults.loading ? machineVisionQuotes : regularQuotes
+        }
+        brain={uploadMementoResults.loading}
+      />
+    );
   }
 
   let members;
@@ -193,14 +208,15 @@ export default function UploadMemento(props) {
         )}
 
         <FormNav>
-        {currentStep !== 1 ? (
+          {currentStep !== 1 ? (
             <ButtonSecondary onClick={prevStep}>Back</ButtonSecondary>
           ) : null}
 
-        {currentStep !== 2 ? (
-          <ButtonPrimary onClick={nextStep}>Next</ButtonPrimary>
-        ) : <ButtonPrimary type="submit">Create Memento</ButtonPrimary>
-      }
+          {currentStep !== 2 ? (
+            <ButtonPrimary onClick={nextStep}>Next</ButtonPrimary>
+          ) : (
+            <ButtonPrimary type="submit">Create Memento</ButtonPrimary>
+          )}
         </FormNav>
       </form>
     </Container>

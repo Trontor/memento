@@ -25,19 +25,18 @@ export default function MementosViewer(props) {
   return (
     <>
       {mementos && mementos.length === 0 ? (
-        <NoMementos
-        />
+        <NoMementos />
       ) : (
-      <MementoCardColumns>
-        {filteredMementos.map(memento => (
-          <MementoCard
-            key={memento.mementoId}
-            onBookmarkToggled={refreshMementos}
-            userId={userId}
-            {...memento}
-          />
-        ))}
-      </MementoCardColumns>
+        <MementoCardColumns>
+          {filteredMementos.map(memento => (
+            <MementoCard
+              key={memento.mementoId}
+              onBookmarkToggled={refreshMementos}
+              userId={userId}
+              {...memento}
+            />
+          ))}
+        </MementoCardColumns>
       )}
     </>
   );

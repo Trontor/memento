@@ -32,7 +32,6 @@ export const Header = styled.h1`
         background-color:${props => props.theme.palette.main};
         margin-top: 4px;
         padding-bottom: 0.1em;
-        margin-bottom: 1em;
         animation: ${line} 0.3s forwards;
         animation-delay: 0.1s;
       }

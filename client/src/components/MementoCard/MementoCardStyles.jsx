@@ -10,7 +10,7 @@ export const Card = styled.div`
   border-radius: 4px;
 
   @media screen and (min-width: ${props =>
-      props.theme.breakpoints.tabletLandscape}) {
+  props.theme.breakpoints.tabletLandscape}) {
     width: 100%;
     margin-top: 0;
     margin-bottom: ${props => props.theme.size.gutterWidth};
@@ -60,7 +60,8 @@ export const MementoInfo = styled.div`
 export const MementoOverview = styled.div`
   line-height: 1.5em;
   margin-bottom: 16px;
-  margin-right: 16px;
+  font-size: 13px;
+  min-height: 4em;
 
   i {
     color: ${props => props.familyColour || props.theme.palette.main};
@@ -84,17 +85,15 @@ export const MementoTitle = styled.div`
 `;
 
 export const MementoCoverImg = styled.div`
-  margin-bottom: 10px;
-  max-width: 100%;
-  max-height: 1000px;
-  height: auto;
   overflow: hidden;
   border-radius: 4px;
 
   img {
     width: 100%;
-    object-fit: cover;
+    height: 360px;
+    object-fit: contain;
     object-position: center center;
+    margin: 20px 0 24px 0;
   }
 `;
 
