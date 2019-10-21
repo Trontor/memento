@@ -59,11 +59,12 @@ export const TagSectionWrapper = styled(MementoTagsWrapper)`
 `;
 
 export const TagsWrapper = styled.div`
-  margin: 20px 0;
+  margin-top: 20px;
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
     position: absolute;
     bottom: 0;
+    margin-bottom: 20px;
   }
 `;

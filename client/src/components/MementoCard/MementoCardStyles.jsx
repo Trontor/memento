@@ -84,11 +84,13 @@ export const MementoTitle = styled.div`
   font-weight: bold;
   letter-spacing: 0.02em;
   margin-bottom: 8px;
+  cursor: pointer;
 `;
 
 export const MementoCoverImg = styled.div`
   overflow: hidden;
   border-radius: 4px;
+  cursor: pointer;
 
   img {
     width: 100%;

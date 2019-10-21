@@ -107,6 +107,9 @@ export default function MementoCard(props) {
               onClick={() => history.push("/memento/" + mementoId + "/edit")}
             />
           )}
+          <i className="fas fa-link"
+            onClick={()=> history.push("/memento/" + mementoId)}
+          />
           <i
             className={(isBookmarked ? "fas" : "far") + " fa-bookmark"}
             onClick={() => (isBookmarked ? removeBookmark() : bookmark())}
@@ -116,7 +119,9 @@ export default function MementoCard(props) {
       <CardContent>
         <MementoInfo>
           {/* Title */}
-          <MementoTitle>{title}</MementoTitle>
+          <MementoTitle onClick={()=> history.push("/memento/" + mementoId)}>
+            {title}
+          </MementoTitle>
           <MementoOverview card familyColour={family.colour}>
             {/* Date */}
             <span>
@@ -171,7 +176,7 @@ export default function MementoCard(props) {
           />
         ) : (
           props.media.length > 0 && (
-            <MementoCoverImg>
+            <MementoCoverImg onClick={()=> history.push("/memento/" + mementoId)}>
               <img alt={props.caption} src={props.media[0].url} />
             </MementoCoverImg>
           )

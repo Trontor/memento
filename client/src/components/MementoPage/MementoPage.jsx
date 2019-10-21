@@ -3,7 +3,6 @@ import {
   CardContent,
   MementoDescription,
   MementoOverview,
-  MementoTagsWrapper,
   PeopleTags
 } from "components/MementoCard/MementoCardStyles";
 import React, { useState } from "react";
@@ -47,7 +46,6 @@ export default function MementoPage() {
 
   return (
     <Container>
-      {memento.mementoId}
       <Card>
         {
           memento.media.length > 0 && (
