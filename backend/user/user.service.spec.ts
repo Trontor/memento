@@ -10,6 +10,7 @@ import { Gender } from "./dto/gender.dto";
 import { UserDocument, UserModel } from "./schema/user.schema";
 import { FamilyRole } from "./dto/role.dto";
 import { RoleInput } from "./input/role.input";
+import { MementoService } from "../memento/memento.service";
 
 describe("UserService", () => {
   let userService: UserService;
@@ -31,10 +32,15 @@ describe("UserService", () => {
                 toDTO: jest.fn().mockReturnValue({}),
               })),
             }));
+            model.findOne = jest.fn();
             model.findOneAndUpdate = jest.fn();
             model.findById = jest.fn();
             return model;
           })(),
+        },
+        {
+          provide: MementoService,
+          useValue: {},
         },
       ],
     }).compile();
@@ -49,6 +55,7 @@ describe("UserService", () => {
 
   describe("create new user", () => {
     it("should create user successfully", async () => {
+      jest.spyOn(userService, "doesEmailExist").mockResolvedValueOnce(false);
       const user: User = await userService.createUser({
         email: faker.internet.email(),
         firstName: faker.name.firstName(),
@@ -56,6 +63,18 @@ describe("UserService", () => {
         password: "password",
       });
       expect(user).toBeDefined();
+    });
+
+    it("should throw error if email already exists", async () => {
+      jest.spyOn(userService, "doesEmailExist").mockResolvedValueOnce(true);
+      await expect(
+        userService.createUser({
+          email: faker.internet.email(),
+          firstName: faker.name.firstName(),
+          lastName: faker.name.lastName(),
+          password: "password",
+        }),
+      ).rejects.toThrowError();
     });
   });
 

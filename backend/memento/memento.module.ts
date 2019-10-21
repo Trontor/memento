@@ -27,12 +27,11 @@ export const MementoDataLoaderProvider: Provider<MementoDataLoaderById> = {
   imports: [
     MongooseModule.forFeature([{ name: "Memento", schema: MementoSchema }]),
     FileModule,
-    FamilyModule,
     VisionModule,
     forwardRef(() => FamilyModule),
     forwardRef(() => UserModule),
   ],
   providers: [MementoService, MementoResolver, MementoDataLoaderProvider],
-  exports: [MEMENTO_LOADER_BY_ID],
+  exports: [MementoService, MEMENTO_LOADER_BY_ID],
 })
 export class MementoModule {}

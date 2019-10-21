@@ -100,6 +100,12 @@ export class UserResolver {
     return user;
   }
 
+  @Query(returns => [Memento])
+  @UseGuards(JwtAuthGuard)
+  async allMyMementosThisMonth(@CurrentUser() user: User): Promise<Memento[]> {
+    return this.userService.allMementosThisMonth(user);
+  }
+
   /**
    * Returns the Mementos uploaded by the current authenticate user.
    * @param user current authenticated user

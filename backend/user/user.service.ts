@@ -4,6 +4,8 @@ import {
   InternalServerErrorException,
   Logger,
   ForbiddenException,
+  Inject,
+  forwardRef,
 } from "@nestjs/common";
 import { UserSignupInput, UpdateUserInput } from "./input/user.input";
 import { InjectModel } from "@nestjs/mongoose";
@@ -18,6 +20,8 @@ import { fromHexStringToObjectId } from "../common/mongo.util";
 import { FileService } from "../file/file.service";
 import { IUpdateUserData } from "./interfaces/user.update.interface";
 import { IUploadedFile } from "../file/file.interface";
+import { Memento } from "../memento/dto/memento.dto";
+import { MementoService } from "../memento/memento.service";
 
 /**
  * Manages CRUD for users
@@ -29,6 +33,8 @@ export class UserService implements IUserService {
     @InjectModel("User")
     private readonly UserModel: Model<UserDocument>,
     private readonly fileService: FileService,
+    @Inject(forwardRef(() => MementoService))
+    private readonly mementoService: MementoService,
   ) {}
 
   /**
@@ -43,16 +49,34 @@ export class UserService implements IUserService {
     return user;
   }
 
+  async allMementosThisMonth(user: User): Promise<Memento[]> {
+    const familyIds: string[] = user.familyRoles.map(role => role.familyId);
+    const currentMonth = new Date().getMonth() + 1;
+    this.logger.log(
+      `Fetching all of user ${
+        user.userId
+      }'s family mementos for month ${currentMonth + 1}`,
+    );
+    return this.mementoService.getAllMementosForMonth(currentMonth, familyIds);
+  }
+
+  async doesEmailExist(email: string): Promise<boolean> {
+    try {
+      await this.findOneByEmail(email);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
+
   /**
    * Creates a new `UserDocument` for a newly registered user.
    * @param input signup fields
    */
   async createUser(input: UserSignupInput): Promise<User> {
     const createdUser = new this.UserModel(input);
-    const existingUser = await this.UserModel.findOne({
-      lowercaseEmail: input.email.toLowerCase(),
-    }).exec();
-    if (existingUser) {
+    const emailExists = await this.doesEmailExist(input.email);
+    if (emailExists) {
       throw new BadRequestException(`${input.email} is already registered :o`);
     }
     try {
