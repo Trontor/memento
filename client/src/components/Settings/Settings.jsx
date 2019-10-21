@@ -1,7 +1,6 @@
 import { BackButton, BackToView, SettingsHeader } from "ui/Navigation";
 import { MenuContainer, MenuTabs } from "ui/Navigation";
 import React, { useState } from "react";
-
 import AccountSettingsView from "./AccountSettingsView";
 import { Container } from "ui/Helpers";
 import GET_CURRENT_USER from "queries/GetCurrentUser";

@@ -15,7 +15,6 @@ import {
   InputField,
   InputLabel,
   InputSection,
-  UserAvatar,
 } from "ui/Forms";
 import {
   RadioButton,
@@ -24,7 +23,6 @@ import {
   RadioOption,
 } from "ui/Radio";
 import React, { useState, useEffect } from "react";
-
 import { DeleteButton } from "components/Invite/InviteStyles";
 import EditInput from "components/EditInput/EditInput";
 import { Formik } from "formik";
@@ -250,6 +248,11 @@ export default function SettingsProfile() {
                 onChange={props.handleChange}
                 placeholder="Enter your hometown"
               />
+              {/* <InputField
+                value={props.values.hometown}
+                onChange={props.handleChange}
+                placeholder="Enter your hometown"
+              /> */}
             </FormSection>
 
             <FormSection>
