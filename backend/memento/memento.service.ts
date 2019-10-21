@@ -271,6 +271,29 @@ export class MementoService {
   }
 
   /**
+   * Fetches mementos of all families for a specific month.
+   *
+   * @param month current month as an integer
+   * @param familyIds ids of families
+   */
+  async getAllMementosForMonth(
+    month: number,
+    familyIds: string[],
+  ): Promise<Memento[]> {
+    const docs: MementoDocument[] = await this.MementoModel.find({
+      inFamily: {
+        $in: familyIds.map(id => fromHexStringToObjectId(id)),
+      },
+      _dates: {
+        $elemMatch: {
+          month: { $eq: month },
+        },
+      },
+    }).exec();
+    return docs.map(doc => doc.toDTO());
+  }
+
+  /**
    * Creates a new Memento.
    *
    * @param uploader user who is uploading the Memento

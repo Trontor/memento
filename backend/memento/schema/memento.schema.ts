@@ -1,7 +1,6 @@
 import { Schema, Model, Types, Document, model } from "mongoose";
 import { Memento, MementoDate } from "../dto/memento.dto";
 import { MediaType, Media } from "../dto/media.dto";
-import { DateSchema } from "@hapi/joi";
 
 /**
  * Use GraphQL `Memento` type as a single source of truth by extending the Mongoose
