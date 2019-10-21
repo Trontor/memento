@@ -1,4 +1,5 @@
-import { lighten } from "polished";
+import { lighten, transparentize } from "polished";
+
 import styled from "styled-components";
 
 export const Card = styled.div`
@@ -8,6 +9,7 @@ export const Card = styled.div`
   background-color: ${props => props.theme.palette.foreground};
   position: relative;
   border-radius: 4px;
+  box-shadow: 1px 1px 16px ${props => transparentize(0.95, props.theme.palette.text)};
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {

@@ -6,7 +6,7 @@ export const SiteGrid = styled.div`
   height: 100vh;
   display: flex;
   /* You could use :after - it doesn't really matter */
-  ::before {
+  /* ::before {
     content: "";
     display: block;
     position: absolute;
@@ -17,7 +17,7 @@ export const SiteGrid = styled.div`
     z-index: -1;
     opacity: 0.5;
     background: url("https://www.toptal.com/designers/subtlepatterns/patterns/leaves-pattern.png");
-  }
+  } */
 `;
 
 // Left column of site grid
