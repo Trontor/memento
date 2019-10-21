@@ -16,7 +16,7 @@ import { Card, CardContent, CardInfo, FamilyGroup } from "./ViewMementoStyles";
 
 import React from "react";
 
-export default function MementoCard(props) {
+export default function ViewMementoCard(props) {
   const {
     //mementoId,
     createdAt,
@@ -47,14 +47,10 @@ export default function MementoCard(props) {
             )}
           </AuthorAvatar>
           <div>
-            {/* Memento  Uploader  */}
-            <MementoAuthor>
-              {uploader.firstName + " " + uploader.lastName}
-            </MementoAuthor>
-            {/* Memento  Upload Date */}
-            <UploadDate>{createdDate.toLocaleDateString()}</UploadDate>
             {/* change family group here */}
             <FamilyGroup>Valerie's Family</FamilyGroup>
+            {/* Memento  Upload Date */}
+            <UploadDate>{createdDate.toLocaleDateString()}</UploadDate>
           </div>
           {/* Bookmark */}
           <CardOptions>

@@ -72,6 +72,9 @@ export const GET_MY_MEMENTOS = gql`
         firstName
         lastName
       }
+      family {
+        colour
+      }
       type
       description
       location
@@ -92,6 +95,9 @@ export const GET_MY_MEMENTOS = gql`
       tags
       createdAt
       updatedAt
+      bookmarkedBy {
+        userId
+      }
     }
   }
 `;
