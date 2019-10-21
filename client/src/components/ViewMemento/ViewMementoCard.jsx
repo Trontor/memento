@@ -90,7 +90,7 @@ export default function MementoCard(props) {
           {/* Beneficiary Tags */}
           {beneficiaries && beneficiaries.length > 0 && (
             <span>
-              <i className="fa fa-users" aria-hidden="true" />
+              <i class="far fa-handshake"></i>
               <div>
                 {props.beneficiaries.map(beneficiary => (
                   <PeopleTags>
