@@ -216,6 +216,7 @@ input UpdateMementoInput {
   people: [ID!]
   beneficiaries: [ID!]
   tags: [String!]
+  dates: [CreateMementoDateInput!]
   updateMedia: [UpdateMementoMediaInput!]
   appendMedia: [CreateMementoMediaInput!]
   deleteMedia: [DeleteMementoMediaInput!]
