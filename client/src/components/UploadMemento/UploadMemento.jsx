@@ -15,6 +15,7 @@ import UploadStep2 from "./UploadStep2";
 const regularQuotes = ["Loading..."];
 const machineVisionQuotes = [
   "👀 Applying Norton Vision 👀",
+  "Using Eyes of Leon",
   "Uploading Memento...",
   "101001010101001010100001010001",
 ];

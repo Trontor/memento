@@ -1,39 +1,69 @@
-import { NoMementosIcon } from "../FamilyGroup/FamilyGroupStyles";
+import { MementoTag, MementoTagsWrapper } from "components/MementoCard/MementoCardStyles";
+
 import styled from "styled-components";
 import { transparentize } from "polished";
 
 export const Card = styled.div`
+  position: relative;
   display: grid;
-  grid-template-columns: 45% 55%;
   background-color: ${props => props.theme.palette.foreground};
-  margin-bottom: 16px;
-  height: auto;
+  padding: 18px;
   border: 1px solid ${props => transparentize(0.95, props.theme.palette.text)};
-  border-radius: 4px;
+  border-radius: 6px;
+  grid-gap: 18px;
 
-  @media screen and (max-width: ${props =>
-  props.theme.breakpoints.tabletPortrait}) {
-    grid-template-columns: 1fr;
+  h1 {
+    font-size: 24px;
+    margin-top: 0;
+  }
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
+    grid-template-columns: 45% auto;
   }
 `;
 
-export const CardInfo = styled.div`
-  margin: 20px;
+export const MementoImg = styled.div`
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center center;
+    border-radius: 4px;
+  }
 `;
 
-export const CardContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-`;
-
-export const FamilyGroup = styled.span`
-  opacity: 0.7;
+export const LargerTag = styled(MementoTag)`
   font-size: 13px;
-  display: block;
-  margin-top: 2px;
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletPortrait}) {
+    font-size: 15px;
+  }
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
+    font-size: 11px;
+  }
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.desktop}) {
+    font-size: 14px;
+  }
 `;
 
-export const NoViewMementoIcon = styled(NoMementosIcon)`
-  height: 150px;
+export const TagSectionWrapper = styled(MementoTagsWrapper)`
+  i {
+    font-size: 16px;
+  }
+`;
+
+export const TagsWrapper = styled.div`
+  margin: 20px 0;
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.tabletLandscape}) {
+    position: absolute;
+    bottom: 0;
+  }
 `;

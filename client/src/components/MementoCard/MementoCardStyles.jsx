@@ -60,10 +60,10 @@ export const MementoInfo = styled.div`
 `;
 
 export const MementoOverview = styled.div`
-  line-height: 1.5em;
+  line-height: 1.6em;
   margin-bottom: 16px;
-  font-size: 13px;
-  min-height: 4em;
+  font-size: ${props => props.card ? "14px" : "16px"};
+  min-height: ${props => props.card ? "3em" : "4em"};
 
   i {
     color: ${props => props.familyColour || props.theme.palette.main};
@@ -102,6 +102,7 @@ export const MementoCoverImg = styled.div`
 export const MementoDescription = styled.div`
   margin-bottom: 10px;
   opacity: 0.8;
+  font-size: ${props => props.card ? "14px" : "16px"};
 `;
 
 export const Divider = styled.span`
@@ -124,6 +125,7 @@ export const MementoTagsWrapper = styled.ul`
   width: 100%;
   margin: 0;
   align-items: center;
+  font-size: 12px;
 
   i {
     color: ${props => props.familyColour || props.theme.palette.main};
@@ -132,7 +134,7 @@ export const MementoTagsWrapper = styled.ul`
   }
 
   &:last-of-type {
-    margin-top: 5px;
+    margin-top: 0.6em;
 
     &:first-child {
       margin: 0;
@@ -142,21 +144,22 @@ export const MementoTagsWrapper = styled.ul`
 
 export const MementoTag = styled.li`
   font-family: "Livvic", sans-serif;
-  font-size: 11px;
-  color: ${props => props.theme.palette.text};
-  border: 1px solid ${props => lighten(0.65, props.theme.palette.text)};
+  font-weight: 600;
+  color: ${props => props.familyColour || props.theme.palette.main};
+  border: 1px solid ${props => transparentize(0.8, props.familyColour || props.theme.palette.main)};
   display: inline-block;
   padding: 6px 10px;
   margin-right: 8px;
+  margin-bottom: 4px;
   border-radius: 4px;
   cursor: pointer;
   ${props => props.theme.mixins.hoverFade};
+  background-color: ${props => transparentize(0.95, props.familyColour || props.theme.palette.main)};
 
   &:hover {
     color: ${props => props.familyColour || props.theme.palette.main};
-    border-color: ${props => lighten(0.2, props.familyColour || props.theme.palette.main)};
-    box-shadow: inset 0 0 0 1px ${props =>
-      lighten(0.2, props.familyColour || props.theme.palette.main)};
+    border-color: ${props => transparentize(0.7, props.familyColour || props.theme.palette.main)};
+    box-shadow: inset 0 0 0 1px ${props => transparentize(0.7, props.familyColour || props.theme.palette.main)};
   }
   span {
     color: gray;

@@ -117,7 +117,7 @@ export default function MementoCard(props) {
         <MementoInfo>
           {/* Title */}
           <MementoTitle>{title}</MementoTitle>
-          <MementoOverview familyColour={family.colour}>
+          <MementoOverview card familyColour={family.colour}>
             {/* Date */}
             <span>
               <i className="far fa-clock"></i>
@@ -159,7 +159,7 @@ export default function MementoCard(props) {
           </MementoOverview>
 
           {/* Description */}
-          <MementoDescription>{description}</MementoDescription>
+          <MementoDescription card>{description}</MementoDescription>
         </MementoInfo>
         {/* Cover Image */}
         {showInheritanceTree && beneficiaries.length > 0 ? (
