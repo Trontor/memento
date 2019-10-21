@@ -7,7 +7,6 @@ import { PersonPin } from "styled-icons/material/PersonPin";
 import { LocationCity } from "styled-icons/material/LocationCity";
 
 export const ProfileWrapper = styled.div`
-  /* display: grid; */
   position: relative;
   grid-template-columns: 25px auto;
   grid-gap: 25px;
