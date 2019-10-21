@@ -73,7 +73,7 @@ export default function DateSelector({
   ];
   const monthOptions = months.map((month, idx) => ({
     label: month,
-    value: idx,
+    value: idx + 1,
   }));
 
   // Run joinDate whenever a change in the values are detected
@@ -90,7 +90,7 @@ export default function DateSelector({
       />
       <Select
         value={monthOptions[month - 1]}
-        onChange={e => setMonth(e.value + 1)}
+        onChange={e => setMonth(e.value)}
         options={monthOptions}
         placeholder="Month"
         styles={customDropdown}

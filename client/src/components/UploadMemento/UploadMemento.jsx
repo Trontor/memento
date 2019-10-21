@@ -158,7 +158,7 @@ export default function UploadMemento(props) {
       dates: [
         {
           day: values.date.getDate(),
-          month: values.date.getMonth() + 1,
+          month: values.date.getMonth(),
           year: values.date.getFullYear(),
         },
       ],
@@ -212,11 +212,11 @@ export default function UploadMemento(props) {
             <ButtonSecondary onClick={prevStep}>Back</ButtonSecondary>
           ) : null}
 
-          {currentStep !== 2 ? (
+          {/* {currentStep !== 2 ? (
             <ButtonPrimary onClick={nextStep}>Next</ButtonPrimary>
           ) : (
             <ButtonPrimary type="submit">Create Memento</ButtonPrimary>
-          )}
+          )} */}
         </FormNav>
       </form>
     </Container>
