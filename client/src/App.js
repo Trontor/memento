@@ -26,7 +26,7 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import Signup from "./components/Signup/Signup";
 import UploadMemento from "./components/UploadMemento/UploadMemento";
 import UserProfile from "./components/UserProfile/UserProfile";
-import ViewMemento from "./components/ViewMemento/ViewMemento";
+import ViewMemento from "./components/ViewMementos/ViewMemento";
 import { theme } from "./theme";
 
 const GlobalStyle = createGlobalStyle`

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { Container } from "ui/Helpers";
 import { GET_MY_MEMENTOS } from "queries/Memento";
+import { Header } from "ui/Typography";
 import MementoCard from "components/MementoCard/MementoCard";
 import NoViewMemento from "./NoViewMemento";
 import ViewMementoCard from "./ViewMementoCard";
@@ -25,6 +26,7 @@ export default function ViewMemento() {
 
   return (
     <Container>
+      <Header underline>My Mementos</Header>
       {mementos.map(memento => {
         return <MementoCard {...memento} />;
       })}

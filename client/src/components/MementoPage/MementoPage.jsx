@@ -1,33 +1,24 @@
-import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
 import {
   AuthorAvatar,
   AuthorWrapper,
-  Card,
-  CardContent,
   CardOptions,
   MementoAuthor,
   MementoCoverImg,
   MementoDescription,
-  MementoInfo,
   MementoOverview,
   MementoTag,
   MementoTagsWrapper,
   MementoTitle,
   PeopleTags,
   UploadDate,
-} from "./MementoPageStyles";
-import React, { useState } from "react";
+} from "../MementoCard/MementoCardStyles";
+import { Card, CardContent, CardInfo, FamilyGroup } from "./MementoPageStyles";
 
-import InheritanceTree from "components/InheritanceTree/InheritanceTree";
-import moment from "moment";
-import { useHistory } from "react-router";
-import { useMutation } from "@apollo/react-hooks";
+import React from "react";
 
 export default function MementoPage(props) {
-  const history = useHistory();
   const {
-    userId,
-    mementoId,
+    //mementoId,
     createdAt,
     dates,
     title,
@@ -37,158 +28,95 @@ export default function MementoPage(props) {
     // tags,
     // type,
     // updatedAt,
-    family,
-    detectedLabels,
-    bookmarkedBy,
     beneficiaries,
     uploader,
     people,
-    onBookmarkToggled,
   } = props;
   const createdDate = new Date(createdAt);
-  const [showInheritanceTree, setShowInheritanceTree] = useState(false);
-
-  const [bookmark] = useMutation(ADD_BOOKMARK, {
-    variables: { id: mementoId },
-    onCompleted: data => {
-      onBookmarkToggled();
-    },
-  });
-
-  const [removeBookmark] = useMutation(DELETE_BOOKMARK, {
-    variables: { id: mementoId },
-    onCompleted: data => {
-      onBookmarkToggled();
-    },
-  });
-
-  const isBookmarked = bookmarkedBy.some(id => id.userId === userId);
-
-  const isUploader = uploader.userId === userId;
-
-  const mementoDate = moment(dates[0].day.toString().padStart(2, "0") + "/" +  dates[0].month.toString().padStart(2, "0") + "/" + dates[0].year, "DD-MM-YYYY").format("Do  MMM YYYY");
 
   return (
     <Card>
-      <AuthorWrapper>
-        <AuthorAvatar>
-          {!uploader.imageUrl ? (
-            <i className="fas fa-user-circle"></i>
-          ) : (
-            <img src={uploader.imageUrl} alt={uploader.firstName} />
-          )}
-        </AuthorAvatar>
-        <div>
-          <MementoAuthor>
-            {uploader.firstName + " " + uploader.lastName}
-          </MementoAuthor>
-          <UploadDate>{moment(createdDate.toLocaleDateString(), "DD-MM-YYYY").fromNow()}</UploadDate>
-        </div>
-        {/* Edit & Bookmark */}
-        <CardOptions>
-          {beneficiaries && beneficiaries.length > 0 && (
-            <i
-              className="fas fa-tree"
-              onClick={() => setShowInheritanceTree(!showInheritanceTree)}
-            />
-          )}
-          {isUploader && (
-            <i
-              className="fas fa-pencil-alt"
-              onClick={() => history.push("/memento/" + mementoId + "/edit")}
-            />
-          )}
-          <i
-            className={(isBookmarked ? "fas" : "far") + " fa-bookmark"}
-            onClick={() => (isBookmarked ? removeBookmark() : bookmark())}
-          ></i>
-        </CardOptions>
-      </AuthorWrapper>
-      <CardContent>
-        <MementoInfo>
-          {/* Title */}
-          <MementoTitle>{title}</MementoTitle>
-          <MementoOverview familyColour={family.colour}>
-            {/* Date */}
+      <CardInfo>
+        <AuthorWrapper>
+          {/* Memento  Uploader Profile Picture */}
+          <AuthorAvatar>
+            {!uploader.imageUrl ? (
+              <i className="fas fa-user-circle"></i>
+            ) : (
+              <img src={uploader.imageUrl} alt={uploader.firstName} />
+            )}
+          </AuthorAvatar>
+          <div>
+            {/* change family group here */}
+            <FamilyGroup>Valerie's Family</FamilyGroup>
+            {/* Memento  Upload Date */}
+            <UploadDate>{createdDate.toLocaleDateString()}</UploadDate>
+          </div>
+          {/* Bookmark */}
+          <CardOptions>
+            <i className="far fa-bookmark"></i>
+          </CardOptions>
+        </AuthorWrapper>
+        {/* Memento  Title */}
+        <MementoTitle>{title}</MementoTitle>
+        <MementoOverview>
+          {/* Dates */}
+          <span>
+            <i className="far fa-clock" />
+            {dates[0].year}
+          </span>
+          {/* Location */}
+          <span>
+            <i className="fas fa-map-marker-alt" />
+            {location}
+          </span>
+          {/* People Tags */}
+          {people && people.length > 0 && (
             <span>
-              <i className="far fa-clock"></i>
-              {mementoDate}
+              <i className="fas fa-user-tag"></i>
+              <div>
+                {props.people.map(person => (
+                  <PeopleTags>
+                    {person.firstName} {person.lastName}
+                  </PeopleTags>
+                ))}
+              </div>
             </span>
-            {/* Location */}
-            {location && (
-              <span>
-                <i className="fas fa-map-marker-alt"></i>
-                {location}
-              </span>
-            )}
-            {/* People Tags */}
-            {people && people.length > 0 && (
-              <span>
-                <i className="fas fa-user-tag"></i>
-                <div>
-                  {props.people.map(person => (
-                    <PeopleTags key={person.firstName}>
-                      {person.firstName} {person.lastName}
-                    </PeopleTags>
-                  ))}
-                </div>
-              </span>
-            )}
-            {/* Beneficiary Tags */}
-            {beneficiaries && beneficiaries.length > 0 && (
-              <span>
-                <i class="far fa-handshake"></i>
-                <div>
-                  {props.beneficiaries.map(beneficiary => (
-                    <PeopleTags key={beneficiary.firstName}>
-                      {beneficiary.firstName} {beneficiary.lastName}
-                    </PeopleTags>
-                  ))}
-                </div>
-              </span>
-            )}
-          </MementoOverview>
+          )}
+          {/* Beneficiary Tags */}
+          {beneficiaries && beneficiaries.length > 0 && (
+            <span>
+              <i className="fa fa-users" aria-hidden="true" />
+              <div>
+                {props.beneficiaries.map(beneficiary => (
+                  <PeopleTags>
+                    {beneficiary.firstName} {beneficiary.lastName}
+                  </PeopleTags>
+                ))}
+              </div>
+            </span>
+          )}
+        </MementoOverview>
 
-          {/* Description */}
-          <MementoDescription>{description}</MementoDescription>
-        </MementoInfo>
+        {/* Description */}
+        <MementoDescription>{description}</MementoDescription>
+
+        {/* Tags */}
+        <MementoTagsWrapper>
+          <i className="fas fa-tags"></i>
+          {props.tags.map(tag => (
+            <MementoTag>{tag}</MementoTag>
+          ))}
+        </MementoTagsWrapper>
+      </CardInfo>
+      <CardContent>
         {/* Cover Image */}
-        {showInheritanceTree && beneficiaries.length > 0 ? (
-          <InheritanceTree
-            width="100%"
-            height="400px"
-            mementoId={mementoId}
-            familyColour={family.colour}
-          />
-        ) : (
-          props.media.length > 0 && (
-            <MementoCoverImg>
-              <img alt={props.caption} src={props.media[0].url} />
-            </MementoCoverImg>
-          )
+        {props.media.length > 0 && (
+          <MementoCoverImg>
+            <img alt={props.caption} src={props.media[0].url} />
+          </MementoCoverImg>
         )}
       </CardContent>
-      {/* Tags */}
-      {props.tags && props.tags.length > 0 && (
-        <MementoTagsWrapper familyColour={family.colour}>
-          <i class="fas fa-tags"></i>
-          {props.tags.map(tag => (
-            <MementoTag familyColour={family.colour}>{tag}</MementoTag>
-          ))}
-        </MementoTagsWrapper>
-      )}
-      {/* Rekognition Tags */}
-      {detectedLabels && detectedLabels.length > 0 && (
-        <MementoTagsWrapper familyColour={family.colour}>
-          <i class="far fa-eye"></i>
-          {detectedLabels.map(result => (
-            <MementoTag key={result.name} familyColour={family.colour}>
-              {result.name.toLowerCase()}{" "}
-              <span>{Math.round(result.confidence, 0)}%</span>
-            </MementoTag>
-          ))}
-        </MementoTagsWrapper>
-      )}
     </Card>
   );
 }
