@@ -159,6 +159,7 @@ export class MementoService {
 
     // update memento top-level properties
     if (rest.title) updateObj.$set.title = rest.title;
+    if (rest.dates) updateObj.$set._dates = rest.dates;
     if (rest.location) updateObj.$set.location = rest.location;
     if (rest.description) updateObj.$set.description = rest.description;
     if (rest.tags) updateObj.$set.tags = preprocessTags(rest.tags);
@@ -178,7 +179,7 @@ export class MementoService {
       { _id: mementoId },
       updateObj,
       updateOptions,
-    );
+    ).exec();
     if (!doc) throw new InternalServerErrorException();
     return doc.toDTO();
   }
