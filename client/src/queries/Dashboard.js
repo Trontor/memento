@@ -34,6 +34,7 @@ export const GET_MONTHLY_MEMENTOS = gql`
       }
       family {
         colour
+        name
       }
       type
       description

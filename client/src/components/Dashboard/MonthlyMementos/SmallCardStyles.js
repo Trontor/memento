@@ -8,6 +8,7 @@ export const Card = styled.div`
   background-color: ${props => props.theme.palette.foreground};
   position: relative;
   border-radius: 5px;
+  display: flex;
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
@@ -26,20 +27,32 @@ export const AuthorWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   margin-bottom: 16px;
+  font-size: 14px;
+
+  span {
+    font-size: 13px;
+    opacity: 0.8;
+  }
 `;
 
 export const AuthorAvatar = styled.div`
+  display: none;
   margin-right: 8px;
 
   img {
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     object-fit: cover;
   }
 
   i {
-    font-size: 30px;
+    font-size: 32px;
+  }
+
+  @media screen and (min-width: ${props =>
+  props.theme.breakpoints.desktop}) {
+    display: block;
   }
 `;
 
@@ -49,8 +62,7 @@ export const MementoAuthor = styled.div`
 `;
 
 export const CardContent = styled.div`
-  display: flex;
-  flex-direction: column;
+  flex: 0 0 50%;
 `;
 
 export const MementoInfo = styled.div`
@@ -60,7 +72,7 @@ export const MementoInfo = styled.div`
 export const MementoOverview = styled.div`
   line-height: 1.5em;
   margin-bottom: 16px;
-  font-size: 13px;
+  font-size: 14px;
   min-height: 3em;
 
   i {
@@ -78,7 +90,7 @@ export const MementoOverview = styled.div`
 
 export const MementoTitle = styled.div`
   font-family: "Livvic", sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   letter-spacing: 0.02em;
   margin-bottom: 8px;
@@ -87,6 +99,8 @@ export const MementoTitle = styled.div`
 export const MementoCoverImg = styled.div`
   overflow: hidden;
   border-radius: 4px;
+  flex-basis: 0 0 50%;
+  margin-right: 16px;
 
   img {
     width: 100%;
@@ -107,12 +121,6 @@ export const Divider = styled.span`
   opacity: 0.6;
 `;
 
-export const UploadDate = styled.span`
-  opacity: 0.7;
-  font-size: 13px;
-  display: block;
-  margin-top: 2px;
-`;
 
 export const PeopleTags = styled.span`
   &::after {
@@ -130,13 +138,13 @@ export const PeopleTags = styled.span`
 export const CardOptions = styled.span`
   margin-left: auto;
   color: ${props => lighten(0.6, props.theme.palette.text)};
-  cursor: pointer;
   align-self: flex-start;
   font-size: 18px;
 
   i {
     &:not(:last-child) {
       margin-right: 12px;
+      cursor: pointer;
     }
 
     &:hover {
