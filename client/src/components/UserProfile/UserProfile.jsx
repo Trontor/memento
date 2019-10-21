@@ -12,7 +12,7 @@ import {
 } from "./UserProfileStyles";
 import { GET_USER } from "queries/UserQueries";
 import { Header } from "ui/Typography";
-import { InputLabel, UserAvatar, ImgPreview } from "ui/Forms";
+import { InputLabel, ImgPreview } from "ui/Forms";
 import JollyLoader from "components/JollyLoader/JollyLoader";
 import React, { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
@@ -53,7 +53,8 @@ export default function UserProfile() {
   return (
     <Container>
       <CenterText>
-        <Header underline>My Profile</Header>
+        <Header underline>Profile</Header>
+        {/* Profile Picture */}
         <ImgPreview>
           {!user.imageUrl ? (
             <i className="fas fa-user-circle" />
@@ -65,37 +66,47 @@ export default function UserProfile() {
           {user.firstName} {user.lastName}
         </h1>
       </CenterText>
-      <ProfileWrapper>
+
+      {/* Birthday */}
+      <ProfileWrapper data={user.dateOfBirth !== null ? "true" : "false"}>
         <UserBday size="25px" />
         <ProfileField>
           <InputLabel>Date of Birth</InputLabel>
           <Span>{formatBirthday(user.dateOfBirth)}</Span>
         </ProfileField>
       </ProfileWrapper>
-      <ProfileWrapper>
+
+      {/* Gender */}
+      <ProfileWrapper data={user.gender !== null ? "true" : "false"}>
         <UserGender size="30px" />
         <ProfileField>
           <InputLabel>Gender</InputLabel>
           <Span>{user.gender}</Span>
         </ProfileField>
       </ProfileWrapper>
-      <ProfileWrapper>
+
+      {/* Hometown */}
+      <ProfileWrapper data={user.hometown !== "" ? "true" : "false"}>
+        {console.log(user.hometown)}
         <UserHome size="25px" />
         <ProfileField>
           <InputLabel>Hometown</InputLabel>
           <Span>{user.hometown}</Span>
         </ProfileField>
       </ProfileWrapper>
-      <ProfileWrapper>
+
+      {/* Current city */}
+      <ProfileWrapper data={user.location !== null ? "true" : "false"}>
         <UserCity size="25px" />
         <ProfileField>
           <InputLabel>Current City</InputLabel>
           <Span>{user.location}</Span>
         </ProfileField>
       </ProfileWrapper>
+
+      {/* Places Lived */}
       <ProfileWrapper>
         <UserPlaces size="25px" />
-
         <ProfileField>
           <PlaceWrapper>
             <InputLabel>Place I've Lived</InputLabel>
