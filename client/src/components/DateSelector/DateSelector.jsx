@@ -26,16 +26,16 @@ export default function DateSelector({
     const proposedDate = `${year}-${month}-${day}`;
     const momentDate = moment(proposedDate, "YYYY-M-D", true);
     const validDate = momentDate.isValid();
-    const wellConstructedDate = year.length === 4;
+    const wellConstructedDate = year.toString().length === 4;
 
     if (!wellConstructedDate || !day || !month || !year) {
       setFieldValue("date", null);
       return;
     }
-    console.log("Proposed Date:", proposedDate);
+    // console.log("Proposed Date:", proposedDate);
     console.log(momentDate, validDate);
     if (!validDate) {
-      console.log("Invalid date: " + proposedDate);
+      // console.log("Invalid date: " + proposedDate);
       setDay(1);
       setMonth(1);
       setYear(2000);

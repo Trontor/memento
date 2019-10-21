@@ -37,7 +37,7 @@ export default function UploadMemento(props) {
       },
     },
   );
-  uploadMementoResults.loading = true;
+  // uploadMementoResults.loading = true;
   if (loading || uploadMementoResults.loading) {
     return (
       <JollyLoader

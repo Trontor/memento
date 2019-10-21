@@ -158,6 +158,7 @@ export class MementoService {
     const updateOptions: IUpdateMementoOptions = { new: true };
 
     // update memento top-level properties
+    if (rest.title) updateObj.$set.title = rest.title;
     if (rest.location) updateObj.$set.location = rest.location;
     if (rest.description) updateObj.$set.description = rest.description;
     if (rest.tags) updateObj.$set.tags = preprocessTags(rest.tags);
