@@ -92,7 +92,8 @@ export default function MementoPage() {
               </UploadDate>
             </div>
             {/* Edit & Bookmark */}
-            <CardOptions>
+            <CardOptions
+             familyColour={memento.family.colour}>
               {memento.beneficiaries && memento.beneficiaries.length > 0 && (
                 <i
                   className="fas fa-sitemap"
@@ -102,15 +103,14 @@ export default function MementoPage() {
                 className="fas fa-pencil-alt"
                 onClick={() => history.push("/memento/" + mementoId + "/edit")}
               />
-              <i className="fas fa-link"
-                onClick={()=> history.push("/memento/" + mementoId)}
-              />
             </CardOptions>
           </AuthorWrapper>
           <h1>
             {memento.title}
           </h1>
-          <MementoOverview page>
+          <MementoOverview
+            page
+            familyColour={memento.family.colour}>
              {/* Date */}
              <span>
               <i className="far fa-clock"></i>

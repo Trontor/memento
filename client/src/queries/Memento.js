@@ -110,6 +110,7 @@ export const GET_A_MEMENTO = gql`
       title
       family {
         familyId
+        colour
       }
       uploader {
         userId
