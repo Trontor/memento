@@ -156,6 +156,7 @@ type Mutation {
   updateMemento(input: UpdateMementoInput!): Memento!
   bookmark(mementoId: ID!): Memento!
   deleteBookmark(mementoId: ID!): Memento!
+  deleteMemento(mementoId: ID!): String!
 }
 
 type Place {
