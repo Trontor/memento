@@ -16,9 +16,11 @@ import FamilyGroup from "./components/FamilyGroup/FamilyGroup";
 import FamilyGroupSettings from "./components/FamilyGroupSettings/FamilyGroupSettings";
 import Hamburger from "./components/Sidebar/Hamburger";
 import Home from "./components/Home/Home"
+import InheritanceTree from "components/InheritanceTree/InheritanceTree";
 import Invite from "./components/Invite/Invite";
 import InviteCode from "./components/AcceptInvite/InviteCode";
 import Login from "./components/Login/Login";
+import MementoPage from "./components/MementoPage/MementoPage";
 import Settings from "./components/Settings/Settings";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Signup from "./components/Signup/Signup";
@@ -26,7 +28,6 @@ import UploadMemento from "./components/UploadMemento/UploadMemento";
 import UserProfile from "./components/UserProfile/UserProfile";
 import ViewMemento from "./components/ViewMemento/ViewMemento";
 import { theme } from "./theme";
-import InheritanceTree from "components/InheritanceTree/InheritanceTree";
 
 const GlobalStyle = createGlobalStyle`
   /* Reset styles */
@@ -163,6 +164,10 @@ const authenticatedRoutes = [
     name: "tree",
     component: InheritanceTree,
   },
+  {
+    name: "memento",
+    component: MementoPage
+  }
 ];
 
 function App() {
