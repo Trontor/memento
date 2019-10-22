@@ -19,6 +19,7 @@ import Home from "./components/Home/Home";
 import Invite from "./components/Invite/Invite";
 import InviteCode from "./components/AcceptInvite/InviteCode";
 import Login from "./components/Login/Login";
+import MementoPage from "./components/MementoPage/MementoPage";
 import Settings from "./components/Settings/Settings";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Signup from "./components/Signup/Signup";
@@ -27,7 +28,6 @@ import UserProfile from "./components/UserProfile/UserProfile";
 import ViewMemento from "./components/ViewMemento/ViewMemento";
 import EditMemento from "./components/EditMemento/EditMemento";
 import { theme } from "./theme";
-import InheritanceTree from "components/InheritanceTree/InheritanceTree";
 
 const GlobalStyle = createGlobalStyle`
   /* Reset styles */
@@ -127,10 +127,6 @@ const authenticatedRoutes = [
     exact: true,
   },
   {
-    name: "invite/accept/:inviteId",
-    component: AcceptInvite,
-  },
-  {
     name: "family/:id/settings",
     component: FamilyGroupSettings,
     exact: true,
@@ -161,8 +157,9 @@ const authenticatedRoutes = [
     component: ViewMemento,
   },
   {
-    name: "tree",
-    component: InheritanceTree,
+    name: "memento/:mementoId",
+    component: MementoPage,
+    exact: true,
   },
   {
     name: "memento/:id/edit",
@@ -184,6 +181,11 @@ function App() {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/login" component={Login} />
+          <Route
+            exact
+            path="/invite/accept/:inviteId"
+            component={AcceptInvite}
+          />
           <Route path="/signup" component={Signup} />
           <Route paths={authenticatedPaths}>
             <SiteGrid>

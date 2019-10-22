@@ -73,6 +73,6 @@ export const BackToView = styled.button`
 `;
 
 export const BackButton = styled(ArrowBack)`
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
 `

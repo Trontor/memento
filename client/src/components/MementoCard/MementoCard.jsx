@@ -2,6 +2,7 @@ import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
 import {
   AuthorAvatar,
   AuthorWrapper,
+  Bookmark,
   Card,
   CardContent,
   CardOptions,
@@ -14,7 +15,7 @@ import {
   MementoTagsWrapper,
   MementoTitle,
   PeopleTags,
-  UploadDate,
+  UploadDate
 } from "./MementoCardStyles";
 import React, { useState } from "react";
 
@@ -94,7 +95,7 @@ export default function MementoCard(props) {
           </UploadDate>
         </div>
         {/* Edit & Bookmark */}
-        <CardOptions>
+        <CardOptions familyColour={family.colour}>
           {beneficiaries && beneficiaries.length > 0 && (
             <i
               className="fas fa-sitemap"
@@ -107,17 +108,26 @@ export default function MementoCard(props) {
               onClick={() => history.push("/memento/" + mementoId + "/edit")}
             />
           )}
-          <i
-            className={(isBookmarked ? "fas" : "far") + " fa-bookmark"}
+          <i className="fas fa-link"
+            onClick={()=> history.push("/memento/" + mementoId)}
+          />
+          <Bookmark
             onClick={() => (isBookmarked ? removeBookmark() : bookmark())}
-          ></i>
+            bookmarked={isBookmarked}
+            familyColour={family.colour}>
+            <i
+              className={(isBookmarked ? "fas" : "far") + " fa-bookmark"}
+            ></i>
+          </Bookmark>
         </CardOptions>
       </AuthorWrapper>
       <CardContent>
         <MementoInfo>
           {/* Title */}
-          <MementoTitle>{title}</MementoTitle>
-          <MementoOverview familyColour={family.colour}>
+          <MementoTitle onClick={()=> history.push("/memento/" + mementoId)}>
+            {title}
+          </MementoTitle>
+          <MementoOverview card familyColour={family.colour}>
             {/* Date */}
             <span>
               <i className="far fa-clock"></i>
@@ -159,7 +169,7 @@ export default function MementoCard(props) {
           </MementoOverview>
 
           {/* Description */}
-          <MementoDescription>{description}</MementoDescription>
+          <MementoDescription card>{description}</MementoDescription>
         </MementoInfo>
         {/* Cover Image */}
         {showInheritanceTree && beneficiaries.length > 0 ? (
@@ -171,7 +181,7 @@ export default function MementoCard(props) {
           />
         ) : (
           props.media.length > 0 && (
-            <MementoCoverImg>
+            <MementoCoverImg onClick={()=> history.push("/memento/" + mementoId)}>
               <img alt={props.caption} src={props.media[0].url} />
             </MementoCoverImg>
           )

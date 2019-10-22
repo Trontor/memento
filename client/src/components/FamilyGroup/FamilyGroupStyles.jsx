@@ -31,7 +31,7 @@ export const FamilyLayout = styled.div`
   @media screen and (min-width: ${props =>
       props.theme.breakpoints.tabletLandscape}) {
     grid-template-columns:
-      minmax(260px, 312px)
+      minmax(260px, 360px)
       minmax(480px, 600px);
     grid-template-rows: 100%;
     grid-column-gap: ${props => props.theme.size.gutterWidth};

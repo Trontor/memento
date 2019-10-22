@@ -5,7 +5,8 @@ import {
 } from "./inputs/memento.inputs";
 import { BadRequestException } from "@nestjs/common";
 
-const validateMementoDate = (date: CreateMementoDateInput): void => {
+const validateMementoDate = (date: CreateMementoDateInput): boolean => {
+  console.log(date);
   if (!date.day && !date.month && !date.year) {
     // cannot all be null
     throw new BadRequestException(
@@ -14,6 +15,7 @@ const validateMementoDate = (date: CreateMementoDateInput): void => {
   } else if (date.day && !date.month && !date.year) {
     throw new BadRequestException("Cannot only specify `day` field");
   }
+  return true;
 };
 
 const validateMementoDates = (dates: CreateMementoDateInput[]): void => {
@@ -67,6 +69,10 @@ export const validateUpdateMementoInput = (input: UpdateMementoInput): void => {
     throw new BadRequestException("No data provided to update Memento.");
   if (data.beneficiaries) validateBeneficiaries(data.beneficiaries);
   if (data.people) validatePeople(data.people);
+  if (data.dates) {
+    console.log("==========================");
+    validateMementoDates(data.dates);
+  }
 };
 
 /**
