@@ -126,11 +126,10 @@ export default function Bookmarks(props) {
                 >
                   {memento.family.name}
                 </span>
-                {/*change family group name */}
               </UploaderText>
               <BookmarksIcon>
                 <i
-                  className="far fa-bookmark"
+                  className="fas fa-bookmark"
                   onClick={() =>
                     removeBookmark({ variables: { id: memento.mementoId } })
                   }

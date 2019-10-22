@@ -73,7 +73,9 @@ export default function MementoCard(props) {
       <CardContent>
         {/* Cover Image */}
         {props.media.length > 0 && (
-          <MementoCoverImg>
+          <MementoCoverImg
+            onClick={() => history.push("/memento/" + mementoId)}
+          >
             <img alt={props.caption} src={props.media[0].url} />
           </MementoCoverImg>
         )}
