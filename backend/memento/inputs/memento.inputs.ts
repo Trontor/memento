@@ -85,6 +85,9 @@ export class UpdateMementoInput {
   @Field(type => [String], { nullable: true })
   tags?: string[];
 
+  @Field(type => [CreateMementoDateInput], { nullable: true })
+  dates?: CreateMementoDateInput[];
+
   @Field(type => [UpdateMementoMediaInput], { nullable: true })
   updateMedia?: UpdateMementoMediaInput[];
 

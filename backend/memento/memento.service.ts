@@ -159,6 +159,7 @@ export class MementoService {
 
     // update memento top-level properties
     if (rest.title) updateObj.$set.title = rest.title;
+    if (rest.dates) updateObj.$set._dates = rest.dates;
     if (rest.location) updateObj.$set.location = rest.location;
     if (rest.description) updateObj.$set.description = rest.description;
     if (rest.tags) updateObj.$set.tags = preprocessTags(rest.tags);
@@ -372,6 +373,24 @@ export class MementoService {
       throw new InternalServerErrorException("Could not save Memento");
     }
     return doc.toDTO();
+  }
+
+  /**
+   * Deletes an existing Memento and removes it from bookmarks.
+   * @param mementoId id of memento
+   * @returns array of users whose documents were modified by this function
+   */
+  async deleteMemento(mementoId: string) {
+    const memento: MementoDocument | null = await this.MementoModel.findByIdAndDelete(
+      fromHexStringToObjectId(mementoId),
+    );
+    if (!memento) throw new MementoNotFoundException();
+    const bookmarkers = memento._bookmarkedBy.map(b => b.toHexString());
+    const removedBookmarkPromises = bookmarkers.map(userId =>
+      this.userService.deleteBookmarkFromUser(userId, mementoId),
+    );
+    await Promise.all(removedBookmarkPromises);
+    return bookmarkers;
   }
 
   private readonly MIN_CONFIDENCE = 80;

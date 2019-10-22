@@ -169,13 +169,13 @@ export default function EditMemento(props) {
       title: values.title,
       description: values.description,
       location: values.location,
-      // dates: [
-      //   {
-      //     day: values.date.getDate(),
-      //     month: values.date.getMonth() + 1,
-      //     year: values.date.getFullYear(),
-      //   },
-      // ],
+      dates: [
+        {
+          day: values.date.getDate(),
+          month: values.date.getMonth(),
+          year: values.date.getFullYear(),
+        },
+      ],
       people: values.memberTags,
       beneficiaries: values.beneficiaries,
       tags: values.tags,
