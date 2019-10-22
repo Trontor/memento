@@ -7,7 +7,7 @@ import {
   MementoDescription,
   MementoOverview,
   PeopleTags,
-  UploadDate
+  UploadDate,
 } from "components/MementoCard/MementoCardStyles";
 import {
   BackButtonDiv,
@@ -15,7 +15,7 @@ import {
   LargerTag,
   MementoImg,
   TagSectionWrapper,
-  TagsWrapper
+  TagsWrapper,
 } from "./MementoPageStyles";
 import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
@@ -40,7 +40,6 @@ export default function MementoPage() {
     },
   });
 
-
   /** Loading/Error state management */
   if (!memento) {
     return <JollyLoader />;
@@ -49,9 +48,9 @@ export default function MementoPage() {
   const mementoDate = moment(
     memento.dates[0].day.toString().padStart(2, "0") +
       "/" +
-    memento.dates[0].month.toString().padStart(2, "0") +
-    "/" +
-    memento.dates[0].year,
+      memento.dates[0].month.toString().padStart(2, "0") +
+      "/" +
+      memento.dates[0].year,
     "DD-MM-YYYY",
   ).format("Do  MMM YYYY");
 
@@ -61,26 +60,28 @@ export default function MementoPage() {
 
   return (
     <Container>
-      <BackButtonDiv onClick={()=> history.push("/family/" + memento.family.familyId)}>
-        <BackButton>
-        </BackButton>
+      <BackButtonDiv
+        onClick={() => history.push("/family/" + memento.family.familyId)}
+      >
+        <BackButton></BackButton>
         <span>Back</span>
       </BackButtonDiv>
       <Card>
-        {
-          memento.media.length > 0 && (
-            <MementoImg>
-              <img alt={memento.media.caption} src={memento.media[0].url} />
-            </MementoImg>
-          )
-        }
+        {memento.media.length > 0 && (
+          <MementoImg>
+            <img alt={memento.media.caption} src={memento.media[0].url} />
+          </MementoImg>
+        )}
         <CardContent>
           <AuthorWrapper>
             <AuthorAvatar>
               {!memento.uploader.imageUrl ? (
                 <i className="fas fa-user-circle"></i>
               ) : (
-                <img src={memento.uploader.imageUrl} alt={memento.uploader.firstName} />
+                <img
+                  src={memento.uploader.imageUrl}
+                  alt={memento.uploader.firstName}
+                />
               )}
             </AuthorAvatar>
             <div>
@@ -88,16 +89,16 @@ export default function MementoPage() {
                 {memento.uploader.firstName + " " + memento.uploader.lastName}
               </MementoAuthor>
               <UploadDate>
-                {moment(createdDate.toLocaleDateString(), "DD-MM-YYYY").fromNow()}
+                {moment
+                  .utc(createdDate)
+                  .local()
+                  .fromNow()}
               </UploadDate>
             </div>
             {/* Edit & Bookmark */}
-            <CardOptions
-             familyColour={memento.family.colour}>
+            <CardOptions familyColour={memento.family.colour}>
               {memento.beneficiaries && memento.beneficiaries.length > 0 && (
-                <i
-                  className="fas fa-sitemap"
-                />
+                <i className="fas fa-sitemap" />
               )}
               <i
                 className="fas fa-pencil-alt"
@@ -105,14 +106,10 @@ export default function MementoPage() {
               />
             </CardOptions>
           </AuthorWrapper>
-          <h1>
-            {memento.title}
-          </h1>
-          <MementoOverview
-            page
-            familyColour={memento.family.colour}>
-             {/* Date */}
-             <span>
+          <h1>{memento.title}</h1>
+          <MementoOverview page familyColour={memento.family.colour}>
+            {/* Date */}
+            <span>
               <i className="far fa-clock"></i>
               {mementoDate}
             </span>
@@ -149,34 +146,37 @@ export default function MementoPage() {
                 </div>
               </span>
             )}
-            </MementoOverview>
-            <MementoDescription>
-              {memento.description}
-            </MementoDescription>
+          </MementoOverview>
+          <MementoDescription>{memento.description}</MementoDescription>
 
-            {/* Tags */}
-            <TagsWrapper>
-              {memento.tags && memento.tags.length > 0 && (
-                <TagSectionWrapper familyColour={memento.family.colour}>
-                  <i class="fas fa-tags"></i>
-                  {memento.tags.map(tag => (
-                    <LargerTag familyColour={memento.family.colour}>{tag}</LargerTag>
-                  ))}
-                </TagSectionWrapper>
-              )}
-              {/* Rekognition Tags */}
-              {memento.detectedLabels && memento.detectedLabels.length > 0 && (
-                <TagSectionWrapper familyColour={memento.family.colour}>
-                  <i class="far fa-eye"></i>
-                  {memento.detectedLabels.map(result => (
-                    <LargerTag key={result.name} familyColour={memento.family.colour}>
-                      {result.name.toLowerCase()}{" "}
-                      <span>{Math.round(result.confidence, 0)}%</span>
-                    </LargerTag>
-                  ))}
-                </TagSectionWrapper>
-              )}
-            </TagsWrapper>
+          {/* Tags */}
+          <TagsWrapper>
+            {memento.tags && memento.tags.length > 0 && (
+              <TagSectionWrapper familyColour={memento.family.colour}>
+                <i class="fas fa-tags"></i>
+                {memento.tags.map(tag => (
+                  <LargerTag familyColour={memento.family.colour}>
+                    {tag}
+                  </LargerTag>
+                ))}
+              </TagSectionWrapper>
+            )}
+            {/* Rekognition Tags */}
+            {memento.detectedLabels && memento.detectedLabels.length > 0 && (
+              <TagSectionWrapper familyColour={memento.family.colour}>
+                <i class="far fa-eye"></i>
+                {memento.detectedLabels.map(result => (
+                  <LargerTag
+                    key={result.name}
+                    familyColour={memento.family.colour}
+                  >
+                    {result.name.toLowerCase()}{" "}
+                    <span>{Math.round(result.confidence, 0)}%</span>
+                  </LargerTag>
+                ))}
+              </TagSectionWrapper>
+            )}
+          </TagsWrapper>
         </CardContent>
       </Card>
     </Container>

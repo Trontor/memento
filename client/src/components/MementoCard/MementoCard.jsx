@@ -15,7 +15,7 @@ import {
   MementoTagsWrapper,
   MementoTitle,
   PeopleTags,
-  UploadDate
+  UploadDate,
 } from "./MementoCardStyles";
 import React, { useState } from "react";
 
@@ -91,7 +91,10 @@ export default function MementoCard(props) {
             {uploader.firstName + " " + uploader.lastName}
           </MementoAuthor>
           <UploadDate>
-            {moment(createdDate.toLocaleDateString(), "DD-MM-YYYY").fromNow()}
+            {moment
+              .utc(createdDate)
+              .local()
+              .fromNow()}
           </UploadDate>
         </div>
         {/* Edit & Bookmark */}
@@ -108,23 +111,23 @@ export default function MementoCard(props) {
               onClick={() => history.push("/memento/" + mementoId + "/edit")}
             />
           )}
-          <i className="fas fa-link"
-            onClick={()=> history.push("/memento/" + mementoId)}
+          <i
+            className="fas fa-link"
+            onClick={() => history.push("/memento/" + mementoId)}
           />
           <Bookmark
             onClick={() => (isBookmarked ? removeBookmark() : bookmark())}
             bookmarked={isBookmarked}
-            familyColour={family.colour}>
-            <i
-              className={(isBookmarked ? "fas" : "far") + " fa-bookmark"}
-            ></i>
+            familyColour={family.colour}
+          >
+            <i className={(isBookmarked ? "fas" : "far") + " fa-bookmark"}></i>
           </Bookmark>
         </CardOptions>
       </AuthorWrapper>
       <CardContent>
         <MementoInfo>
           {/* Title */}
-          <MementoTitle onClick={()=> history.push("/memento/" + mementoId)}>
+          <MementoTitle onClick={() => history.push("/memento/" + mementoId)}>
             {title}
           </MementoTitle>
           <MementoOverview card familyColour={family.colour}>
@@ -181,7 +184,9 @@ export default function MementoCard(props) {
           />
         ) : (
           props.media.length > 0 && (
-            <MementoCoverImg onClick={()=> history.push("/memento/" + mementoId)}>
+            <MementoCoverImg
+              onClick={() => history.push("/memento/" + mementoId)}
+            >
               <img alt={props.caption} src={props.media[0].url} />
             </MementoCoverImg>
           )
