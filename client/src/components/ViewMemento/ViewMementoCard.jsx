@@ -12,8 +12,9 @@ import {
   PeopleTags,
   UploadDate,
 } from "../MementoCard/MementoCardStyles";
+import { Card, CardContent, CardInfo, FamilyGroup } from "./ViewMementoStyles";
+
 import React from "react";
-import { Card, CardInfo, CardContent, FamilyGroup } from "./ViewMementoStyles";
 import { useHistory } from "react-router";
 
 export default function MementoCard(props) {
@@ -38,6 +39,14 @@ export default function MementoCard(props) {
 
   return (
     <Card>
+      <CardContent>
+        {/* Cover Image */}
+        {props.media.length > 0 && (
+          <MementoCoverImg>
+            <img alt={props.caption} src={props.media[0].url} />
+          </MementoCoverImg>
+        )}
+      </CardContent>
       <CardInfo>
         <AuthorWrapper>
           {/* Memento  Uploader Profile Picture */}
@@ -49,10 +58,14 @@ export default function MementoCard(props) {
             )}
           </AuthorAvatar>
           <div>
-            {/* change family group here */}
-            <FamilyGroup>Valerie's Family</FamilyGroup>
+            {/* Memento  Uploader  */}
+            <MementoAuthor>
+              {uploader.firstName + " " + uploader.lastName}
+            </MementoAuthor>
             {/* Memento  Upload Date */}
             <UploadDate>{createdDate.toLocaleDateString()}</UploadDate>
+            {/* change family group here */}
+            <FamilyGroup>Valerie's Family</FamilyGroup>
           </div>
           {/* Edit & Bookmark */}
           <CardOptions>
@@ -92,7 +105,7 @@ export default function MementoCard(props) {
           {/* Beneficiary Tags */}
           {beneficiaries && beneficiaries.length > 0 && (
             <span>
-              <i className="fa fa-users" aria-hidden="true" />
+              <i class="far fa-handshake"></i>
               <div>
                 {props.beneficiaries.map(beneficiary => (
                   <PeopleTags>
@@ -115,14 +128,6 @@ export default function MementoCard(props) {
           ))}
         </MementoTagsWrapper>
       </CardInfo>
-      <CardContent>
-        {/* Cover Image */}
-        {props.media.length > 0 && (
-          <MementoCoverImg>
-            <img alt={props.caption} src={props.media[0].url} />
-          </MementoCoverImg>
-        )}
-      </CardContent>
     </Card>
   );
 }
