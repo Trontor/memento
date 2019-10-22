@@ -11,21 +11,26 @@ import {
   MementoTitle,
   PeopleTags,
   UploadDate,
+  Bookmark,
 } from "../MementoCard/MementoCardStyles";
 import { Card, CardContent, CardInfo, FamilyGroup } from "./ViewMementoStyles";
-
+import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
+import moment from "moment";
 import React from "react";
 import { useHistory } from "react-router";
+import { useMutation } from "@apollo/react-hooks";
 
 export default function MementoCard(props) {
   const history = useHistory();
   const {
+    userId,
     mementoId,
     createdAt,
     dates,
     title,
     description,
     location,
+    family,
     // media,
     // tags,
     // type,
@@ -33,9 +38,35 @@ export default function MementoCard(props) {
     beneficiaries,
     uploader,
     people,
+    bookmarkedBy,
+    onBookmarkToggled,
   } = props;
-  console.log(props);
   const createdDate = new Date(createdAt);
+
+  const [bookmark] = useMutation(ADD_BOOKMARK, {
+    variables: { id: mementoId },
+    onCompleted: data => {
+      onBookmarkToggled();
+    },
+  });
+
+  const [removeBookmark] = useMutation(DELETE_BOOKMARK, {
+    variables: { id: mementoId },
+    onCompleted: data => {
+      onBookmarkToggled();
+    },
+  });
+
+  const isBookmarked = bookmarkedBy.some(id => id.userId === userId);
+
+  const mementoDate = moment(
+    dates[0].day.toString().padStart(2, "0") +
+      "/" +
+      dates[0].month.toString().padStart(2, "0") +
+      "/" +
+      dates[0].year,
+    "DD-MM-YYYY",
+  ).format("Do  MMM YYYY");
 
   return (
     <Card>
@@ -63,9 +94,11 @@ export default function MementoCard(props) {
               {uploader.firstName + " " + uploader.lastName}
             </MementoAuthor>
             {/* Memento  Upload Date */}
-            <UploadDate>{createdDate.toLocaleDateString()}</UploadDate>
-            {/* change family group here */}
-            <FamilyGroup>Valerie's Family</FamilyGroup>
+            <UploadDate>
+              {moment(createdDate.toLocaleDateString(), "DD-MM-YYYY").fromNow()}
+            </UploadDate>
+            {/* Family Group the memento belongs to */}
+            <FamilyGroup>{props.family.name}</FamilyGroup>
           </div>
           {/* Edit & Bookmark */}
           <CardOptions>
@@ -73,7 +106,14 @@ export default function MementoCard(props) {
               class="fas fa-pencil-alt"
               onClick={() => history.push(`/memento/${mementoId}/edit/`)}
             />
-            <i class="far fa-bookmark"></i>
+            <Bookmark
+              onClick={() => (isBookmarked ? removeBookmark() : bookmark())}
+              bookmarked={isBookmarked}
+            >
+              <i
+                className={(isBookmarked ? "fas" : "far") + " fa-bookmark"}
+              ></i>
+            </Bookmark>
           </CardOptions>
         </AuthorWrapper>
         {/* Memento  Title */}
@@ -82,13 +122,16 @@ export default function MementoCard(props) {
           {/* Dates */}
           <span>
             <i className="far fa-clock" />
-            {dates[0].year}
+            {mementoDate}
           </span>
           {/* Location */}
-          <span>
-            <i className="fas fa-map-marker-alt" />
-            {location}
-          </span>
+          {location && (
+            <span>
+              <i className="fas fa-map-marker-alt"></i>
+              {location}
+            </span>
+          )}
+
           {/* People Tags */}
           {people && people.length > 0 && (
             <span>
@@ -121,12 +164,14 @@ export default function MementoCard(props) {
         <MementoDescription>{description}</MementoDescription>
 
         {/* Tags */}
-        <MementoTagsWrapper>
-          <i className="fas fa-tags"></i>
-          {props.tags.map(tag => (
-            <MementoTag>{tag}</MementoTag>
-          ))}
-        </MementoTagsWrapper>
+        {props.tags && props.tags.length > 0 && (
+          <MementoTagsWrapper>
+            <i class="fas fa-tags"></i>
+            {props.tags.map(tag => (
+              <MementoTag>{tag}</MementoTag>
+            ))}
+          </MementoTagsWrapper>
+        )}
       </CardInfo>
     </Card>
   );

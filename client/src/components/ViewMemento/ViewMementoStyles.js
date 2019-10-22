@@ -12,7 +12,7 @@ export const Card = styled.div`
   border-radius: 4px;
 
   @media screen and (max-width: ${props =>
-  props.theme.breakpoints.tabletPortrait}) {
+      props.theme.breakpoints.tabletPortrait}) {
     grid-template-columns: 1fr;
   }
 `;
@@ -25,6 +25,7 @@ export const CardContent = styled.div`
   display: flex;
   flex-direction: column;
   margin: auto;
+  padding: 10px;
 `;
 
 export const FamilyGroup = styled.span`
