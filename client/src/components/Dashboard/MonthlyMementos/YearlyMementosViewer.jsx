@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-
-import { GET_MEMENTOS } from "queries/Memento";
+// import { GET_MEMENTOS } from "queries/Memento";
 import { MonthlyMementosWrapper } from "./MonthlyMementoStyles";
+import React from "react";
 import SmallCard from "./SmallCard";
-import { useQuery } from "@apollo/react-hooks";
+
+// import { useQuery } from "@apollo/react-hooks";
 
 export default function YearlyMementosViewer(props) {
   const { year, mementos } = props;

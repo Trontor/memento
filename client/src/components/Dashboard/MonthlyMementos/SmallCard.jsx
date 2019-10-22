@@ -15,7 +15,7 @@ import {
 } from "./SmallCardStyles";
 import React, { useState } from "react";
 
-import InheritanceTree from "components/InheritanceTree/InheritanceTree";
+// import InheritanceTree from "components/InheritanceTree/InheritanceTree";
 import moment from "moment";
 import { useHistory } from "react-router";
 import { useMutation } from "@apollo/react-hooks";
@@ -25,7 +25,7 @@ export default function SmallCard(props) {
   const {
     userId,
     mementoId,
-    createdAt,
+    // createdAt,
     dates,
     title,
     description,
