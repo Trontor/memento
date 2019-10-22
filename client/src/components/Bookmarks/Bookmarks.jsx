@@ -8,11 +8,7 @@ import {
   UploaderBox,
   UploaderText,
 } from "./BookmarksStyles";
-import {
-  MementoOverview,
-  PeopleTags,
-  MementoDescription,
-} from "../MementoCard/MementoCardStyles";
+import { MementoOverview, PeopleTags } from "../MementoCard/MementoCardStyles";
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Container } from "ui/Helpers";

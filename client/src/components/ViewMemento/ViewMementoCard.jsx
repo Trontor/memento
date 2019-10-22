@@ -38,8 +38,8 @@ export default function MementoCard(props) {
     description,
     location,
     family,
-    // media,
-    // tags,
+    media,
+    tags,
     // type,
     // updatedAt,
     beneficiaries,
@@ -118,7 +118,7 @@ export default function MementoCard(props) {
                 ).fromNow()}
               </UploadDate>
               {/* Family Group the memento belongs to */}
-              <FamilyGroup>{props.family.name}</FamilyGroup>
+              <FamilyGroup>{family.name}</FamilyGroup>
             </div>
             {/* Edit & Bookmark */}
             <CardOptions>
@@ -165,7 +165,7 @@ export default function MementoCard(props) {
               <span>
                 <i className="fas fa-user-tag"></i>
                 <div>
-                  {props.people.map(person => (
+                  {people.map(person => (
                     <PeopleTags>
                       {person.firstName} {person.lastName}
                     </PeopleTags>
@@ -178,7 +178,7 @@ export default function MementoCard(props) {
               <span>
                 <i class="far fa-handshake"></i>
                 <div>
-                  {props.beneficiaries.map(beneficiary => (
+                  {beneficiaries.map(beneficiary => (
                     <PeopleTags>
                       {beneficiary.firstName} {beneficiary.lastName}
                     </PeopleTags>
@@ -189,25 +189,25 @@ export default function MementoCard(props) {
           </MementoOverview>
 
           {/* Description */}
-          {props.media.length > 0 && (
+          {media.length > 0 && (
             <MementoDescription>{description}</MementoDescription>
           )}
 
           {/* Tags */}
           <TagsWrapper>
-            {props.tags && props.tags.length > 0 && (
+            {tags && props.tags.length > 0 && (
               <TagSectionWrapper>
                 <i class="fas fa-tags"></i>
-                {props.tags.map(tag => (
+                {tags.map(tag => (
                   <MementoTag>{tag}</MementoTag>
                 ))}
               </TagSectionWrapper>
             )}
             {/* Rekognition Tags */}
-            {props.detectedLabels && props.detectedLabels.length > 0 && (
+            {detectedLabels && detectedLabels.length > 0 && (
               <TagSectionWrapper>
                 <i class="far fa-eye"></i>
-                {props.detectedLabels.map(result => (
+                {detectedLabels.map(result => (
                   <MementoTag key={result.name}>
                     {result.name.toLowerCase()}{" "}
                     <span>{Math.round(result.confidence, 0)}%</span>
