@@ -23,9 +23,7 @@ import { FormNav } from "ui/Forms";
 import { Header } from "ui/Typography";
 import JollyLoader from "components/JollyLoader/JollyLoader";
 import { LOAD_FAMILY } from "mutations/Family";
-import UploadStep1 from "./UploadStep1";
 import CreatableSelect from "react-select/creatable";
-import UploadStep2 from "./UploadStep2";
 import {
   RadioButton,
   RadioButtonStyle,
@@ -140,10 +138,7 @@ const customDropdown = {
 };
 
 export default function UploadMemento(props) {
-  //Define react hooks
-  const [selectMementoType, setSelectMementoType] = useState("");
   const [selectEventType, setSelectEventType] = useState("");
-  const [currentStep, setCurrentStep] = useState(2);
   const familyId = props.match.params.id;
   const { data, loading } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
@@ -197,12 +192,6 @@ export default function UploadMemento(props) {
   if (data) {
     members = data.family.members;
   }
-
-  //Handle Radio value
-  const handleRadioChange = option => {
-    const value = option.target.value;
-    setSelectMementoType(value);
-  };
 
   const onSubmit = values => {
     const mediaType =
@@ -285,7 +274,7 @@ export default function UploadMemento(props) {
                 </RadioOption>
               </FormSection>
 
-              {selectMementoType === "event" && (
+              {props.values.event && (
                 <FormSection>
                   <InstructionLabel>What kind of event is it?</InstructionLabel>
                   <CreatableSelect
