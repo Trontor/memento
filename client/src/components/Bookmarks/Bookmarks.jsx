@@ -8,10 +8,13 @@ import {
   UploaderBox,
   UploaderText,
 } from "./BookmarksStyles";
-import { MementoOverview, PeopleTags } from "../MementoCard/MementoCardStyles";
+import {
+  MementoOverview,
+  PeopleTags,
+  MementoDescription,
+} from "../MementoCard/MementoCardStyles";
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
-
 import { Container } from "ui/Helpers";
 import { DELETE_BOOKMARK } from "mutations/Memento";
 import { GET_BOOKMARKS } from "queries/Bookmarks";
@@ -55,6 +58,11 @@ export default function Bookmarks(props) {
             {memento.media.length > 0 && (
               <BookmarkImg>
                 <img alt="blah" src={memento.media[0].url} />
+              </BookmarkImg>
+            )}
+            {memento.media.length === 0 && (
+              <BookmarkImg>
+                <MementoDescription>{memento.description}</MementoDescription>
               </BookmarkImg>
             )}
             <BookmarkContent>

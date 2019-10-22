@@ -86,7 +86,7 @@ export default function UserProfile() {
       </ProfileWrapper>
 
       {/* Hometown */}
-      <ProfileWrapper data={user.hometown !== "" ? "true" : "false"}>
+      <ProfileWrapper data={user.hometown !== null ? "true" : "false"}>
         {console.log(user.hometown)}
         <UserHome size="25px" />
         <ProfileField>
