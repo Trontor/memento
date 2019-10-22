@@ -75,7 +75,7 @@ export default function Home(props) {
     <>
       <PageHeader>
         <Logo />
-        {loggedIn ? (
+        {!loggedIn ? (
           <ButtonSecondary onClick={() => props.history.push("/login")}>
             Login
           </ButtonSecondary>
