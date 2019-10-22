@@ -60,11 +60,11 @@ export default function Bookmarks(props) {
                 <img alt="blah" src={memento.media[0].url} />
               </BookmarkImg>
             )}
-            {memento.media.length === 0 && (
+            {/* {memento.media.length === 0 && (
               <BookmarkImg>
                 <MementoDescription>{memento.description}</MementoDescription>
               </BookmarkImg>
-            )}
+            )} */}
             <BookmarkContent>
               {/* Memento Title */}
               <h3>{memento.title}</h3>
