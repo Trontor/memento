@@ -68,7 +68,7 @@ export default function Bookmarks(props) {
             <BookmarkContent>
               {/* Memento Title */}
               <h3>{memento.title}</h3>
-              <MementoOverview familyColour={memento.family.colour}>
+              <MementoOverview>
                 {/* Memento Date */}
                 <span>
                   <i className="far fa-clock" />
