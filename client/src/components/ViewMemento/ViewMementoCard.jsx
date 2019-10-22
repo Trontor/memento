@@ -12,8 +12,9 @@ import {
   PeopleTags,
   UploadDate,
 } from "../MementoCard/MementoCardStyles";
+import { Card, CardContent, CardInfo, FamilyGroup } from "./ViewMementoStyles";
+
 import React from "react";
-import { Card, CardInfo, CardContent, FamilyGroup } from "./ViewMementoStyles";
 import { useHistory } from "react-router";
 
 export default function MementoCard(props) {
@@ -38,6 +39,14 @@ export default function MementoCard(props) {
 
   return (
     <Card>
+      <CardContent>
+        {/* Cover Image */}
+        {props.media.length > 0 && (
+          <MementoCoverImg>
+            <img alt={props.caption} src={props.media[0].url} />
+          </MementoCoverImg>
+        )}
+      </CardContent>
       <CardInfo>
         <AuthorWrapper>
           {/* Memento  Uploader Profile Picture */}
@@ -119,14 +128,6 @@ export default function MementoCard(props) {
           ))}
         </MementoTagsWrapper>
       </CardInfo>
-      <CardContent>
-        {/* Cover Image */}
-        {props.media.length > 0 && (
-          <MementoCoverImg>
-            <img alt={props.caption} src={props.media[0].url} />
-          </MementoCoverImg>
-        )}
-      </CardContent>
     </Card>
   );
 }

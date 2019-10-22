@@ -1,14 +1,15 @@
-import React from "react";
-import { Container } from "ui/Helpers";
 import {
-  TextWrapper,
-  DashboardButtons,
   ButtonHeading,
-  GoToButton,
   CreateFamily,
+  DashboardButtons,
+  GoToButton,
   InviteFamily,
+  TextWrapper,
 } from "../Dashboard/NewUser/NewUserStyles";
+
+import { Container } from "ui/Helpers";
 import { NoViewMementoIcon } from "./ViewMementoStyles";
+import React from "react";
 
 export default function NoViewMemento(props) {
   return (
@@ -40,4 +41,4 @@ export default function NoViewMemento(props) {
       </TextWrapper>
     </Container>
   );
-}
+  }

@@ -36,8 +36,8 @@ export const Container = styled.div`
   props.theme.breakpoints.tabletLandscape}) {
     top: 0;
     margin: 30px auto;
-    width: 70%;
-    max-width: 748px;
+    width: 80%;
+    max-width: 960px;
   }
 `;
 
