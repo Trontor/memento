@@ -10,7 +10,7 @@ export const ProfileWrapper = styled.div`
   position: relative;
   grid-template-columns: 25px auto;
   grid-gap: 25px;
-  display: ${props => (props.data === "true" ? "grid" : "none")};
+  display: ${props => (props.data ? "grid" : "none")};
 `;
 
 export const ProfileField = styled.div`

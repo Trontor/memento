@@ -68,7 +68,7 @@ export default function UserProfile() {
       </CenterText>
 
       {/* Birthday */}
-      <ProfileWrapper data={user.dateOfBirth !== null ? "true" : "false"}>
+      <ProfileWrapper data={user.dateOfBirth}>
         <UserBday size="25px" />
         <ProfileField>
           <InputLabel>Date of Birth</InputLabel>
@@ -77,7 +77,7 @@ export default function UserProfile() {
       </ProfileWrapper>
 
       {/* Gender */}
-      <ProfileWrapper data={user.gender !== null ? "true" : "false"}>
+      <ProfileWrapper data={user.gender}>
         <UserGender size="30px" />
         <ProfileField>
           <InputLabel>Gender</InputLabel>
@@ -86,7 +86,7 @@ export default function UserProfile() {
       </ProfileWrapper>
 
       {/* Hometown */}
-      <ProfileWrapper data={user.hometown !== null ? "true" : "false"}>
+      <ProfileWrapper data={user.hometown}>
         {console.log(user.hometown)}
         <UserHome size="25px" />
         <ProfileField>
@@ -96,7 +96,7 @@ export default function UserProfile() {
       </ProfileWrapper>
 
       {/* Current city */}
-      <ProfileWrapper data={user.location !== null ? "true" : "false"}>
+      <ProfileWrapper data={user.location}>
         <UserCity size="25px" />
         <ProfileField>
           <InputLabel>Current City</InputLabel>
@@ -105,17 +105,19 @@ export default function UserProfile() {
       </ProfileWrapper>
 
       {/* Places Lived */}
-      <ProfileWrapper>
+      <ProfileWrapper data={user.placesLived}>
         <UserPlaces size="25px" />
         <ProfileField>
           <PlaceWrapper>
             <InputLabel>Place I've Lived</InputLabel>
             <InputLabel>Date Moved</InputLabel>
           </PlaceWrapper>
-          <PlaceWrapper>
-            <Span>Amsterdam</Span>
-            <Span> March, 2001</Span>
-          </PlaceWrapper>
+          {user.placesLived.map(place => (
+            <PlaceWrapper>
+              <Span>{place.city}</Span>
+              <Span>{moment(place.dateMoved).format("Do MMM YYYY ")}</Span>
+            </PlaceWrapper>
+          ))}
         </ProfileField>
       </ProfileWrapper>
     </Container>

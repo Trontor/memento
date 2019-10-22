@@ -52,16 +52,19 @@ const convertUserDataToFormValues = user => {
     locationCountry,
     gender: user.gender,
     hometown: user.hometown,
-    placesLived: user.placesLived,
+    placesLived: user.placesLived.map(p => ({
+      city: p.city,
+      dateMoved: new Date(Date.parse(p.dateMoved)),
+    })),
   };
 };
 
 export default function SettingsProfile() {
   // User data
   const [user, setUser] = useState(null);
-  const [placesLived, setPlacesLived] = useState([
-    { city: "", dateMoved: null },
-  ]);
+  // const [placesLived, setPlacesLived] = useState([
+  //   { city: "", dateMoved: null },
+  // ]);
   // List of possible genders (infinite)
   const genderList = ["Male", "Female", "Other"];
 
@@ -75,7 +78,7 @@ export default function SettingsProfile() {
       const user = data.currentUser;
       console.log("Loaded User Data:", user);
       setUser(user);
-      setPlacesLived(user.placesLived);
+      // setPlacesLived(user.placesLived);
     },
   });
 
@@ -117,19 +120,6 @@ export default function SettingsProfile() {
       return <i className="fas fa-user-circle" />;
     }
   };
-
-  //Add places lived from the list
-  const addPlace = place => {
-    setPlacesLived([...placesLived, place]);
-  };
-
-  // Deletes places lived from the list
-  const deletePlace = index => {
-    const places = [...placesLived];
-    places.splice(index, 1);
-    setPlacesLived(places);
-  };
-
   /**
    * Handles the Formik form submit (when the 'Save Changes' button is pressed)
    * @param {any} values Formik values object
@@ -147,6 +137,7 @@ export default function SettingsProfile() {
       dateOfBirth: values.dateOfBirth,
       firstName: values.firstName,
       lastName: values.lastName,
+      placesLived: values.placesLived,
       location,
       hometown: values.hometown,
     };
@@ -164,174 +155,210 @@ export default function SettingsProfile() {
       enableReinitialize
       onSubmit={handleFormSubmit}
       initialValues={defaultFormValues}
-      render={props => (
-        <form onSubmit={props.handleSubmit}>
-          <SettingsContainer>
-            <FormSection>
-              <ImgPreview>{getProfilePicture(props.values.file)}</ImgPreview>
-              <UploadPhoto
-                type="file"
-                id="file"
-                onChange={e => props.setFieldValue("file", e.target.files[0])}
-              />
-              <UploadLabel htmlFor="file">Add a Profile Photo</UploadLabel>
-            </FormSection>
+      render={props => {
+        return (
+          <form onSubmit={props.handleSubmit}>
+            <SettingsContainer>
+              <FormSection>
+                <ImgPreview>{getProfilePicture(props.values.file)}</ImgPreview>
+                <UploadPhoto
+                  type="file"
+                  id="file"
+                  onChange={e => props.setFieldValue("file", e.target.files[0])}
+                />
+                <UploadLabel htmlFor="file">Add a Profile Photo</UploadLabel>
+              </FormSection>
 
-            <FormSection>
-              {/* First Name */}
-              <EditInput
-                name="firstName"
-                value={props.values.firstName}
-                inputLabel="First Name"
-                onChange={props.handleChange}
-                placeholder="Enter your first name"
-              />
-            </FormSection>
+              <FormSection>
+                {/* First Name */}
+                <EditInput
+                  name="firstName"
+                  value={props.values.firstName}
+                  inputLabel="First Name"
+                  onChange={props.handleChange}
+                  placeholder="Enter your first name"
+                />
+              </FormSection>
 
-            <FormSection>
-              {/* Last Name */}
-              <EditInput
-                name="lastName"
-                value={props.values.lastName}
-                inputLabel="Last Name"
-                onChange={props.handleChange}
-                placeholder="Enter your last name"
-              />
-            </FormSection>
+              <FormSection>
+                {/* Last Name */}
+                <EditInput
+                  name="lastName"
+                  value={props.values.lastName}
+                  inputLabel="Last Name"
+                  onChange={props.handleChange}
+                  placeholder="Enter your last name"
+                />
+              </FormSection>
 
-            <FormSection>
-              {/* Birthday  */}
-              <InputLabel>Birthday</InputLabel>
-              <Calendar
-                name="dateOfBirth"
-                placeholderText="Click to select a date"
-                selected={props.values.dateOfBirth}
-                showMonthDropdown
-                showYearDropdown
-                isClearable
-                dateFormat="dd/MM/yyyy"
-                onChange={date => props.setFieldValue("dateOfBirth", date)}
-                dropdownMode="select"
-                maxDate={new Date()}
-              />
-            </FormSection>
+              <FormSection>
+                {/* Birthday  */}
+                <InputLabel>Birthday</InputLabel>
+                <Calendar
+                  name="dateOfBirth"
+                  placeholderText="Click to select a date"
+                  selected={props.values.dateOfBirth}
+                  showMonthDropdown
+                  showYearDropdown
+                  isClearable
+                  dateFormat="dd/MM/yyyy"
+                  onChange={date => props.setFieldValue("dateOfBirth", date)}
+                  dropdownMode="select"
+                  maxDate={new Date()}
+                />
+              </FormSection>
 
-            <FormSection>
-              {/* Gender */}
-              <InputLabel>Gender</InputLabel>
-              <InputSection>
-                {genderList.map(gender => (
-                  <RadioOption key={gender}>
-                    <RadioButton
-                      name="gender"
-                      type="radio"
-                      value={gender}
-                      checked={
-                        props.values.gender &&
-                        props.values.gender.toLowerCase() ===
-                          gender.toLowerCase()
-                      }
-                      onChange={props.handleChange}
-                    />
-                    <RadioButtonStyle />
-                    <RadioLabel>{gender}</RadioLabel>
-                  </RadioOption>
-                ))}
-              </InputSection>
-            </FormSection>
+              <FormSection>
+                {/* Gender */}
+                <InputLabel>Gender</InputLabel>
+                <InputSection>
+                  {genderList.map(gender => (
+                    <RadioOption key={gender}>
+                      <RadioButton
+                        name="gender"
+                        type="radio"
+                        value={gender}
+                        checked={
+                          props.values.gender &&
+                          props.values.gender.toLowerCase() ===
+                            gender.toLowerCase()
+                        }
+                        onChange={props.handleChange}
+                      />
+                      <RadioButtonStyle />
+                      <RadioLabel>{gender}</RadioLabel>
+                    </RadioOption>
+                  ))}
+                </InputSection>
+              </FormSection>
 
-            <FormSection>
-              <EditInput
-                name="hometown"
-                inputLabel="Hometown"
-                value={props.values.hometown}
-                onChange={props.handleChange}
-                placeholder="Enter your hometown"
-              />
-              {/* <InputField
+              <FormSection>
+                <EditInput
+                  name="hometown"
+                  inputLabel="Hometown"
+                  value={props.values.hometown}
+                  onChange={props.handleChange}
+                  placeholder="Enter your hometown"
+                />
+                {/* <InputField
                 value={props.values.hometown}
                 onChange={props.handleChange}
                 placeholder="Enter your hometown"
               /> */}
-            </FormSection>
+              </FormSection>
 
-            <FormSection>
-              {/* Location */}
-              <InputLabel>Location</InputLabel>
-              <CountryPicker
-                name="locationCountry"
-                value={props.values.locationCountry}
-                onChange={country =>
-                  props.setFieldValue("locationCountry", country)
-                }
-              />
-              <RegionPicket
-                name="locationRegion"
-                country={props.values.locationCountry}
-                value={props.values.locationRegion}
-                onChange={region =>
-                  props.setFieldValue("locationRegion", region)
-                }
-              />
-            </FormSection>
+              <FormSection>
+                {/* Location */}
+                <InputLabel>Location</InputLabel>
+                <CountryPicker
+                  name="locationCountry"
+                  value={props.values.locationCountry}
+                  onChange={country =>
+                    props.setFieldValue("locationCountry", country)
+                  }
+                />
+                <RegionPicket
+                  name="locationRegion"
+                  country={props.values.locationCountry}
+                  value={props.values.locationRegion}
+                  onChange={region =>
+                    props.setFieldValue("locationRegion", region)
+                  }
+                />
+              </FormSection>
 
-            <PlaceWrapper>
-              <InputLabel>Places You've Lived</InputLabel>
-              <InputLabel>Date Moved</InputLabel>
-            </PlaceWrapper>
-            {
-              <PlacesList>
-                {placesLived.map((place, idx) => (
-                  <PlaceWrapper>
-                    <InputField
-                      type="text"
-                      name="city"
-                      placeholder="Select City"
-                      style={{ width: "85%" }}
-                      value={place.city}
-                      //insert onChange function here
-                    />
-                    <Calendar
-                      name="calendar"
-                      placeholderText="Click to select a date"
-                      selected={place.date}
-                      //insert onChange function here
-                      showMonthDropdown
-                      showYearDropdown
-                      dropdownMode="select"
-                      maxDate={new Date()}
-                    />
+              <PlaceWrapper>
+                <InputLabel>Places You've Lived</InputLabel>
+                <InputLabel>Date Moved</InputLabel>
+              </PlaceWrapper>
+              {
+                <PlacesList>
+                  {props.values.placesLived.map((place, idx) => {
+                    return (
+                      <PlaceWrapper>
+                        <InputField
+                          type="text"
+                          name="city"
+                          placeholder="Select City"
+                          style={{ width: "85%" }}
+                          value={place.city}
+                          //insert onChange function here
+                          onChange={e => {
+                            const place = e.target.value;
+                            const placesLivedCopy = [
+                              ...props.values.placesLived,
+                            ];
+                            placesLivedCopy[idx].city = place;
+                            props.setFieldValue("placesLived", placesLivedCopy);
+                          }}
+                        />
+                        <Calendar
+                          name="calendar"
+                          dateFormat="dd/MM/yyyy"
+                          placeholderText="Click to select a date"
+                          selected={place.dateMoved}
+                          onChange={date => {
+                            console.log(date);
+                            const placesLivedCopy = [
+                              ...props.values.placesLived,
+                            ];
+                            placesLivedCopy[idx].dateMoved = date;
+                            props.setFieldValue("placesLived", placesLivedCopy);
+                          }}
+                          showMonthDropdown
+                          showYearDropdown
+                          dropdownMode="select"
+                          maxDate={new Date()}
+                        />
 
-                    {placesLived.length > 1 && (
-                      <DeleteButton onClick={() => deletePlace(idx)}>
-                        <i className="fa fa-trash"></i>
-                      </DeleteButton>
-                    )}
-                  </PlaceWrapper>
-                ))}
-              </PlacesList>
-            }
-            {placesLived.length < 10 && (
-              <AddButton
-                text="Add another"
-                onClick={() => addPlace({ city: "", date: null })}
-              >
-                <i className="fa fa-plus"></i>
-              </AddButton>
-            )}
+                        {props.values.placesLived.length > 1 && (
+                          <DeleteButton
+                            onClick={() => {
+                              const placesLivedCopy = [
+                                ...props.values.placesLived,
+                              ];
+                              placesLivedCopy.splice(idx, 1);
+                              props.setFieldValue(
+                                "placesLived",
+                                placesLivedCopy,
+                              );
+                            }}
+                          >
+                            <i className="fa fa-trash"></i>
+                          </DeleteButton>
+                        )}
+                      </PlaceWrapper>
+                    );
+                  })}
+                </PlacesList>
+              }
+              {props.values.placesLived.length < 10 && (
+                <AddButton
+                  text="Add another"
+                  onClick={() =>
+                    props.setFieldValue("placesLived", [
+                      ...props.values.placesLived,
+                      { city: "", dateMoved: null },
+                    ])
+                  }
+                >
+                  <i className="fa fa-plus"></i>
+                </AddButton>
+              )}
 
-            {/* Save Changes Button  */}
-            {props.dirty && (
-              <ButtonPrimary
-                type="submit"
-                style={{ float: "right", margin: "10px" }}
-              >
-                Save Changes
-              </ButtonPrimary>
-            )}
-          </SettingsContainer>
-        </form>
-      )}
+              {/* Save Changes Button  */}
+              {
+                <ButtonPrimary
+                  type="submit"
+                  style={{ float: "right", margin: "10px" }}
+                >
+                  Save Changes
+                </ButtonPrimary>
+              }
+            </SettingsContainer>
+          </form>
+        );
+      }}
     />
   );
 }

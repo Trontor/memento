@@ -11,17 +11,6 @@ import ProfileSettingsView from "./ProfileSettingsView";
 export default function Settings(props) {
   const menuTabs = ["Profile", "Account"];
   const [currentTabIndex, setTabIndex] = useState(0);
-  // const userId = props.match.params.id;
-
-  // const { data } = useQuery(GET_CURRENT_USER, {
-  //   variables: { id: userId },
-  // });
-
-  // let user = {};
-
-  // if (data && data.currentUser) {
-  //   user = data.currentUser;
-  // }
 
   let tabComponent = null;
   switch (menuTabs[currentTabIndex]) {
