@@ -199,6 +199,7 @@ export default function EditMemento(props) {
                   value={props.values.title}
                   inputLabel="Title"
                   onChange={props.handleChange}
+                  placeholder="Enter a cool title..."
                 />
               </FormSection>
               <FormSection>
@@ -207,6 +208,7 @@ export default function EditMemento(props) {
                   value={props.values.description}
                   inputLabel="Description"
                   onChange={props.handleChange}
+                  placeholder="Enter a description..."
                 />
               </FormSection>
               <FormSection>
@@ -267,6 +269,7 @@ export default function EditMemento(props) {
                   value={props.values.location}
                   inputLabel="Add Location:"
                   onChange={props.handleChange}
+                  placeholder="Enter the name of a location..."
                 />
               </FormSection>
 
@@ -338,67 +341,6 @@ export default function EditMemento(props) {
                   Save Changes
                 </ButtonPrimary>
               )}
-              {/* <FormSection>
-              <InstructionLabel>Tags:</InstructionLabel>
-              <TagsContainer>
-                {tags.sort().map(tag => (
-                  <Tag
-                    onClick={() => {
-                      if (props.values.tags.includes(tag)) {
-                        props.setFieldValue(
-                          "tags",
-                          props.values.tags.filter(t => t !== tag),
-                        );
-                      } else {
-                        props.setFieldValue("tags", [
-                          ...props.values.tags,
-                          tag,
-                        ]);
-                      }
-                    }}
-                    selected={props.values.tags.includes(tag)}
-                  >
-                    {tag}
-                  </Tag>
-                ))}
-                <NewTag type="button" onClick={() => setNewTag("")}>
-                  <i class="fas fa-plus"></i> new tag
-                </NewTag>
-              </TagsContainer>
-
-              {newTag !== null && (
-                <>
-                  <InputField
-                    placeholder="New tag name"
-                    value={newTag}
-                    onChange={e => handleChange(e)}
-                    // onBlur={() => setDefaultTags([...defaultTags, newTag])}
-                  />
-                  <ButtonPrimary
-                    type="button"
-                    onClick={() => {
-                      setTags([...new Set([...tags, newTag])]);
-                      props.setFieldValue("tags", [
-                        ...props.values.tags,
-                        newTag,
-                      ]);
-                      setNewTag(null);
-                    }}
-                  >
-                    Create new tag
-                  </ButtonPrimary>
-
-                  <AlignRight>
-                    <ButtonSecondary
-                      type="button"
-                      onClick={() => setNewTag(null)}
-                    >
-                      Cancel
-                    </ButtonSecondary>
-                  </AlignRight>
-                </>
-              )}
-            </FormSection> */}
             </Container>
           </form>
         );

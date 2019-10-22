@@ -119,7 +119,7 @@ export default function UploadStep2({
                 name="description"
                 onChange={props.handleChange}
                 value={props.values.description}
-                placeholder=""
+                placeholder="Enter a descriprion..."
               />
             </FormSection>
             {props.errors.description && props.touched.description && (
