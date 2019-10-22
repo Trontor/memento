@@ -117,7 +117,7 @@ const Sidebar = props => {
           View My Mementos
         </SidebarLink>
         <SidebarLink icon="far fa-bookmark" name="bookmarks" to="/bookmarks">
-          Saved Mementos
+          Bookmarks
         </SidebarLink>
       </MenuSection>
       <MenuSection>
