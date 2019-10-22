@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
 import { Container } from "ui/Helpers";
-import { useQuery } from "@apollo/react-hooks";
 import { GET_MY_MEMENTOS } from "queries/Memento";
-import ViewMementoCard from "./ViewMementoCard";
 import NoViewMemento from "./NoViewMemento";
+import ViewMementoCard from "./ViewMementoCard";
+import { useQuery } from "@apollo/react-hooks";
 
 // import { useQuery } from "@apollo/react-hooks";
 

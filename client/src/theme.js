@@ -19,8 +19,8 @@ const theme = {
     disabled: "#ddd",
 
     border: "#D3D0DD",
-    sidebar: "#F9F9FB",
-    foreground: "#FCFDFE"
+    sidebar: "#FDFDFE",
+    foreground: "#FDFDFE"
   },
   mixins: {
     hoverFade: "transition: ease-in 0.1s",
