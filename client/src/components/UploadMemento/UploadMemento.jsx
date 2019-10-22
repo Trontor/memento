@@ -1,4 +1,4 @@
-import { ButtonPrimary, ButtonSecondary } from "ui/Buttons";
+import { ButtonSecondary } from "ui/Buttons";
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 
@@ -37,7 +37,7 @@ export default function UploadMemento(props) {
       },
     },
   );
-  uploadMementoResults.loading = true;
+  // uploadMementoResults.loading = true;
   if (loading || uploadMementoResults.loading) {
     return (
       <JollyLoader
@@ -62,10 +62,10 @@ export default function UploadMemento(props) {
     setSelectMementoType(value);
   };
 
-  //Go to next step
-  const nextStep = () => {
-    setCurrentStep(currentStep + 1);
-  };
+  // //Go to next step
+  // const nextStep = () => {
+  //   setCurrentStep(currentStep + 1);
+  // };
 
   //Go back to prev step
   const prevStep = () => {
@@ -158,7 +158,7 @@ export default function UploadMemento(props) {
       dates: [
         {
           day: values.date.getDate(),
-          month: values.date.getMonth() + 1,
+          month: values.date.getMonth(),
           year: values.date.getFullYear(),
         },
       ],
@@ -212,11 +212,11 @@ export default function UploadMemento(props) {
             <ButtonSecondary onClick={prevStep}>Back</ButtonSecondary>
           ) : null}
 
-          {currentStep !== 2 ? (
+          {/* {currentStep !== 2 ? (
             <ButtonPrimary onClick={nextStep}>Next</ButtonPrimary>
           ) : (
             <ButtonPrimary type="submit">Create Memento</ButtonPrimary>
-          )}
+          )} */}
         </FormNav>
       </form>
     </Container>

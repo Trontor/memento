@@ -66,7 +66,14 @@ export default function MementoCard(props) {
 
   const isUploader = uploader.userId === userId;
 
-  const mementoDate = moment(dates[0].day.toString().padStart(2, "0") + "/" +  dates[0].month.toString().padStart(2, "0") + "/" + dates[0].year, "DD-MM-YYYY").format("Do  MMM YYYY");
+  const mementoDate = moment(
+    dates[0].day.toString().padStart(2, "0") +
+      "/" +
+      dates[0].month.toString().padStart(2, "0") +
+      "/" +
+      dates[0].year,
+    "DD-MM-YYYY",
+  ).format("Do  MMM YYYY");
 
   return (
     <Card>
@@ -82,13 +89,15 @@ export default function MementoCard(props) {
           <MementoAuthor>
             {uploader.firstName + " " + uploader.lastName}
           </MementoAuthor>
-          <UploadDate>{moment(createdDate.toLocaleDateString(), "DD-MM-YYYY").fromNow()}</UploadDate>
+          <UploadDate>
+            {moment(createdDate.toLocaleDateString(), "DD-MM-YYYY").fromNow()}
+          </UploadDate>
         </div>
         {/* Edit & Bookmark */}
         <CardOptions>
           {beneficiaries && beneficiaries.length > 0 && (
             <i
-              className="fas fa-tree"
+              className="fas fa-sitemap"
               onClick={() => setShowInheritanceTree(!showInheritanceTree)}
             />
           )}

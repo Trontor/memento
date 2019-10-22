@@ -26,16 +26,16 @@ export default function DateSelector({
     const proposedDate = `${year}-${month}-${day}`;
     const momentDate = moment(proposedDate, "YYYY-M-D", true);
     const validDate = momentDate.isValid();
-    const wellConstructedDate = year.length === 4;
+    const wellConstructedDate = year.toString().length === 4;
 
     if (!wellConstructedDate || !day || !month || !year) {
       setFieldValue("date", null);
       return;
     }
-    console.log("Proposed Date:", proposedDate);
+    // console.log("Proposed Date:", proposedDate);
     console.log(momentDate, validDate);
     if (!validDate) {
-      console.log("Invalid date: " + proposedDate);
+      // console.log("Invalid date: " + proposedDate);
       setDay(1);
       setMonth(1);
       setYear(2000);
@@ -73,7 +73,7 @@ export default function DateSelector({
   ];
   const monthOptions = months.map((month, idx) => ({
     label: month,
-    value: idx,
+    value: idx + 1,
   }));
 
   // Run joinDate whenever a change in the values are detected
@@ -90,7 +90,7 @@ export default function DateSelector({
       />
       <Select
         value={monthOptions[month - 1]}
-        onChange={e => setMonth(e.value + 1)}
+        onChange={e => setMonth(e.value)}
         options={monthOptions}
         placeholder="Month"
         styles={customDropdown}

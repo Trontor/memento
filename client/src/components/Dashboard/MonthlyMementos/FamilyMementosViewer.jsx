@@ -36,14 +36,13 @@ export default function FamilyMementosViewer(props) {
   }
   // Filter mementos by the same month
   const filteredMementos = mementos.filter(sameMonth);
-  const todayMementos = mementos.filter(sameDay)
+  const todayMementos = mementos.filter(sameDay);
+  console.log(todayMementos);
 
   return (
     <MonthlyMementosWrapper>
       {filteredMementos.map(memento => (
-        <MementoCard
-          key={memento.mementoId}
-          {...memento} />
+        <MementoCard key={memento.mementoId} {...memento} />
       ))}
     </MonthlyMementosWrapper>
   );

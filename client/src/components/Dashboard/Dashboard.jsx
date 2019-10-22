@@ -14,7 +14,7 @@ const loadingQuotes = [
   ">.< hold on!",
 ];
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const [user, setUser] = useState(null);
   const { error, loading } = useQuery(GET_DASHBOARD_INFORMATION, {
     fetchPolicy: "network-only",
@@ -24,6 +24,12 @@ export default function Dashboard() {
       }
     },
   });
+  // Check for any pending invites in localstorage
+  const pendingInviteId = localStorage.getItem("PENDING-INVITE");
+  if (pendingInviteId) {
+    localStorage.removeItem("PENDING-INVITE");
+    props.history.push("/invite/accept/" + pendingInviteId);
+  }
 
   // Handle the states of displaying data, error and loading
   if (error) {
@@ -38,8 +44,5 @@ export default function Dashboard() {
     return <NewUser user={user} />;
   }
 
-  return <MonthlyMementos
-    families={families}
-    user={user}
-  />;
+  return <MonthlyMementos families={families} user={user} />;
 }
