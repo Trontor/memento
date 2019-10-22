@@ -75,15 +75,6 @@ export default function MementoCard(props) {
   return (
     <Card>
       <CardContent>
-        {/* Cover Image
-        {props.media.length > 0 && (
-          <MementoCoverImg
-            onClick={() => history.push("/memento/" + mementoId)}
-          >
-            <img alt={props.caption} src={props.media[0].url} />
-          </MementoCoverImg>
-        )} */}
-
         {/* Cover Image */}
         {showInheritanceTree && beneficiaries.length > 0 ? (
           <InheritanceTree width="100%" height="400px" mementoId={mementoId} />
@@ -95,6 +86,9 @@ export default function MementoCard(props) {
               <img alt={props.caption} src={props.media[0].url} />
             </MementoCoverImg>
           )
+        )}
+        {props.media.length === 0 && (
+          <MementoDescription>{description}</MementoDescription>
         )}
       </CardContent>
       <CardInfo>
@@ -142,7 +136,9 @@ export default function MementoCard(props) {
           </CardOptions>
         </AuthorWrapper>
         {/* Memento  Title */}
-        <MementoTitle>{title}</MementoTitle>
+        <MementoTitle onClick={() => history.push("/memento/" + mementoId)}>
+          {title}
+        </MementoTitle>
         <MementoOverview>
           {/* Dates */}
           <span>
@@ -186,7 +182,9 @@ export default function MementoCard(props) {
         </MementoOverview>
 
         {/* Description */}
-        <MementoDescription>{description}</MementoDescription>
+        {props.media.length > 0 && (
+          <MementoDescription>{description}</MementoDescription>
+        )}
 
         {/* Tags */}
         {props.tags && props.tags.length > 0 && (
