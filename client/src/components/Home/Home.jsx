@@ -1,5 +1,5 @@
-import {Background, Bubbles} from "./BubblesStyles";
-import {ButtonPrimary, ButtonSecondary} from "ui/Buttons";
+import { Background, Bubbles } from "./BubblesStyles";
+import { ButtonPrimary, ButtonSecondary } from "ui/Buttons";
 import {
   FeatureDescription,
   FeatureImg,
@@ -10,74 +10,94 @@ import {
   Intro,
   IntroContent,
   PageHeader,
-  PitchActions
-} from './HomeStyles'
+  PitchActions,
+} from "./HomeStyles";
 
 import { Logo } from "ui/Logos";
-import React from 'react'
+import React, { useState, useEffect } from "react";
 
 const features = [
   {
     image: "https://image.flaticon.com/icons/svg/2219/2219802.svg",
     alt: "family",
     title: "Create or Join Family Groups",
-    description: "Invite your closest family members, or even extended family members to a personalised & private space."
+    description:
+      "Invite your closest family members, or even extended family members to a personalised & private space.",
   },
   {
     image: "https://image.flaticon.com/icons/svg/2159/2159991.svg",
     alt: "archive",
     title: "Collate and Archive",
-    description: "Store your most important milestones, events, and artefacts all in one place."
+    description:
+      "Store your most important milestones, events, and artefacts all in one place.",
   },
   {
     image: "https://image.flaticon.com/icons/svg/461/461352.svg",
     alt: "tags",
     title: "Tag and Organise",
-    description: "Create your own tags for your mementos, or let our Norton Vision handle it for you."
+    description:
+      "Create your own tags for your mementos, or let our Norton Vision handle it for you.",
   },
   {
     image: "https://image.flaticon.com/icons/svg/616/616490.svg",
     alt: "bookmark",
     title: "Bookmark and View Later",
-    description: "Save your favourite mementos so you can always look back on them anytime and anywhere."
-  }
-]
+    description:
+      "Save your favourite mementos so you can always look back on them anytime and anywhere.",
+  },
+];
 
 let bubbleBackground = (
   <Background>
-    <Bubbles/>
-    <Bubbles/>
-    <Bubbles/>
-    <Bubbles/>
-    <Bubbles/>
-    <Bubbles/>
-    <Bubbles/>
-    <Bubbles/>
-    <Bubbles/>
-    <Bubbles/>
-    <Bubbles/>
-    <Bubbles/>
+    <Bubbles />
+    <Bubbles />
+    <Bubbles />
+    <Bubbles />
+    <Bubbles />
+    <Bubbles />
+    <Bubbles />
+    <Bubbles />
+    <Bubbles />
+    <Bubbles />
+    <Bubbles />
+    <Bubbles />
   </Background>
 );
 
 export default function Home(props) {
+  const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    if (localStorage.getItem("AUTH-TOKEN")) {
+      setLoggedIn(true);
+    }
+  }, []);
   return (
     <>
       <PageHeader>
-        <Logo/>
-        <ButtonSecondary onClick={() => props.history.push("/login")}>Login</ButtonSecondary>
+        <Logo />
+        {loggedIn ? (
+          <ButtonSecondary onClick={() => props.history.push("/login")}>
+            Login
+          </ButtonSecondary>
+        ) : (
+          <ButtonSecondary onClick={() => props.history.push("/dashboard")}>
+            Go to Dashboard
+          </ButtonSecondary>
+        )}
       </PageHeader>
       <Intro>
         {bubbleBackground}
         <IntroContent>
-          <h1>
-            Store your significant memories all in one place.
-          </h1>
+          <h1>Store your significant memories all in one place.</h1>
           <p>
-            Memento offers a safe and simple way to preserve your life events, milestones and artefacts for you and your family to appreciate for generations come.
+            Memento offers a safe and simple way to preserve your life events,
+            milestones and artefacts for you and your family to appreciate for
+            generations come.
           </p>
           <PitchActions>
-            <ButtonPrimary onClick={() => props.history.push("/signup")}>Sign Up</ButtonPrimary>
+            <ButtonPrimary onClick={() => props.history.push("/signup")}>
+              Sign Up
+            </ButtonPrimary>
             <ButtonSecondary>Learn More</ButtonSecondary>
           </PitchActions>
         </IntroContent>
@@ -87,23 +107,21 @@ export default function Home(props) {
           {features.map(feature => (
             <FeatureWrapper>
               <FeatureImg>
-                <img src={feature.image} alt={feature.alt}/>
+                <img src={feature.image} alt={feature.alt} />
               </FeatureImg>
               <div>
-                <FeatureTitle>
-                  {feature.title}
-                </FeatureTitle>
-                <FeatureDescription>
-                  {feature.description}
-                </FeatureDescription>
+                <FeatureTitle>{feature.title}</FeatureTitle>
+                <FeatureDescription>{feature.description}</FeatureDescription>
               </div>
             </FeatureWrapper>
           ))}
         </FeaturesContentWrapper>
         <PitchActions>
-          <ButtonPrimary onClick={() => props.history.push("/signup")}>Get Started</ButtonPrimary>
+          <ButtonPrimary onClick={() => props.history.push("/signup")}>
+            Get Started
+          </ButtonPrimary>
         </PitchActions>
       </FeaturesOverview>
     </>
-  )
+  );
 }
