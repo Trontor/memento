@@ -34,6 +34,7 @@ export default function MementoPage() {
   // Load the memento data
   useQuery(GET_A_MEMENTO, {
     variables: { id: mementoId },
+    fetchPolicy: "network-only",
     onCompleted: data => {
       if (data && data.memento) setMemento(data.memento);
     },
