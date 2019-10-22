@@ -20,7 +20,7 @@ import { useParams } from "react-router-dom";
 import moment from "moment";
 
 const formatBirthday = date => {
-  const parsedDate = moment(date);
+  const parsedDate = moment.utc(date).local();
   if (parsedDate.isValid()) {
     return parsedDate.format("DD/MM/YYYY");
   } else {

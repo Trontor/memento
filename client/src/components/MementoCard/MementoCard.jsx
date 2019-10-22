@@ -92,7 +92,10 @@ export default function MementoCard(props) {
             {uploader.firstName + " " + uploader.lastName}
           </MementoAuthor>
           <UploadDate>
-            {moment(createdDate.toLocaleDateString(), "DD-MM-YYYY").fromNow()}
+            {moment
+              .utc(createdDate)
+              .local()
+              .fromNow()}
           </UploadDate>
         </div>
         {/* Edit & Bookmark */}
