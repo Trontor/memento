@@ -18,7 +18,6 @@ import {
   UploadDate,
 } from "./MementoCardStyles";
 import React, { useState } from "react";
-
 import InheritanceTree from "components/InheritanceTree/InheritanceTree";
 import moment from "moment";
 import { useHistory } from "react-router";

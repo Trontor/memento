@@ -16,9 +16,10 @@ import {
 import { Card, CardContent, CardInfo, FamilyGroup } from "./ViewMementoStyles";
 import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
 import moment from "moment";
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { useMutation } from "@apollo/react-hooks";
+import InheritanceTree from "components/InheritanceTree/InheritanceTree";
 
 export default function MementoCard(props) {
   const history = useHistory();
@@ -40,8 +41,11 @@ export default function MementoCard(props) {
     people,
     bookmarkedBy,
     onBookmarkToggled,
+    detectedLabels,
   } = props;
   const createdDate = new Date(createdAt);
+
+  const [showInheritanceTree, setShowInheritanceTree] = useState(false);
 
   const [bookmark] = useMutation(ADD_BOOKMARK, {
     variables: { id: mementoId },
@@ -71,13 +75,26 @@ export default function MementoCard(props) {
   return (
     <Card>
       <CardContent>
-        {/* Cover Image */}
+        {/* Cover Image
         {props.media.length > 0 && (
           <MementoCoverImg
             onClick={() => history.push("/memento/" + mementoId)}
           >
             <img alt={props.caption} src={props.media[0].url} />
           </MementoCoverImg>
+        )} */}
+
+        {/* Cover Image */}
+        {showInheritanceTree && beneficiaries.length > 0 ? (
+          <InheritanceTree width="100%" height="400px" mementoId={mementoId} />
+        ) : (
+          props.media.length > 0 && (
+            <MementoCoverImg
+              onClick={() => history.push("/memento/" + mementoId)}
+            >
+              <img alt={props.caption} src={props.media[0].url} />
+            </MementoCoverImg>
+          )
         )}
       </CardContent>
       <CardInfo>
@@ -104,6 +121,12 @@ export default function MementoCard(props) {
           </div>
           {/* Edit & Bookmark */}
           <CardOptions>
+            {beneficiaries && beneficiaries.length > 0 && (
+              <i
+                className="fas fa-sitemap"
+                onClick={() => setShowInheritanceTree(!showInheritanceTree)}
+              />
+            )}
             <i
               class="fas fa-pencil-alt"
               onClick={() => history.push(`/memento/${mementoId}/edit/`)}
@@ -171,6 +194,19 @@ export default function MementoCard(props) {
             <i class="fas fa-tags"></i>
             {props.tags.map(tag => (
               <MementoTag>{tag}</MementoTag>
+            ))}
+          </MementoTagsWrapper>
+        )}
+
+        {/* Rekognition Tags */}
+        {detectedLabels && detectedLabels.length > 0 && (
+          <MementoTagsWrapper familyColour={family.colour}>
+            <i class="far fa-eye"></i>
+            {detectedLabels.map(result => (
+              <MementoTag key={result.name} familyColour={family.colour}>
+                {result.name.toLowerCase()}{" "}
+                <span>{Math.round(result.confidence, 0)}%</span>
+              </MementoTag>
             ))}
           </MementoTagsWrapper>
         )}
