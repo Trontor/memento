@@ -38,7 +38,7 @@ export default function Bookmarks(props) {
       refetch();
     },
   });
-  if (loading) {
+  if (loading && !bookmarks) {
     return <JollyLoader />;
   }
   if (bookmarks.length === 0) {
