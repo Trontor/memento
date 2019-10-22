@@ -41,6 +41,7 @@ export const Calendar = styled(DatePicker)`
   margin-top: 10px;
   border-radius: 4px;
   border: 1px solid ${props => props.theme.palette.border};
+  background: transparent;
 `;
 
 const PickerStyle = css`

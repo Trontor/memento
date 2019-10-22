@@ -13,7 +13,7 @@ export const SignupBackgroundWrapper = styled.div`
 export const SignupOrganic = styled.div`
   position: absolute;
   display: block;
-  opacity: 0.7;
+  opacity: 1;
   border-radius: 41% 59% 41% 59% / 43% 45% 55% 57%;
 
   &:first-child {

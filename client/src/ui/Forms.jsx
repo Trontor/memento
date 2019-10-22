@@ -1,7 +1,5 @@
 import styled, { css } from "styled-components";
-
 import Textarea from "react-textarea-autosize";
-import { User } from "styled-icons/fa-regular/User";
 import { lighten } from "polished";
 
 // Single-line text input field
@@ -176,17 +174,18 @@ export const ImgPreview = styled.div`
   background: #f8f8f8;
   height: 200px;
   width: 200px;
-  border: 2px solid gray;
+  border-radius: 50%;
 
   img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
   }
-`;
 
-export const UserAvatar = styled(User)`
-  color: gray;
-  margin: 35px 0 0 35px;
+  i {
+    font-size: 200px;
+  }
 `;
 
 export const InputEdit = styled.div`

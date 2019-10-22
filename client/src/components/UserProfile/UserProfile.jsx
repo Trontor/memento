@@ -12,7 +12,7 @@ import {
 } from "./UserProfileStyles";
 import { GET_USER } from "queries/UserQueries";
 import { Header } from "ui/Typography";
-import { InputLabel, UserAvatar, ImgPreview } from "ui/Forms";
+import { InputLabel, ImgPreview } from "ui/Forms";
 import JollyLoader from "components/JollyLoader/JollyLoader";
 import React, { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
@@ -20,7 +20,7 @@ import { useParams } from "react-router-dom";
 import moment from "moment";
 
 const formatBirthday = date => {
-  const parsedDate = moment(date);
+  const parsedDate = moment.utc(date).local();
   if (parsedDate.isValid()) {
     return parsedDate.format("DD/MM/YYYY");
   } else {
@@ -53,10 +53,11 @@ export default function UserProfile() {
   return (
     <Container>
       <CenterText>
-        <Header underline>My Profile</Header>
+        <Header underline>Profile</Header>
+        {/* Profile Picture */}
         <ImgPreview>
           {!user.imageUrl ? (
-            <UserAvatar size="125px" style={{ "margin-left": 0 }} />
+            <i className="fas fa-user-circle" />
           ) : (
             <img src={user.imageUrl} alt={user.firstName} />
           )}
@@ -65,46 +66,58 @@ export default function UserProfile() {
           {user.firstName} {user.lastName}
         </h1>
       </CenterText>
-      <ProfileWrapper>
+
+      {/* Birthday */}
+      <ProfileWrapper data={user.dateOfBirth}>
         <UserBday size="25px" />
         <ProfileField>
           <InputLabel>Date of Birth</InputLabel>
           <Span>{formatBirthday(user.dateOfBirth)}</Span>
         </ProfileField>
       </ProfileWrapper>
-      <ProfileWrapper>
+
+      {/* Gender */}
+      <ProfileWrapper data={user.gender}>
         <UserGender size="30px" />
         <ProfileField>
           <InputLabel>Gender</InputLabel>
           <Span>{user.gender}</Span>
         </ProfileField>
       </ProfileWrapper>
-      <ProfileWrapper>
+
+      {/* Hometown */}
+      <ProfileWrapper data={user.hometown}>
+        {console.log(user.hometown)}
         <UserHome size="25px" />
         <ProfileField>
           <InputLabel>Hometown</InputLabel>
           <Span>{user.hometown}</Span>
         </ProfileField>
       </ProfileWrapper>
-      <ProfileWrapper>
+
+      {/* Current city */}
+      <ProfileWrapper data={user.location}>
         <UserCity size="25px" />
         <ProfileField>
           <InputLabel>Current City</InputLabel>
           <Span>{user.location}</Span>
         </ProfileField>
       </ProfileWrapper>
-      <ProfileWrapper>
-        <UserPlaces size="25px" />
 
+      {/* Places Lived */}
+      <ProfileWrapper data={user.placesLived}>
+        <UserPlaces size="25px" />
         <ProfileField>
           <PlaceWrapper>
             <InputLabel>Place I've Lived</InputLabel>
             <InputLabel>Date Moved</InputLabel>
           </PlaceWrapper>
-          <PlaceWrapper>
-            <Span>Amsterdam</Span>
-            <Span> March, 2001</Span>
-          </PlaceWrapper>
+          {user.placesLived.map(place => (
+            <PlaceWrapper>
+              <Span>{place.city}</Span>
+              <Span>{moment(place.dateMoved).format("Do MMM YYYY ")}</Span>
+            </PlaceWrapper>
+          ))}
         </ProfileField>
       </ProfileWrapper>
     </Container>

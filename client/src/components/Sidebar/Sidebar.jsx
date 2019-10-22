@@ -15,7 +15,6 @@ import {
 } from "./SidebarStyles";
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-
 import GET_CURRENT_USER from "queries/GetCurrentUser";
 import { GET_USER_FAMILIES } from "queries/UserQueries";
 import { Logo } from "ui/Logos";
@@ -116,7 +115,7 @@ const Sidebar = props => {
           View My Mementos
         </SidebarLink>
         <SidebarLink icon="far fa-bookmark" name="bookmarks" to="/bookmarks">
-          Saved Mementos
+          Bookmarks
         </SidebarLink>
       </MenuSection>
       <MenuSection>

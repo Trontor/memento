@@ -15,9 +15,7 @@ import { Formik } from "formik";
 import { Header } from "ui/Typography";
 import { Link } from "react-router-dom";
 import { Logo } from "ui/Logos";
-import {
-  NameInputContainer,
-} from "./SignupStyles";
+import { NameInputContainer } from "./SignupStyles";
 import { PageHeader } from "components/Home/HomeStyles";
 import React from "react";
 import { SIGNUP } from "mutations/Authentication";
@@ -25,11 +23,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { withRouter } from "react-router-dom";
 
 const defaultValues = {
-  firstName: "Jane",
-  lastName: "Doe",
-  email: `testaccount${Math.trunc(Math.random() * 1000000)}@email.com`,
-  password: "compl14n7Pa$$w0rd",
-  confirmPassword: "compl14n7Pa$$w0rd",
+  firstName: "",
 };
 
 /**
@@ -128,15 +122,15 @@ const Signup = props => {
   return (
     <>
       <PageHeader>
-        <Logo pointer center onClick={() => props.history.push("/")}/>
+        <Logo pointer center onClick={() => props.history.push("/")} />
       </PageHeader>
       <FormWrapper>
         <Header underline>Sign up today!</Header>
         {signUpErrors.length > 0 && (
           <ErrorBanner>
-          {signUpErrors.map(error => (
-            <div>{error}</div>
-          ))}
+            {signUpErrors.map(error => (
+              <div>{error}</div>
+            ))}
           </ErrorBanner>
         )}
         <Formik
@@ -150,7 +144,6 @@ const Signup = props => {
           validateOnChange={false}
           render={props => (
             <form onSubmit={props.handleSubmit}>
-
               <NameInputContainer>
                 <InputSection>
                   <InputLabel>First Name</InputLabel>
