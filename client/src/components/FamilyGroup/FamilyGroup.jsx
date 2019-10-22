@@ -70,6 +70,7 @@ export default function FamilyGroup(props) {
   const { loading, error, refetch } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
     fetchPolicy: "cache-and-network",
+    pollInterval: 2000,
     onCompleted: data => {
       if (data && data.family) {
         setCurrentUser(data.currentUser);
