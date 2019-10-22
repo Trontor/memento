@@ -75,6 +75,7 @@ export const GET_MY_MEMENTOS = gql`
       family {
         colour
         familyId
+        name
       }
       type
       description

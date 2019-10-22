@@ -18,7 +18,6 @@ import {
   UploadDate,
 } from "./MementoCardStyles";
 import React, { useState } from "react";
-
 import InheritanceTree from "components/InheritanceTree/InheritanceTree";
 import moment from "moment";
 import { useHistory } from "react-router";
@@ -34,8 +33,9 @@ export default function MementoCard(props) {
     title,
     description,
     location,
-    // media,
-    // tags,
+    media,
+    caption,
+    tags,
     // type,
     // updatedAt,
     family,
@@ -46,27 +46,29 @@ export default function MementoCard(props) {
     people,
     onBookmarkToggled,
   } = props;
+
   const createdDate = new Date(createdAt);
   const [showInheritanceTree, setShowInheritanceTree] = useState(false);
-
+  const [optimisticBookmark, setOptimisticBookmark] = useState(false);
   const [bookmark] = useMutation(ADD_BOOKMARK, {
     variables: { id: mementoId },
     onCompleted: data => {
-      onBookmarkToggled();
+      if (data) onBookmarkToggled();
     },
   });
 
   const [removeBookmark] = useMutation(DELETE_BOOKMARK, {
     variables: { id: mementoId },
     onCompleted: data => {
-      onBookmarkToggled();
+      if (data) onBookmarkToggled();
     },
   });
-
-  const isBookmarked = bookmarkedBy.some(id => id.userId === userId);
-
+  const isBookmarked =
+    optimisticBookmark || bookmarkedBy.some(id => id.userId === userId);
+  // if (isBookmarked && optimisticBookmark) {
+  //   setOptimisticBookmark(false);
+  // }
   const isUploader = uploader.userId === userId;
-
   const mementoDate = moment(
     dates[0].day.toString().padStart(2, "0") +
       "/" +
@@ -116,7 +118,14 @@ export default function MementoCard(props) {
             onClick={() => history.push("/memento/" + mementoId)}
           />
           <Bookmark
-            onClick={() => (isBookmarked ? removeBookmark() : bookmark())}
+            onClick={() => {
+              setOptimisticBookmark(!isBookmarked);
+              if (!isBookmarked) {
+                bookmark();
+              } else {
+                removeBookmark();
+              }
+            }}
             bookmarked={isBookmarked}
             familyColour={family.colour}
           >
@@ -148,7 +157,7 @@ export default function MementoCard(props) {
               <span>
                 <i className="fas fa-user-tag"></i>
                 <div>
-                  {props.people.map(person => (
+                  {people.map(person => (
                     <PeopleTags key={person.firstName}>
                       {person.firstName} {person.lastName}
                     </PeopleTags>
@@ -161,7 +170,7 @@ export default function MementoCard(props) {
               <span>
                 <i class="far fa-handshake"></i>
                 <div>
-                  {props.beneficiaries.map(beneficiary => (
+                  {beneficiaries.map(beneficiary => (
                     <PeopleTags key={beneficiary.firstName}>
                       {beneficiary.firstName} {beneficiary.lastName}
                     </PeopleTags>
@@ -183,20 +192,20 @@ export default function MementoCard(props) {
             familyColour={family.colour}
           />
         ) : (
-          props.media.length > 0 && (
+          media.length > 0 && (
             <MementoCoverImg
               onClick={() => history.push("/memento/" + mementoId)}
             >
-              <img alt={props.caption} src={props.media[0].url} />
+              <img alt={caption} src={media[0].url} />
             </MementoCoverImg>
           )
         )}
       </CardContent>
       {/* Tags */}
-      {props.tags && props.tags.length > 0 && (
+      {tags && tags.length > 0 && (
         <MementoTagsWrapper familyColour={family.colour}>
           <i class="fas fa-tags"></i>
-          {props.tags.map(tag => (
+          {tags.map(tag => (
             <MementoTag familyColour={family.colour}>{tag}</MementoTag>
           ))}
         </MementoTagsWrapper>

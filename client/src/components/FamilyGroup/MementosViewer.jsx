@@ -25,7 +25,7 @@ export default function MementosViewer(props) {
   return (
     <>
       {mementos && mementos.length === 0 ? (
-        <NoMementos />
+        <NoMementos familyColour={props.familyColour} />
       ) : (
         <MementoCardColumns>
           {filteredMementos.map(memento => (

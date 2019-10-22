@@ -1,10 +1,8 @@
 import { lighten, transparentize } from "polished";
 import styled, { css } from "styled-components";
-
 import { ButtonSecondary } from "../../ui/Buttons";
 import { Close } from "styled-icons/material/Close";
 import { NavLink } from "react-router-dom";
-import { Search } from "styled-icons/boxicons-regular/Search";
 
 export const SidebarContainer = styled.div.attrs({ "data-cy": "sidebar" })`
   min-width: ${props => props.theme.size.sidebar}px;
@@ -49,43 +47,6 @@ export const SidebarHeader = styled.div`
   height: 40px;
 `;
 
-export const SearchBar = styled.div`
-  width: 100%;
-  height: 30px;
-  border: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
-  background: #fcfcfc;
-  border-radius: 4px;
-  display: flex;
-  margin: 10px 0 20px 0;
-`;
-
-export const SearchIcon = styled(Search)`
-  color: rgba(75, 71, 75, 0.8);
-  position: relative;
-  transform: translateY(-50%);
-  top: 50%;
-  left: 12px;
-  margin-right: 16px;
-  width: 15px;
-`;
-
-export const SearchInput = styled.input`
-  position: relative;
-  background: transparent;
-  border: none;
-  font-family: "Rubik";
-  width: 100%;
-
-  &:focus,
-  &:active {
-    outline: none;
-  }
-
-  &:focus ${SearchBar} {
-    border-color: ${props => props.theme.palette.main};
-  }
-`;
-
 export const FamilyListSection = styled.div`
   border-top: 1px solid ${props => lighten(0.65, props.theme.palette.text)};
   margin: 12px 0;
@@ -128,7 +89,8 @@ export const TextList = styled(NavLink)`
     }
     /* padding-left: 18px;
     border-radius: 4px;
-    background-color: ${props => transparentize(0.9, props.theme.palette.main)} */
+    background-color: ${props =>
+      transparentize(0.9, props.theme.palette.main)} */
   }
 
   span {
@@ -167,7 +129,7 @@ export const FamilyList = styled(NavLink)`
     font-weight: 600;
   }
 
-  &.active > span> img {
+  &.active > span > img {
     border-color: ${props => props.familyColour || props.theme.palette.main};
   }
 `;
@@ -177,7 +139,9 @@ export const FamilyAvatar = styled.span`
   margin-bottom: 0;
 
   img {
-    border: 2px solid ${props => transparentize(0.35, props.familyColour || props.theme.palette.main)};
+    border: 2px solid
+      ${props =>
+        transparentize(0.35, props.familyColour || props.theme.palette.main)};
     border-radius: 50%;
     width: 48px;
     height: 48px;
@@ -206,7 +170,7 @@ export const CloseMenu = styled(Close)`
   }
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     display: none;
   }
 `;

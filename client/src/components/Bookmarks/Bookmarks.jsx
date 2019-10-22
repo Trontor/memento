@@ -11,7 +11,6 @@ import {
 import { MementoOverview, PeopleTags } from "../MementoCard/MementoCardStyles";
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
-
 import { Container } from "ui/Helpers";
 import { DELETE_BOOKMARK } from "mutations/Memento";
 import { GET_BOOKMARKS } from "queries/Bookmarks";
@@ -35,7 +34,7 @@ export default function Bookmarks(props) {
       refetch();
     },
   });
-  if (loading) {
+  if (loading && !bookmarks) {
     return <JollyLoader />;
   }
   if (bookmarks.length === 0) {
@@ -46,7 +45,7 @@ export default function Bookmarks(props) {
 
   return (
     <Container>
-      <Header underline>Saved Mementos</Header>
+      <Header underline>Bookmarks</Header>
 
       {/* Bookmarks Card*/}
       <BookmarksWrapper>
@@ -57,10 +56,15 @@ export default function Bookmarks(props) {
                 <img alt="blah" src={memento.media[0].url} />
               </BookmarkImg>
             )}
+            {/* {memento.media.length === 0 && (
+              <BookmarkImg>
+                <MementoDescription>{memento.description}</MementoDescription>
+              </BookmarkImg>
+            )} */}
             <BookmarkContent>
               {/* Memento Title */}
               <h3>{memento.title}</h3>
-              <MementoOverview familyColour={memento.family.colour}>
+              <MementoOverview>
                 {/* Memento Date */}
                 <span>
                   <i className="far fa-clock" />
@@ -126,11 +130,10 @@ export default function Bookmarks(props) {
                 >
                   {memento.family.name}
                 </span>
-                {/*change family group name */}
               </UploaderText>
               <BookmarksIcon>
                 <i
-                  className="far fa-bookmark"
+                  className="fas fa-bookmark"
                   onClick={() =>
                     removeBookmark({ variables: { id: memento.mementoId } })
                   }

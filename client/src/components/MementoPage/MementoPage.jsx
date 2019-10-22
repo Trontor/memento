@@ -19,7 +19,6 @@ import {
 } from "./MementoPageStyles";
 import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-
 import { BackButton } from "ui/Navigation";
 import { Container } from "ui/Helpers";
 import { GET_A_MEMENTO } from "queries/Memento";
@@ -35,6 +34,7 @@ export default function MementoPage() {
   // Load the memento data
   useQuery(GET_A_MEMENTO, {
     variables: { id: mementoId },
+    fetchPolicy: "network-only",
     onCompleted: data => {
       if (data && data.memento) setMemento(data.memento);
     },

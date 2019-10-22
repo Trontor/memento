@@ -9,23 +9,21 @@ export const BookmarksWrapper = styled.div`
   display: grid;
   grid-gap: 16px;
 
-  @media screen and (min-width: ${props =>
-  props.theme.breakpoints.mobile}) {
+  @media screen and (min-width: ${props => props.theme.breakpoints.mobile}) {
     grid-template-columns: 1fr 1fr;
   }
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletPortrait}) {
+      props.theme.breakpoints.tabletPortrait}) {
     grid-template-columns: 1fr 1fr 1fr;
   }
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     grid-template-columns: 1fr 1fr;
   }
 
-  @media screen and (min-width: ${props =>
-  props.theme.breakpoints.desktop}) {
+  @media screen and (min-width: ${props => props.theme.breakpoints.desktop}) {
     grid-template-columns: 1fr 1fr 1fr;
   }
 `;
@@ -48,8 +46,13 @@ export const BookmarkCard = styled.div`
 export const BookmarkImg = styled.div`
   background-color: ${props => props.theme.palette.foreground};
   width: 100%;
-  /* border-bottom: 1px solid ${props => transparentize(0.95, props.theme.palette.text)}; */
+  /* border-bottom: 1px solid ${props =>
+    transparentize(0.95, props.theme.palette.text)}; */
   padding: 12px;
+
+  MementoDescription{
+    height: 150px;
+  }
 `;
 
 export const BookmarkContent = styled.div`
