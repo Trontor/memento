@@ -1,10 +1,11 @@
-import { DashboardNotifier } from "./MonthlyMementoStyles";
+import { DashboardContainer, DashboardNotifier } from "./MonthlyMementoStyles";
 import React, { useState } from "react";
 
 import { GET_MONTHLY_MEMENTOS } from "queries/Dashboard";
 // import FamilyMementosViewer from "./FamilyMementosViewer";
 import { Header } from "ui/Typography";
 import JollyLoader from "components/JollyLoader/JollyLoader";
+import NoMonthliesYet from "./NoMonthliesYet";
 import YearlyMementosViewer from "./YearlyMementosViewer";
 import moment from "moment";
 import { useQuery } from "@apollo/react-hooks";
@@ -49,9 +50,9 @@ export default function MonthlyMementos(props) {
   console.log(yearGroups);
 
   return (
-    <>
+    <DashboardContainer>
       <DashboardNotifier>
-        Hi {props.user.firstName}!
+        <h2>Hi {props.user.firstName}!</h2>
         <p>
           Now that you have joined a famly group, allow us to introduce{" "}
           <span>Monthly Mementos</span>!
@@ -62,19 +63,19 @@ export default function MonthlyMementos(props) {
           in history.
         </p>
       </DashboardNotifier>
-      <Header underline>{currentMonth} Mementos</Header>
-      {yearGroups.map(group => (
-        <>
-          <h2>{group.key}</h2>
-          <YearlyMementosViewer year={group.key} mementos={group.value} />
-        </>
-      ))}
-      {/* {families.map(family => (
-        <>
-          <h2>{family.name}</h2>
-          <FamilyMementosViewer familyId={family.familyId} />
-        </>
-      ))} */}
-    </>
+        {yearGroups ? (
+          <>
+          <Header underline>{currentMonth} Mementos</Header>
+          {yearGroups.map(group => (
+            <>
+              <h2>{group.key}</h2>
+              <YearlyMementosViewer year={group.key} mementos={group.value} />
+            </>
+          ))}
+          </>
+        ):
+        <NoMonthliesYet currentMonth={currentMonth}/>
+      }
+    </DashboardContainer>
   );
 }
