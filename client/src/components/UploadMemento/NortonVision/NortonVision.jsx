@@ -47,7 +47,7 @@ export default function NortonVision() {
           <Brain/>
           {nortonTags.length > 0 ? (
             <>
-              <h2>👀 Norton Vision 👀</h2>
+              <h2><span role="img" aria-label="emoji">👀</span> Norton Vision <span role="img" aria-label="emoji">👀</span></h2>
               has identified the following tags for  <MementoName>Memento Title</MementoName>:
               <NortonTagsWrapper>
                 {nortonTags.map(tag =>(
@@ -64,7 +64,7 @@ export default function NortonVision() {
               </SelectMsg>
                 <NortonRating>
                   <div>5 out of 5 tags selected.</div>
-                  {selectedTags == 1 ? (
+                  {selectedTags === 1 ? (
                     <span>Norton is doing an excellent job! :D</span>
                   ):
                   selectedTags >= 0.7 && selectedTags < 1 ? (
@@ -83,7 +83,7 @@ export default function NortonVision() {
             </>
           ) : (
             <>
-              <h2>😬 Well that's embarassing...</h2>
+              <h2><span role="img" aria-label="emoji">😬</span> Well that's embarassing...</h2>
               Norton Vision has failed to read your memento.
             </>
           )
