@@ -1,4 +1,7 @@
-import { MementoTag, MementoTagsWrapper } from "components/MementoCard/MementoCardStyles";
+import {
+  MementoTag,
+  MementoTagsWrapper,
+} from "components/MementoCard/MementoCardStyles";
 
 import styled from "styled-components";
 import { transparentize } from "polished";
@@ -17,8 +20,7 @@ export const Card = styled.div`
     margin-top: 0;
   }
 
-  @media screen and (min-width: ${props =>
-  props.theme.breakpoints.desktop}) {
+  @media screen and (min-width: ${props => props.theme.breakpoints.desktop}) {
     grid-template-columns: 55% auto;
   }
 `;
@@ -37,17 +39,16 @@ export const LargerTag = styled(MementoTag)`
   font-size: 13px;
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletPortrait}) {
+      props.theme.breakpoints.tabletPortrait}) {
     font-size: 15px;
   }
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     font-size: 11px;
   }
 
-  @media screen and (min-width: ${props =>
-  props.theme.breakpoints.desktop}) {
+  @media screen and (min-width: ${props => props.theme.breakpoints.desktop}) {
     font-size: 14px;
   }
 `;
@@ -61,8 +62,7 @@ export const TagSectionWrapper = styled(MementoTagsWrapper)`
 export const TagsWrapper = styled.div`
   margin-top: 20px;
 
-  @media screen and (min-width: ${props =>
-  props.theme.breakpoints.desktop}) {
+  @media screen and (min-width: ${props => props.theme.breakpoints.desktop}) {
     position: absolute;
     bottom: 0;
     margin-bottom: 20px;

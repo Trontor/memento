@@ -11,3 +11,7 @@ export const FamilyGroup = styled.span`
 export const NoViewMementoIcon = styled(NoMementosIcon)`
   height: 150px;
 `;
+
+// export const MementoInfo = styled.div`
+//   display: flex;
+// `;

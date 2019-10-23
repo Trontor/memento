@@ -11,6 +11,7 @@ import {
   UploadDate,
   Bookmark,
   CardContent,
+  MementoInfo,
 } from "../MementoCard/MementoCardStyles";
 import {
   Card,
@@ -142,82 +143,83 @@ export default function MementoCard(props) {
               </Bookmark>
             </CardOptions>
           </AuthorWrapper>
-          {/* Memento  Title */}
-          <MementoTitle onClick={() => history.push("/memento/" + mementoId)}>
-            {title}
-          </MementoTitle>
-          <MementoOverview>
-            {/* Dates */}
-            <span>
-              <i className="far fa-clock" />
-              {mementoDate}
-            </span>
-            {/* Location */}
-            {location && (
+          <MementoInfo>
+            {/* Memento  Title */}
+            <MementoTitle onClick={() => history.push("/memento/" + mementoId)}>
+              {title}
+            </MementoTitle>
+            <MementoOverview>
+              {/* Dates */}
               <span>
-                <i className="fas fa-map-marker-alt"></i>
-                {location}
+                <i className="far fa-clock" />
+                {mementoDate}
               </span>
+              {/* Location */}
+              {location && (
+                <span>
+                  <i className="fas fa-map-marker-alt"></i>
+                  {location}
+                </span>
+              )}
+
+              {/* People Tags */}
+              {people && people.length > 0 && (
+                <span>
+                  <i className="fas fa-user-tag"></i>
+                  <div>
+                    {people.map(person => (
+                      <PeopleTags>
+                        {person.firstName} {person.lastName}
+                      </PeopleTags>
+                    ))}
+                  </div>
+                </span>
+              )}
+              {/* Beneficiary Tags */}
+              {beneficiaries && beneficiaries.length > 0 && (
+                <span>
+                  <i class="far fa-handshake"></i>
+                  <div>
+                    {beneficiaries.map(beneficiary => (
+                      <PeopleTags>
+                        {beneficiary.firstName} {beneficiary.lastName}
+                      </PeopleTags>
+                    ))}
+                  </div>
+                </span>
+              )}
+            </MementoOverview>
+
+            {/* Description */}
+            {media.length > 0 && (
+              <MementoDescription>{description}</MementoDescription>
             )}
 
-            {/* People Tags */}
-            {people && people.length > 0 && (
-              <span>
-                <i className="fas fa-user-tag"></i>
-                <div>
-                  {people.map(person => (
-                    <PeopleTags>
-                      {person.firstName} {person.lastName}
-                    </PeopleTags>
+            {/* Tags */}
+            <TagsWrapper>
+              {tags && props.tags.length > 0 && (
+                <TagSectionWrapper>
+                  <i class="fas fa-tags"></i>
+                  {tags.map(tag => (
+                    <MementoTag>{tag}</MementoTag>
                   ))}
-                </div>
-              </span>
-            )}
-            {/* Beneficiary Tags */}
-            {beneficiaries && beneficiaries.length > 0 && (
-              <span>
-                <i class="far fa-handshake"></i>
-                <div>
-                  {beneficiaries.map(beneficiary => (
-                    <PeopleTags>
-                      {beneficiary.firstName} {beneficiary.lastName}
-                    </PeopleTags>
+                </TagSectionWrapper>
+              )}
+              {/* Rekognition Tags */}
+              {detectedLabels && detectedLabels.length > 0 && (
+                <TagSectionWrapper>
+                  <i class="far fa-eye"></i>
+                  {detectedLabels.map(result => (
+                    <MementoTag key={result.name}>
+                      {result.name.toLowerCase()}{" "}
+                      <span>{Math.round(result.confidence, 0)}%</span>
+                    </MementoTag>
                   ))}
-                </div>
-              </span>
-            )}
-          </MementoOverview>
+                </TagSectionWrapper>
+              )}
+            </TagsWrapper>
 
-          {/* Description */}
-          {media.length > 0 && (
-            <MementoDescription>{description}</MementoDescription>
-          )}
-
-          {/* Tags */}
-          <TagsWrapper>
-            {tags && props.tags.length > 0 && (
-              <TagSectionWrapper>
-                <i class="fas fa-tags"></i>
-                {tags.map(tag => (
-                  <MementoTag>{tag}</MementoTag>
-                ))}
-              </TagSectionWrapper>
-            )}
-            {/* Rekognition Tags */}
-            {detectedLabels && detectedLabels.length > 0 && (
-              <TagSectionWrapper>
-                <i class="far fa-eye"></i>
-                {detectedLabels.map(result => (
-                  <MementoTag key={result.name}>
-                    {result.name.toLowerCase()}{" "}
-                    <span>{Math.round(result.confidence, 0)}%</span>
-                  </MementoTag>
-                ))}
-              </TagSectionWrapper>
-            )}
-          </TagsWrapper>
-
-          {/* Tags
+            {/* Tags
           {props.tags && props.tags.length > 0 && (
             <MementoTagsWrapper>
               <i class="fas fa-tags"></i>
@@ -228,7 +230,7 @@ export default function MementoCard(props) {
           )}
 
           {/* Rekognition Tags */}
-          {/* {detectedLabels && detectedLabels.length > 0 && (
+            {/* {detectedLabels && detectedLabels.length > 0 && (
             <MementoTagsWrapper familyColour={family.colour}>
               <i class="far fa-eye"></i>
               {detectedLabels.map(result => (
@@ -239,6 +241,7 @@ export default function MementoCard(props) {
               ))}
             </MementoTagsWrapper>
           )} */}
+          </MementoInfo>
         </CardContent>
       </Card>
     </Container>
