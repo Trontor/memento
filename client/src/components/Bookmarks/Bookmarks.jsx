@@ -8,9 +8,14 @@ import {
   UploaderBox,
   UploaderText,
 } from "./BookmarksStyles";
-import { MementoOverview, PeopleTags } from "../MementoCard/MementoCardStyles";
+import {
+  MementoOverview,
+  PeopleTags,
+  MementoDescription,
+} from "../MementoCard/MementoCardStyles";
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useHistory } from "react-router";
 import { Container } from "ui/Helpers";
 import { DELETE_BOOKMARK } from "mutations/Memento";
 import { GET_BOOKMARKS } from "queries/Bookmarks";
@@ -20,8 +25,9 @@ import NoBookmarks from "./NoBookmarks";
 import moment from "moment";
 
 export default function Bookmarks(props) {
+  const history = useHistory();
+  const { mementoId } = props;
   const [bookmarks, setBookmarks] = useState([]);
-
   const { refetch, loading } = useQuery(GET_BOOKMARKS, {
     fetchPolicy: "cache-and-network",
     onCompleted: data => {
@@ -29,6 +35,7 @@ export default function Bookmarks(props) {
       console.log(data);
     },
   });
+
   const [removeBookmark] = useMutation(DELETE_BOOKMARK, {
     onCompleted: data => {
       refetch();
@@ -46,22 +53,27 @@ export default function Bookmarks(props) {
   return (
     <Container>
       <Header underline>Bookmarks</Header>
-
       {/* Bookmarks Card*/}
       <BookmarksWrapper>
         {bookmarks.map(memento => (
           <BookmarkCard>
             {memento.media.length > 0 && (
-              <BookmarkImg>
+              <BookmarkImg
+                onClick={() => history.push("/memento/" + mementoId)}
+              >
                 <img alt="blah" src={memento.media[0].url} />
               </BookmarkImg>
             )}
-            {/* {memento.media.length === 0 && (
-              <BookmarkImg>
+            {memento.media.length === 0 && (
+              <BookmarkImg
+                onClick={() => history.push("/memento/" + mementoId)}
+              >
                 <MementoDescription>{memento.description}</MementoDescription>
               </BookmarkImg>
-            )} */}
-            <BookmarkContent>
+            )}
+            <BookmarkContent
+              onClick={() => history.push("/memento/" + mementoId)}
+            >
               {/* Memento Title */}
               <h3>{memento.title}</h3>
               <MementoOverview>
@@ -134,9 +146,9 @@ export default function Bookmarks(props) {
               <BookmarksIcon>
                 <i
                   className="fas fa-bookmark"
-                  onClick={() =>
-                    removeBookmark({ variables: { id: memento.mementoId } })
-                  }
+                  onClick={() => {
+                    removeBookmark({ variables: { id: memento.mementoId } });
+                  }}
                 ></i>
               </BookmarksIcon>
             </UploaderBox>
