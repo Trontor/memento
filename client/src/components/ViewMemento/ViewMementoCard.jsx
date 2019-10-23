@@ -12,12 +12,13 @@ import {
   Bookmark,
   CardContent,
   MementoInfo,
+  MementoTagsWrapper,
 } from "../MementoCard/MementoCardStyles";
 import {
   Card,
   MementoImg,
-  TagSectionWrapper,
-  TagsWrapper,
+  // TagSectionWrapper,
+  // TagsWrapper,
 } from "../MementoPage/MementoPageStyles";
 import { Container } from "ui/Helpers";
 import { FamilyGroup } from "./ViewMementoStyles";
@@ -196,51 +197,27 @@ export default function MementoCard(props) {
             )}
 
             {/* Tags */}
-            <TagsWrapper>
-              {tags && props.tags.length > 0 && (
-                <TagSectionWrapper>
-                  <i class="fas fa-tags"></i>
-                  {tags.map(tag => (
-                    <MementoTag>{tag}</MementoTag>
-                  ))}
-                </TagSectionWrapper>
-              )}
-              {/* Rekognition Tags */}
-              {detectedLabels && detectedLabels.length > 0 && (
-                <TagSectionWrapper>
-                  <i class="far fa-eye"></i>
-                  {detectedLabels.map(result => (
-                    <MementoTag key={result.name}>
-                      {result.name.toLowerCase()}{" "}
-                      <span>{Math.round(result.confidence, 0)}%</span>
-                    </MementoTag>
-                  ))}
-                </TagSectionWrapper>
-              )}
-            </TagsWrapper>
 
-            {/* Tags
-          {props.tags && props.tags.length > 0 && (
-            <MementoTagsWrapper>
-              <i class="fas fa-tags"></i>
-              {props.tags.map(tag => (
-                <MementoTag>{tag}</MementoTag>
-              ))}
-            </MementoTagsWrapper>
-          )}
-
-          {/* Rekognition Tags */}
-            {/* {detectedLabels && detectedLabels.length > 0 && (
-            <MementoTagsWrapper familyColour={family.colour}>
-              <i class="far fa-eye"></i>
-              {detectedLabels.map(result => (
-                <MementoTag key={result.name} familyColour={family.colour}>
-                  {result.name.toLowerCase()}{" "}
-                  <span>{Math.round(result.confidence, 0)}%</span>
-                </MementoTag>
-              ))}
-            </MementoTagsWrapper>
-          )} */}
+            {tags && props.tags.length > 0 && (
+              <MementoTagsWrapper>
+                <i class="fas fa-tags"></i>
+                {tags.map(tag => (
+                  <MementoTag>{tag}</MementoTag>
+                ))}
+              </MementoTagsWrapper>
+            )}
+            {/* Rekognition Tags */}
+            {detectedLabels && detectedLabels.length > 0 && (
+              <MementoTagsWrapper>
+                <i class="far fa-eye"></i>
+                {detectedLabels.map(result => (
+                  <MementoTag key={result.name}>
+                    {result.name.toLowerCase()}{" "}
+                    <span>{Math.round(result.confidence, 0)}%</span>
+                  </MementoTag>
+                ))}
+              </MementoTagsWrapper>
+            )}
           </MementoInfo>
         </CardContent>
       </Card>
