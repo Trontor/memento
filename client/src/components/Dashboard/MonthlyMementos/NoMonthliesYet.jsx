@@ -1,6 +1,5 @@
 import { NoMonthliesWrapper } from "./MonthlyMementoStyles";
 import React from 'react'
-import { TextWrapper } from "components/Dashboard/NewUser/NewUserStyles";
 
 export default function NoMonthliesYet(props) {
   return (
