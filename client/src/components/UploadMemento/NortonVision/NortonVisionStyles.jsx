@@ -1,5 +1,7 @@
-import styled from "styled-components";
-import { transparentize } from "polished";
+import { adjustHue, darken, transparentize } from "polished";
+import styled, {css} from "styled-components";
+
+import { ButtonPrimary } from "ui/Buttons";
 
 export const NortonBox = styled.div`
   width: 100%;
@@ -24,52 +26,107 @@ export const MementoName = styled.span`
 `;
 
 export const NortonTagsWrapper = styled.ul`
-  margin: 0 auto;
+  margin: 0px auto;
   width: 80%;
   display: flex;
   flex-wrap: wrap;
-  padding: 0;
-  width: 100%;
-  margin: 0;
+  padding: 60px 0 40px 0;
   align-items: center;
-  font-size: 48px;
+  font-size: 24px;
+  justify-content: left;
 
   i {
     color: ${props => props.familyColour || props.theme.palette.main};
     margin-right: 8px;
     width: 20px;
   }
-
-  &:last-of-type {
-    margin-top: 0.6em;
-
-    &:first-child {
-      margin: 0;
-    }
-  }
 `;
 
 export const NortonTag = styled.li`
   font-family: "Livvic", sans-serif;
   font-weight: 700;
-  color: ${props => props.familyColour || props.theme.palette.main};
-  border: 1px solid ${props => transparentize(0.8, props.familyColour || props.theme.palette.main)};
+  color: ${props => transparentize(0.4, props.familyColour || props.theme.palette.main)};
+  border: 1px solid ${props => transparentize(0.7, props.familyColour || props.theme.palette.main)};
   display: inline-block;
-  padding: 0.5em 0.7em;
-  margin-right: 0.2em;
-  margin-bottom: 0.2em;
+  padding: 0.3em 0.7em;
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
   border-radius: 0.3em;
   cursor: pointer;
   ${props => props.theme.mixins.hoverFade};
-  background-color: ${props => transparentize(0.95, props.familyColour || props.theme.palette.main)};
+  background-color: ${props => transparentize(0.97, props.familyColour || props.theme.palette.main)};
 
   &:hover {
     color: ${props => props.familyColour || props.theme.palette.main};
-    border-color: ${props => transparentize(0.7, props.familyColour || props.theme.palette.main)};
-    box-shadow: inset 0 0 0 1px ${props => transparentize(0.7, props.familyColour || props.theme.palette.main)};
+    border-color: ${props => transparentize(0.4, props.familyColour || props.theme.palette.main)};
+    background-color: ${props => transparentize(0.9, props.familyColour || props.theme.palette.main)};
+
+    span {
+      color: ${props => transparentize(0.4, props.theme.palette.text)};
+    }
   }
+
   span {
-    color: gray;
-    font-size: 10px;
+    color: ${props => transparentize(0.7, props.theme.palette.text)};
+    font-size: 0.7em;
+    display: inline-block;
+    margin-left: 10px;
   }
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  ${({ selected }) =>
+    selected &&
+    css`
+      border-color: ${props => transparentize(0.15, props.theme.palette.main)};
+      background-color: ${props => adjustHue(-0.4, transparentize(0.9, props.familyColour || props.theme.palette.main))};
+      color: ${props => darken(0.08, props.theme.palette.main)};
+
+      span {
+        color: ${props => transparentize(0.2, props.theme.palette.main)};
+      }
+
+      &:hover {
+        border-color: ${props => transparentize(0.5, props.theme.palette.main)};
+        background-color: ${props => transparentize(0.95, props.familyColour || props.theme.palette.main)};
+        color: ${props => transparentize(0.3, props.theme.palette.main)};
+
+        span {
+          color: ${props => transparentize(0.7, props.theme.palette.text)};
+        }
+      }
+    `};
+`;
+
+export const SelectMsg = styled.span`
+  font-size: 21px;
+  display: block;
+  margin-bottom: 30px;
+  font-family: "Rubik", sans-serif;
+`;
+
+export const NortonRating = styled.div`
+  > div {
+    margin: 0.75em;
+    color: ${props=> transparentize(0.4, props.theme.palette.text)};
+
+     > span {
+      color: ${props=> props.theme.palette.main};
+     }
+  }
+
+  margin-top: 10px;
+  color: ${props=> props.theme.palette.main};
+  display: block;
+  font-size: 0.9em;
+  font-weight: bold;
+`;
+
+export const DoneBtn = styled(ButtonPrimary)`
+  font-size: 24px;
+  margin: 30px 0 20px 0;
+  padding: 16px 28px;
+  border-radius: 6px;
 `;

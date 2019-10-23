@@ -12,7 +12,7 @@ export const ButtonPrimary = styled.button.attrs(() => ({ type: "button" }))`
   color: white;
   border: 1px solid ${props => props.theme.palette.main};
   padding: 10px 20px;
-  font-size: 15px;
+  font-size: 16px;
   border-radius: 4px;
   ${props => props.theme.mixins.hoverFade};
   margin-right: ${props => (props.spacing ? "15px" : "0")};
@@ -41,7 +41,7 @@ export const ButtonSecondary = styled.button.attrs(() => ({ type: "button" }))`
   padding: 10px 20px;
   border-radius: 4px;
   display: inline-block;
-  font-size: 15px;
+  font-size: 16px;
   height: 42px;
   ${props => props.theme.mixins.hoverFade};
 
