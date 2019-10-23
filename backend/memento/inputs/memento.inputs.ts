@@ -4,6 +4,7 @@ import {
   DeleteMementoMediaInput,
   UpdateMementoMediaInput,
 } from "./media.inputs";
+import { DetectionLabelInput } from "./label.inputs";
 
 @InputType()
 export class CreateMementoDateInput {
@@ -84,6 +85,9 @@ export class UpdateMementoInput {
 
   @Field(type => [String], { nullable: true })
   tags?: string[];
+
+  @Field(type => [DetectionLabelInput], { nullable: true })
+  detectedLabels?: DetectionLabelInput[];
 
   @Field(type => [CreateMementoDateInput], { nullable: true })
   dates?: CreateMementoDateInput[];

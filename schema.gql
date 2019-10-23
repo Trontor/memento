@@ -60,6 +60,11 @@ type DetectionLabel {
   confidence: Float!
 }
 
+input DetectionLabelInput {
+  name: String!
+  confidence: Float!
+}
+
 type FailedInviteOutput {
   email: String!
   error: String!
@@ -217,6 +222,7 @@ input UpdateMementoInput {
   people: [ID!]
   beneficiaries: [ID!]
   tags: [String!]
+  detectedLabels: [DetectionLabelInput!]
   dates: [CreateMementoDateInput!]
   updateMedia: [UpdateMementoMediaInput!]
   appendMedia: [CreateMementoMediaInput!]
