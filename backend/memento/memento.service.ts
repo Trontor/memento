@@ -247,7 +247,7 @@ export class MementoService {
     familyId: string,
     tags?: string[],
     lastId?: string,
-    pageSize: number = 10,
+    pageSize: number = 50,
   ): Promise<MementoDocument[]> {
     const conditions: IFindMementoConditions = {
       inFamily: fromHexStringToObjectId(familyId),

@@ -14,7 +14,7 @@ import {
 } from "./HomeStyles";
 
 import { Logo } from "ui/Logos";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createRef } from "react";
 
 const features = [
   {
@@ -66,6 +66,7 @@ let bubbleBackground = (
 
 export default function Home(props) {
   const [loggedIn, setLoggedIn] = useState(false);
+  const featuresDiv = createRef();
   useEffect(() => {
     if (localStorage.getItem("AUTH-TOKEN")) {
       setLoggedIn(true);
@@ -98,11 +99,17 @@ export default function Home(props) {
             <ButtonPrimary onClick={() => props.history.push("/signup")}>
               Sign Up
             </ButtonPrimary>
-            <ButtonSecondary>Learn More</ButtonSecondary>
+            <ButtonSecondary
+              onClick={() =>
+                featuresDiv.current.scrollIntoView({ behavior: "smooth" })
+              }
+            >
+              Learn More
+            </ButtonSecondary>
           </PitchActions>
         </IntroContent>
       </Intro>
-      <FeaturesOverview>
+      <FeaturesOverview ref={featuresDiv}>
         <FeaturesContentWrapper>
           {features.map(feature => (
             <FeatureWrapper>
