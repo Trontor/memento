@@ -110,6 +110,9 @@ export const UploaderAvatar = styled(AuthorAvatar)`
 
 export const BookmarksIcon = styled(CardOptions)`
   margin-top: 7px;
+  i {
+    color: ${props => props.theme.palette.main};
+  }
 `;
 
 export const NoBookmarksIcon = styled(BookBookmark)`
