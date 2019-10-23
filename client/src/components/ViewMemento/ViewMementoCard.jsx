@@ -14,9 +14,9 @@ import {
   MementoInfo,
   MementoTagsWrapper,
 } from "../MementoCard/MementoCardStyles";
-import { Card, MementoImg } from "../MementoPage/MementoPageStyles";
+import { Card } from "../MementoPage/MementoPageStyles";
 import { Container } from "ui/Helpers";
-import { FamilyGroup } from "./ViewMementoStyles";
+import { FamilyGroup, MementoImg } from "./ViewMementoStyles";
 import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
 import moment from "moment";
 import React, { useState } from "react";
