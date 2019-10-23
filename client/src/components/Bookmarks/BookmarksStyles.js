@@ -46,6 +46,7 @@ export const BookmarkImg = styled.div`
   padding: 12px;
   margin: auto;
   height: 180px;
+  cursor: pointer;
 
   img {
     width: 100%;
@@ -67,6 +68,7 @@ export const BookmarkContent = styled.div`
 
   h3 {
     font-size: 15px;
+    cursor: pointer;
   }
 `;
 

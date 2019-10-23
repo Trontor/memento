@@ -59,23 +59,23 @@ export default function Bookmarks(props) {
           <BookmarkCard>
             {memento.media.length > 0 && (
               <BookmarkImg
-                onClick={() => history.push("/memento/" + mementoId)}
+                onClick={() => history.push("/memento/" + memento.mementoId)}
               >
                 <img alt="blah" src={memento.media[0].url} />
               </BookmarkImg>
             )}
             {memento.media.length === 0 && (
               <BookmarkImg
-                onClick={() => history.push("/memento/" + mementoId)}
+                onClick={() => history.push("/memento/" + memento.mementoId)}
               >
                 <MementoDescription>{memento.description}</MementoDescription>
               </BookmarkImg>
             )}
-            <BookmarkContent
-              onClick={() => history.push("/memento/" + mementoId)}
-            >
+            <BookmarkContent>
               {/* Memento Title */}
-              <h3>{memento.title}</h3>
+              <h3 onClick={() => history.push("/memento/" + memento.mementoId)}>
+                {memento.title}
+              </h3>
               <MementoOverview>
                 {/* Memento Date */}
                 <span>
