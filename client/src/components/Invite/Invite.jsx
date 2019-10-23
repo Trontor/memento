@@ -142,9 +142,7 @@ export default function InviteFamily() {
   };
 
   if (inviteFamilies.length === 0) {
-    return (
-      <InviteNoFamilies/>
-    )
+    return <InviteNoFamilies />;
   }
 
   return (
