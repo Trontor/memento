@@ -33,6 +33,7 @@ export default function UserProfile() {
   const [user, setUser] = useState(null);
   const { error, loading } = useQuery(GET_USER, {
     variables: { id: params.id },
+    fetchPolicy: "cache-and-network",
     onCompleted: data => {
       if (data && data.user) {
         setUser(data.user);

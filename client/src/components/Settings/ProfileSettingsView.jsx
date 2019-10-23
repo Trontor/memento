@@ -30,6 +30,7 @@ import GET_CURRENT_USER from "queries/GetCurrentUser";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { UPDATE_USER } from "mutations/User";
 import JollyLoader from "components/JollyLoader/JollyLoader";
+import imageCompression from "browser-image-compression";
 
 const convertUserDataToFormValues = user => {
   // Extract 'country' and 'region' from the concatenated format
@@ -62,15 +63,12 @@ const convertUserDataToFormValues = user => {
 export default function SettingsProfile() {
   // User data
   const [user, setUser] = useState(null);
-  // const [placesLived, setPlacesLived] = useState([
-  //   { city: "", dateMoved: null },
-  // ]);
+  // Optimistic updating changes for file compression before mutation
+  const [optimisticLoading, setOptimisticLoading] = useState(false);
   // List of possible genders (infinite)
   const genderList = ["Male", "Female", "Other"];
-
   // Stores information about the current user, and the form values
   let defaultFormValues = null;
-
   // Query to retrieve user settings, and mutation to update user settings
   const currentUserStatus = useQuery(GET_CURRENT_USER, {
     fetchPolicy: "cache-and-network",
@@ -78,13 +76,16 @@ export default function SettingsProfile() {
       const user = data.currentUser;
       console.log("Loaded User Data:", user);
       setUser(user);
-      // setPlacesLived(user.placesLived);
     },
   });
-
   const [updateUser, updateUserStatus] = useMutation(UPDATE_USER, {
+    onError: error => {
+      console.log("An error occured while updating the user:", error);
+      setOptimisticLoading(false);
+    },
     onCompleted: () => {
       setUser(null);
+      setOptimisticLoading(false);
     },
   });
   useEffect(() => {
@@ -95,7 +96,12 @@ export default function SettingsProfile() {
   }, [user, currentUserStatus]);
 
   // Loading state
-  if (currentUserStatus.loading || updateUserStatus.loading || !user) {
+  if (
+    optimisticLoading ||
+    currentUserStatus.loading ||
+    updateUserStatus.loading ||
+    !user
+  ) {
     return <JollyLoader />;
   }
   defaultFormValues = convertUserDataToFormValues(user);
@@ -124,7 +130,8 @@ export default function SettingsProfile() {
    * Handles the Formik form submit (when the 'Save Changes' button is pressed)
    * @param {any} values Formik values object
    */
-  const handleFormSubmit = values => {
+  const handleFormSubmit = async values => {
+    setOptimisticLoading(true);
     // Concatenate location if both country and region values exist
     let location;
     if (values.locationCountry && values.locationRegion) {
@@ -143,7 +150,9 @@ export default function SettingsProfile() {
     };
     // Only add the "image" attribute if a new file has been selected
     if (values.file) {
-      payload["image"] = values.file;
+      payload["image"] = await imageCompression(values.file, {
+        maxWidthOrHeight: 1200,
+      });
     }
     console.log("Payload:", payload);
     updateUser({ variables: { input: payload } });
