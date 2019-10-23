@@ -8,14 +8,13 @@ import {
   MementoOverview,
   PeopleTags,
   UploadDate,
+  MementoTagsWrapper,
 } from "components/MementoCard/MementoCardStyles";
 import {
   BackButtonDiv,
   Card,
   LargerTag,
   MementoImg,
-  TagSectionWrapper,
-  TagsWrapper,
 } from "./MementoPageStyles";
 import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
@@ -159,33 +158,33 @@ export default function MementoPage() {
           <MementoDescription>{memento.description}</MementoDescription>
 
           {/* Tags */}
-          <TagsWrapper>
-            {memento.tags && memento.tags.length > 0 && (
-              <TagSectionWrapper familyColour={memento.family.colour}>
-                <i class="fas fa-tags"></i>
-                {memento.tags.map(tag => (
-                  <LargerTag familyColour={memento.family.colour}>
-                    {tag}
-                  </LargerTag>
-                ))}
-              </TagSectionWrapper>
-            )}
-            {/* Rekognition Tags */}
-            {memento.detectedLabels && memento.detectedLabels.length > 0 && (
-              <TagSectionWrapper familyColour={memento.family.colour}>
-                <i class="far fa-eye"></i>
-                {memento.detectedLabels.map(result => (
-                  <LargerTag
-                    key={result.name}
-                    familyColour={memento.family.colour}
-                  >
-                    {result.name.toLowerCase()}{" "}
-                    <span>{Math.round(result.confidence, 0)}%</span>
-                  </LargerTag>
-                ))}
-              </TagSectionWrapper>
-            )}
-          </TagsWrapper>
+          {/* <TagsWrapper> */}
+          {memento.tags && memento.tags.length > 0 && (
+            <MementoTagsWrapper familyColour={memento.family.colour}>
+              <i class="fas fa-tags"></i>
+              {memento.tags.map(tag => (
+                <LargerTag familyColour={memento.family.colour}>
+                  {tag}
+                </LargerTag>
+              ))}
+            </MementoTagsWrapper>
+          )}
+          {/* Rekognition Tags */}
+          {memento.detectedLabels && memento.detectedLabels.length > 0 && (
+            <MementoTagsWrapper familyColour={memento.family.colour}>
+              <i class="far fa-eye"></i>
+              {memento.detectedLabels.map(result => (
+                <LargerTag
+                  key={result.name}
+                  familyColour={memento.family.colour}
+                >
+                  {result.name.toLowerCase()}{" "}
+                  <span>{Math.round(result.confidence, 0)}%</span>
+                </LargerTag>
+              ))}
+            </MementoTagsWrapper>
+          )}
+          {/* </TagsWrapper> */}
         </CardContent>
       </Card>
     </Container>

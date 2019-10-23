@@ -14,12 +14,7 @@ import {
   MementoInfo,
   MementoTagsWrapper,
 } from "../MementoCard/MementoCardStyles";
-import {
-  Card,
-  MementoImg,
-  // TagSectionWrapper,
-  // TagsWrapper,
-} from "../MementoPage/MementoPageStyles";
+import { Card, MementoImg } from "../MementoPage/MementoPageStyles";
 import { Container } from "ui/Helpers";
 import { FamilyGroup } from "./ViewMementoStyles";
 import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";

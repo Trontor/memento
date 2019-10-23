@@ -53,22 +53,6 @@ export const LargerTag = styled(MementoTag)`
   }
 `;
 
-export const TagSectionWrapper = styled(MementoTagsWrapper)`
-  i {
-    font-size: 16px;
-  }
-`;
-
-export const TagsWrapper = styled.div`
-  margin-top: 20px;
-
-  @media screen and (min-width: ${props => props.theme.breakpoints.desktop}) {
-    position: absolute;
-    bottom: 0;
-    margin-bottom: 20px;
-  }
-`;
-
 export const BackButtonDiv = styled.button`
   padding: 10px 10px 10px 0;
   margin-bottom: 10px;
