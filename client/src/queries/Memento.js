@@ -106,6 +106,9 @@ export const GET_MY_MEMENTOS = gql`
 
 export const GET_A_MEMENTO = gql`
   query getMemento($id: ID!) {
+    currentUser {
+      userId
+    }
     memento(mementoId: $id) {
       mementoId
       title
