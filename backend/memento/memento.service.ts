@@ -131,6 +131,11 @@ export class MementoService {
     return { memento, user: userDoc };
   }
 
+  /**
+   * Updates an existing Memento.
+   *
+   * @param input input for updating Memento
+   */
   async updateMemento(input: UpdateMementoInput): Promise<Memento> {
     // validate fields
     validateUpdateMementoInput(input);
@@ -163,6 +168,8 @@ export class MementoService {
     if (rest.location) updateObj.$set.location = rest.location;
     if (rest.description) updateObj.$set.description = rest.description;
     if (rest.tags) updateObj.$set.tags = preprocessTags(rest.tags);
+    if (rest.detectedLabels)
+      updateObj.$set.detectedLabels = rest.detectedLabels;
     if (_beneficiaries) updateObj.$set._beneficiaries = _beneficiaries;
     if (_people) updateObj.$set._people = _people;
 
