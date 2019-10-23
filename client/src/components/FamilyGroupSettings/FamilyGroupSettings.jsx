@@ -41,8 +41,21 @@ export default function FamilyGroupSettings(props) {
   }
 
   // Colour Theme Selection for Family Group
-  const colorSelection = ["#FF7F5F", "#FF3221", "#FF337D", "#EA40E0", "#9127D2", "#5627D2", "#274CE3", "#2883FF", "#0099BE", "#00C494", "#00BE4E", "#FFB700", "#F97908"]
-
+  const colorSelection = [
+    "#FF7F5F",
+    "#FF3221",
+    "#FF337D",
+    "#EA40E0",
+    "#9127D2",
+    "#5627D2",
+    "#274CE3",
+    "#2883FF",
+    "#0099BE",
+    "#00C494",
+    "#00BE4E",
+    "#FFB700",
+    "#F97908",
+  ];
 
   /**
    * Handles the Formik form submit (when the 'Save Changes' button is pressed)
@@ -170,14 +183,14 @@ export default function FamilyGroupSettings(props) {
                 </MembersList>
               </FormSection>
               {/* Save Changes Button  */}
-              {props.dirty && (
+              {
                 <ButtonPrimary
                   type="submit"
                   style={{ float: "right", marginBottom: "10px" }}
                 >
                   Save Changes
                 </ButtonPrimary>
-              )}
+              }
             </Container>
           </form>
         );

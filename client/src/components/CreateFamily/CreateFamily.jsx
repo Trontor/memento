@@ -16,9 +16,10 @@ import { Formik } from "formik";
 import { Header } from "ui/Typography";
 import JollyLoader from "components/JollyLoader/JollyLoader";
 import { PickerWrapper } from "./CreateFamilyStyles";
-import React from "react";
+import React, { useState } from "react";
 import { StyledDropzone } from "components/FileDropzone/FileDropzone";
 import { useMutation } from "@apollo/react-hooks";
+import imageCompression from "browser-image-compression";
 
 const MAX_FILE_SIZE = 160 * 1024 * 1024;
 const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
@@ -49,41 +50,70 @@ const loadingFamilyQuotes = [
 ];
 
 // Colour Theme Selection for Family Group
-const colorSelection = ["#FF7F5F", "#FF3221", "#FF337D", "#EA40E0", "#9127D2", "#5627D2", "#274CE3", "#2883FF", "#0099BE", "#00C494", "#00BE4E", "#FFB700", "#F97908"]
+const colorSelection = [
+  "#FF7F5F",
+  "#FF3221",
+  "#FF337D",
+  "#EA40E0",
+  "#9127D2",
+  "#5627D2",
+  "#274CE3",
+  "#2883FF",
+  "#0099BE",
+  "#00C494",
+  "#00BE4E",
+  "#FFB700",
+  "#F97908",
+];
 
 export default function CreateFamily(props) {
-  const [createNewFamily, { data, loading /* error */ }] = useMutation(
-    CREATE_NEW_FAMILY,
-  );
+  const [createNewFamily, { loading }] = useMutation(CREATE_NEW_FAMILY, {
+    onCompleted: data => {
+      if (data && data.createFamily) {
+        const { familyId } = data.createFamily;
+        props.history.push("/family/" + familyId);
+      }
+    },
+    onError: error => {
+      setOptimisticLoading(false);
+    },
+  });
+  const [optimisticLoading, setOptimisticLoading] = useState(false);
 
   const defaultValues = {
     familyName: "",
     color: "",
     file: null,
   };
-  if (data && data.createFamily) {
-    const { familyId } = data.createFamily;
-    props.history.push("/family/" + familyId);
-  }
-  if (loading) {
+
+  if (optimisticLoading || loading) {
     return <JollyLoader quotes={loadingFamilyQuotes} />;
   }
+  const onSubmit = async values => {
+    setOptimisticLoading(true);
+    let compressedImage = null;
+    console.log("Before compression:", values.file);
 
+    if (values.file) {
+      compressedImage = await imageCompression(values.file, {
+        maxWidthOrHeight: 1200,
+      });
+      console.log("After compression:", compressedImage);
+    }
+    const payload = {
+      name: values.familyName,
+      colour: values.color,
+      image: compressedImage,
+    };
+    console.log("Creating family with payload:", payload);
+    createNewFamily({ variables: { input: payload } });
+  };
   return (
     <Container data-cy="new-family">
       <Header underline>Create a New Family</Header>
       <Formik
         initialValues={defaultValues}
-        onSubmit={(values, actions) => {
-          console.log(values);
-
-          const payload = {
-            name: values.familyName,
-            colour: values.color,
-            image: values.file,
-          };
-          createNewFamily({ variables: { input: payload } });
-        }}
+        onSubmit={onSubmit}
         validationSchema={CreateFamilyValidationSchema}
         validateOnBlur={false}
         validateOnChange={false}
