@@ -10,6 +10,7 @@
     "apollo-link-error": "^1.1.11",
     "apollo-link-http": "^1.5.15",
     "apollo-upload-client": "^11.0.0",
+    "browser-image-compression": "^1.0.6",
     "font-awesome": "^4.7.0",
     "formik": "^1.5.8",
     "graphql": "^14.5.0",
