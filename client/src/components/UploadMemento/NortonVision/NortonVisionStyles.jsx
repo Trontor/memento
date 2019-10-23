@@ -126,7 +126,7 @@ export const NortonRating = styled.div`
 
 export const DoneBtn = styled(ButtonPrimary)`
   font-size: 24px;
-  margin: 30px 0 20px 0;
+  margin: 60px 0 40px 0;
   padding: 16px 28px;
   border-radius: 6px;
 `;
