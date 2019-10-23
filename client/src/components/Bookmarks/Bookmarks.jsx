@@ -26,7 +26,7 @@ import moment from "moment";
 
 export default function Bookmarks(props) {
   const history = useHistory();
-  const { mementoId } = props;
+  // const { mementoId } = props;
   const [bookmarks, setBookmarks] = useState([]);
   const { refetch, loading } = useQuery(GET_BOOKMARKS, {
     fetchPolicy: "cache-and-network",

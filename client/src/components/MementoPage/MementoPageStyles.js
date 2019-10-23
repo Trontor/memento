@@ -1,6 +1,6 @@
 import {
   MementoTag,
-  MementoTagsWrapper,
+  // MementoTagsWrapper,
 } from "components/MementoCard/MementoCardStyles";
 
 import styled from "styled-components";

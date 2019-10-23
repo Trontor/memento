@@ -1,4 +1,4 @@
-import { DashboardContainer, DashboardNotifier } from "./MonthlyMementoStyles";
+import { DashboardNotifier } from "./MonthlyMementoStyles";
 import React, { useState } from "react";
 
 import { GET_MONTHLY_MEMENTOS } from "queries/Dashboard";
@@ -48,7 +48,7 @@ export default function MonthlyMementos(props) {
   console.log(yearGroups);
 
   return (
-    <DashboardContainer>
+    <>
       <DashboardNotifier>
         Hi {props.user.firstName}!
         <p>
@@ -74,6 +74,6 @@ export default function MonthlyMementos(props) {
           <FamilyMementosViewer familyId={family.familyId} />
         </>
       ))} */}
-    </DashboardContainer>
+    </>
   );
 }
