@@ -27,6 +27,7 @@ const Sidebar = props => {
   const [families, setFamilies] = useState(null);
   const [user, setUser] = useState({});
   useQuery(GET_CURRENT_USER, {
+    fetchPolicy: "cache-and-network",
     onCompleted: data => {
       if (data && data.currentUser) {
         setUser(data.currentUser);
@@ -35,6 +36,7 @@ const Sidebar = props => {
   });
 
   const signOut = () => {
+    setUser(false);
     localStorage.removeItem("AUTH-TOKEN");
     history.push("/login");
   };

@@ -183,14 +183,14 @@ export default function FamilyGroupSettings(props) {
                 </MembersList>
               </FormSection>
               {/* Save Changes Button  */}
-              {props.dirty && (
+              {
                 <ButtonPrimary
                   type="submit"
                   style={{ float: "right", marginBottom: "10px" }}
                 >
                   Save Changes
                 </ButtonPrimary>
-              )}
+              }
             </Container>
           </form>
         );

@@ -11,7 +11,7 @@ import {
 } from "ui/Forms";
 import { NewTag, NewTagsForm, Tag, TagsContainer } from "./UploadMementoStyles";
 import React, { useState } from "react";
-
+import imageCompression from "browser-image-compression";
 import DateSelector from "components/DateSelector/DateSelector";
 import { Formik } from "formik";
 import Select from "react-select";
@@ -139,6 +139,7 @@ const customDropdown = {
 
 export default function UploadMemento(props) {
   const [selectEventType, setSelectEventType] = useState("");
+  const [optimisticLoading, setOptimisticLoading] = useState(false);
   const familyId = props.match.params.id;
   const { data, loading } = useQuery(LOAD_FAMILY, {
     variables: { id: familyId },
@@ -148,9 +149,14 @@ export default function UploadMemento(props) {
     CREATE_NEW_MEMENTO,
     {
       onCompleted: data => {
+        setOptimisticLoading(false);
         if (data && data.createMemento) {
           props.history.push("/family/" + familyId);
         }
+      },
+      onError: error => {
+        setOptimisticLoading(false);
+        console.log("Error uploading image:", error);
       },
     },
   );
@@ -175,7 +181,7 @@ export default function UploadMemento(props) {
     setNewTag(tag);
   };
 
-  if (loading || uploadMementoResults.loading) {
+  if (loading || uploadMementoResults.loading || optimisticLoading) {
     return (
       <JollyLoader
         interval={2500}
@@ -193,9 +199,17 @@ export default function UploadMemento(props) {
     members = data.family.members;
   }
 
-  const onSubmit = values => {
+  const onSubmit = async values => {
     const mediaType =
       values.file && values.file.type.includes("image") ? "Image" : "Video";
+    setOptimisticLoading(true);
+    // Compress file
+    let compressedFile = null;
+    if (values.file) {
+      compressedFile = await imageCompression(values.file, {
+        maxWidthOrHeight: 800,
+      });
+    }
     const mutationValues = {
       familyId: familyId,
       type: "Test",
@@ -209,11 +223,11 @@ export default function UploadMemento(props) {
           year: values.date.getFullYear(),
         },
       ],
-      media: !values.file
+      media: !compressedFile
         ? null
         : {
             type: mediaType,
-            file: values.file,
+            file: compressedFile,
             caption: "Test Caption",
           },
       people: values.memberTags,
@@ -236,8 +250,6 @@ export default function UploadMemento(props) {
         validationSchema={uploadMementoValidationSchema}
         onSubmit={onSubmit}
         render={props => {
-          console.log(props.values);
-
           return (
             <form onSubmit={props.handleSubmit}>
               <Header underline>Create a Memento</Header>
