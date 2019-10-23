@@ -23,8 +23,8 @@ export const MonthlyMementosWrapper = styled.div`
   }
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.desktop}) {
-    grid-template-columns: 1fr 1fr 1fr;
+  props.theme.breakpoints.tabletLandscape}) {
+    grid-template-columns: 1fr 1fr;
   }
 `;
 

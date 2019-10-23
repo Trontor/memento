@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 import { GET_MEMENTOS } from "queries/Memento";
-import MementoCard from "components/MementoCard/MementoCard";
 import { MonthlyMementosWrapper } from "./MonthlyMementoStyles";
+import SmallCard from "./SmallCard";
 import { useQuery } from "@apollo/react-hooks";
 
 const sameMonth = memento => {
@@ -42,7 +42,7 @@ export default function FamilyMementosViewer(props) {
   return (
     <MonthlyMementosWrapper>
       {filteredMementos.map(memento => (
-        <MementoCard key={memento.mementoId} {...memento} />
+        <SmallCard key={memento.mementoId} {...memento} />
       ))}
     </MonthlyMementosWrapper>
   );

@@ -56,8 +56,6 @@ const Sidebar = props => {
     refetch();
   }, [refetch, location]);
 
-  console.log(families);
-
   return (
     <SidebarContainer isOpen={props.sidebarOpen}>
       <SidebarHeader>
