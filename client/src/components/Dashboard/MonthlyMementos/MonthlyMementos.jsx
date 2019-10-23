@@ -30,6 +30,7 @@ export default function MonthlyMementos(props) {
   const currentMonth = moment.months(new Date().getMonth());
 
   useQuery(GET_MONTHLY_MEMENTOS, {
+    fetchPolicy: "cache-and-network",
     onCompleted: data => {
       if (data && data.allMyMementosThisMonth) {
         setMementos(data.allMyMementosThisMonth);
