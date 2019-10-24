@@ -325,6 +325,12 @@ export default function UploadMemento(props) {
                   <InstructionLabel>Add media files:</InstructionLabel>
                   {props.values.file ? (
                     <div>
+                      <div>
+                        <img
+                          alt={props.values.file.name}
+                          src={URL.createObjectURL(props.values.file)}
+                        />
+                      </div>
                       <span>{props.values.file.name}</span>
                       <span onClick={() => props.setFieldValue("file", null)}>
                         {" "}
