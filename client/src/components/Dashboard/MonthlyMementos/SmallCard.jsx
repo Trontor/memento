@@ -97,7 +97,7 @@ export default function SmallCard(props) {
           </div>
           {/* Edit & Bookmark */}
           <CardOptions>
-            {beneficiaries && beneficiaries.length > 0 && (
+            {false && beneficiaries && beneficiaries.length > 0 && (
               <i
                 className="fas fa-sitemap"
                 onClick={() => setShowInheritanceTree(!showInheritanceTree)}
@@ -121,10 +121,10 @@ export default function SmallCard(props) {
               class="fas fa-link"
               onClick={() => history.push("/memento/" + mementoId)}
             ></i>
-            <i
+            {/* <i
               className={(isBookmarked ? "fas" : "far") + " fa-bookmark"}
               onClick={() => (isBookmarked ? removeBookmark() : bookmark())}
-            ></i>
+            ></i> */}
           </CardOptions>
         </AuthorWrapper>
         <MementoInfo>
