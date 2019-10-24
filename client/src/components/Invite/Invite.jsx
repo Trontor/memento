@@ -208,8 +208,8 @@ export default function InviteFamily() {
               style={{
                 cursor: "pointer",
                 zIndex: 100,
-                top: 0,
-                marginLeft: "50px",
+                marginTop: "100px",
+                marginLeft: "150px",
               }}
             >
               .
