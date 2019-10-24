@@ -17,8 +17,21 @@ import {
 import { GET_VISION_MEMENTO } from "queries/Memento";
 import { UPDATE_MEMENTO } from "mutations/Memento";
 
-let selectedTags = 1;
-
+const effectivenessMessage = ratio => {
+  if (ratio === 1) {
+    return "Norton seems to be doing an excellent job!";
+  }
+  if (ratio > 0.66) {
+    return "Norton is doing a good job! :)";
+  }
+  if (ratio > 0.5) {
+    return "Norton is doing an okay job! :/";
+  }
+  if (ratio > 0) {
+    return "Norton is doing a poor job. :c ";
+  }
+  return "Sorry, Norton will do better next time.";
+};
 export default function NortonVision() {
   const { mementoId } = useParams();
   const history = useHistory();
@@ -61,6 +74,8 @@ export default function NortonVision() {
       },
     });
   };
+  const selectedCount = tags.filter(tag => tag.selected).length;
+  const selectedRatio = selectedCount / tags.length;
 
   return (
     <Container>
@@ -98,18 +113,10 @@ export default function NortonVision() {
               </NortonTagsWrapper>
               <SelectMsg>Feel free to deselect tags you don't like.</SelectMsg>
               <NortonRating>
-                <div>5 out of 5 tags selected.</div>
-                {selectedTags === 1 ? (
-                  <span>Norton is doing an excellent job! :D</span>
-                ) : selectedTags >= 0.7 && selectedTags < 1 ? (
-                  <span>Norton is doing a good job! :)</span>
-                ) : selectedTags >= 0.33 && selectedTags < 0.7 ? (
-                  <span>Norton is doing an okay job! :/</span>
-                ) : selectedTags >= 0.01 && selectedTags < 0.33 ? (
-                  <span>Norton is doing a poor job. :c </span>
-                ) : (
-                  <span>Sorry, Norton will do better next time.</span>
-                )}
+                <div>
+                  {selectedCount} out of {tags.length} tags selected.
+                </div>
+                <span>{effectivenessMessage(selectedRatio)}</span>
               </NortonRating>
               <DoneBtn onClick={onSubmit}>Look's Good!</DoneBtn>
             </>
