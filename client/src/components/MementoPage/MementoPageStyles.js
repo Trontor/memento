@@ -9,7 +9,7 @@ export const Card = styled.div`
   display: grid;
   background-color: ${props => props.theme.palette.foreground};
   padding: 18px;
-  border: 1px solid ${props => transparentize(0.95, props.theme.palette.text)};
+  border: 1px solid ${props => transparentize(0.9, props.theme.palette.text)};
   border-radius: 6px;
   grid-gap: 18px;
 
@@ -19,7 +19,7 @@ export const Card = styled.div`
   }
 
   @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
-    grid-template-columns: minmax(auto, 45%) 1fr;
+    grid-template-columns: ${props => props.noImg ? "1fr" : "minmax(auto, 45%) 1fr"};
   }
 `;
 

@@ -71,12 +71,12 @@ export const FamilyProfileContainer = styled.div`
   width: 100%;
   border-radius: 4px;
   overflow: hidden;
-  border-bottom: 1px solid ${props => lighten(0.6, props.theme.palette.text)};
+  border-bottom: 1px solid ${props => transparentize(0.9, props.theme.palette.text)};
 
   @media screen and (min-width: ${props =>
       props.theme.breakpoints.tabletLandscape}) {
     background-color: ${props => props.theme.palette.foreground};
-    border: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
+    border: 1px solid ${props => transparentize(0.9, props.theme.palette.text)};
   }
 `;
 
@@ -148,7 +148,7 @@ export const SideMenuSectionContainer = styled.section`
       props.theme.breakpoints.tabletLandscape}) {
     display: block;
     background-color: ${props => props.theme.palette.foreground};
-    border: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
+    border: 1px solid ${props => transparentize(0.9, props.theme.palette.text)};
     list-style: none;
     border-radius: 4px;
     margin-top: ${props => props.theme.size.gutterWidth};
@@ -161,7 +161,7 @@ export const SideMenuSectionHeader = styled.div`
   @media screen and (min-width: ${props =>
       props.theme.breakpoints.tabletLandscape}) {
     display: block;
-    border-bottom: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
+    border-bottom: 1px solid ${props => transparentize(0.9, props.theme.palette.text)};
     padding: 16px;
 
     h2 {
@@ -200,7 +200,7 @@ export const DetailsWrapper = styled.div`
 export const MemberRow = styled.div`
   margin: 0;
   padding: 12px 16px;
-  border-bottom: 1px solid ${props => lighten(0.67, props.theme.palette.text)};
+  border-bottom: 1px solid ${props => transparentize(0.9, props.theme.palette.text)};
   display: grid;
   grid-template-columns: min-content 1fr auto;
   grid-column-gap: 12px;
@@ -245,7 +245,7 @@ export const TagRow = styled.div`
   font-weight: 600;
   letter-spacing: 0.02em;
   padding: 12px 16px;
-  border-bottom: 1px solid ${props => lighten(0.68, props.theme.palette.text)};
+  border-bottom: 1px solid ${props => transparentize(0.92, props.theme.palette.text)};
   cursor: pointer;
 
   &:hover {

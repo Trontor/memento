@@ -29,7 +29,7 @@ export const BookmarksWrapper = styled.div`
 `;
 
 export const BookmarkCard = styled.div`
-  border: 1px solid ${props => transparentize(0.95, props.theme.palette.text)};
+  border: 1px solid ${props => transparentize(0.9, props.theme.palette.text)};
   border-radius: 4px;
   width: 100%;
   overflow: hidden;

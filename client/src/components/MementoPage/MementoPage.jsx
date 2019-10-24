@@ -71,7 +71,7 @@ export default function MementoPage() {
         <BackButton></BackButton>
         <span>Back</span>
       </BackButtonDiv>
-      <Card>
+      <Card noImg={memento.media.length === 0}>
         {memento.media.length > 0 && (
           <MementoImg>
             <img alt={memento.media.caption} src={memento.media[0].url} />
@@ -166,7 +166,6 @@ export default function MementoPage() {
             )}
           </MementoOverview>
           <MementoDescription>{memento.description}</MementoDescription>
-
           {/* Tags */}
           {/* <TagsWrapper> */}
           {memento.tags && memento.tags.length > 0 && (

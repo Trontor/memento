@@ -117,7 +117,10 @@ export default function SmallCard(props) {
                 onClick={() => history.push("/memento/" + mementoId + "/edit")}
               />
             )}
-            <i class="fas fa-link"></i>
+            <i
+              class="fas fa-link"
+              onClick={() => history.push("/memento/" + mementoId)}
+            ></i>
             <i
               className={(isBookmarked ? "fas" : "far") + " fa-bookmark"}
               onClick={() => (isBookmarked ? removeBookmark() : bookmark())}
