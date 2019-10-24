@@ -36,7 +36,7 @@ export default function MementoCard(props) {
     media,
     caption,
     tags,
-    // type,
+    type,
     // updatedAt,
     family,
     detectedLabels,
@@ -107,6 +107,12 @@ export default function MementoCard(props) {
               onClick={() => setShowInheritanceTree(!showInheritanceTree)}
             />
           )}
+          {isUploader && detectedLabels.length > 0 && (
+            <i
+              className="fas fa-eye"
+              onClick={() => history.push("/memento/" + mementoId + "/vision")}
+            />
+          )}
           {isUploader && (
             <i
               className="fas fa-pencil-alt"
@@ -136,6 +142,7 @@ export default function MementoCard(props) {
       <CardContent>
         <MementoInfo>
           {/* Title */}
+          {type && !["Test", "memento"].includes(type) && <p>Type: {type}</p>}
           <MementoTitle onClick={() => history.push("/memento/" + mementoId)}>
             {title}
           </MementoTitle>

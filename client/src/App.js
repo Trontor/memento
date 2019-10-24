@@ -167,9 +167,9 @@ const authenticatedRoutes = [
     component: EditMemento,
   },
   {
-    name: "norton",
-    component: NortonVision
-  }
+    name: "memento/:mementoId/vision/",
+    component: NortonVision,
+  },
 ];
 
 function App() {
