@@ -106,6 +106,9 @@ export const GET_MY_MEMENTOS = gql`
 
 export const GET_A_MEMENTO = gql`
   query getMemento($id: ID!) {
+    currentUser {
+      userId
+    }
     memento(mementoId: $id) {
       mementoId
       title
@@ -150,6 +153,26 @@ export const GET_A_MEMENTO = gql`
       tags
       createdAt
       updatedAt
+    }
+  }
+`;
+export const GET_VISION_MEMENTO = gql`
+  query getMemento($id: ID!) {
+    currentUser {
+      userId
+    }
+    memento(mementoId: $id) {
+      mementoId
+      title
+      family {
+        familyId
+        colour
+      }
+      detectedLabels {
+        name
+        confidence
+      }
+      tags
     }
   }
 `;

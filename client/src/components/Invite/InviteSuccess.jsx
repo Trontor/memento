@@ -50,7 +50,11 @@ export default function InviteSuccess({ results }) {
           <ButtonPrimary onClick={() => history.push("/dashboard")}>
             Go to Dashboard
           </ButtonPrimary>
-          <ButtonSecondary onClick={() => history.push("/invite")}>
+          <ButtonSecondary
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
             Invite More People
           </ButtonSecondary>
         </ButtonMenu>

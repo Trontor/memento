@@ -1,5 +1,6 @@
+import {lighten, transparentize} from "polished";
+
 import styled from "styled-components";
-import {transparentize} from "polished";
 
 export const DashboardContainer = styled.div`
   margin-top: 50px;
@@ -56,5 +57,26 @@ export const DashboardNotifier = styled.div`
       font-weight: 700;
       color: ${props => props.theme.palette.main};
     }
+  }
+`;
+
+export const NoMonthliesWrapper = styled.div`
+  padding: 30px;
+  position: relative;
+  width: 100%;
+  text-align: center;
+  margin: 60px auto;
+  max-width: 600px;
+
+  p {
+    line-height: 1.3em;
+    margin-bottom: 1em;
+    font-size: 16px;
+  }
+
+  i {
+    font-size: 80px;
+    margin-bottom: 16px;
+    color: ${props => lighten(0.1, props.theme.palette.main)};
   }
 `;

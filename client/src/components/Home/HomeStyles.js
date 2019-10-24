@@ -9,6 +9,8 @@ export const PageHeader = styled.div`
   padding: 0 8vw;
   align-items: center;
   width: 100%;
+  background-color: ${props => props.theme.palette.background};
+  z-index: 9999;
 `;
 
 export const Intro = styled.section`
@@ -120,6 +122,7 @@ export const FeatureTitle = styled.div`
   font-family: "Livvic", sans-serif;
   margin-bottom: 8px;
   font-size: 18px;
+  font-weight: bold;
 `;
 
 export const FeatureDescription = styled.div`

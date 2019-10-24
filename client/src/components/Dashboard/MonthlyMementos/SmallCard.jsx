@@ -35,7 +35,7 @@ export default function SmallCard(props) {
     // type,
     // updatedAt,
     family,
-    // detectedLabels,
+    detectedLabels,
     bookmarkedBy,
     beneficiaries,
     uploader,
@@ -71,7 +71,7 @@ export default function SmallCard(props) {
     "DD-MM-YYYY",
   ).format("Do  MMM YYYY");
 
-  console.log(family)
+  console.log(family);
 
   return (
     <Card>
@@ -93,9 +93,7 @@ export default function SmallCard(props) {
             <MementoAuthor>
               {uploader.firstName + " " + uploader.lastName}
             </MementoAuthor>
-            <span>
-              {family.name}
-            </span>
+            <span>{family.name}</span>
           </div>
           {/* Edit & Bookmark */}
           <CardOptions>
@@ -103,6 +101,14 @@ export default function SmallCard(props) {
               <i
                 className="fas fa-sitemap"
                 onClick={() => setShowInheritanceTree(!showInheritanceTree)}
+              />
+            )}
+            {isUploader && detectedLabels.length > 0 && (
+              <i
+                className="fas fa-eye"
+                onClick={() =>
+                  history.push("/memento/" + mementoId + "/vision")
+                }
               />
             )}
             {isUploader && (
@@ -118,40 +124,40 @@ export default function SmallCard(props) {
             ></i>
           </CardOptions>
         </AuthorWrapper>
-          <MementoInfo>
-            {/* Title */}
-            <MementoTitle>{title}</MementoTitle>
-            <MementoOverview familyColour={family.colour}>
-              {/* Date */}
+        <MementoInfo>
+          {/* Title */}
+          <MementoTitle>{title}</MementoTitle>
+          <MementoOverview familyColour={family.colour}>
+            {/* Date */}
+            <span>
+              <i className="far fa-clock"></i>
+              {mementoDate}
+            </span>
+            {/* Location */}
+            {location && (
               <span>
-                <i className="far fa-clock"></i>
-                {mementoDate}
+                <i className="fas fa-map-marker-alt"></i>
+                {location}
               </span>
-              {/* Location */}
-              {location && (
-                <span>
-                  <i className="fas fa-map-marker-alt"></i>
-                  {location}
-                </span>
-              )}
-              {/* People Tags */}
-              {people && people.length > 0 && (
-                <span>
-                  <i className="fas fa-user-tag"></i>
-                  <div>
-                    {props.people.map(person => (
-                      <PeopleTags key={person.firstName}>
-                        {person.firstName} {person.lastName}
-                      </PeopleTags>
-                    ))}
-                  </div>
-                </span>
-              )}
-            </MementoOverview>
+            )}
+            {/* People Tags */}
+            {people && people.length > 0 && (
+              <span>
+                <i className="fas fa-user-tag"></i>
+                <div>
+                  {props.people.map(person => (
+                    <PeopleTags key={person.firstName}>
+                      {person.firstName} {person.lastName}
+                    </PeopleTags>
+                  ))}
+                </div>
+              </span>
+            )}
+          </MementoOverview>
 
-            {/* Description */}
-            <MementoDescription>{description}</MementoDescription>
-          </MementoInfo>
+          {/* Description */}
+          <MementoDescription>{description}</MementoDescription>
+        </MementoInfo>
       </CardContent>
     </Card>
   );

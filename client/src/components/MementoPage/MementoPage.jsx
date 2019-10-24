@@ -30,13 +30,17 @@ export default function MementoPage() {
   /** Hooks */
   const history = useHistory();
   const { mementoId } = useParams();
+  const [currentUserId, setCurrentUserId] = useState(null);
   const [memento, setMemento] = useState(null);
   // Load the memento data
   useQuery(GET_A_MEMENTO, {
     variables: { id: mementoId },
     fetchPolicy: "network-only",
     onCompleted: data => {
-      if (data && data.memento) setMemento(data.memento);
+      if (data && data.memento) {
+        setMemento(data.memento);
+        setCurrentUserId(data.currentUser.userId);
+      }
     },
   });
 
@@ -58,6 +62,7 @@ export default function MementoPage() {
 
   /** Business Logic */
 
+  const isUploader = memento.uploader.userId === currentUserId;
   return (
     <Container>
       <BackButtonDiv
@@ -97,13 +102,25 @@ export default function MementoPage() {
             </div>
             {/* Edit & Bookmark */}
             <CardOptions familyColour={memento.family.colour}>
-              {memento.beneficiaries && memento.beneficiaries.length > 0 && (
+              {/* {memento.beneficiaries && memento.beneficiaries.length > 0 && (
                 <i className="fas fa-sitemap" />
+              )} */}
+              {isUploader && memento.detectedLabels.length > 0 && (
+                <i
+                  className="fas fa-eye"
+                  onClick={() =>
+                    history.push("/memento/" + mementoId + "/vision")
+                  }
+                />
               )}
-              <i
-                className="fas fa-pencil-alt"
-                onClick={() => history.push("/memento/" + mementoId + "/edit")}
-              />
+              {isUploader && (
+                <i
+                  className="fas fa-pencil-alt"
+                  onClick={() =>
+                    history.push("/memento/" + mementoId + "/edit")
+                  }
+                />
+              )}
             </CardOptions>
           </AuthorWrapper>
           <h1>{memento.title}</h1>

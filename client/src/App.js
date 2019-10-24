@@ -12,6 +12,7 @@ import AcceptInvite from "components/AcceptInvite/AcceptInvite";
 import Bookmarks from "./components/Bookmarks/Bookmarks";
 import CreateFamily from "./components/CreateFamily/CreateFamily";
 import Dashboard from "./components/Dashboard/Dashboard";
+import EditMemento from "./components/EditMemento/EditMemento";
 import FamilyGroup from "./components/FamilyGroup/FamilyGroup";
 import FamilyGroupSettings from "./components/FamilyGroupSettings/FamilyGroupSettings";
 import Hamburger from "./components/Sidebar/Hamburger";
@@ -20,13 +21,13 @@ import Invite from "./components/Invite/Invite";
 import InviteCode from "./components/AcceptInvite/InviteCode";
 import Login from "./components/Login/Login";
 import MementoPage from "./components/MementoPage/MementoPage";
+import NortonVision from "./components/UploadMemento/NortonVision/NortonVision";
 import Settings from "./components/Settings/Settings";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Signup from "./components/Signup/Signup";
 import UploadMemento from "./components/UploadMemento/UploadMemento";
 import UserProfile from "./components/UserProfile/UserProfile";
 import ViewMemento from "./components/ViewMemento/ViewMemento";
-import EditMemento from "./components/EditMemento/EditMemento";
 import { theme } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
@@ -164,6 +165,10 @@ const authenticatedRoutes = [
   {
     name: "memento/:id/edit",
     component: EditMemento,
+  },
+  {
+    name: "memento/:mementoId/vision/",
+    component: NortonVision,
   },
 ];
 
