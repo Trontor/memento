@@ -156,3 +156,23 @@ export const GET_A_MEMENTO = gql`
     }
   }
 `;
+export const GET_VISION_MEMENTO = gql`
+  query getMemento($id: ID!) {
+    currentUser {
+      userId
+    }
+    memento(mementoId: $id) {
+      mementoId
+      title
+      family {
+        familyId
+        colour
+      }
+      detectedLabels {
+        name
+        confidence
+      }
+      tags
+    }
+  }
+`;

@@ -35,6 +35,7 @@ const regularQuotes = ["Loading..."];
 
 const initialFormValues = {
   event: false,
+  type: null,
   title: "",
   description: "",
   date: null,
@@ -138,7 +139,6 @@ const customDropdown = {
 };
 
 export default function UploadMemento(props) {
-  const [selectEventType, setSelectEventType] = useState("");
   const [optimisticLoading, setOptimisticLoading] = useState(false);
   const familyId = props.match.params.id;
   const { data, loading } = useQuery(LOAD_FAMILY, {
@@ -151,7 +151,14 @@ export default function UploadMemento(props) {
       onCompleted: data => {
         setOptimisticLoading(false);
         if (data && data.createMemento) {
-          props.history.push("/family/" + familyId);
+          // Check if any detected labels
+          if (data.createMemento.detectedLabels.length > 0) {
+            props.history.push(
+              "/memento/" + data.createMemento.mementoId + "/vision",
+            );
+          } else {
+            props.history.push("/family/" + familyId);
+          }
         }
       },
       onError: error => {
@@ -212,7 +219,7 @@ export default function UploadMemento(props) {
     }
     const mutationValues = {
       familyId: familyId,
-      type: "Test",
+      type: values.type ? values.type.value : "item",
       title: values.title,
       description: values.description,
       location: values.location,
@@ -294,8 +301,8 @@ export default function UploadMemento(props) {
                     options={eventOptions}
                     placeholder="Type to create your own special event..."
                     styles={customDropdown}
-                    value={selectEventType}
-                    onChange={option => setSelectEventType(option)}
+                    value={props.values.type}
+                    onChange={option => props.setFieldValue("type", option)}
                   />
                 </FormSection>
               )}

@@ -102,8 +102,16 @@ export default function MementoPage() {
             </div>
             {/* Edit & Bookmark */}
             <CardOptions familyColour={memento.family.colour}>
-              {memento.beneficiaries && memento.beneficiaries.length > 0 && (
+              {/* {memento.beneficiaries && memento.beneficiaries.length > 0 && (
                 <i className="fas fa-sitemap" />
+              )} */}
+              {isUploader && memento.detectedLabels.length > 0 && (
+                <i
+                  className="fas fa-eye"
+                  onClick={() =>
+                    history.push("/memento/" + mementoId + "/vision")
+                  }
+                />
               )}
               {isUploader && (
                 <i

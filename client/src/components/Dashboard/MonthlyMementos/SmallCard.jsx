@@ -35,7 +35,7 @@ export default function SmallCard(props) {
     // type,
     // updatedAt,
     family,
-    // detectedLabels,
+    detectedLabels,
     bookmarkedBy,
     beneficiaries,
     uploader,
@@ -101,6 +101,14 @@ export default function SmallCard(props) {
               <i
                 className="fas fa-sitemap"
                 onClick={() => setShowInheritanceTree(!showInheritanceTree)}
+              />
+            )}
+            {isUploader && detectedLabels.length > 0 && (
+              <i
+                className="fas fa-eye"
+                onClick={() =>
+                  history.push("/memento/" + mementoId + "/vision")
+                }
               />
             )}
             {isUploader && (
