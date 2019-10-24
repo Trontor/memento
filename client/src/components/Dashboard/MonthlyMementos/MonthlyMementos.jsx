@@ -63,7 +63,7 @@ export default function MonthlyMementos(props) {
           in history.
         </p>
       </DashboardNotifier>
-      {yearGroups ? (
+      {yearGroups && yearGroups.length > 0 ? (
         <>
           <Header underline>{currentMonth} Mementos</Header>
           {yearGroups.map(group => (
