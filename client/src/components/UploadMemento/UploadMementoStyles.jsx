@@ -194,3 +194,8 @@ export const PreviewImg = styled.div`
     margin: 20px 0;
   }
 `;
+
+export const Req = styled.span`
+  color: ${props => darken(0.1, props.theme.palette.main)};
+  margin-left: 3px;
+`;

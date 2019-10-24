@@ -8,7 +8,7 @@ import {
   InstructionLabel,
   TextArea,
 } from "ui/Forms";
-import { NewTag, NewTagsForm, PreviewImg, RemovePhoto, Tag, TagsContainer } from "./UploadMementoStyles";
+import { NewTag, NewTagsForm, PreviewImg, RemovePhoto, Req, Tag, TagsContainer } from "./UploadMementoStyles";
 import {
   RadioButton,
   RadioButtonStyle,
@@ -270,20 +270,6 @@ export default function UploadMemento(props) {
                 <RadioOption>
                   <RadioButton
                     type="radio"
-                    value="event"
-                    checked={props.values.event}
-                    onChange={e =>
-                      props.setFieldValue("event", e.target.checked)
-                    }
-                  />
-                  <RadioButtonStyle />
-                  <RadioLabel>Event (e.g. anniversary, birthday,
-                  graduation).</RadioLabel>
-                </RadioOption>
-
-                <RadioOption>
-                  <RadioButton
-                    type="radio"
                     value="object"
                     name="mementoType"
                     checked={!props.values.event}
@@ -294,11 +280,24 @@ export default function UploadMemento(props) {
                   <RadioButtonStyle />
                   <RadioLabel>Item (e.g. painting, stuffed toy, photograph).</RadioLabel>
                 </RadioOption>
+                <RadioOption>
+                  <RadioButton
+                    type="radio"
+                    value="event"
+                    checked={props.values.event}
+                    onChange={e =>
+                      props.setFieldValue("event", e.target.checked)
+                    }
+                  />
+                  <RadioButtonStyle />
+                  <RadioLabel>Event (e.g. anniversary, birthday,
+                  graduation).</RadioLabel>
+                </RadioOption>
               </FormSection>
 
               {props.values.event && (
                 <FormSection>
-                  <InstructionLabel>What kind of event is it?</InstructionLabel>
+                  <InstructionLabel>What kind of event is it?<Req>*</Req></InstructionLabel>
                   <CreatableSelect
                     isClearable
                     options={eventOptions}
@@ -311,7 +310,7 @@ export default function UploadMemento(props) {
               )}
 
               <FormSection>
-                <InstructionLabel>Title:</InstructionLabel>
+                <InstructionLabel>Title<Req>*</Req></InstructionLabel>
                 <InputField
                   value={props.values.title}
                   name="title"
@@ -324,7 +323,7 @@ export default function UploadMemento(props) {
               </FormSection>
 
               <FormSection>
-                <InstructionLabel>Add media files:</InstructionLabel>
+                <InstructionLabel>Add a media file:</InstructionLabel>
                 {props.values.file ? (
                   <div>
                     <PreviewImg>
@@ -350,7 +349,7 @@ export default function UploadMemento(props) {
                 )}
               </FormSection>
               <FormSection>
-                <InstructionLabel>Description:</InstructionLabel>
+                <InstructionLabel>Description</InstructionLabel>
                 <TextArea
                   type="text"
                   name="description"
@@ -363,7 +362,7 @@ export default function UploadMemento(props) {
                 <Error>{props.errors.description}</Error>
               )}
               <FormSection>
-                <InstructionLabel>Date:</InstructionLabel>
+                <InstructionLabel>Date</InstructionLabel>
                 <DateSelector
                   setFieldValue={props.setFieldValue}
                   // onChange={props.handleChange}
@@ -432,7 +431,7 @@ export default function UploadMemento(props) {
                 )}
               </FormSection>
               <FormSection>
-                <InstructionLabel>Tags:</InstructionLabel>
+                <InstructionLabel>Select Tags:</InstructionLabel>
                 <TagsContainer>
                   {tags.sort().map(tag => (
                     <Tag
