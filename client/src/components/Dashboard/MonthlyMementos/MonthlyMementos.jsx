@@ -63,8 +63,8 @@ export default function MonthlyMementos(props) {
           in history.
         </p>
       </DashboardNotifier>
-        {yearGroups ? (
-          <>
+      {yearGroups ? (
+        <>
           <Header underline>{currentMonth} Mementos</Header>
           {yearGroups.map(group => (
             <>
@@ -72,10 +72,10 @@ export default function MonthlyMementos(props) {
               <YearlyMementosViewer year={group.key} mementos={group.value} />
             </>
           ))}
-          </>
-        ):
-        <NoMonthliesYet currentMonth={currentMonth}/>
-      }
+        </>
+      ) : (
+        <NoMonthliesYet currentMonth={currentMonth} />
+      )}
     </DashboardContainer>
   );
 }
