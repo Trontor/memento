@@ -5,12 +5,12 @@ import styled from "styled-components";
 export const Card = styled.div`
   width: 100%;
   padding: 18px 20px;
-  border: 1px solid ${props => lighten(0.68, props.theme.palette.text)};
+  border: 1px solid ${props => transparentize(0.9, props.theme.palette.text)};
   background-color: ${props => props.theme.palette.foreground};
   position: relative;
   border-radius: 4px;
-  box-shadow: 1px 1px 16px
-    ${props => transparentize(0.95, props.theme.palette.text)};
+  box-shadow: 1px 1px 10px
+    ${props => transparentize(0.97, props.theme.palette.text)};
 
   @media screen and (min-width: ${props =>
       props.theme.breakpoints.tabletLandscape}) {
@@ -130,7 +130,7 @@ export const MementoTagsWrapper = styled.ul`
   width: 100%;
   margin: 0;
   align-items: center;
-  font-size: 12px;
+  font-size: 11px;
 
   i {
     color: ${props => props.familyColour || props.theme.palette.main};

@@ -6,6 +6,7 @@ export const FamilyGroup = styled.span`
   display: block;
   margin-top: 2px;
   font-weight: bold;
+  cursor: pointer;
 `;
 
 export const NoViewMementoIcon = styled(NoMementosIcon)`

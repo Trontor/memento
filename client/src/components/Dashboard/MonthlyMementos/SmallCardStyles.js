@@ -1,24 +1,22 @@
-import { lighten } from "polished";
+import { lighten, transparentize } from "polished";
+
 import styled from "styled-components";
 
 export const Card = styled.div`
   width: 100%;
   padding: 16px;
-  border: 1px solid ${props => lighten(0.68, props.theme.palette.text)};
+  border: 1px solid ${props => transparentize(0.93, props.theme.palette.text)};
   background-color: ${props => props.theme.palette.foreground};
   position: relative;
   border-radius: 5px;
   display: flex;
+  box-shadow: 1px 1px 6px ${props => transparentize(0.97, props.theme.palette.text)};
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
     width: 100%;
     margin-top: 0;
     margin-bottom: ${props => props.theme.size.gutterWidth};
-
-    &:last-child {
-      margin-bottom: 0;
-    }
   }
 `;
 
@@ -62,7 +60,7 @@ export const MementoAuthor = styled.div`
 `;
 
 export const CardContent = styled.div`
-  flex: 0 0 50%;
+  flex: 1 0 50%;
 `;
 
 export const MementoInfo = styled.div`
@@ -104,7 +102,7 @@ export const MementoCoverImg = styled.div`
 
   img {
     width: 100%;
-    height: 200px;
+    max-height: 200px;
     object-fit: contain;
     object-position: center center;
   }

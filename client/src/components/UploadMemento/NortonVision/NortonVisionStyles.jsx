@@ -34,7 +34,7 @@ export const NortonTagsWrapper = styled.ul`
   padding: 60px 0 40px 0;
   align-items: center;
   font-size: 20px;
-  justify-content: left;
+  justify-content: center;
 
   i {
     color: ${props => props.familyColour || props.theme.palette.main};

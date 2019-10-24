@@ -104,7 +104,10 @@ export default function MementoCard(props) {
             </AuthorAvatar>
             <div>
               {/* Family Group the memento belongs to */}
-              <FamilyGroup>{family.name}</FamilyGroup>
+              <FamilyGroup
+                onClick={() => history.push("/family/" + family.familyId)}>
+                {family.name}
+              </FamilyGroup>
               {/* Memento  Upload Date */}
               <UploadDate>
                 {moment(
@@ -205,7 +208,6 @@ export default function MementoCard(props) {
             )}
 
             {/* Tags */}
-
             {tags && props.tags.length > 0 && (
               <MementoTagsWrapper>
                 <i class="fas fa-tags"></i>

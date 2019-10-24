@@ -80,7 +80,7 @@ const eventOptions = [
   { value: "birthday", label: "Birthday" },
   { value: "childbirth", label: "Childbirth" },
   { value: "graduation", label: "Graduation" },
-  { value: "it project", label: "IT Project Presentation" },
+  { value: "last day of school", label: "Last Day of School" },
   { value: "first date", label: "First Date" },
   { value: "wedding", label: "Wedding" },
   { value: "first day at school", label: "First Day at School" },
