@@ -1,6 +1,8 @@
-import { MemberRow } from "./FamilyGroupStyles";
-import { useHistory } from "react-router-dom";
+import { ActivityIndicator, MemberRow } from "./FamilyGroupStyles";
+
 import React from "react";
+import moment from "moment";
+import { useHistory } from "react-router-dom";
 
 export default function MembersViewer(props) {
   const history = useHistory();
@@ -12,6 +14,17 @@ export default function MembersViewer(props) {
           r =>
             r.familyId === familyId && r.familyRole.toLowerCase() === "admin",
         );
+
+        const now = moment(); //todays date
+        const lastActive = moment.duration(now.diff(member.lastSeenAt));
+        const isActive = lastActive.asMinutes() < 2;
+        // if (isActive) {
+        //   console.log(
+        //     `${
+        //       member.firstName
+        //     } was active ${lastActive.asSeconds()} seconds ago`,
+        //   );
+        // }
         return (
           <MemberRow key={member.firstName} admin={isAdmin}>
             {member.imageUrl ? (
@@ -21,10 +34,13 @@ export default function MembersViewer(props) {
             )}
             <div>
               <span onClick={() => history.push("/profile/" + member.userId)}>
-                {member.firstName} {member.lastName}
+                  {member.firstName} {member.lastName}
               </span>
               {isAdmin && <span>Admin</span>}
             </div>
+            {isActive && (
+              <ActivityIndicator/>
+            )}
           </MemberRow>
         );
       })}

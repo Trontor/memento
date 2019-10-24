@@ -41,6 +41,7 @@ export const AuthorAvatar = styled.div`
   i {
     font-size: 38px;
   }
+
 `;
 
 export const MementoAuthor = styled.div`

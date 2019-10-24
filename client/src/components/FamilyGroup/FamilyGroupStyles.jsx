@@ -403,3 +403,12 @@ export const NoMementosIcon = styled(PhotoAlbum)`
   margin: auto;
   height: 120px;
 `;
+
+
+export const ActivityIndicator = styled.span`
+  background-color: #08D852;
+  width: 12px;
+  height: 12px;
+  border-radius: 20px;
+  display: inline-block;
+`;
