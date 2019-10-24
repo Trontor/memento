@@ -11,33 +11,34 @@ export const Background = styled.div`
 `;
 
 const floating = keyframes`
-  from { transform: translate(0, 0px); }
-  20%  { transform: translate(0, -12px); }
+  from { transform: translate(0, -10px); }
+  20%  { transform: translate(0, -15px); }
   35%  { transform: translate(0, -20px); }
   75%  { transform: translate(0, 10px); }
-  to   { transform: translate(0, 0px); }
+  to   { transform: translate(0, -10px); }
 `;
 
 const shapeshift = keyframes`
   from {
-    border-radius: 41% 59% 41% 59% / 43% 45% 55% 57%;
+    border-radius: 81% 59% 41% 59% / 82% 65% 80% 57%;
   }
   25% {
-    border-radius: 31% 69% 51% 49% / 53% 55% 65% 47%;
+    border-radius: 61% 69% 51% 49% / 76% 75% 65% 47%;
   }
   40% {
-    border-radius: 51% 79% 61% 39% / 63% 75% 85% 77%;
+    border-radius: 47% 79% 91% 39% / 63% 85% 85% 77%;
+    rotate: 180deg;
   }
   65% {
-    border-radius: 31% 69% 51% 49% / 63% 55% 65% 47%;
+    border-radius: 61% 69% 51% 49% / 71% 75% 65% 47%;
   }
   to  {
-    border-radius: 41% 59% 41% 59% / 43% 45% 55% 57%;
+    border-radius: 81% 59% 41% 59% / 82% 65% 80% 57%;
+    rotate: 360deg;
   }
 `;
 
 export const Bubbles = styled.div`
-  border-radius: 41% 59% 41% 59% / 43% 45% 55% 57%;
   left: 50%;
   position: absolute;
   z-index: -1;
@@ -54,10 +55,10 @@ export const Bubbles = styled.div`
     top: 100px;
     background:
       linear-gradient(225deg,
-        ${transparentize(0.7, "#DCE5FD")},
-        ${transparentize(0.9, "#CEE8F9")}
+        ${transparentize(0.5, "#DCE5FD")},
+        ${transparentize(0.7, "#CEE8F9")}
       );
-    animation: ${floating} 5s linear infinite, ${shapeshift} 1.5s linear infinite;
+    animation: ${floating} 7s linear infinite, ${shapeshift} 3s linear infinite;
   }
 
   &:first-child {
@@ -67,10 +68,10 @@ export const Bubbles = styled.div`
     top: 90px;
     background:
       linear-gradient(225deg,
-        ${transparentize(0.85, "#DCE5FD")},
-        ${transparentize(0.8, "#D3E1F7")}
+        ${transparentize(0.85, "paleturquoise")},
+        ${transparentize(0.7, "paleturquoise")}
       );
-    animation: ${floating} 5.5s linear infinite, ${shapeshift} 1.5s linear infinite;
+    animation: ${floating} 7.5s linear infinite, ${shapeshift} 3s linear infinite;
 
     &:after {
       content: '';
@@ -82,10 +83,10 @@ export const Bubbles = styled.div`
       margin-top: -100px;
       background:
         linear-gradient(90deg,
-          ${transparentize(0.7, "#DCE5FD")},
-          ${transparentize(0.9, "#CEE8F9")}
+          ${transparentize(0.5, "#DCE5FD")},
+          ${transparentize(0.7, "#CEE8F9")}
         );
-      animation: ${floating} 20s linear infinite;
+      animation: ${floating} 30s linear infinite;
     }
   }
 
@@ -96,10 +97,10 @@ export const Bubbles = styled.div`
     top: 30px;
     background:
       linear-gradient(-30deg,
-        ${transparentize(0.9, "#90B6E8")},
-        ${transparentize(0.9, "#A4CBF0")}
+        ${transparentize(0.7, "#90B6E8")},
+        ${transparentize(0.75, "#A4CBF0")}
       );
-    animation: ${floating} 4s linear infinite, ${shapeshift} 2s linear infinite;
+    animation: ${floating} 6s linear infinite, ${shapeshift} 4s linear infinite;
   }
 
   &:nth-child(3) {
@@ -109,12 +110,12 @@ export const Bubbles = styled.div`
     top: 65px;
     background:
       linear-gradient(135deg,
-        ${transparentize(0.8, "#DCEDFD")},
-        ${transparentize(0.75, "#DCE5FD")}
+        ${transparentize(0.7, "lightsalmon")},
+        ${transparentize(0.85, "pink")}
       );
     rotate: 45deg;
     animation-delay: 0.5s;
-    animation: ${floating} 5s linear infinite, ${shapeshift} 2s linear infinite;
+    animation: ${floating} 7s linear infinite, ${shapeshift} 3s linear infinite;
   }
 
   &:nth-child(4) {
@@ -124,10 +125,10 @@ export const Bubbles = styled.div`
     top: 270px;
     background:
       linear-gradient(100deg,
-        ${transparentize(0.97, "#A4CBF0")},
-        ${transparentize(0.85, "#A4CBF0")}
+        ${transparentize(0.85, "salmon")},
+        ${transparentize(0.8, "lightsalmon")}
       );
-    animation: ${floating} 5.5s linear infinite, ${shapeshift} 2s linear infinite;
+    animation: ${floating} 7.5s linear infinite, ${shapeshift} 3s linear infinite;
   }
 
   &:nth-child(5) {
@@ -137,10 +138,10 @@ export const Bubbles = styled.div`
     top: 360px;
     background:
       linear-gradient(135deg,
-        ${transparentize(0.9, "#A4CBF0")},
-        ${transparentize(0.85, "#A4CBF0")}
+        ${transparentize(0.7, "#A4CBF0")},
+        ${transparentize(0.65, "#A4CBF0")}
       );
-    animation: ${floating} 4s linear infinite, ${shapeshift} 1s linear infinite;
+    animation: ${floating} 6s linear infinite, ${shapeshift} 2s linear infinite;
 
     &:after {
       display: block;
@@ -151,10 +152,10 @@ export const Bubbles = styled.div`
       margin-top: 25px;
       background:
         linear-gradient(-90deg,
-          ${transparentize(0.92, "#A4C8F0")},
-          ${transparentize(0.9, "#CCD3FF")}
+          ${transparentize(0.8, "#A4C8F0")},
+          ${transparentize(0.7, "#CCD3FF")}
         );
-      animation: ${floating} 12s linear infinite, ${shapeshift} 2s linear infinite;
+      animation: ${floating} 15s linear infinite, ${shapeshift} 2s linear infinite;
       rotate: 50deg;
     }
   }
@@ -166,10 +167,10 @@ export const Bubbles = styled.div`
     top: 250px;
     background:
       linear-gradient(225deg,
-        ${transparentize(0.9, "#A4CBF0")},
-        ${transparentize(0.85, "#DCE5FD")}
+        ${transparentize(0.8, "#A4CBF0")},
+        ${transparentize(0.65, "#DCE5FD")}
       );
-    animation: ${floating} 5s linear infinite, ${shapeshift} 2s linear infinite;
+    animation: ${floating} 7s linear infinite, ${shapeshift} 3s linear infinite;
   }
 
   &:nth-child(7) {
@@ -179,10 +180,10 @@ export const Bubbles = styled.div`
     top: 80px;
     background:
       linear-gradient(225deg,
-        ${transparentize(0.9, "#A4CBF0")},
-        ${transparentize(0.85, "#A4CBF0")}
+        ${transparentize(0.7, "#A4CBF0")},
+        ${transparentize(0.65, "#A4CBF0")}
       );
-    animation: ${floating} 4.8s linear infinite, ${shapeshift} 1s linear infinite;
+    animation: ${floating} 6.8s linear infinite, ${shapeshift} 2s linear infinite;
   }
 
   &:nth-child(8) {
@@ -192,10 +193,10 @@ export const Bubbles = styled.div`
     top: 200px;
     background:
       linear-gradient(90deg,
-        ${transparentize(0.9, "#DCE5FD")},
-        ${transparentize(0.95, "#A4CBF0")}
+        ${transparentize(0.9, "lightskyblue")},
+        ${transparentize(0.75, "lightskyblue")}
       );
-    animation: ${floating} 6s linear infinite, ${shapeshift} 2s linear infinite;
+    animation: ${floating} 8s linear infinite, ${shapeshift} 3s linear infinite;
     rotate: 90deg;
   }
 
@@ -206,10 +207,10 @@ export const Bubbles = styled.div`
     top: 105px;
     background:
       linear-gradient(180deg,
-        ${transparentize(0.9, "#A4CBF0")},
-        ${transparentize(0.9, "#A4CBF0")}
+        ${transparentize(0.7, "#A4CBF0")},
+        ${transparentize(0.7, "#A4CBF0")}
       );
-    animation: ${floating} 7s linear infinite, ${shapeshift} 2s linear infinite;;
+    animation: ${floating} 8s linear infinite, ${shapeshift} 3s linear infinite;;
     rotate: 90deg;
   }
 
@@ -220,24 +221,25 @@ export const Bubbles = styled.div`
     top: 250px;
     background:
       linear-gradient(90deg,
-        ${transparentize(0.8, "#A4CBF0")},390p
-        ${transparentize(0.9, "#A4CBF0")}
+        ${transparentize(0.6, "#A4CBF0")},390p
+        ${transparentize(0.7, "#A4CBF0")}
       );
-    animation: ${floating} 4s linear infinite, ${shapeshift} 2s linear infinite;;
+    animation: ${floating} 6s linear infinite, ${shapeshift} 4s linear infinite;;
     rotate: 90deg;
   }
 
   &:nth-child(11) {
+    border-radius: 50%;
     width: 280px;
     height: 280px;
     margin-left: 30px;
     top: 40px;
     background:
       linear-gradient(225deg,
-        ${transparentize(0.85, "#D6E0FF")},
-        ${transparentize(0.85, "#DCEDFD")}
+        ${transparentize(0.8, "lavender")},
+        ${transparentize(0.7, "lavender")}
       );
-    animation: ${floating} 6s linear infinite, ${shapeshift} 3s linear infinite;
+    animation: ${floating} 9s linear infinite, ${shapeshift} 5s linear infinite;
     animation-delay: 0.5s;
   }
 `;
