@@ -32,7 +32,6 @@ export default function MementosViewer(props) {
             <MementoCard
               key={memento.mementoId}
               onBookmarkToggled={refreshMementos}
-              userId={userId}
               {...memento}
             />
           ))}

@@ -6,9 +6,9 @@ import {
   MementoAuthor,
   MementoDescription,
   MementoOverview,
+  MementoTagsWrapper,
   PeopleTags,
   UploadDate,
-  MementoTagsWrapper,
 } from "components/MementoCard/MementoCardStyles";
 import {
   BackButtonDiv,
@@ -18,6 +18,7 @@ import {
 } from "./MementoPageStyles";
 import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
+
 import { BackButton } from "ui/Navigation";
 import { Container } from "ui/Helpers";
 import { GET_A_MEMENTO } from "queries/Memento";
@@ -140,13 +141,11 @@ export default function MementoPage() {
             {memento.people && memento.people.length > 0 && (
               <span>
                 <i className="fas fa-user-tag"></i>
-                <div>
                   {memento.people.map(person => (
-                    <PeopleTags key={person.firstName}>
+                    <PeopleTags key={person.firstName} onClick={() => history.push("/profile/" + person.userId)}>
                       {person.firstName} {person.lastName}
                     </PeopleTags>
                   ))}
-                </div>
               </span>
             )}
             {/* Beneficiary Tags */}

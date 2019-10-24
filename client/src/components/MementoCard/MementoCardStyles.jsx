@@ -176,7 +176,14 @@ export const MementoTag = styled.li`
   }
 `;
 
-export const PeopleTags = styled.span`
+export const PeopleTags = styled.a`
+  cursor: pointer;
+  color: ${props => transparentize(0.2, props.theme.palette.text)};
+
+  &:hover {
+    color: ${props => props.familyColour || props.theme.palette.main};
+  }
+
   &::after {
     display: inline;
     content: ", ";

@@ -1,6 +1,7 @@
 import { adjustHue, darken, lighten } from "polished";
 import styled, { css } from "styled-components";
 
+import {ButtonSecondary} from "ui/Buttons";
 import { center } from "ui/Helpers";
 
 export const TagsContainer = styled.ul`
@@ -167,4 +168,29 @@ export const NewTagsForm = styled.div`
     padding: 5px 16px;
   }
 
+`;
+
+export const RemovePhoto = styled(ButtonSecondary)`
+  margin-left: 10px;
+`;
+
+export const PreviewImg = styled.div`
+  overflow: hidden;
+  margin-bottom: 10px;
+  padding: 10px;
+  text-align: center;
+
+  img {
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    max-height: 360px;
+    border: 3px solid ${props => lighten(0.63, props.theme.palette.text)};
+    border-radius: 3px;
+  }
+
+  span {
+    display: block;
+    margin: 20px 0;
+  }
 `;
