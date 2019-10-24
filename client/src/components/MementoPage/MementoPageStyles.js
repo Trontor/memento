@@ -12,6 +12,7 @@ export const Card = styled.div`
   border: 1px solid ${props => transparentize(0.9, props.theme.palette.text)};
   border-radius: 6px;
   grid-gap: 18px;
+  min-height: ${props => props.noImg ? "default" : "300px"};
 
   h1 {
     font-size: 24px;
@@ -19,7 +20,7 @@ export const Card = styled.div`
   }
 
   @media screen and (min-width: ${props => props.theme.breakpoints.desktop}) {
-    grid-template-columns: ${props => props.noImg ? "1fr" : "minmax(auto, 45%) 1fr"};
+    grid-template-columns: ${props => props.noImg ? "1fr" : "minmax(auto, 50%) 1fr"};
   }
 `;
 
