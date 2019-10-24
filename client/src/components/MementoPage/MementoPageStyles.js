@@ -1,8 +1,6 @@
 import {
   MementoTag,
-  // MementoTagsWrapper,
 } from "components/MementoCard/MementoCardStyles";
-
 import styled from "styled-components";
 import { transparentize } from "polished";
 
@@ -20,8 +18,8 @@ export const Card = styled.div`
     margin-top: 0;
   }
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.desktop}) {
-    grid-template-columns: 55% auto;
+  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
+    grid-template-columns: minmax(auto, 45%) 1fr;
   }
 `;
 

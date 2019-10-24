@@ -9,13 +9,14 @@ import {
   UploaderText,
 } from "./BookmarksStyles";
 import {
+  MementoDescription,
   MementoOverview,
   PeopleTags,
-  MementoDescription,
+  SpecialMemento
 } from "../MementoCard/MementoCardStyles";
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
-import { useHistory } from "react-router";
+
 import { Container } from "ui/Helpers";
 import { DELETE_BOOKMARK } from "mutations/Memento";
 import { GET_BOOKMARKS } from "queries/Bookmarks";
@@ -23,6 +24,7 @@ import { Header } from "ui/Typography";
 import JollyLoader from "components/JollyLoader/JollyLoader";
 import NoBookmarks from "./NoBookmarks";
 import moment from "moment";
+import { useHistory } from "react-router";
 
 export default function Bookmarks(props) {
   const history = useHistory();
@@ -77,6 +79,15 @@ export default function Bookmarks(props) {
                 {memento.title}
               </h3>
               <MementoOverview>
+                {/* Special Event */}
+                {memento.type && !["Test", "item", "memento"].includes(memento.type) && (
+                <span>
+                  <i class="far fa-calendar-alt"></i>
+                  <SpecialMemento>
+                    {memento.type}
+                  </SpecialMemento>
+                </span>
+                )}
                 {/* Memento Date */}
                 <span>
                   <i className="far fa-clock" />
@@ -104,7 +115,9 @@ export default function Bookmarks(props) {
                     <i className="fas fa-user-tag"></i>
                     <div>
                       {memento.people.map(person => (
-                        <PeopleTags key={person.firstName}>
+                        <PeopleTags
+                          key={person.firstName}
+                          onClick={() => history.push("/profile/" + person.userId)}>
                           {person.firstName} {person.lastName}
                         </PeopleTags>
                       ))}

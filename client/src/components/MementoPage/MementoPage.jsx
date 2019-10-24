@@ -142,7 +142,10 @@ export default function MementoPage() {
               <span>
                 <i className="fas fa-user-tag"></i>
                   {memento.people.map(person => (
-                    <PeopleTags key={person.firstName} onClick={() => history.push("/profile/" + person.userId)}>
+                    <PeopleTags
+                      key={person.firstName}
+                      onClick={() => history.push("/profile/" + person.userId)}
+                      familyColour={memento.family.colour}>
                       {person.firstName} {person.lastName}
                     </PeopleTags>
                   ))}

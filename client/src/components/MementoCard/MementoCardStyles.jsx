@@ -29,6 +29,7 @@ export const AuthorWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   margin-bottom: 16px;
+  width: 100%;
 `;
 
 export const AuthorAvatar = styled.div`
@@ -69,6 +70,7 @@ export const MementoOverview = styled.div`
   i {
     color: ${props => props.familyColour || props.theme.palette.main};
     justify-content: left;
+    margin-right: 2px;
   }
 
   > span {
@@ -221,4 +223,10 @@ export const Bookmark = styled.span`
         ? props.familyColour || props.theme.palette.main
         : "default"};
   }
+`;
+
+export const SpecialMemento = styled.span`
+  color: ${props => props.familyColour || props.theme.palette.main};
+  font-weight: bold;
+  letter-spacing: 0.03em;
 `;

@@ -1,28 +1,29 @@
+import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
 import {
   AuthorAvatar,
   AuthorWrapper,
-  CardOptions,
-  MementoAuthor,
-  MementoDescription,
-  MementoOverview,
-  MementoTag,
-  MementoTitle,
-  PeopleTags,
-  UploadDate,
   Bookmark,
   CardContent,
+  CardOptions,
+  MementoDescription,
   MementoInfo,
+  MementoOverview,
+  MementoTag,
   MementoTagsWrapper,
+  MementoTitle,
+  PeopleTags,
+  SpecialMemento,
+  UploadDate
 } from "../MementoCard/MementoCardStyles";
+import { FamilyGroup, MementoImg } from "./ViewMementoStyles";
+import React, { useState } from "react";
+
 import { Card } from "../MementoPage/MementoPageStyles";
 import { Container } from "ui/Helpers";
-import { FamilyGroup, MementoImg } from "./ViewMementoStyles";
-import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
+import InheritanceTree from "components/InheritanceTree/InheritanceTree";
 import moment from "moment";
-import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { useMutation } from "@apollo/react-hooks";
-import InheritanceTree from "components/InheritanceTree/InheritanceTree";
 
 export default function MementoCard(props) {
   const history = useHistory();
@@ -37,10 +38,9 @@ export default function MementoCard(props) {
     family,
     media,
     tags,
-    // type,
+    type,
     // updatedAt,
     beneficiaries,
-    uploader,
     people,
     bookmarkedBy,
     onBookmarkToggled,
@@ -96,17 +96,15 @@ export default function MementoCard(props) {
           <AuthorWrapper>
             {/* Memento  Uploader Profile Picture */}
             <AuthorAvatar>
-              {!uploader.imageUrl ? (
-                <i className="fas fa-user-circle"></i>
+              {!family.imageUrl ? (
+                <img src="https://image.flaticon.com/icons/svg/1999/1999109.svg" alt={family.name}/>
               ) : (
-                <img src={uploader.imageUrl} alt={uploader.firstName} />
+                <img src={family.imageUrl} alt={family.name} />
               )}
             </AuthorAvatar>
             <div>
-              {/* Memento  Uploader  */}
-              <MementoAuthor>
-                {uploader.firstName + " " + uploader.lastName}
-              </MementoAuthor>
+              {/* Family Group the memento belongs to */}
+              <FamilyGroup>{family.name}</FamilyGroup>
               {/* Memento  Upload Date */}
               <UploadDate>
                 {moment(
@@ -114,8 +112,6 @@ export default function MementoCard(props) {
                   "DD-MM-YYYY",
                 ).fromNow()}
               </UploadDate>
-              {/* Family Group the memento belongs to */}
-              <FamilyGroup>{family.name}</FamilyGroup>
             </div>
             {/* Edit & Bookmark */}
             <CardOptions>
@@ -153,6 +149,15 @@ export default function MementoCard(props) {
               {title}
             </MementoTitle>
             <MementoOverview>
+             {/* Special Event */}
+              {type && !["Test", "item", "memento"].includes(type) && (
+              <span>
+                <i class="far fa-calendar-alt"></i>
+                <SpecialMemento>
+                  {type}
+                </SpecialMemento>
+              </span>
+              )}
               {/* Dates */}
               <span>
                 <i className="far fa-clock" />

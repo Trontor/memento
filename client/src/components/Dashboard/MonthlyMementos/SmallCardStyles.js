@@ -30,7 +30,7 @@ export const AuthorWrapper = styled.div`
   font-size: 14px;
 
   span {
-    font-size: 13px;
+    font-size: 12px;
     opacity: 0.8;
   }
 `;
@@ -99,7 +99,7 @@ export const MementoTitle = styled.div`
 export const MementoCoverImg = styled.div`
   overflow: hidden;
   border-radius: 4px;
-  flex-basis: 0 0 50%;
+  flex-basis: 0 0 45%;
   margin-right: 16px;
 
   img {
