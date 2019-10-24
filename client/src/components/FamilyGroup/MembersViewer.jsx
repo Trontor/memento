@@ -1,7 +1,8 @@
-import { MemberRow } from "./FamilyGroupStyles";
-import { useHistory } from "react-router-dom";
+import { ActivityIndicator, MemberRow } from "./FamilyGroupStyles";
+
 import React from "react";
 import moment from "moment";
+import { useHistory } from "react-router-dom";
 
 export default function MembersViewer(props) {
   const history = useHistory();
@@ -26,7 +27,6 @@ export default function MembersViewer(props) {
         // }
         return (
           <MemberRow key={member.firstName} admin={isAdmin}>
-            {isActive && "*"}
             {member.imageUrl ? (
               <img src={member.imageUrl} alt={`${member.firstName}'s avatar`} />
             ) : (
@@ -34,10 +34,13 @@ export default function MembersViewer(props) {
             )}
             <div>
               <span onClick={() => history.push("/profile/" + member.userId)}>
-                {member.firstName} {member.lastName}
+                  {member.firstName} {member.lastName}
               </span>
               {isAdmin && <span>Admin</span>}
             </div>
+            {isActive && (
+              <ActivityIndicator/>
+            )}
           </MemberRow>
         );
       })}

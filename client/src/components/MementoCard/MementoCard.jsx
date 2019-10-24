@@ -18,6 +18,7 @@ import {
   UploadDate,
 } from "./MementoCardStyles";
 import React, { useState } from "react";
+
 import InheritanceTree from "components/InheritanceTree/InheritanceTree";
 import moment from "moment";
 import { useHistory } from "react-router";
@@ -68,6 +69,7 @@ export default function MementoCard(props) {
   // if (isBookmarked && optimisticBookmark) {
   //   setOptimisticBookmark(false);
   // }
+
   const isUploader = uploader.userId === userId;
   const mementoDate = moment(
     dates[0].day.toString().padStart(2, "0") +

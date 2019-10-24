@@ -14,8 +14,8 @@ export const MenuTabs = styled.div`
   cursor: pointer;
   padding: 12px;
   font-size: 18px;
+  font-weight: 600;
   font-family: "Livvic", sans-serif;
-  font-weight: 500;
   display: flex;
   width: 100%;
   align-items: center;
