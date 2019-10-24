@@ -18,7 +18,7 @@ export const Card = styled.div`
     margin-top: 0;
   }
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.tabletLandscape}) {
+  @media screen and (min-width: ${props => props.theme.breakpoints.desktop}) {
     grid-template-columns: ${props => props.noImg ? "1fr" : "minmax(auto, 45%) 1fr"};
   }
 `;
