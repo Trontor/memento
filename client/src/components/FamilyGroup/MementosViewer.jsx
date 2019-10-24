@@ -5,7 +5,7 @@ import NoMementos from "./NoMementos";
 import React from "react";
 
 export default function MementosViewer(props) {
-  const { mementos, userId, refreshMementos } = props;
+  const { mementos, refreshMementos } = props;
 
   if (!mementos) {
     return <JollyLoader />;
