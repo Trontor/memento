@@ -125,6 +125,14 @@ export default function MementoCard(props) {
                   onClick={() => setShowInheritanceTree(!showInheritanceTree)}
                 />
               )}
+              {detectedLabels.length > 0 && (
+                <i
+                  className="fas fa-eye"
+                  onClick={() =>
+                    history.push("/memento/" + mementoId + "/vision")
+                  }
+                />
+              )}
               <i
                 class="fas fa-pencil-alt"
                 onClick={() => history.push(`/memento/${mementoId}/edit/`)}

@@ -82,7 +82,7 @@ export default function Home(props) {
           </ButtonSecondary>
         ) : (
           <ButtonSecondary onClick={() => props.history.push("/dashboard")}>
-            Go to Dashboard
+            Dashboard
           </ButtonSecondary>
         )}
       </PageHeader>
