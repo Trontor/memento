@@ -9,10 +9,11 @@ export const Card = styled.div`
   background-color: ${props => props.theme.palette.foreground};
   position: relative;
   border-radius: 4px;
-  box-shadow: 1px 1px 16px ${props => transparentize(0.95, props.theme.palette.text)};
+  box-shadow: 1px 1px 16px
+    ${props => transparentize(0.95, props.theme.palette.text)};
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     width: 100%;
     margin-top: 0;
     margin-bottom: ${props => props.theme.size.gutterWidth};
@@ -28,6 +29,7 @@ export const AuthorWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   margin-bottom: 16px;
+  width: 100%;
 `;
 
 export const AuthorAvatar = styled.div`
@@ -62,12 +64,13 @@ export const MementoInfo = styled.div`
 export const MementoOverview = styled.div`
   line-height: 1.6em;
   margin-bottom: 16px;
-  font-size: ${props => props.card ? "14px" : "16px"};
-  min-height: ${props => props.card ? "3em" : "4em"};
+  font-size: ${props => (props.card ? "14px" : "16px")};
+  min-height: ${props => (props.card ? "3em" : "4em")};
 
   i {
     color: ${props => props.familyColour || props.theme.palette.main};
     justify-content: left;
+    margin-right: 2px;
   }
 
   > span {
@@ -104,7 +107,7 @@ export const MementoCoverImg = styled.div`
 export const MementoDescription = styled.div`
   margin-bottom: 10px;
   opacity: 0.8;
-  font-size: ${props => props.card ? "14px" : "16px"};
+  font-size: ${props => (props.card ? "14px" : "16px")};
 `;
 
 export const Divider = styled.span`
@@ -148,7 +151,9 @@ export const MementoTag = styled.li`
   font-family: "Livvic", sans-serif;
   font-weight: 600;
   color: ${props => props.familyColour || props.theme.palette.main};
-  border: 1px solid ${props => transparentize(0.8, props.familyColour || props.theme.palette.main)};
+  border: 1px solid
+    ${props =>
+      transparentize(0.8, props.familyColour || props.theme.palette.main)};
   display: inline-block;
   padding: 6px 10px;
   margin-right: 8px;
@@ -156,12 +161,16 @@ export const MementoTag = styled.li`
   border-radius: 4px;
   cursor: pointer;
   ${props => props.theme.mixins.hoverFade};
-  background-color: ${props => transparentize(0.95, props.familyColour || props.theme.palette.main)};
+  background-color: ${props =>
+    transparentize(0.95, props.familyColour || props.theme.palette.main)};
 
   &:hover {
     color: ${props => props.familyColour || props.theme.palette.main};
-    border-color: ${props => transparentize(0.7, props.familyColour || props.theme.palette.main)};
-    box-shadow: inset 0 0 0 1px ${props => transparentize(0.7, props.familyColour || props.theme.palette.main)};
+    border-color: ${props =>
+      transparentize(0.7, props.familyColour || props.theme.palette.main)};
+    box-shadow: inset 0 0 0 1px
+      ${props =>
+        transparentize(0.7, props.familyColour || props.theme.palette.main)};
   }
   span {
     color: gray;
@@ -169,7 +178,14 @@ export const MementoTag = styled.li`
   }
 `;
 
-export const PeopleTags = styled.span`
+export const PeopleTags = styled.a`
+  cursor: pointer;
+  color: ${props => transparentize(0.2, props.theme.palette.text)};
+
+  &:hover {
+    color: ${props => props.familyColour || props.theme.palette.main};
+  }
+
   &::after {
     display: inline;
     content: ", ";
@@ -200,9 +216,17 @@ export const CardOptions = styled.span`
   }
 `;
 
-
 export const Bookmark = styled.span`
   i {
-    color: ${props => props.bookmarked ? props.familyColour || props.theme.palette.main : "default"}
+    color: ${props =>
+      props.bookmarked
+        ? props.familyColour || props.theme.palette.main
+        : "default"};
   }
+`;
+
+export const SpecialMemento = styled.span`
+  color: ${props => props.familyColour || props.theme.palette.main};
+  font-weight: bold;
+  letter-spacing: 0.03em;
 `;

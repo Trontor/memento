@@ -1,4 +1,3 @@
-import { useMutation, useQuery } from "@apollo/react-hooks";
 import * as yup from "yup";
 
 import { ButtonPrimary, ButtonPrimaryLight, ButtonSecondary } from "ui/Buttons";
@@ -9,32 +8,35 @@ import {
   InstructionLabel,
   TextArea,
 } from "ui/Forms";
-import { NewTag, NewTagsForm, Tag, TagsContainer } from "./UploadMementoStyles";
-import React, { useState } from "react";
-import imageCompression from "browser-image-compression";
-import DateSelector from "components/DateSelector/DateSelector";
-import { Formik } from "formik";
-import Select from "react-select";
-import { StyledDropzone } from "components/FileDropzone/FileDropzone";
-// import { AlignRight } from "ui/Helpers";
-import { CREATE_NEW_MEMENTO } from "mutations/Memento";
-import { Container } from "ui/Helpers";
-import { FormNav } from "ui/Forms";
-import { Header } from "ui/Typography";
-import JollyLoader from "components/JollyLoader/JollyLoader";
-import { LOAD_FAMILY } from "mutations/Family";
-import CreatableSelect from "react-select/creatable";
+import { NewTag, NewTagsForm, PreviewImg, RemovePhoto, Req, Tag, TagsContainer } from "./UploadMementoStyles";
 import {
   RadioButton,
   RadioButtonStyle,
   RadioLabel,
   RadioOption,
 } from "ui/Radio";
+import React, { useState } from "react";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+
+import { AlignRight } from "ui/Helpers";
+// import { AlignRight } from "ui/Helpers";
+import { CREATE_NEW_MEMENTO } from "mutations/Memento";
+import { Container } from "ui/Helpers";
+import CreatableSelect from "react-select/creatable";
+import DateSelector from "components/DateSelector/DateSelector";
+import { FormNav } from "ui/Forms";
+import { Formik } from "formik";
+import { Header } from "ui/Typography";
+import JollyLoader from "components/JollyLoader/JollyLoader";
+import { LOAD_FAMILY } from "mutations/Family";
+import Select from "react-select";
+import { StyledDropzone } from "components/FileDropzone/FileDropzone";
+import imageCompression from "browser-image-compression";
 
 const regularQuotes = ["Loading..."];
 
 const initialFormValues = {
-  event: false,
+  event: true,
   type: null,
   title: "",
   description: "",
@@ -78,6 +80,7 @@ const eventOptions = [
   { value: "birthday", label: "Birthday" },
   { value: "childbirth", label: "Childbirth" },
   { value: "graduation", label: "Graduation" },
+  { value: "it project", label: "IT Project Presentation" },
   { value: "first date", label: "First Date" },
   { value: "wedding", label: "Wedding" },
   { value: "first day at school", label: "First Day at School" },
@@ -262,22 +265,8 @@ export default function UploadMemento(props) {
               <Header underline>Create a Memento</Header>
               <FormSection>
                 <InstructionLabel>
-                  Is your memento a special event? (e.g. anniversary, birthday,
-                  graduation)
+                  What type of memento would you like to create?
                 </InstructionLabel>
-                <RadioOption>
-                  <RadioButton
-                    type="radio"
-                    value="event"
-                    checked={props.values.event}
-                    onChange={e =>
-                      props.setFieldValue("event", e.target.checked)
-                    }
-                  />
-                  <RadioButtonStyle />
-                  <RadioLabel>Yes, it is a special event.</RadioLabel>
-                </RadioOption>
-
                 <RadioOption>
                   <RadioButton
                     type="radio"
@@ -289,13 +278,26 @@ export default function UploadMemento(props) {
                     }
                   />
                   <RadioButtonStyle />
-                  <RadioLabel>No, but it is a special item.</RadioLabel>
+                  <RadioLabel>Item (e.g. painting, stuffed toy, photograph).</RadioLabel>
+                </RadioOption>
+                <RadioOption>
+                  <RadioButton
+                    type="radio"
+                    value="event"
+                    checked={props.values.event}
+                    onChange={e =>
+                      props.setFieldValue("event", e.target.checked)
+                    }
+                  />
+                  <RadioButtonStyle />
+                  <RadioLabel>Event (e.g. anniversary, birthday,
+                  graduation).</RadioLabel>
                 </RadioOption>
               </FormSection>
 
               {props.values.event && (
                 <FormSection>
-                  <InstructionLabel>What kind of event is it?</InstructionLabel>
+                  <InstructionLabel>What kind of event is it?<Req>*</Req></InstructionLabel>
                   <CreatableSelect
                     isClearable
                     options={eventOptions}
@@ -308,7 +310,7 @@ export default function UploadMemento(props) {
               )}
 
               <FormSection>
-                <InstructionLabel>Title:</InstructionLabel>
+                <InstructionLabel>Title<Req>*</Req></InstructionLabel>
                 <InputField
                   value={props.values.title}
                   name="title"
@@ -320,31 +322,34 @@ export default function UploadMemento(props) {
                 )}
               </FormSection>
 
-              {!props.values.event && (
-                <FormSection>
-                  <InstructionLabel>Add media files:</InstructionLabel>
-                  {props.values.file ? (
-                    <div>
-                      <span>{props.values.file.name}</span>
-                      <span onClick={() => props.setFieldValue("file", null)}>
-                        {" "}
-                        Remove
-                      </span>
-                    </div>
-                  ) : (
-                    <StyledDropzone
-                      onFilesAdded={files =>
-                        props.setFieldValue("file", files[0])
-                      }
-                    />
-                  )}
-                  {props.errors.file && props.touched.file && (
-                    <Error>{props.errors.file}</Error>
-                  )}
-                </FormSection>
-              )}
               <FormSection>
-                <InstructionLabel>Description:</InstructionLabel>
+                <InstructionLabel>Add a media file:</InstructionLabel>
+                {props.values.file ? (
+                  <div>
+                    <PreviewImg>
+                      <img
+                        alt={props.values.file.name}
+                        src={URL.createObjectURL(props.values.file)}
+                      />
+                      <span>{props.values.file.name}</span>
+                      <RemovePhoto onClick={() => props.setFieldValue("file", null)}>
+                        Remove
+                      </RemovePhoto>
+                    </PreviewImg>
+                  </div>
+                ) : (
+                  <StyledDropzone
+                    onFilesAdded={files =>
+                      props.setFieldValue("file", files[0])
+                    }
+                  />
+                )}
+                {props.errors.file && props.touched.file && (
+                  <Error>{props.errors.file}</Error>
+                )}
+              </FormSection>
+              <FormSection>
+                <InstructionLabel>Description</InstructionLabel>
                 <TextArea
                   type="text"
                   name="description"
@@ -357,7 +362,7 @@ export default function UploadMemento(props) {
                 <Error>{props.errors.description}</Error>
               )}
               <FormSection>
-                <InstructionLabel>Date:</InstructionLabel>
+                <InstructionLabel>Date</InstructionLabel>
                 <DateSelector
                   setFieldValue={props.setFieldValue}
                   // onChange={props.handleChange}
@@ -426,7 +431,7 @@ export default function UploadMemento(props) {
                 )}
               </FormSection>
               <FormSection>
-                <InstructionLabel>Tags:</InstructionLabel>
+                <InstructionLabel>Select Tags:</InstructionLabel>
                 <TagsContainer>
                   {tags.sort().map(tag => (
                     <Tag
@@ -516,7 +521,9 @@ export default function UploadMemento(props) {
             <ButtonSecondary onClick={prevStep}>Back</ButtonSecondary>
           ) : null} */}
                 {/* <ButtonSecondary onClick={prevStep}>Back</ButtonSecondary> */}
-                <ButtonPrimary type="submit">Create Memento</ButtonPrimary>
+                <AlignRight>
+                  <ButtonPrimary type="submit">Create Memento</ButtonPrimary>
+                </AlignRight>
 
                 {/* {currentStep !== 2 ? (
             <ButtonPrimary onClick={nextStep}>Next</ButtonPrimary>

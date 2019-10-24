@@ -6,6 +6,8 @@ import JollyLoader from "components/JollyLoader/JollyLoader";
 import MonthlyMementos from "./MonthlyMementos/MonthlyMementos";
 import NewUser from "./NewUser/NewUser";
 import { useQuery } from "@apollo/react-hooks";
+// import ContributionGrid from "./ContributionGrid/ContributionGrid";
+import { DashboardContainer } from "./MonthlyMementos/MonthlyMementoStyles";
 
 const loadingQuotes = [
   "Dashboarding things...",
@@ -44,5 +46,10 @@ export default function Dashboard(props) {
     return <NewUser user={user} />;
   }
 
-  return <MonthlyMementos families={families} user={user} />;
+  return (
+    <DashboardContainer>
+      <MonthlyMementos families={families} user={user} />
+      {/* <ContributionGrid /> */}
+    </DashboardContainer>
+  );
 }

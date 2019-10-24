@@ -15,7 +15,8 @@ import {
   MementoTagsWrapper,
   MementoTitle,
   PeopleTags,
-  UploadDate,
+  SpecialMemento,
+  UploadDate
 } from "./MementoCardStyles";
 import React, { useState } from "react";
 
@@ -144,11 +145,19 @@ export default function MementoCard(props) {
       <CardContent>
         <MementoInfo>
           {/* Title */}
-          {type && !["Test", "memento"].includes(type) && <p>Type: {type}</p>}
           <MementoTitle onClick={() => history.push("/memento/" + mementoId)}>
             {title}
-          </MementoTitle>
+        </MementoTitle>
           <MementoOverview card familyColour={family.colour}>
+            {/* Special Event */}
+            {type && !["Test", "item", "memento"].includes(type) && (
+            <span>
+              <i class="far fa-calendar-alt"></i>
+              <SpecialMemento familyColour={family.colour}>
+                {type}
+              </SpecialMemento>
+            </span>
+            )}
             {/* Date */}
             <span>
               <i className="far fa-clock"></i>
@@ -165,13 +174,14 @@ export default function MementoCard(props) {
             {people && people.length > 0 && (
               <span>
                 <i className="fas fa-user-tag"></i>
-                <div>
                   {people.map(person => (
-                    <PeopleTags key={person.firstName}>
-                      {person.firstName} {person.lastName}
+                    <PeopleTags
+                      key={person.firstName}
+                      onClick={() => history.push("/profile/" + person.userId)}
+                      familyColour={family.colour}>
+                    {person.firstName} {person.lastName}
                     </PeopleTags>
                   ))}
-                </div>
               </span>
             )}
             {/* Beneficiary Tags */}

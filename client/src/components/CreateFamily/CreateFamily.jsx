@@ -148,7 +148,13 @@ export default function CreateFamily(props) {
               </InstructionLabel>
               {props.values.file ? (
                 <div>
-                  {props.values.file.name}{" "}
+                  <div>
+                    <img
+                      alt={props.values.file.name}
+                      src={URL.createObjectURL(props.values.file)}
+                    />
+                  </div>
+                  {props.values.file.name}
                   <button onClick={() => props.setFieldValue("file", null)}>
                     Remove
                   </button>

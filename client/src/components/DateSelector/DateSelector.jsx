@@ -1,6 +1,7 @@
+import { DateField, DateInput } from "./DateSelectorStyles";
 import React, { useEffect, useState } from "react";
+
 import Select from "react-select";
-import { DateInput, DateField } from "./DateSelectorStyles";
 import moment from "moment";
 
 export default function DateSelector({
@@ -9,9 +10,9 @@ export default function DateSelector({
   customDropdown,
   onChange,
 }) {
-  const defaultDay = value ? value.getDate() : 1;
-  const defaultMonth = value ? value.getMonth() : 1;
-  const defaultYear = value ? value.getFullYear() : 2000;
+  const defaultDay = value ? value.getDate() : 25;
+  const defaultMonth = value ? value.getMonth() : 10;
+  const defaultYear = value ? value.getFullYear() : 2019;
   // Date values
   const [day, setDay] = useState(defaultDay);
   const [month, setMonth] = useState(defaultMonth);
@@ -38,7 +39,7 @@ export default function DateSelector({
       // console.log("Invalid date: " + proposedDate);
       setDay(1);
       setMonth(1);
-      setYear(2000);
+      setYear(2019);
     } else {
       setFieldValue("date", new Date(year, month, day));
     }

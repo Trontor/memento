@@ -47,7 +47,7 @@ export const NortonTag = styled.li`
   font-family: "Livvic", sans-serif;
   font-weight: 600;
   color: ${props =>
-    transparentize(0.4, props.familyColour || props.theme.palette.main)};
+    transparentize(0.5, props.familyColour || props.theme.palette.main)};
   border: 1px solid
     ${props =>
       transparentize(0.7, props.familyColour || props.theme.palette.main)};
@@ -61,17 +61,17 @@ export const NortonTag = styled.li`
   background-color: ${props =>
     transparentize(0.97, props.familyColour || props.theme.palette.main)};
 
-  /* &:hover {
+  &:hover {
     color: ${props => props.familyColour || props.theme.palette.main};
     border-color: ${props =>
-      transparentize(0.4, props.familyColour || props.theme.palette.main)};
+      transparentize(0.6, props.familyColour || props.theme.palette.main)};
     background-color: ${props =>
-      transparentize(0.9, props.familyColour || props.theme.palette.main)};
+      transparentize(0.95, props.familyColour || props.theme.palette.main)};
 
     span {
-      color: ${props => transparentize(0.4, props.theme.palette.text)};
+      color: ${props => transparentize(0.3, props.theme.palette.text)};
     }
-  } */
+  }
 
   span {
     color: ${props => transparentize(0.7, props.theme.palette.text)};
@@ -91,7 +91,7 @@ export const NortonTag = styled.li`
       background-color: ${props =>
         adjustHue(
           -0.4,
-          transparentize(0.9, props.familyColour || props.theme.palette.main),
+          transparentize(0.8, props.familyColour || props.theme.palette.main),
         )};
       color: ${props => darken(0.08, props.theme.palette.main)};
 
@@ -99,16 +99,19 @@ export const NortonTag = styled.li`
         color: ${props => transparentize(0.2, props.theme.palette.main)};
       }
 
-      /* &:hover {
-        border-color: ${props => transparentize(0.5, props.theme.palette.main)};
+      &:hover {
+        border-color: ${props => transparentize(0.15, props.theme.palette.main)};
         background-color: ${props =>
-          transparentize(0.95, props.familyColour || props.theme.palette.main)};
-        color: ${props => transparentize(0.3, props.theme.palette.main)};
+          adjustHue(
+            -0.4,
+            transparentize(0.8, props.familyColour || props.theme.palette.main),
+          )};
+        color: ${props => darken(0.08, props.theme.palette.main)};
 
         span {
-          color: ${props => transparentize(0.7, props.theme.palette.text)};
+          color: ${props => transparentize(0.2, props.theme.palette.main)};
         }
-      } */
+      }
     `};
 `;
 

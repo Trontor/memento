@@ -201,8 +201,8 @@ export default function SettingsProfile() {
               </FormSection>
 
               <FormSection>
-                {/* Birthday  */}
-                <InputLabel>Birthday</InputLabel>
+                {/* Date of Birth  */}
+                <InputLabel>Date of Birth</InputLabel>
                 <Calendar
                   name="dateOfBirth"
                   placeholderText="Click to select a date"

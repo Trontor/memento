@@ -164,6 +164,8 @@ export const MementoTag = styled.li`
 `;
 
 export const PeopleTags = styled.span`
+  cursor: pointer;
+
   &::after {
     display: inline;
     content: ", ";
