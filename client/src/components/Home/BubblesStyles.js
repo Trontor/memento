@@ -55,8 +55,8 @@ export const Bubbles = styled.div`
     top: 100px;
     background:
       linear-gradient(225deg,
-        ${transparentize(0.5, "#DCE5FD")},
-        ${transparentize(0.7, "#CEE8F9")}
+        ${transparentize(0.45, "#DCE5FD")},
+        ${transparentize(0.3, "#CEE8F9")}
       );
     animation: ${floating} 7s linear infinite, ${shapeshift} 3s linear infinite;
   }
@@ -68,8 +68,8 @@ export const Bubbles = styled.div`
     top: 90px;
     background:
       linear-gradient(225deg,
-        ${transparentize(0.85, "paleturquoise")},
-        ${transparentize(0.7, "paleturquoise")}
+        ${transparentize(0.8, "paleturquoise")},
+        ${transparentize(0.65, "paleturquoise")}
       );
     animation: ${floating} 7.5s linear infinite, ${shapeshift} 3s linear infinite;
 
@@ -83,8 +83,8 @@ export const Bubbles = styled.div`
       margin-top: -100px;
       background:
         linear-gradient(90deg,
-          ${transparentize(0.5, "#DCE5FD")},
-          ${transparentize(0.7, "#CEE8F9")}
+          ${transparentize(0.45, "#DCE5FD")},
+          ${transparentize(0.6, "#CEE8F9")}
         );
       animation: ${floating} 30s linear infinite;
     }
@@ -97,8 +97,8 @@ export const Bubbles = styled.div`
     top: 30px;
     background:
       linear-gradient(-30deg,
-        ${transparentize(0.7, "#90B6E8")},
-        ${transparentize(0.75, "#A4CBF0")}
+        ${transparentize(0.65, "#90B6E8")},
+        ${transparentize(0.7, "#A4CBF0")}
       );
     animation: ${floating} 6s linear infinite, ${shapeshift} 4s linear infinite;
   }
@@ -110,8 +110,8 @@ export const Bubbles = styled.div`
     top: 65px;
     background:
       linear-gradient(135deg,
-        ${transparentize(0.7, "lightsalmon")},
-        ${transparentize(0.85, "pink")}
+        ${transparentize(0.65, "lightsalmon")},
+        ${transparentize(0.8, "pink")}
       );
     rotate: 45deg;
     animation-delay: 0.5s;
@@ -125,8 +125,8 @@ export const Bubbles = styled.div`
     top: 270px;
     background:
       linear-gradient(100deg,
-        ${transparentize(0.85, "salmon")},
-        ${transparentize(0.8, "lightsalmon")}
+        ${transparentize(0.8, "salmon")},
+        ${transparentize(0.75, "lightsalmon")}
       );
     animation: ${floating} 7.5s linear infinite, ${shapeshift} 3s linear infinite;
   }
@@ -138,8 +138,8 @@ export const Bubbles = styled.div`
     top: 360px;
     background:
       linear-gradient(135deg,
-        ${transparentize(0.7, "#A4CBF0")},
-        ${transparentize(0.65, "#A4CBF0")}
+        ${transparentize(0.65, "#A4CBF0")},
+        ${transparentize(0.6, "#A4CBF0")}
       );
     animation: ${floating} 6s linear infinite, ${shapeshift} 2s linear infinite;
 
@@ -152,8 +152,8 @@ export const Bubbles = styled.div`
       margin-top: 25px;
       background:
         linear-gradient(-90deg,
-          ${transparentize(0.8, "#A4C8F0")},
-          ${transparentize(0.7, "#CCD3FF")}
+          ${transparentize(0.75, "#A4C8F0")},
+          ${transparentize(0.65, "#CCD3FF")}
         );
       animation: ${floating} 15s linear infinite, ${shapeshift} 2s linear infinite;
       rotate: 50deg;
@@ -167,8 +167,8 @@ export const Bubbles = styled.div`
     top: 250px;
     background:
       linear-gradient(225deg,
-        ${transparentize(0.8, "#A4CBF0")},
-        ${transparentize(0.65, "#DCE5FD")}
+        ${transparentize(0.75, "#A4CBF0")},
+        ${transparentize(0.6, "#DCE5FD")}
       );
     animation: ${floating} 7s linear infinite, ${shapeshift} 3s linear infinite;
   }
@@ -180,8 +180,8 @@ export const Bubbles = styled.div`
     top: 80px;
     background:
       linear-gradient(225deg,
-        ${transparentize(0.7, "#A4CBF0")},
-        ${transparentize(0.65, "#A4CBF0")}
+        ${transparentize(0.65, "#A4CBF0")},
+        ${transparentize(0.6, "#A4CBF0")}
       );
     animation: ${floating} 6.8s linear infinite, ${shapeshift} 2s linear infinite;
   }
@@ -193,8 +193,8 @@ export const Bubbles = styled.div`
     top: 200px;
     background:
       linear-gradient(90deg,
-        ${transparentize(0.9, "lightskyblue")},
-        ${transparentize(0.75, "lightskyblue")}
+        ${transparentize(0.85, "lightskyblue")},
+        ${transparentize(0.7, "lightskyblue")}
       );
     animation: ${floating} 8s linear infinite, ${shapeshift} 3s linear infinite;
     rotate: 90deg;
@@ -207,8 +207,8 @@ export const Bubbles = styled.div`
     top: 105px;
     background:
       linear-gradient(180deg,
-        ${transparentize(0.7, "#A4CBF0")},
-        ${transparentize(0.7, "#A4CBF0")}
+        ${transparentize(0.65, "#A4CBF0")},
+        ${transparentize(0.65, "#A4CBF0")}
       );
     animation: ${floating} 8s linear infinite, ${shapeshift} 3s linear infinite;;
     rotate: 90deg;
@@ -221,8 +221,8 @@ export const Bubbles = styled.div`
     top: 250px;
     background:
       linear-gradient(90deg,
-        ${transparentize(0.6, "#A4CBF0")},390p
-        ${transparentize(0.7, "#A4CBF0")}
+        ${transparentize(0.5, "#A4CBF0")},390p
+        ${transparentize(0.65, "#A4CBF0")}
       );
     animation: ${floating} 6s linear infinite, ${shapeshift} 4s linear infinite;;
     rotate: 90deg;
@@ -236,8 +236,8 @@ export const Bubbles = styled.div`
     top: 40px;
     background:
       linear-gradient(225deg,
-        ${transparentize(0.8, "lavender")},
-        ${transparentize(0.7, "lavender")}
+        ${transparentize(0.6, "lavender")},
+        ${transparentize(0.65, "lavender")}
       );
     animation: ${floating} 9s linear infinite, ${shapeshift} 5s linear infinite;
     animation-delay: 0.5s;

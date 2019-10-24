@@ -70,7 +70,7 @@ const floating = keyframes`
 export const FeaturesOverview = styled.section`
   margin: 0 auto;
   padding: 80px 8vw;
-  background-color: #F5F9FC;
+  background-color: #EBF8FD;
 `
 export const FeaturesContentWrapper = styled.div`
   max-width: 768px;
