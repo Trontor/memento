@@ -142,7 +142,9 @@ export default function MementoCard(props) {
       <CardContent>
         <MementoInfo>
           {/* Title */}
-          {type && !["Test", "memento"].includes(type) && <p>Type: {type}</p>}
+          {type && !["Test", "item", "memento"].includes(type) && (
+            <p>Type: {type}</p>
+          )}
           <MementoTitle onClick={() => history.push("/memento/" + mementoId)}>
             {title}
           </MementoTitle>
