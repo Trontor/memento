@@ -198,6 +198,7 @@ function App() {
                 <Sidebar
                   sidebarOpen={sidebarOpen}
                   toggleSidebar={toggleSidebar}
+                  setSidebarOpen={setSidebarOpen}
                 />
               </LeftColumn>
               <Main>

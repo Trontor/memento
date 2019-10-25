@@ -56,6 +56,7 @@ const Sidebar = props => {
   useEffect(() => {
     console.log("Refreshing sidebar...");
     refetch();
+    props.setSidebarOpen(false);
   }, [refetch, location]);
 
   return (
