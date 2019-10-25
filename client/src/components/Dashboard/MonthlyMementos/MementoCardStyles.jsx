@@ -10,7 +10,7 @@ export const Card = styled.div`
   border-radius: 4px;
 
   @media screen and (min-width: ${props =>
-  props.theme.breakpoints.tabletLandscape}) {
+      props.theme.breakpoints.tabletLandscape}) {
     width: 100%;
     margin-top: 0;
     margin-bottom: ${props => props.theme.size.gutterWidth};
@@ -41,7 +41,6 @@ export const AuthorAvatar = styled.div`
   i {
     font-size: 38px;
   }
-
 `;
 
 export const MementoAuthor = styled.div`
@@ -148,14 +147,15 @@ export const MementoTag = styled.li`
   padding: 6px 10px;
   margin-right: 8px;
   border-radius: 4px;
-  cursor: pointer;
+  cursor: default;
   ${props => props.theme.mixins.hoverFade};
 
   &:hover {
     color: ${props => props.familyColour || props.theme.palette.main};
-    border-color: ${props => lighten(0.2, props.familyColour || props.theme.palette.main)};
-    box-shadow: inset 0 0 0 1px ${props =>
+    border-color: ${props =>
       lighten(0.2, props.familyColour || props.theme.palette.main)};
+    box-shadow: inset 0 0 0 1px
+      ${props => lighten(0.2, props.familyColour || props.theme.palette.main)};
   }
   span {
     color: gray;

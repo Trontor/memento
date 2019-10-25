@@ -226,7 +226,16 @@ export default function MementoCard(props) {
         <MementoTagsWrapper familyColour={family.colour}>
           <i className="fas fa-tags"></i>
           {tags.map(tag => (
-            <MementoTag familyColour={family.colour}>{tag}</MementoTag>
+            <MementoTag
+              onClick={() => {
+                if (props.onTagClicked) {
+                  props.onTagClicked(tag);
+                }
+              }}
+              familyColour={family.colour}
+            >
+              {tag}
+            </MementoTag>
           ))}
         </MementoTagsWrapper>
       )}
@@ -235,7 +244,15 @@ export default function MementoCard(props) {
         <MementoTagsWrapper familyColour={family.colour}>
           <i className="far fa-eye"></i>
           {detectedLabels.map(result => (
-            <MementoTag key={result.name} familyColour={family.colour}>
+            <MementoTag
+              onClick={() => {
+                if (props.onTagClicked) {
+                  props.onTagClicked(result.name.toLowerCase());
+                }
+              }}
+              key={result.name}
+              familyColour={family.colour}
+            >
               {result.name.toLowerCase()}{" "}
               <span>{Math.round(result.confidence, 0)}%</span>
             </MementoTag>

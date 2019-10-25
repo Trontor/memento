@@ -49,6 +49,7 @@ export default function FamilyGroup(props) {
   const [family, setFamily] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const location = useLocation();
+  const tagsRef = React.createRef();
   useEffect(() => {
     // If there are no mementos, forget about it
     if (!mementos) return;
@@ -75,7 +76,7 @@ export default function FamilyGroup(props) {
       if (data && data.family) {
         setCurrentUser(data.currentUser);
         setFamily(data.family);
-        console.log("Loaded family...", data.family);
+        // console.log("Loaded family...", data.family);
       }
     },
   });
@@ -122,10 +123,15 @@ export default function FamilyGroup(props) {
     }
   };
 
+  const cardTagClicked = tag => {
+    selectTag(tag);
+    tagsRef.current.scrollIntoView({ behavior: "smooth" });
+  };
   let tabComponent = null;
   // Extract this as it is used twice within the file (reduces code duplication)
   const mementoViewerComponent = (
     <MementosViewer
+      cardTagClicked={cardTagClicked}
       filterTags={filterTags}
       mementos={mementos}
       familyId={familyId}
@@ -237,10 +243,18 @@ export default function FamilyGroup(props) {
               <MembersViewer members={family.members} familyId={familyId} />
             </SideMenuSectionContainer>
 
-            <SideMenuSectionContainer>
+            <SideMenuSectionContainer ref={tagsRef}>
               {/* Tags */}
               <SideMenuSectionHeader>
-                <h2>Tags</h2>
+                <h2>
+                  Tags
+                  {filterTags && filterTags.length > 0 && (
+                    <span style={{ fontWeight: 200 }}>
+                      {" "}
+                      ({filterTags.length} selected)
+                    </span>
+                  )}
+                </h2>
               </SideMenuSectionHeader>
               {!tagOptions.length && <TagRow>No Tags</TagRow>}
               {tagOptions.sort().map(tag => (

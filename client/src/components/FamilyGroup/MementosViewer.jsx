@@ -22,6 +22,9 @@ export default function MementosViewer(props) {
     );
   }
 
+  const onMementoTagClicked = tag => {
+    props.cardTagClicked(tag);
+  };
   return (
     <>
       {mementos && mementos.length === 0 ? (
@@ -32,6 +35,7 @@ export default function MementosViewer(props) {
             <MementoCard
               key={memento.mementoId}
               onBookmarkToggled={refreshMementos}
+              onTagClicked={onMementoTagClicked}
               {...memento}
             />
           ))}
