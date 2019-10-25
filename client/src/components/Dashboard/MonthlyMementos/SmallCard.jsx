@@ -1,4 +1,4 @@
-import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
+// import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
 import {
   AuthorAvatar,
   AuthorWrapper,
@@ -18,7 +18,7 @@ import React, { useState } from "react";
 // import InheritanceTree from "components/InheritanceTree/InheritanceTree";
 import moment from "moment";
 import { useHistory } from "react-router";
-import { useMutation } from "@apollo/react-hooks";
+// import { useMutation } from "@apollo/react-hooks";
 
 export default function SmallCard(props) {
   const history = useHistory();
@@ -36,29 +36,29 @@ export default function SmallCard(props) {
     // updatedAt,
     family,
     detectedLabels,
-    bookmarkedBy,
+    // bookmarkedBy,
     beneficiaries,
     uploader,
     people,
-    onBookmarkToggled,
+    // onBookmarkToggled,
   } = props;
   const [showInheritanceTree, setShowInheritanceTree] = useState(false);
 
-  const [bookmark] = useMutation(ADD_BOOKMARK, {
-    variables: { id: mementoId },
-    onCompleted: data => {
-      onBookmarkToggled();
-    },
-  });
+  // const [bookmark] = useMutation(ADD_BOOKMARK, {
+  //   variables: { id: mementoId },
+  //   onCompleted: data => {
+  //     onBookmarkToggled();
+  //   },
+  // });
 
-  const [removeBookmark] = useMutation(DELETE_BOOKMARK, {
-    variables: { id: mementoId },
-    onCompleted: data => {
-      onBookmarkToggled();
-    },
-  });
+  // const [removeBookmark] = useMutation(DELETE_BOOKMARK, {
+  //   variables: { id: mementoId },
+  //   onCompleted: data => {
+  //     onBookmarkToggled();
+  //   },
+  // });
 
-  const isBookmarked = bookmarkedBy.some(id => id.userId === userId);
+  // const isBookmarked = bookmarkedBy.some(id => id.userId === userId);
 
   const isUploader = uploader.userId === userId;
 
