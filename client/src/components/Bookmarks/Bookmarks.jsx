@@ -12,7 +12,7 @@ import {
   MementoDescription,
   MementoOverview,
   PeopleTags,
-  SpecialMemento
+  SpecialMemento,
 } from "../MementoCard/MementoCardStyles";
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
@@ -80,14 +80,13 @@ export default function Bookmarks(props) {
               </h3>
               <MementoOverview>
                 {/* Special Event */}
-                {memento.type && !["Test", "item", "memento"].includes(memento.type) && (
-                <span>
-                  <i class="far fa-calendar-alt"></i>
-                  <SpecialMemento>
-                    {memento.type}
-                  </SpecialMemento>
-                </span>
-                )}
+                {memento.type &&
+                  !["Test", "item", "memento"].includes(memento.type) && (
+                    <span>
+                      <i className="far fa-calendar-alt"></i>
+                      <SpecialMemento>{memento.type}</SpecialMemento>
+                    </span>
+                  )}
                 {/* Memento Date */}
                 <span>
                   <i className="far fa-clock" />
@@ -117,7 +116,10 @@ export default function Bookmarks(props) {
                       {memento.people.map(person => (
                         <PeopleTags
                           key={person.firstName}
-                          onClick={() => history.push("/profile/" + person.userId)}>
+                          onClick={() =>
+                            history.push("/profile/" + person.userId)
+                          }
+                        >
                           {person.firstName} {person.lastName}
                         </PeopleTags>
                       ))}

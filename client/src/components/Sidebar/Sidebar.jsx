@@ -53,11 +53,12 @@ const Sidebar = props => {
 
   const iconSize = "20px";
 
+  const { setSidebarOpen } = props;
   useEffect(() => {
     console.log("Refreshing sidebar...");
     refetch();
-    props.setSidebarOpen(false);
-  }, [refetch, location]);
+    setSidebarOpen(false);
+  }, [setSidebarOpen, refetch, location]);
 
   return (
     <SidebarContainer isOpen={props.sidebarOpen}>

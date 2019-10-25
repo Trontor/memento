@@ -118,7 +118,7 @@ export default function SmallCard(props) {
               />
             )}
             <i
-              class="fas fa-link"
+              className="fas fa-link"
               onClick={() => history.push("/memento/" + mementoId)}
             ></i>
             {/* <i

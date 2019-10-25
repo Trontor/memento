@@ -297,7 +297,7 @@ export default function EditMemento(props) {
                     </Tag>
                   ))}
                   <NewTag type="button" onClick={() => setNewTag("")}>
-                    <i class="fas fa-plus"></i> new tag
+                    <i className="fas fa-plus"></i> new tag
                   </NewTag>
                 </TagsContainer>
                 {newTag !== null && (

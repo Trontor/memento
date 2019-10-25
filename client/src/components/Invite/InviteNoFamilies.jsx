@@ -16,7 +16,7 @@ export default function InviteNoFamilies(props) {
     <Container>
       <TextWrapper>
         <IconImg>
-          <i class="far fa-sad-cry"></i>
+          <i className="far fa-sad-cry"></i>
         </IconImg>
 
         <h2>Oops...you're not an admin of any group yet.</h2>

@@ -13,7 +13,7 @@ import {
   MementoTitle,
   PeopleTags,
   SpecialMemento,
-  UploadDate
+  UploadDate,
 } from "../MementoCard/MementoCardStyles";
 import { FamilyGroup, MementoImg } from "./ViewMementoStyles";
 import React, { useState } from "react";
@@ -97,7 +97,10 @@ export default function MementoCard(props) {
             {/* Memento  Uploader Profile Picture */}
             <AuthorAvatar>
               {!family.imageUrl ? (
-                <img src="https://image.flaticon.com/icons/svg/1999/1999109.svg" alt={family.name}/>
+                <img
+                  src="https://image.flaticon.com/icons/svg/1999/1999109.svg"
+                  alt={family.name}
+                />
               ) : (
                 <img src={family.imageUrl} alt={family.name} />
               )}
@@ -105,7 +108,8 @@ export default function MementoCard(props) {
             <div>
               {/* Family Group the memento belongs to */}
               <FamilyGroup
-                onClick={() => history.push("/family/" + family.familyId)}>
+                onClick={() => history.push("/family/" + family.familyId)}
+              >
                 {family.name}
               </FamilyGroup>
               {/* Memento  Upload Date */}
@@ -133,7 +137,7 @@ export default function MementoCard(props) {
                 />
               )}
               <i
-                class="fas fa-pencil-alt"
+                className="fas fa-pencil-alt"
                 onClick={() => history.push(`/memento/${mementoId}/edit/`)}
               />
               <Bookmark
@@ -152,14 +156,12 @@ export default function MementoCard(props) {
               {title}
             </MementoTitle>
             <MementoOverview>
-             {/* Special Event */}
+              {/* Special Event */}
               {type && !["Test", "item", "memento"].includes(type) && (
-              <span>
-                <i class="far fa-calendar-alt"></i>
-                <SpecialMemento>
-                  {type}
-                </SpecialMemento>
-              </span>
+                <span>
+                  <i className="far fa-calendar-alt"></i>
+                  <SpecialMemento>{type}</SpecialMemento>
+                </span>
               )}
               {/* Dates */}
               <span>
@@ -190,7 +192,7 @@ export default function MementoCard(props) {
               {/* Beneficiary Tags */}
               {beneficiaries && beneficiaries.length > 0 && (
                 <span>
-                  <i class="far fa-handshake"></i>
+                  <i className="far fa-handshake"></i>
                   <div>
                     {beneficiaries.map(beneficiary => (
                       <PeopleTags>
@@ -210,7 +212,7 @@ export default function MementoCard(props) {
             {/* Tags */}
             {tags && props.tags.length > 0 && (
               <MementoTagsWrapper>
-                <i class="fas fa-tags"></i>
+                <i className="fas fa-tags"></i>
                 {tags.map(tag => (
                   <MementoTag>{tag}</MementoTag>
                 ))}
@@ -219,7 +221,7 @@ export default function MementoCard(props) {
             {/* Rekognition Tags */}
             {detectedLabels && detectedLabels.length > 0 && (
               <MementoTagsWrapper>
-                <i class="far fa-eye"></i>
+                <i className="far fa-eye"></i>
                 {detectedLabels.map(result => (
                   <MementoTag key={result.name}>
                     {result.name.toLowerCase()}{" "}

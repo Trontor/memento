@@ -16,7 +16,7 @@ import {
   MementoTitle,
   PeopleTags,
   SpecialMemento,
-  UploadDate
+  UploadDate,
 } from "./MementoCardStyles";
 import React, { useState } from "react";
 
@@ -147,16 +147,16 @@ export default function MementoCard(props) {
           {/* Title */}
           <MementoTitle onClick={() => history.push("/memento/" + mementoId)}>
             {title}
-        </MementoTitle>
+          </MementoTitle>
           <MementoOverview card familyColour={family.colour}>
             {/* Special Event */}
             {type && !["Test", "item", "memento"].includes(type) && (
-            <span>
-              <i class="far fa-calendar-alt"></i>
-              <SpecialMemento familyColour={family.colour}>
-                {type}
-              </SpecialMemento>
-            </span>
+              <span>
+                <i className="far fa-calendar-alt"></i>
+                <SpecialMemento familyColour={family.colour}>
+                  {type}
+                </SpecialMemento>
+              </span>
             )}
             {/* Date */}
             <span>
@@ -174,20 +174,21 @@ export default function MementoCard(props) {
             {people && people.length > 0 && (
               <span>
                 <i className="fas fa-user-tag"></i>
-                  {people.map(person => (
-                    <PeopleTags
-                      key={person.firstName}
-                      onClick={() => history.push("/profile/" + person.userId)}
-                      familyColour={family.colour}>
+                {people.map(person => (
+                  <PeopleTags
+                    key={person.firstName}
+                    onClick={() => history.push("/profile/" + person.userId)}
+                    familyColour={family.colour}
+                  >
                     {person.firstName} {person.lastName}
-                    </PeopleTags>
-                  ))}
+                  </PeopleTags>
+                ))}
               </span>
             )}
             {/* Beneficiary Tags */}
             {beneficiaries && beneficiaries.length > 0 && (
               <span>
-                <i class="far fa-handshake"></i>
+                <i className="far fa-handshake"></i>
                 <div>
                   {beneficiaries.map(beneficiary => (
                     <PeopleTags key={beneficiary.firstName}>
@@ -223,7 +224,7 @@ export default function MementoCard(props) {
       {/* Tags */}
       {tags && tags.length > 0 && (
         <MementoTagsWrapper familyColour={family.colour}>
-          <i class="fas fa-tags"></i>
+          <i className="fas fa-tags"></i>
           {tags.map(tag => (
             <MementoTag familyColour={family.colour}>{tag}</MementoTag>
           ))}
@@ -232,7 +233,7 @@ export default function MementoCard(props) {
       {/* Rekognition Tags */}
       {detectedLabels && detectedLabels.length > 0 && (
         <MementoTagsWrapper familyColour={family.colour}>
-          <i class="far fa-eye"></i>
+          <i className="far fa-eye"></i>
           {detectedLabels.map(result => (
             <MementoTag key={result.name} familyColour={family.colour}>
               {result.name.toLowerCase()}{" "}

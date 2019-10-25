@@ -141,20 +141,21 @@ export default function MementoPage() {
             {memento.people && memento.people.length > 0 && (
               <span>
                 <i className="fas fa-user-tag"></i>
-                  {memento.people.map(person => (
-                    <PeopleTags
-                      key={person.firstName}
-                      onClick={() => history.push("/profile/" + person.userId)}
-                      familyColour={memento.family.colour}>
-                      {person.firstName} {person.lastName}
-                    </PeopleTags>
-                  ))}
+                {memento.people.map(person => (
+                  <PeopleTags
+                    key={person.firstName}
+                    onClick={() => history.push("/profile/" + person.userId)}
+                    familyColour={memento.family.colour}
+                  >
+                    {person.firstName} {person.lastName}
+                  </PeopleTags>
+                ))}
               </span>
             )}
             {/* Beneficiary Tags */}
             {memento.beneficiaries && memento.beneficiaries.length > 0 && (
               <span>
-                <i class="far fa-handshake"></i>
+                <i className="far fa-handshake"></i>
                 <div>
                   {memento.beneficiaries.map(beneficiary => (
                     <PeopleTags key={beneficiary.firstName}>
@@ -170,7 +171,7 @@ export default function MementoPage() {
           {/* <TagsWrapper> */}
           {memento.tags && memento.tags.length > 0 && (
             <MementoTagsWrapper familyColour={memento.family.colour}>
-              <i class="fas fa-tags"></i>
+              <i className="fas fa-tags"></i>
               {memento.tags.map(tag => (
                 <LargerTag familyColour={memento.family.colour}>
                   {tag}
@@ -181,7 +182,7 @@ export default function MementoPage() {
           {/* Rekognition Tags */}
           {memento.detectedLabels && memento.detectedLabels.length > 0 && (
             <MementoTagsWrapper familyColour={memento.family.colour}>
-              <i class="far fa-eye"></i>
+              <i className="far fa-eye"></i>
               {memento.detectedLabels.map(result => (
                 <LargerTag
                   key={result.name}
