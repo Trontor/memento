@@ -154,14 +154,12 @@ export default function InviteFamily() {
         <form>
           <Container>
             <Header underline>Invite a Family Member</Header>
-
             <InviteStep1
               inviteFamilies={inviteFamilies}
               currentStep={currentStep}
               selectFamily={handleSelectFamily}
               selected={selectedFamily}
             />
-
             <InviteStep2
               currentStep={currentStep}
               addEmail={addEmail}
@@ -170,7 +168,6 @@ export default function InviteFamily() {
               selected={selectedFamily}
               handleChange={handleChange}
             />
-
             {/* A navigation container for the 'Back' and 'Next' buttons */}
             <FormNav>
               {currentStep !== 1 ? (
@@ -195,6 +192,29 @@ export default function InviteFamily() {
               </AlignRight>
             </FormNav>
           </Container>
+          {currentStep === 2 && (
+            <span
+              onClick={() =>
+                setInviteEmails(
+                  [
+                    "wux14@student.unimelb.edu.au",
+                    "norton.wei@unimelb.edu.au",
+                    "leonss@unimelb.edu.au",
+                    "valerie.febriana@gmail.com",
+                    "gleung@student.unimelb.edu.au",
+                  ].map(e => ({ email: e, valid: true })),
+                )
+              }
+              style={{
+                cursor: "pointer",
+                zIndex: 100,
+                marginTop: "100px",
+                marginLeft: "150px",
+              }}
+            >
+              .
+            </span>
+          )}
         </form>
       )}
     />

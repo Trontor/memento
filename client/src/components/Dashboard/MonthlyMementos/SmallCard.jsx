@@ -1,4 +1,4 @@
-import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
+// import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
 import {
   AuthorAvatar,
   AuthorWrapper,
@@ -18,7 +18,7 @@ import React, { useState } from "react";
 // import InheritanceTree from "components/InheritanceTree/InheritanceTree";
 import moment from "moment";
 import { useHistory } from "react-router";
-import { useMutation } from "@apollo/react-hooks";
+// import { useMutation } from "@apollo/react-hooks";
 
 export default function SmallCard(props) {
   const history = useHistory();
@@ -36,29 +36,29 @@ export default function SmallCard(props) {
     // updatedAt,
     family,
     detectedLabels,
-    bookmarkedBy,
+    // bookmarkedBy,
     beneficiaries,
     uploader,
     people,
-    onBookmarkToggled,
+    // onBookmarkToggled,
   } = props;
   const [showInheritanceTree, setShowInheritanceTree] = useState(false);
 
-  const [bookmark] = useMutation(ADD_BOOKMARK, {
-    variables: { id: mementoId },
-    onCompleted: data => {
-      onBookmarkToggled();
-    },
-  });
+  // const [bookmark] = useMutation(ADD_BOOKMARK, {
+  //   variables: { id: mementoId },
+  //   onCompleted: data => {
+  //     onBookmarkToggled();
+  //   },
+  // });
 
-  const [removeBookmark] = useMutation(DELETE_BOOKMARK, {
-    variables: { id: mementoId },
-    onCompleted: data => {
-      onBookmarkToggled();
-    },
-  });
+  // const [removeBookmark] = useMutation(DELETE_BOOKMARK, {
+  //   variables: { id: mementoId },
+  //   onCompleted: data => {
+  //     onBookmarkToggled();
+  //   },
+  // });
 
-  const isBookmarked = bookmarkedBy.some(id => id.userId === userId);
+  // const isBookmarked = bookmarkedBy.some(id => id.userId === userId);
 
   const isUploader = uploader.userId === userId;
 
@@ -97,7 +97,7 @@ export default function SmallCard(props) {
           </div>
           {/* Edit & Bookmark */}
           <CardOptions>
-            {beneficiaries && beneficiaries.length > 0 && (
+            {false && beneficiaries && beneficiaries.length > 0 && (
               <i
                 className="fas fa-sitemap"
                 onClick={() => setShowInheritanceTree(!showInheritanceTree)}
@@ -117,11 +117,14 @@ export default function SmallCard(props) {
                 onClick={() => history.push("/memento/" + mementoId + "/edit")}
               />
             )}
-            <i class="fas fa-link"></i>
             <i
+              className="fas fa-link"
+              onClick={() => history.push("/memento/" + mementoId)}
+            ></i>
+            {/* <i
               className={(isBookmarked ? "fas" : "far") + " fa-bookmark"}
               onClick={() => (isBookmarked ? removeBookmark() : bookmark())}
-            ></i>
+            ></i> */}
           </CardOptions>
         </AuthorWrapper>
         <MementoInfo>

@@ -49,7 +49,6 @@ export const ButtonSecondary = styled.button.attrs(() => ({ type: "button" }))`
     background: ${props => adjustHue(-20, transparentize(0.97, props.theme.palette.main))};
     ${props => props.theme.mixins.hoverFade};
     border: 1px solid ${props => lighten(0.1, props.theme.palette.main)};
-    transform: translateY(-2px);
     box-shadow: 0px 1px 3px ${props => transparentize(0.8, props.theme.palette.main)};
   }
 

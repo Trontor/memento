@@ -5,7 +5,7 @@ import NoMementos from "./NoMementos";
 import React from "react";
 
 export default function MementosViewer(props) {
-  const { mementos, userId, refreshMementos } = props;
+  const { mementos, refreshMementos } = props;
 
   if (!mementos) {
     return <JollyLoader />;
@@ -22,6 +22,9 @@ export default function MementosViewer(props) {
     );
   }
 
+  const onMementoTagClicked = tag => {
+    props.cardTagClicked(tag);
+  };
   return (
     <>
       {mementos && mementos.length === 0 ? (
@@ -30,9 +33,10 @@ export default function MementosViewer(props) {
         <MementoCardColumns>
           {filteredMementos.map(memento => (
             <MementoCard
+              userId={props.userId}
               key={memento.mementoId}
               onBookmarkToggled={refreshMementos}
-              userId={userId}
+              onTagClicked={onMementoTagClicked}
               {...memento}
             />
           ))}

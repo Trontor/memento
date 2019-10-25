@@ -29,18 +29,13 @@ export const BookmarksWrapper = styled.div`
 `;
 
 export const BookmarkCard = styled.div`
-  border: 1px solid ${props => transparentize(0.95, props.theme.palette.text)};
+  border: 1px solid ${props => transparentize(0.9, props.theme.palette.text)};
   border-radius: 4px;
   width: 100%;
   overflow: hidden;
   background-color: ${props => props.theme.palette.foreground};
   box-shadow: 1px 2px 3px -2px ${props => transparentize(0.97, props.theme.palette.text)};
-
-  img {
-    width: 100%;
-    height: 220px;
-    object-fit: contain;
-  }
+  height: 350px;
 `;
 
 export const BookmarkImg = styled.div`
@@ -49,9 +44,20 @@ export const BookmarkImg = styled.div`
   /* border-bottom: 1px solid ${props =>
     transparentize(0.95, props.theme.palette.text)}; */
   padding: 12px;
+  margin: auto;
+  height: 180px;
+  cursor: pointer;
 
-  MementoDescription{
-    height: 150px;
+  img {
+    width: 100%;
+    height: 160px;
+    object-fit: contain;
+   
+  }
+  div{
+   text-overflow: ellipsis;
+   overflow: hidden;
+  height: 160px;
   }
 `;
 
@@ -62,6 +68,7 @@ export const BookmarkContent = styled.div`
 
   h3 {
     font-size: 15px;
+    cursor: pointer;
   }
 `;
 
@@ -110,6 +117,9 @@ export const UploaderAvatar = styled(AuthorAvatar)`
 
 export const BookmarksIcon = styled(CardOptions)`
   margin-top: 7px;
+  i {
+    color: ${props => props.theme.palette.main};
+  }
 `;
 
 export const NoBookmarksIcon = styled(BookBookmark)`

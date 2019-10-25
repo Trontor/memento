@@ -30,9 +30,12 @@ const Sidebar = props => {
     fetchPolicy: "cache-and-network",
     onCompleted: data => {
       if (data && data.currentUser) {
+        console.log("Received user data...", data.currentUser);
+
         setUser(data.currentUser);
       }
     },
+    pollInterval: 5000,
   });
 
   const signOut = () => {
@@ -53,10 +56,12 @@ const Sidebar = props => {
 
   const iconSize = "20px";
 
+  const { setSidebarOpen } = props;
   useEffect(() => {
     console.log("Refreshing sidebar...");
     refetch();
-  }, [refetch, location]);
+    setSidebarOpen(false);
+  }, [setSidebarOpen, refetch, location]);
 
   return (
     <SidebarContainer isOpen={props.sidebarOpen}>

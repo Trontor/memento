@@ -1,31 +1,29 @@
+import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
 import {
   AuthorAvatar,
   AuthorWrapper,
-  CardOptions,
-  MementoAuthor,
-  MementoDescription,
-  MementoOverview,
-  MementoTag,
-  MementoTitle,
-  PeopleTags,
-  UploadDate,
   Bookmark,
   CardContent,
+  CardOptions,
+  MementoDescription,
+  MementoInfo,
+  MementoOverview,
+  MementoTag,
+  MementoTagsWrapper,
+  MementoTitle,
+  PeopleTags,
+  SpecialMemento,
+  UploadDate,
 } from "../MementoCard/MementoCardStyles";
-import {
-  Card,
-  MementoImg,
-  TagSectionWrapper,
-  TagsWrapper,
-} from "../MementoPage/MementoPageStyles";
-import { Container } from "ui/Helpers";
-import { FamilyGroup } from "./ViewMementoStyles";
-import { ADD_BOOKMARK, DELETE_BOOKMARK } from "mutations/Memento";
-import moment from "moment";
+import { FamilyGroup, MementoImg } from "./ViewMementoStyles";
 import React, { useState } from "react";
+
+import { Card } from "../MementoPage/MementoPageStyles";
+import { Container } from "ui/Helpers";
+import InheritanceTree from "components/InheritanceTree/InheritanceTree";
+import moment from "moment";
 import { useHistory } from "react-router";
 import { useMutation } from "@apollo/react-hooks";
-import InheritanceTree from "components/InheritanceTree/InheritanceTree";
 
 export default function MementoCard(props) {
   const history = useHistory();
@@ -40,10 +38,9 @@ export default function MementoCard(props) {
     family,
     media,
     tags,
-    // type,
+    type,
     // updatedAt,
     beneficiaries,
-    uploader,
     people,
     bookmarkedBy,
     onBookmarkToggled,
@@ -99,17 +96,22 @@ export default function MementoCard(props) {
           <AuthorWrapper>
             {/* Memento  Uploader Profile Picture */}
             <AuthorAvatar>
-              {!uploader.imageUrl ? (
-                <i className="fas fa-user-circle"></i>
+              {!family.imageUrl ? (
+                <img
+                  src="https://image.flaticon.com/icons/svg/1999/1999109.svg"
+                  alt={family.name}
+                />
               ) : (
-                <img src={uploader.imageUrl} alt={uploader.firstName} />
+                <img src={family.imageUrl} alt={family.name} />
               )}
             </AuthorAvatar>
             <div>
-              {/* Memento  Uploader  */}
-              <MementoAuthor>
-                {uploader.firstName + " " + uploader.lastName}
-              </MementoAuthor>
+              {/* Family Group the memento belongs to */}
+              <FamilyGroup
+                onClick={() => history.push("/family/" + family.familyId)}
+              >
+                {family.name}
+              </FamilyGroup>
               {/* Memento  Upload Date */}
               <UploadDate>
                 {moment(
@@ -117,8 +119,6 @@ export default function MementoCard(props) {
                   "DD-MM-YYYY",
                 ).fromNow()}
               </UploadDate>
-              {/* Family Group the memento belongs to */}
-              <FamilyGroup>{family.name}</FamilyGroup>
             </div>
             {/* Edit & Bookmark */}
             <CardOptions>
@@ -137,7 +137,7 @@ export default function MementoCard(props) {
                 />
               )}
               <i
-                class="fas fa-pencil-alt"
+                className="fas fa-pencil-alt"
                 onClick={() => history.push(`/memento/${mementoId}/edit/`)}
               />
               <Bookmark
@@ -150,103 +150,87 @@ export default function MementoCard(props) {
               </Bookmark>
             </CardOptions>
           </AuthorWrapper>
-          {/* Memento  Title */}
-          <MementoTitle onClick={() => history.push("/memento/" + mementoId)}>
-            {title}
-          </MementoTitle>
-          <MementoOverview>
-            {/* Dates */}
-            <span>
-              <i className="far fa-clock" />
-              {mementoDate}
-            </span>
-            {/* Location */}
-            {location && (
+          <MementoInfo>
+            {/* Memento  Title */}
+            <MementoTitle onClick={() => history.push("/memento/" + mementoId)}>
+              {title}
+            </MementoTitle>
+            <MementoOverview>
+              {/* Special Event */}
+              {type && !["Test", "item", "memento"].includes(type) && (
+                <span>
+                  <i className="far fa-calendar-alt"></i>
+                  <SpecialMemento>{type}</SpecialMemento>
+                </span>
+              )}
+              {/* Dates */}
               <span>
-                <i className="fas fa-map-marker-alt"></i>
-                {location}
+                <i className="far fa-clock" />
+                {mementoDate}
               </span>
+              {/* Location */}
+              {location && (
+                <span>
+                  <i className="fas fa-map-marker-alt"></i>
+                  {location}
+                </span>
+              )}
+
+              {/* People Tags */}
+              {people && people.length > 0 && (
+                <span>
+                  <i className="fas fa-user-tag"></i>
+                  <div>
+                    {people.map(person => (
+                      <PeopleTags>
+                        {person.firstName} {person.lastName}
+                      </PeopleTags>
+                    ))}
+                  </div>
+                </span>
+              )}
+              {/* Beneficiary Tags */}
+              {beneficiaries && beneficiaries.length > 0 && (
+                <span>
+                  <i className="far fa-handshake"></i>
+                  <div>
+                    {beneficiaries.map(beneficiary => (
+                      <PeopleTags>
+                        {beneficiary.firstName} {beneficiary.lastName}
+                      </PeopleTags>
+                    ))}
+                  </div>
+                </span>
+              )}
+            </MementoOverview>
+
+            {/* Description */}
+            {media.length > 0 && (
+              <MementoDescription>{description}</MementoDescription>
             )}
 
-            {/* People Tags */}
-            {people && people.length > 0 && (
-              <span>
-                <i className="fas fa-user-tag"></i>
-                <div>
-                  {people.map(person => (
-                    <PeopleTags>
-                      {person.firstName} {person.lastName}
-                    </PeopleTags>
-                  ))}
-                </div>
-              </span>
-            )}
-            {/* Beneficiary Tags */}
-            {beneficiaries && beneficiaries.length > 0 && (
-              <span>
-                <i class="far fa-handshake"></i>
-                <div>
-                  {beneficiaries.map(beneficiary => (
-                    <PeopleTags>
-                      {beneficiary.firstName} {beneficiary.lastName}
-                    </PeopleTags>
-                  ))}
-                </div>
-              </span>
-            )}
-          </MementoOverview>
-
-          {/* Description */}
-          {media.length > 0 && (
-            <MementoDescription>{description}</MementoDescription>
-          )}
-
-          {/* Tags */}
-          <TagsWrapper>
+            {/* Tags */}
             {tags && props.tags.length > 0 && (
-              <TagSectionWrapper>
-                <i class="fas fa-tags"></i>
+              <MementoTagsWrapper>
+                <i className="fas fa-tags"></i>
                 {tags.map(tag => (
                   <MementoTag>{tag}</MementoTag>
                 ))}
-              </TagSectionWrapper>
+              </MementoTagsWrapper>
             )}
             {/* Rekognition Tags */}
             {detectedLabels && detectedLabels.length > 0 && (
-              <TagSectionWrapper>
-                <i class="far fa-eye"></i>
+              <MementoTagsWrapper>
+                <i className="far fa-eye"></i>
                 {detectedLabels.map(result => (
                   <MementoTag key={result.name}>
                     {result.name.toLowerCase()}{" "}
                     <span>{Math.round(result.confidence, 0)}%</span>
                   </MementoTag>
                 ))}
-              </TagSectionWrapper>
+              </MementoTagsWrapper>
             )}
-          </TagsWrapper>
-
-          {/* Tags
-          {props.tags && props.tags.length > 0 && (
-            <MementoTagsWrapper>
-              <i class="fas fa-tags"></i>
-              {props.tags.map(tag => (
-                <MementoTag>{tag}</MementoTag>
-              ))}
-            </MementoTagsWrapper>
-          )}
-
-          {/* Rekognition Tags */}
-          {/* {detectedLabels && detectedLabels.length > 0 && (
-            <MementoTagsWrapper familyColour={family.colour}>
-              <i class="far fa-eye"></i>
-              {detectedLabels.map(result => (
-                <MementoTag key={result.name} familyColour={family.colour}>
-                  {result.name.toLowerCase()}{" "}
-                  <span>{Math.round(result.confidence, 0)}%</span>
-                </MementoTag>
-              ))}
-            </MementoTagsWrapper>
-          )} */}
+          </MementoInfo>
         </CardContent>
       </Card>
     </Container>

@@ -8,9 +8,9 @@ import {
   InputLabel,
   InputSection,
 } from "ui/Forms";
+import { FormWrapper, PageWrapper } from "ui/Helpers";
 
 import { ButtonPrimary } from "ui/Buttons";
-import { FormWrapper } from "ui/Helpers";
 import { Formik } from "formik";
 import { Header } from "ui/Typography";
 import { Link } from "react-router-dom";
@@ -124,108 +124,110 @@ const Signup = props => {
       <PageHeader>
         <Logo pointer center onClick={() => props.history.push("/")} />
       </PageHeader>
-      <FormWrapper>
-        <Header underline>Sign up today!</Header>
-        {signUpErrors.length > 0 && (
-          <ErrorBanner>
-            {signUpErrors.map(error => (
-              <div>{error}</div>
-            ))}
-          </ErrorBanner>
-        )}
-        <Formik
-          initialValues={defaultValues}
-          onSubmit={(values, actions) => {
-            const { confirmPassword, ...inputValues } = values;
-            signup({ variables: { input: inputValues } });
-          }}
-          validationSchema={SignupValidationSchema}
-          validateOnBlur={false}
-          validateOnChange={false}
-          render={props => (
-            <form onSubmit={props.handleSubmit}>
-              <NameInputContainer>
-                <InputSection>
-                  <InputLabel>First Name</InputLabel>
-                  <InputField
-                    type="text"
-                    name="firstName"
-                    onChange={props.handleChange}
-                    onBlur={props.handleBlur}
-                    value={props.values.firstName}
-                    filled={props.values.firstName.length > 0}
-                  />
-                  {props.errors.firstName && props.touched.firstName && (
-                    <Error>{props.errors.firstName}</Error>
-                  )}
-                </InputSection>
-
-                <InputSection>
-                  <InputLabel>Last Name</InputLabel>
-                  <InputField
-                    type="text"
-                    name="lastName"
-                    onChange={props.handleChange}
-                    onBlur={props.handleBlur}
-                    value={props.values.lastName}
-                  />
-                  {props.errors.lastName && props.touched.lastName && (
-                    <Error>{props.errors.lastName}</Error>
-                  )}
-                </InputSection>
-              </NameInputContainer>
-
-              <InputSection>
-                <InputLabel>Email Address</InputLabel>
-                <InputField
-                  type="email"
-                  name="email"
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  value={props.values.email}
-                />
-                {props.errors.email && props.touched.email && (
-                  <Error>{props.errors.email}</Error>
-                )}
-              </InputSection>
-
-              <InputSection>
-                <InputLabel>Password</InputLabel>
-                <InputField
-                  type="password"
-                  name="password"
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  value={props.values.password}
-                />
-                {props.errors.password && props.touched.password && (
-                  <Error>{props.errors.password}</Error>
-                )}
-              </InputSection>
-
-              <InputSection>
-                <InputLabel>Confirm Password</InputLabel>
-                <InputField
-                  type="password"
-                  name="confirmPassword"
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  value={props.values.confirmPassword}
-                />
-                {props.errors.confirmPassword && (
-                  <Error>{props.errors.confirmPassword}</Error>
-                )}
-              </InputSection>
-              <ButtonPrimary type="submit" spacing="true">
-                Sign Up
-              </ButtonPrimary>
-              <HelpText>
-                Already have an account? <Link to="/login">Log in</Link>
-              </HelpText>
-            </form>
+      <PageWrapper>
+        <FormWrapper>
+          <Header underline>Sign up today!</Header>
+          {signUpErrors.length > 0 && (
+            <ErrorBanner>
+              {signUpErrors.map(error => (
+                <div>{error}</div>
+              ))}
+            </ErrorBanner>
           )}
-        />
-      </FormWrapper>
+          <Formik
+            initialValues={defaultValues}
+            onSubmit={(values, actions) => {
+              const { confirmPassword, ...inputValues } = values;
+              signup({ variables: { input: inputValues } });
+            }}
+            validationSchema={SignupValidationSchema}
+            validateOnBlur={false}
+            validateOnChange={false}
+            render={props => (
+              <form onSubmit={props.handleSubmit}>
+                <NameInputContainer>
+                  <InputSection>
+                    <InputLabel>First Name</InputLabel>
+                    <InputField
+                      type="text"
+                      name="firstName"
+                      onChange={props.handleChange}
+                      onBlur={props.handleBlur}
+                      value={props.values.firstName}
+                      filled={props.values.firstName.length > 0}
+                    />
+                    {props.errors.firstName && props.touched.firstName && (
+                      <Error>{props.errors.firstName}</Error>
+                    )}
+                  </InputSection>
+
+                  <InputSection>
+                    <InputLabel>Last Name</InputLabel>
+                    <InputField
+                      type="text"
+                      name="lastName"
+                      onChange={props.handleChange}
+                      onBlur={props.handleBlur}
+                      value={props.values.lastName}
+                    />
+                    {props.errors.lastName && props.touched.lastName && (
+                      <Error>{props.errors.lastName}</Error>
+                    )}
+                  </InputSection>
+                </NameInputContainer>
+
+                <InputSection>
+                  <InputLabel>Email Address</InputLabel>
+                  <InputField
+                    type="email"
+                    name="email"
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.email}
+                  />
+                  {props.errors.email && props.touched.email && (
+                    <Error>{props.errors.email}</Error>
+                  )}
+                </InputSection>
+
+                <InputSection>
+                  <InputLabel>Password</InputLabel>
+                  <InputField
+                    type="password"
+                    name="password"
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.password}
+                  />
+                  {props.errors.password && props.touched.password && (
+                    <Error>{props.errors.password}</Error>
+                  )}
+                </InputSection>
+
+                <InputSection>
+                  <InputLabel>Confirm Password</InputLabel>
+                  <InputField
+                    type="password"
+                    name="confirmPassword"
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.confirmPassword}
+                  />
+                  {props.errors.confirmPassword && (
+                    <Error>{props.errors.confirmPassword}</Error>
+                  )}
+                </InputSection>
+                <ButtonPrimary type="submit" spacing="true">
+                  Sign Up
+                </ButtonPrimary>
+                <HelpText>
+                  Already have an account? <Link to="/login">Log in</Link>
+                </HelpText>
+              </form>
+            )}
+          />
+        </FormWrapper>
+      </PageWrapper>
     </>
   );
 };

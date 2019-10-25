@@ -8,7 +8,6 @@ import { TextWrapper } from "components/Dashboard/NewUser/NewUserStyles";
 
 export default function InviteCode(props) {
   const [inviteId, setInviteId] = useState("");
-
   const handleAcceptClick = () => {
     props.history.push("/invite/accept/" + inviteId);
   };

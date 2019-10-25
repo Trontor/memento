@@ -8,9 +8,9 @@ import {
   InputLabel,
   InputSection
 } from "ui/Forms";
+import { FormWrapper, PageWrapper } from "ui/Helpers";
 
 import { ButtonPrimary } from "ui/Buttons";
-import { FormWrapper } from "ui/Helpers";
 import { Formik } from "formik";
 import { Header } from "ui/Typography";
 import { LOGIN } from "mutations/Authentication";
@@ -79,64 +79,66 @@ export default function Login(props) {
       <PageHeader>
         <Logo pointer center onClick={() => history.push("/")}/>
       </PageHeader>
-      <FormWrapper>
-        <Header underline>Welcome back!</Header>
-        {loginErrors.length > 0 && (
-          <ErrorBanner>
-          {loginErrors.map(error => (
-            <div>{error}</div>
-          ))}
-          </ErrorBanner>
-        )}
-        <Formik
-          initialValues={defaultValues}
-          onSubmit={(values, actions) => {
-            login({ variables: { input: { ...values } } });
-          }}
-          validationSchema={LoginValidationSchema}
-          validateOnBlur={false}
-          validateOnChange={false}
-          render={props => (
-            <form onSubmit={props.handleSubmit}>
-              {/* Email Field */}
-              <InputSection>
-                <InputLabel>Email</InputLabel>
-                <InputField
-                  type="text"
-                  name="email"
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  value={props.values.email}
-                />
-                {props.errors.email && props.touched.email && (
-                  <Error>{props.errors.email}</Error>
-                )}
-              </InputSection>
-              {/* Password Field */}
-              <InputSection>
-                <InputLabel>Password</InputLabel>
-                <InputField
-                  type="password"
-                  name="password"
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  value={props.values.password}
-                />
-                {props.errors.password && props.touched.password && (
-                  <Error>{props.errors.password}</Error>
-                )}
-              </InputSection>
-              <ButtonPrimary type="submit" spacing>
-                Login
-              </ButtonPrimary>
-              <HelpText>
-                Don't have an account?
-                <MsgLink to="/signup"> Sign up</MsgLink>
-              </HelpText>
-            </form>
+      <PageWrapper>
+        <FormWrapper>
+          <Header underline>Welcome back!</Header>
+          {loginErrors.length > 0 && (
+            <ErrorBanner>
+            {loginErrors.map(error => (
+              <div>{error}</div>
+            ))}
+            </ErrorBanner>
           )}
-        />
-      </FormWrapper>
+          <Formik
+            initialValues={defaultValues}
+            onSubmit={(values, actions) => {
+              login({ variables: { input: { ...values } } });
+            }}
+            validationSchema={LoginValidationSchema}
+            validateOnBlur={false}
+            validateOnChange={false}
+            render={props => (
+              <form onSubmit={props.handleSubmit}>
+                {/* Email Field */}
+                <InputSection>
+                  <InputLabel>Email</InputLabel>
+                  <InputField
+                    type="text"
+                    name="email"
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.email}
+                  />
+                  {props.errors.email && props.touched.email && (
+                    <Error>{props.errors.email}</Error>
+                  )}
+                </InputSection>
+                {/* Password Field */}
+                <InputSection>
+                  <InputLabel>Password</InputLabel>
+                  <InputField
+                    type="password"
+                    name="password"
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.password}
+                  />
+                  {props.errors.password && props.touched.password && (
+                    <Error>{props.errors.password}</Error>
+                  )}
+                </InputSection>
+                <ButtonPrimary type="submit" spacing>
+                  Login
+                </ButtonPrimary>
+                <HelpText>
+                  Don't have an account?
+                  <MsgLink to="/signup"> Sign up</MsgLink>
+                </HelpText>
+              </form>
+            )}
+          />
+        </FormWrapper>
+      </PageWrapper>
     </>
   );
 }

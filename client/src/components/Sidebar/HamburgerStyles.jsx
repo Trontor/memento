@@ -1,6 +1,6 @@
-import styled from "styled-components";
 import { MenuAltLeft } from "styled-icons/boxicons-regular/MenuAltLeft";
 import { lighten } from "polished";
+import styled from "styled-components";
 
 export const NavBar = styled.div`
   height: 50px;
@@ -28,7 +28,7 @@ export const ModalBackground = styled.div`
   opacity: 0.8;
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   z-index: 998;
 
   @media screen and (min-width: ${props =>

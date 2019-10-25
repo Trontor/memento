@@ -1,9 +1,3 @@
-import { useQuery, useMutation } from "@apollo/react-hooks";
-import { ReactComponent as Brain } from "components/JollyLoader/brain.svg";
-import JollyLoader from "components/JollyLoader/JollyLoader";
-import React, { useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import { Container } from "ui/Helpers";
 import {
   DoneBtn,
   MementoName,
@@ -14,7 +8,14 @@ import {
   NortonTagsWrapper,
   SelectMsg,
 } from "./NortonVisionStyles";
+import React, { useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+
+import { ReactComponent as Brain } from "components/JollyLoader/brain.svg";
+import { Container } from "ui/Helpers";
 import { GET_VISION_MEMENTO } from "queries/Memento";
+import JollyLoader from "components/JollyLoader/JollyLoader";
 import { UPDATE_MEMENTO } from "mutations/Memento";
 
 const effectivenessMessage = ratio => {
@@ -22,13 +23,13 @@ const effectivenessMessage = ratio => {
     return "Norton seems to be doing an excellent job!";
   }
   if (ratio > 0.66) {
-    return "Norton is doing a good job! :)";
+    return "Norton is doing a good job!";
   }
-  if (ratio > 0.5) {
-    return "Norton is doing an okay job! :/";
+  if (ratio > 0.3) {
+    return "Norton is doing an okay job.";
   }
   if (ratio > 0) {
-    return "Norton is doing a poor job. :c ";
+    return "Norton is doing a poor job :c ";
   }
   return "Sorry, Norton will do better next time.";
 };
@@ -114,11 +115,11 @@ export default function NortonVision() {
               <SelectMsg>Feel free to deselect tags you don't like.</SelectMsg>
               <NortonRating>
                 <div>
-                  {selectedCount} out of {tags.length} tags selected.
+                  {selectedCount} of {tags.length} tags selected.
                 </div>
                 <span>{effectivenessMessage(selectedRatio)}</span>
               </NortonRating>
-              <DoneBtn onClick={onSubmit}>Look's Good!</DoneBtn>
+              <DoneBtn onClick={onSubmit}>Looks Good!</DoneBtn>
             </>
           ) : (
             <>

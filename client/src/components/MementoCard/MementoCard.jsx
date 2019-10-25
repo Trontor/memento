@@ -15,9 +15,11 @@ import {
   MementoTagsWrapper,
   MementoTitle,
   PeopleTags,
+  SpecialMemento,
   UploadDate,
 } from "./MementoCardStyles";
 import React, { useState } from "react";
+
 import InheritanceTree from "components/InheritanceTree/InheritanceTree";
 import moment from "moment";
 import { useHistory } from "react-router";
@@ -68,7 +70,10 @@ export default function MementoCard(props) {
   // if (isBookmarked && optimisticBookmark) {
   //   setOptimisticBookmark(false);
   // }
+
   const isUploader = uploader.userId === userId;
+  // console.log(userId, props);
+
   const mementoDate = moment(
     dates[0].day.toString().padStart(2, "0") +
       "/" +
@@ -142,11 +147,19 @@ export default function MementoCard(props) {
       <CardContent>
         <MementoInfo>
           {/* Title */}
-          {type && !["Test", "memento"].includes(type) && <p>Type: {type}</p>}
           <MementoTitle onClick={() => history.push("/memento/" + mementoId)}>
             {title}
           </MementoTitle>
           <MementoOverview card familyColour={family.colour}>
+            {/* Special Event */}
+            {type && !["Test", "item", "memento"].includes(type) && (
+              <span>
+                <i className="far fa-calendar-alt"></i>
+                <SpecialMemento familyColour={family.colour}>
+                  {type}
+                </SpecialMemento>
+              </span>
+            )}
             {/* Date */}
             <span>
               <i className="far fa-clock"></i>
@@ -163,19 +176,21 @@ export default function MementoCard(props) {
             {people && people.length > 0 && (
               <span>
                 <i className="fas fa-user-tag"></i>
-                <div>
-                  {people.map(person => (
-                    <PeopleTags key={person.firstName}>
-                      {person.firstName} {person.lastName}
-                    </PeopleTags>
-                  ))}
-                </div>
+                {people.map(person => (
+                  <PeopleTags
+                    key={person.firstName}
+                    onClick={() => history.push("/profile/" + person.userId)}
+                    familyColour={family.colour}
+                  >
+                    {person.firstName} {person.lastName}
+                  </PeopleTags>
+                ))}
               </span>
             )}
             {/* Beneficiary Tags */}
             {beneficiaries && beneficiaries.length > 0 && (
               <span>
-                <i class="far fa-handshake"></i>
+                <i className="far fa-handshake"></i>
                 <div>
                   {beneficiaries.map(beneficiary => (
                     <PeopleTags key={beneficiary.firstName}>
@@ -211,18 +226,35 @@ export default function MementoCard(props) {
       {/* Tags */}
       {tags && tags.length > 0 && (
         <MementoTagsWrapper familyColour={family.colour}>
-          <i class="fas fa-tags"></i>
+          <i className="fas fa-tags"></i>
           {tags.map(tag => (
-            <MementoTag familyColour={family.colour}>{tag}</MementoTag>
+            <MementoTag
+              onClick={() => {
+                if (props.onTagClicked) {
+                  props.onTagClicked(tag);
+                }
+              }}
+              familyColour={family.colour}
+            >
+              {tag}
+            </MementoTag>
           ))}
         </MementoTagsWrapper>
       )}
       {/* Rekognition Tags */}
       {detectedLabels && detectedLabels.length > 0 && (
         <MementoTagsWrapper familyColour={family.colour}>
-          <i class="far fa-eye"></i>
+          <i className="far fa-eye"></i>
           {detectedLabels.map(result => (
-            <MementoTag key={result.name} familyColour={family.colour}>
+            <MementoTag
+              onClick={() => {
+                if (props.onTagClicked) {
+                  props.onTagClicked(result.name.toLowerCase());
+                }
+              }}
+              key={result.name}
+              familyColour={family.colour}
+            >
               {result.name.toLowerCase()}{" "}
               <span>{Math.round(result.confidence, 0)}%</span>
             </MementoTag>

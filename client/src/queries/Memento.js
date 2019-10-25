@@ -17,6 +17,7 @@ export const GET_MEMENTOS = gql`
       people {
         firstName
         lastName
+        userId
       }
       beneficiaries {
         firstName
@@ -67,6 +68,7 @@ export const GET_MY_MEMENTOS = gql`
       people {
         firstName
         lastName
+        userId
       }
       beneficiaries {
         firstName

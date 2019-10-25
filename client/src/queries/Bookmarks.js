@@ -5,6 +5,7 @@ export const GET_BOOKMARKS = gql`
     currentUser {
       bookmarks {
         createdAt
+        type
         description
         location
         mementoId

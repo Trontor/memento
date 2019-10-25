@@ -11,6 +11,7 @@ const StyledLogo = styled.div`
   cursor: ${props => (props.pointer ? "pointer" : "default")};
   font-family: "Livvic", sans-serif;
   text-align: ${props => (props.center ? "center" : "default")};
+  font-weight: 600;
 
   @media screen and (min-width: ${props =>
   props.theme.breakpoints.tabletLandscape}) {
