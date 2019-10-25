@@ -33,6 +33,7 @@ export default function MementosViewer(props) {
         <MementoCardColumns>
           {filteredMementos.map(memento => (
             <MementoCard
+              userId={props.userId}
               key={memento.mementoId}
               onBookmarkToggled={refreshMementos}
               onTagClicked={onMementoTagClicked}

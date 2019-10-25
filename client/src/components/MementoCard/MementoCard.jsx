@@ -72,6 +72,8 @@ export default function MementoCard(props) {
   // }
 
   const isUploader = uploader.userId === userId;
+  // console.log(userId, props);
+
   const mementoDate = moment(
     dates[0].day.toString().padStart(2, "0") +
       "/" +
