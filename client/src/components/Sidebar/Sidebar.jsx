@@ -30,9 +30,12 @@ const Sidebar = props => {
     fetchPolicy: "cache-and-network",
     onCompleted: data => {
       if (data && data.currentUser) {
+        console.log("Received user data...", data.currentUser);
+
         setUser(data.currentUser);
       }
     },
+    pollInterval: 5000,
   });
 
   const signOut = () => {

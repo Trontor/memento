@@ -20,6 +20,7 @@ import React, { useState } from "react";
 import { StyledDropzone } from "components/FileDropzone/FileDropzone";
 import { useMutation } from "@apollo/react-hooks";
 import imageCompression from "browser-image-compression";
+import { PreviewImg } from "components/UploadMemento/UploadMementoStyles";
 
 const MAX_FILE_SIZE = 160 * 1024 * 1024;
 const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
@@ -148,13 +149,13 @@ export default function CreateFamily(props) {
               </InstructionLabel>
               {props.values.file ? (
                 <div>
-                  <div>
+                  <PreviewImg>
                     <img
                       alt={props.values.file.name}
                       src={URL.createObjectURL(props.values.file)}
                     />
-                  </div>
-                  {props.values.file.name}
+                    <span>{props.values.file.name}</span>
+                  </PreviewImg>
                   <button onClick={() => props.setFieldValue("file", null)}>
                     Remove
                   </button>
