@@ -8,7 +8,15 @@ import {
   InstructionLabel,
   TextArea,
 } from "ui/Forms";
-import { NewTag, NewTagsForm, PreviewImg, RemovePhoto, Req, Tag, TagsContainer } from "./UploadMementoStyles";
+import {
+  NewTag,
+  NewTagsForm,
+  PreviewImg,
+  RemovePhoto,
+  Req,
+  Tag,
+  TagsContainer,
+} from "./UploadMementoStyles";
 import {
   RadioButton,
   RadioButtonStyle,
@@ -36,7 +44,7 @@ import imageCompression from "browser-image-compression";
 const regularQuotes = ["Loading..."];
 
 const initialFormValues = {
-  event: true,
+  event: false,
   type: null,
   title: "",
   description: "",
@@ -273,31 +281,38 @@ export default function UploadMemento(props) {
                     value="object"
                     name="mementoType"
                     checked={!props.values.event}
-                    onChange={e =>
-                      props.setFieldValue("event", !e.target.checked)
-                    }
+                    onChange={e => {
+                      props.setFieldValue("type", null);
+                      props.setFieldValue("event", !e.target.checked);
+                    }}
                   />
                   <RadioButtonStyle />
-                  <RadioLabel>Item (e.g. painting, stuffed toy, photograph).</RadioLabel>
+                  <RadioLabel>
+                    Item (e.g. painting, stuffed toy, photograph).
+                  </RadioLabel>
                 </RadioOption>
                 <RadioOption>
                   <RadioButton
                     type="radio"
                     value="event"
                     checked={props.values.event}
-                    onChange={e =>
-                      props.setFieldValue("event", e.target.checked)
-                    }
+                    onChange={e => {
+                      props.setFieldValue("type", null);
+                      props.setFieldValue("event", e.target.checked);
+                    }}
                   />
                   <RadioButtonStyle />
-                  <RadioLabel>Event (e.g. anniversary, birthday,
-                  graduation).</RadioLabel>
+                  <RadioLabel>
+                    Event (e.g. anniversary, birthday, graduation).
+                  </RadioLabel>
                 </RadioOption>
               </FormSection>
 
               {props.values.event && (
                 <FormSection>
-                  <InstructionLabel>What kind of event is it?<Req>*</Req></InstructionLabel>
+                  <InstructionLabel>
+                    What kind of event is it?<Req>*</Req>
+                  </InstructionLabel>
                   <CreatableSelect
                     isClearable
                     options={eventOptions}
@@ -310,7 +325,9 @@ export default function UploadMemento(props) {
               )}
 
               <FormSection>
-                <InstructionLabel>Title<Req>*</Req></InstructionLabel>
+                <InstructionLabel>
+                  Title<Req>*</Req>
+                </InstructionLabel>
                 <InputField
                   value={props.values.title}
                   name="title"
@@ -332,7 +349,9 @@ export default function UploadMemento(props) {
                         src={URL.createObjectURL(props.values.file)}
                       />
                       <span>{props.values.file.name}</span>
-                      <RemovePhoto onClick={() => props.setFieldValue("file", null)}>
+                      <RemovePhoto
+                        onClick={() => props.setFieldValue("file", null)}
+                      >
                         Remove
                       </RemovePhoto>
                     </PreviewImg>
