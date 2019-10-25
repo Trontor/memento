@@ -141,6 +141,7 @@ export default function MementoPage() {
             {memento.people && memento.people.length > 0 && (
               <span>
                 <i className="fas fa-user-tag"></i>
+                <div>
                 {memento.people.map(person => (
                   <PeopleTags
                     key={person.firstName}
@@ -150,6 +151,7 @@ export default function MementoPage() {
                     {person.firstName} {person.lastName}
                   </PeopleTags>
                 ))}
+                </div>
               </span>
             )}
             {/* Beneficiary Tags */}
