@@ -37,7 +37,7 @@ const mementoToBeneficiaryTree = memento => {
   };
 };
 
-export default function InheritanceTree(props) {
+export default React.memo(props => {
   // let treeContainer = null;
   const [treeContainer, setTreeContainer] = useState(null);
   const [translate, setTranslate] = useState({});
@@ -94,7 +94,7 @@ export default function InheritanceTree(props) {
       />
     </TreeWrapper>
   );
-}
+});
 const NodeLabel = ({ nodeData }) => {
   const [nodeContainer, setNodeContainer] = useState(null);
   const nodeSize = "75px";
