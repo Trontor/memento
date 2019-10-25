@@ -176,15 +176,17 @@ export default function MementoCard(props) {
             {people && people.length > 0 && (
               <span>
                 <i className="fas fa-user-tag"></i>
-                {people.map(person => (
-                  <PeopleTags
-                    key={person.firstName}
-                    onClick={() => history.push("/profile/" + person.userId)}
-                    familyColour={family.colour}
-                  >
-                    {person.firstName} {person.lastName}
-                  </PeopleTags>
-                ))}
+                <div>
+                  {people.map(person => (
+                    <PeopleTags
+                      key={person.firstName}
+                      onClick={() => history.push("/profile/" + person.userId)}
+                      familyColour={family.colour}
+                    >
+                      {person.firstName} {person.lastName}
+                    </PeopleTags>
+                  ))}
+                </div>
               </span>
             )}
             {/* Beneficiary Tags */}
